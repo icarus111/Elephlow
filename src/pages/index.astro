@@ -1,11 +1,282 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const brandName = "推開部屋的門";
+const pageTitle = "@Apollo11-/流星小飛象 第四季電子報 宣傳頁 2026";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{brandName} | {pageTitle}</title>
+    <style>
+        /* 定義撞色色票 */
+        :root {
+            --bg-color: #F4F0EA; /* 復古米紙色 */
+            --text-dark: #111111; /* 極深灰，幾乎黑 */
+            --klein-blue: #0033FF; /* 寶石藍 */
+            --neon-orange: #FF4D00; /* 亮橘色 */
+        }
+
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+        }
+
+        /* 頂部撞色橫幅 */
+        header {
+            background-color: var(--klein-blue);
+            color: #FFFFFF;
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 8px solid var(--text-dark);
+        }
+        .brand-logo {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border: 2px solid #FFF;
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        /* 主要閱讀區 */
+        main {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 24px 100px;
+        }
+
+        /* 獨立出版風格的標題 */
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 70px;
+            margin-bottom: 25px;
+            background-color: var(--neon-orange);
+            color: #FFF;
+            display: inline-block;
+            padding: 6px 18px;
+            transform: rotate(-1.5deg); /* 手工剪貼的傾斜感 */
+            box-shadow: 4px 4px 0px var(--text-dark);
+            border: 2px solid var(--text-dark);
+        }
+
+        /* 撞色連結 */
+        a {
+            color: var(--klein-blue);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid var(--klein-blue);
+            transition: all 0.2s ease;
+        }
+        a:hover {
+            background-color: var(--klein-blue);
+            color: #FFF;
+        }
+
+        /* 粗獷風格的表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 0.95rem;
+            border: 3px solid var(--text-dark);
+            background-color: #FFF;
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.05);
+        }
+        th, td {
+            border: 1px solid var(--text-dark);
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--text-dark);
+            color: var(--bg-color);
+            font-weight: 600;
+        }
+        tr:nth-child(even) { background-color: #FAFAF7; }
+        s { color: #999; text-decoration-thickness: 2px; }
+
+        /* 引言區塊 */
+        blockquote {
+            margin: 40px 0;
+            padding: 20px 30px;
+            border-left: 6px solid var(--neon-orange);
+            background-color: #FFF;
+            color: #444;
+            border-top: 1px solid var(--text-dark);
+            border-right: 1px solid var(--text-dark);
+            border-bottom: 1px solid var(--text-dark);
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+        }
+
+        ul, ol { padding-left: 24px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        
+        strong { color: var(--neon-orange); }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--text-dark);
+            color: var(--bg-color);
+            font-size: 0.9rem;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand-logo">{brandName}</div>
+        <h1>{pageTitle}</h1>
+    </header>
+
+    <main>
+        <h3>📬 試閱內容</h3>
+        <p>【往季內容目錄】<br>
+        <a href="https://www.notion.so/Apollo11-1b715431c08d80a5a44afe66c6cd6fd3?pvs=21" target="_blank">@Apollo11-/流星小飞象 往季小报目錄展示頁</a></p>
+        
+        <p>【第一季】<br>
+        <a href="https://www.notion.so/Issue-01-1-35115431c08d8120ba20f72b2be8571d?pvs=21" target="_blank">Issue#01 我們的飛地 第一季試閱版內容 (1)</a></p>
+        
+        <p>【第二季】<br>
+        <a href="https://www.notion.so/Issue-15-35115431c08d81c9ba18f44e4a6a26c9?pvs=21" target="_blank">Issue#15 與異見共存 第二季試閱內容</a></p>
+        
+        <p>【第三季】<br>
+        <a href="https://www.notion.so/Issue-36-39e15431c08d831f8c6281af440ecc69?pvs=21" target="_blank">Issue# 36 折返 第三季试阅内容</a></p>
+        
+        <p>【閱讀小報】<br>
+        <a href="https://www.notion.so/002-35415431c08d80f8888dd173b80840a3?pvs=21" target="_blank">閱讀小報 002：正發生 （試閱內容）</a></p>
+        
+        <p>【海外備份公開縮減版】<br>
+        <a href="https://fmtoymoon.substack.com/" target="_blank">新女性的復仇 | Icarus | Substack</a></p>
+
+        <h3>💬 讀者評價（持續施工中）</h3>
+        <p><a href="https://www.notion.so/Apollo11-35115431c08d813e951af1bc02d85032?pvs=21" target="_blank">@Apollo11- / 流星小飛象 小報讀者反饋💕</a></p>
+
+        <h3>📮 訂閱方式 / 價格優惠</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>套餐</th>
+                    <th>原價</th>
+                    <th>現價</th>
+                    <th>備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>第四季 正價</td><td>￥229</td><td><strong>￥229</strong></td><td>一年12期主題策展正刊+每月2-4篇雜誌通信</td></tr>
+                <tr><td>第四季 早鳥價</td><td><s>￥229</s></td><td><strong>￥199</strong></td><td>限 2026 年 5 月 17 日之前</td></tr>
+                <tr><td>第四季 學生價</td><td><s>￥229</s></td><td><strong>￥199</strong></td><td>需出示學生身份</td></tr>
+                <tr><td>第四季 同行價</td><td><s>￥229</s></td><td><strong>￥169</strong></td><td>已訂閱完整三季 ／ 已填過第三季讀者問卷</td></tr>
+                <tr><td>四季合訂・一＋二＋三＋四</td><td><s>￥639</s></td><td><strong>￥520</strong></td><td>四季完整內容</td></tr>
+                <tr><td>三季合訂・一＋二＋三</td><td><s>￥410</s></td><td><strong>￥350</strong></td><td>過往三季全部內容</td></tr>
+                <tr><td>三、四季合訂</td><td><s>￥409</s></td><td><strong>￥379</strong></td><td>已更新完成的第三季+即將發送的第四季全部內容</td></tr>
+                <tr><td>一、二季合訂</td><td><s>￥230</s></td><td><strong>￥170</strong></td><td>前兩季全部內容</td></tr>
+                <tr><td>第三季單訂（12期正刊+12期閱讀小報）</td><td>￥180</td><td><strong>￥180</strong></td><td></td></tr>
+                <tr><td>單期電子報</td><td>—</td><td><strong>￥25／期</strong></td><td>請在付款時備註期數</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>自助下單地址：<a href="https://tally.so/r/4415XB" target="_blank">https://tally.so/r/4415XB</a></strong></p>
+        
+        <p><strong>✨ 若一次購買「四季合訂」（520 RMB），可獲得：</strong></p>
+        <ul>
+            <li><strong>第五季「同行價」優先續訂</strong>——以同行讀者身份保留下一季最優惠價格</li>
+            <li><strong>未來即將推出的所有服務優先體驗</strong>：如實體 Zine 派贈、創作者品牌顧問 1V1 針對性建議、讀者社群</li>
+        </ul>
+        <p>往季讀者如嫌麻煩可直接通過已有小助手微信（Elephlow）轉賬進行續訂~</p>
+
+        <h3>❓ 內容策劃？第四季與之前的區別？</h3>
+        <p><strong>往季內容概括：</strong>港台流行音樂歌單與專題、港台仍在運營的雜誌與獨立書店、紀錄片影展與作者研究、港台開放式課程與海外中文播客推薦、Zine 的研究與製作、亞洲藝術書展與獨立出版現場、女性主義與酷兒視角的書寫、跨海岸線的政治與地方書寫、台灣與東亞文學的譜系探索、與同齡女孩們的對談等等。</p>
+        <p><strong>第四季與前三季最主要的區別：</strong></p>
+        <ol>
+            <li><strong>正刊的變化：</strong>第四季依然以港台流行文化為核心，但寫作形式從前三季的固定欄目（播放器、雜誌社、逛書店等）轉向了<strong>主題策展</strong>。每一期會圍繞一個非常具體的切入點展開——可能是某件物、某個文學人物、某種音樂風格、某段歷史的某個細節——把它當成一個小型策展的中心，從這裡往不同的方向慢慢鋪開。比起前三季那種「一期裡幾個欄目並行」的結構，第四季每一期更像獨立雜誌的單期，做得窄、做得深。</li>
+            <li><strong>副刊的變化：</strong>之前的閱讀小報以港台新書資訊為主，一月一期。但這一年實踐下來我發現：月更的頻率在這個快節奏的時代還是太慢了，沒有辦法達成我開啟閱讀小報時分散小報內容輕量化的目的，每一期編寫的複雜度不亞於寫正刊。這次正刊改成了主題策展後會在正刊內移除過去雜誌社的固定欄目，但我對雜誌的興趣始終都在，也不太想就這樣停下，所以決定把雜誌相關的內容整體搬到副刊上來。第四季的副刊會變得短小精悍一些（1000字左右）、更新頻率也會加快（每月多期），內容上以<strong>單期雜誌</strong>為單位，過去正刊裡的雜誌社欄目是以整本雜誌為單位，介紹它的歷史脈絡與整體編輯方向，範圍較廣、線索較長，而且主要選擇的是港台發行的中文出版的非獨立雜誌；新的雜誌通信會聚焦某一本雜誌的某一期具體在做什麼、那一期的選題是怎麼想的，是更貼近閱讀現場的形式，同時也不會局限於港台出版和華語內容。</li>
+            <li><strong>外部供稿者的加入：</strong>第三季已經透過邀請小羊進行單獨的欄目合作嘗試訓練了作為編輯的一年，這一季想要合作更多的青睞的中港台成熟寫作者，讓多一些人帶著自己的脈絡進來，希望大家在這裡讀到更多元的更在地的聲音。</li>
+        </ol>
+
+        <h3>💌 創作目的</h3>
+        <p>【你可以獲得什麼？】</p>
+        <ul>
+            <li><strong>打破信息差。</strong>借用方可成老師提出的觀點：</li>
+        </ul>
+        <blockquote>
+            <p>面向大眾的、免費使用的平臺，都不會是你能打破資訊差、躋身「資訊達人」行列的地方，它們只能是讓你和眾人變得一樣、沒有差別的地方。這背後是一個簡單的經濟學問題——或者都稱不上經濟學，只是一個簡單的商業模式問題。 免費使用的平臺，一定會追求數據最大化（這樣才能變現成廣告），那麼上面的資訊就一定要投福斯所好。你可以用它們來放鬆娛樂、獲取談資、跟上熱點，但別寄望通過它們來打破資訊差。</p>
+            <p>免費的內容一定不能打破資訊差嗎？ 並非如此，但是，<strong>免費世界的遊戲規則就是：越趨向福斯平均值的內容，可見度越高，你要去挖掘優質內容需要付出的努力就越大。</strong></p>
+            <p>而付費世界的遊戲規則，正好相反：<strong>越大眾化的內容，越沒人願意買單</strong>，也就越活不下去； 而越能真正打破資訊差、讓你躋身“資訊達人”行列的內容，就越能持續獲得用戶，不斷運營下去。</p>
+        </blockquote>
+        <p>我也運營著免費發佈內容的小紅書賬號，但是作為一個已經成熟的賬號，選擇分享和發佈內容的邏輯是【我發佈的內容與哪個品牌合作的商品相關】而不是【我要為興趣相似的人提供可讀內容】，內容的創作是由品牌推動的，服務的對象也是品牌，它對消費者渴望看到什麼、創作者想要表達什麼不那麼重視，重視的是推薦產品、建立口碑、增加銷量。對於想獲取有效信息的人來說，要從如此海量的軟廣世界裡找到純粹的內容分享和真實表態，這需要花費大量時間。我認為對於有求知慾的人來說，篩選、建立自己有興趣、可靠、高質的信息源非常重要。訂閱電子報≈是找到一個taste相似的人，省時省力為自己提供精選過的新鮮訊息。</p>
+        
+        <ul>
+            <li><strong>整合性的信息。</strong></li>
+        </ul>
+        <p>接受過學術和記者專業化培訓的我，不喜歡提供單一的、零散的、空殼的信息。了解一家店不可以只是知道一個打卡地址、了解一本雜誌也不能只知道它的名字與當下。我希望提供的是在我知識范圍內串聯起來的整合性訊息，一家店和它所在的城市、街區的關係，一本雜誌的歷史與它背後的製作者，我不僅提供內容，也分享內容獲取的渠道與資源。</p>
+        
+        <ul>
+            <li><strong>一種誠實和一份鼓勵。</strong></li>
+        </ul>
+        <p>不摻雜商業利益的內容篩選和真實的想法， 不顧忌平台制定的遊戲規則寫作，是一個普通的、同齡的、相似的人的真實閱讀世界。過去我了解過很多自己的電子報訂閱讀者，很多人都有自己創造的想法，無論是創造自己的播客、電子報還是公眾號。我想讓更多人看到普通人販售自己成功的可能。</p>
+        
+        <ul>
+            <li><strong>一個真實的人的陪伴感。</strong></li>
+        </ul>
+        <p>個體創作者區分於集體創作的地方。在集體中創作，如果不主動去獲取訊息的話，比較容易看不到背後的創作者，無法得知一個人是經歷了什麼去觀察、寫作、操作選題，創造內容。我的電子報中不僅有提供文化資訊和信息，也有自己個人生活經驗的觀察、思考與分享，你看到一個具有主觀意識的活人在操作，而非冷靜客觀、機械化的表達。在長期運營的過程當中，會不斷進行調整、不斷進化，可以見證一種成長。</p>
+
+        <p>【我的創作者角度】</p>
+        <ul>
+            <li><strong>獲得勞動報酬，促進文化消費</strong><br>興趣可以促使一個項目的開始，獲得實在的勞動報酬才能在時間有限的今天促使一個項目的長期運營。當我獲得勞動報酬後，我又會將這些報酬用來支持其他創作者的作品，這些作品可能會成為某一次電子報的養料，讓這部分支持文化發展的錢流動起來。周而復始，你付出的每一筆錢都不只是在支持單一的某個人。</li>
+            <li><strong>持續性學習，保持信息靈敏度</strong><br>寫電子報的過程對我來說也是獲得新知識的過程。工作以後，如果不處在一個對信息靈敏的行業，是會對新的訊息變得比較遲鈍的——掌握自己行業所需的技能和知識就足以謀生了。保持電子報的創作和閱讀，是提醒自己在目前工作的環境以外，還有另一個世界的存在，我們不必永遠陷在同一個環境之中。</li>
+            <li><strong>輔助回顧性整理與記錄</strong><br>我們都會閱讀、觀影、聽歌、評論，會不斷地與周邊環境發生碰撞、生活。但是在進行這些「任務」的時候很難得去把發生在每一件事時的思考給記錄下來。寫電子報給了我分享的空間以及回顧性整理的時間，把那些我對有啟發的內容、經歷著的生活思考給書寫下來。即使不能獲取勞動報酬，我也會要為自己創作下去，充當電子手賬的記錄。</li>
+        </ul>
+
+        <h3>💭 為什麼要使用Notion頁面+郵件這樣傳統的形式？</h3>
+        <p>比起依靠平台，只有自己建立平台才能長久、持續地運營。不用遵循平台設定的遊戲規則，我是制定規則的人。如果使用國內任何一個已成型的中文電子報平台，那和我使用微信公眾號、長微博、小紅書等任何平台發都沒有區別，它們在我發佈出來後所經曆的第一件事是國內的審核。那樣你看到的永遠只有閹割的內容。不使用海外平台託管的原因是，我希望這份電子報不僅僅是給在海外的、有海外經曆、已經啟蒙會自主獲取訊息的朋友看到。使用notion頁面的話，在國內不科學上網也可以看到文字和圖片。</p>
+
+        <h3>🌱 Notion加載比較慢怎麼辦？不同客戶端如何在境內穩定、快速地上網？</h3>
+        <p>之前一直沒有寫這個部分，是因為擔心常使用的梯子一旦得到大量曝光會遭遇關停的命運，而小報在創作時也一直有考慮到部份讀者不會、不方便的需求，提供了PDF離線版本，Notion頁面也能看到比較多不上網也能看到的完整內容，對閱讀小報來說是否擁有這個工具並不是特別影響。</p>
+        <p>但是，如果你想要更深度地瀏覽境外內容，獲得更好的閱讀體驗，自我探索就不得不學習這一課。所以我在這寫一個使用多年比較簡單的教程。</p>
+        
+        <p><strong>【IOS端少量、免費版】</strong><br>
+        <a href="https://zhuanlan.zhihu.com/p/623576755" target="_blank">註冊一個外區賬戶</a>（超鏈接是美區Apple id指南，同理可註冊世界各地任何區域賬戶,有了這個賬戶除了下載免費VPN，你還可以下載一些外區專屬的應用和遊戲）在應用商店裡搜VPN，會出現很多結果，有部分每天會提供試用，這適合不需要大流量（看視頻），只偶爾看看網頁。</p>
+        
+        <p><strong>【大量、付費版】</strong><br>
+        我目前還沒有找到免費又流量比較多的VPN，有了流量訴求以後，一直在充值付費的VPN，以下是我常使用的兩個提供端點的網站，它們分別是按月度計費（以前都用這個，但經常時間到了流量有剩餘）和按流量計費（不限時間，朋友分享給我這個後就改用這個了），兩個網站界面都比較相似。</p>
+        
+        <ul>
+            <li>按流量計費版本：1元/2G體驗，14.9元/130G：<br><a href="https://mojie.app/register?aff=pSdLG9Un" target="_blank">注册账户 - 魔戒.net</a></li>
+            <li>按日期計費版本：10元/月/50G，15元/月/100G：<br><a href="https://v2.wnet.one/#/register?code=FMAvRbqT" target="_blank">WNet.one</a></li>
+        </ul>
+
+        <p>我個人日常主要用來看社交網站和網頁，視頻看的不是特別多，一般控制在每月35G-40G左右，如果該月下載或看視頻比較多可能就會超過50G。兩個網站裡都有不同客戶端比較清晰的使用文檔，註冊進入網站後就可以看到。</p>
+        
+        
+        <p>其實不同客戶端使用教程差不太多，就是下載一個可以連接節點的軟件，然後把網站提供給你的節點導入到軟件中就可以。非常建議朋友們不要只在單一的端口安裝，電腦/平板安裝後全球化辦公的感覺很不一樣。</p>
+
+        <h3>🌏 電子報收藏室 & 友情推薦</h3>
+        <ul>
+            <li><a href="http://xhslink.com/rWXj3h" target="_blank">中文电子报分享第一期</a></li>
+            <li><a href="http://xhslink.com/no0j3h" target="_blank">中文电子报分享第二期</a></li>
+            <li><a href="https://www.notion.so/68ee46c0a4574f659fb8a873ead438c6?pvs=21" target="_blank">方可成老师的中文电子报清单</a></li>
+            <li><a href="https://us17.campaign-archive.com/?u=2da899afd116f317c3c81682d&id=89f81716a0" target="_blank">Nowhere Newsletters</a></li>
+            <li><a href="https://www.xiaoyuzhoufm.com/episode/61dfe231d1d1fc34a7c7337f?s=eyJ1IjogIjVmMjA1NjUyZTBmNWU3MjNiYmJlYzAyYSJ9" target="_blank">声东击西</a></li>
+        </ul>
+    </main>
+
+    <footer>
+        <p>© 2026 推開部屋的門 | Elephlow</p>
+    </footer>
+</body>
+</html>
