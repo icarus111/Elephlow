@@ -1,15 +1,14 @@
 ---
-// src/pages/en/index.astro
+// src/pages/en/guestbook.astro
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Push The Door | Home</title>
+    <title>Guestbook | Push The Door</title>
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* 樣式與中文版完全相同，為節省版面緊湊處理 */
         :root{--win-gray:#c0c0c0;--win-dark:#808080;--win-light:#ffffff;--win-blue:#000080;--y2k-purple:#4B2D8C;--y2k-pink:#FF66B3;--y2k-mint:#B2F5EA;--text:#000000;}
         *{margin:0;padding:0;box-sizing:border-box;cursor:default;}
         html,body{height:auto;min-height:100%;}
@@ -23,22 +22,21 @@
         .icon-emoji{font-size:40px;margin-bottom:5px;filter:drop-shadow(2px 2px 0px rgba(0,0,0,1));}
         .icon-text{color:#fff;background-color:var(--win-blue);font-size:13px;text-align:center;padding:2px 6px;border:1px dotted transparent;}
         .desktop-icon:hover .icon-text{border:1px dotted #fff;background-color:var(--y2k-purple);}
-        .desktop-copyright{position:fixed;bottom:60px;right:20px;font-size:12px;color:#555;text-shadow:1px 1px 0px rgba(255,255,255,0.8);z-index:10;}
         #playground{flex:1;position:relative;}
-        .window{background:var(--win-gray);border:2px solid;border-color:var(--win-light) #000 #000 var(--win-light);box-shadow:inset 1px 1px 0 #dfdfdf,inset -1px -1px 0 var(--win-dark),2px 2px 0 rgba(0,0,0,0.5);display:flex;flex-direction:column;position:absolute;height:auto;min-height:400px;padding:3px;}
+        
+        .window{background:var(--win-gray);border:2px solid;border-color:var(--win-light) #000 #000 var(--win-light);box-shadow:inset 1px 1px 0 #dfdfdf,inset -1px -1px 0 var(--win-dark),2px 2px 0 rgba(0,0,0,0.5);display:flex;flex-direction:column;position:absolute;height:auto;padding:3px;}
         .title-bar{background:linear-gradient(90deg,var(--win-blue),#1084d0);padding:3px 6px;display:flex;justify-content:space-between;align-items:center;color:white;font-size:13px;cursor:move;letter-spacing:1px;}
         .win-controls{display:flex;gap:2px;margin-left:10px;}
         .win-btn{width:18px;height:18px;background-color:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);color:#000;font-family:'Pixel',sans-serif;font-size:10px;font-weight:bold;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:1px 1px 0 #000;}
         .win-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding-top:2px;padding-left:2px;box-shadow:none;}
-        .win-content{flex:1;background:white;margin-top:4px;padding:40px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);}
-        .brand-hero{display:flex;flex-direction:column;justify-content:center;align-items:center;}
-        .hero-title{font-family:'Noto Serif',serif;font-size:4.2rem;font-weight:900;color:var(--y2k-purple);line-height:1.2;text-align:center;letter-spacing:0.05em;text-shadow:4px 4px 0px var(--y2k-mint);margin-bottom:10px;}
-        .hero-slogan{font-family:'DotGothic16',sans-serif;font-weight:900;color:var(--y2k-pink);font-size:1.2rem;letter-spacing:0.2rem;margin-bottom:25px;text-align:center;}
-        .ip-house{margin:20px 0;width:120px;height:120px;border:4px solid var(--text);background:var(--y2k-pink);display:flex;align-items:center;justify-content:center;font-size:4rem;box-shadow:8px 8px 0px #000;}
-        .stat-tag{border:2px solid #000;padding:6px 15px;font-size:14px;background:var(--win-gray);box-shadow:2px 2px 0 #000;}
-        .intro-text{max-width:580px;margin-top:35px;color:#111;line-height:2;text-align:justify;font-size:1rem;border-top:2px dotted var(--win-dark);padding-top:25px;font-family:'Noto Serif',serif;}
-        .intro-text p{margin-bottom:15px;}
-        .intro-text strong{color:var(--y2k-purple);font-weight:900;}
+        .win-content{flex:1;background:#fffcf2;margin-top:4px;padding:25px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);font-family:'Noto Serif',serif;font-size:0.95rem;line-height:1.8;color:#111;text-align:justify;}
+        
+        .win-content mark { background-color: var(--y2k-mint); color: #000; padding: 0 4px; font-weight: 700; border-radius: 2px; }
+        .win-content strong { color: var(--y2k-purple); font-weight: 900; }
+        .win-content em { color: var(--y2k-pink); font-style: normal; font-weight: bold; }
+        .action-btn { display: inline-block; background: var(--y2k-mint); border: 2px solid #000; padding: 8px 20px; font-weight: 900; text-decoration: none; color: #000; box-shadow: 2px 2px 0 var(--y2k-purple); margin-top: 15px; transition: all 0.1s; cursor: pointer; font-family:'Noto Serif',serif;}
+        .action-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--y2k-purple); }
+
         .taskbar{position:fixed;bottom:0;left:0;right:0;height:42px;background:var(--win-gray);border-top:2px solid var(--win-light);display:flex;align-items:center;padding:0 6px;z-index:3000;box-shadow:inset 0 1px 0 #dfdfdf;}
         .start-btn{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;color:#000;font-size:15px;font-weight:bold;flex-shrink:0;}
         .start-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:5px 11px 3px 13px;}
@@ -58,17 +56,12 @@
             .desktop-wrapper { flex-direction: column; padding: 15px; padding-bottom: 70px; min-height: auto; }
             .desktop-icons { flex-direction: row; flex-wrap: wrap; width: 100%; justify-content: center; gap: 15px; padding-bottom: 20px; }
             .desktop-icon { width: 80px; padding: 5px; }
-            .window { position: relative !important; width: 100% !important; left: 0 !important; top: 0 !important; min-height: auto; }
-            .win-content { padding: 25px 15px; }
-            .hero-title { font-size: 2.8rem; }
-            .hero-slogan { font-size: 1rem; letter-spacing: 0.1rem; }
-            .ip-house { width: 90px; height: 90px; font-size: 2.5rem; }
+            .window { position: relative !important; width: 100% !important; left: 0 !important; top: 0 !important; margin-bottom: 25px; }
             .taskbar { padding: 0 6px; overflow-x: auto; white-space: nowrap; gap: 8px; justify-content: flex-start; height: 48px; }
             .taskbar::-webkit-scrollbar { display: none; }
             .taskbar-windows { display: none; }
             .subscribe-pill { margin-left: 0; }
             .system-tray { margin-left: 0; }
-            .desktop-copyright { position: static; text-align: center; margin: 20px 0; }
         }
     </style>
 </head>
@@ -88,45 +81,90 @@
         </div>
 
         <div id="playground">
-            <div id="home-win" class="window draggable" style="width: 700px; left: 120px; top: 30px; z-index: 100;">
+            
+            <div class="window draggable" style="width: 450px; left: 20px; top: 20px; z-index: 101;">
                 <div class="title-bar">
-                    <div style="display: flex; align-items: center; gap: 6px;"><span style="font-size: 14px;">🔑</span><span>Welcome.exe</span></div>
-                    <div class="win-controls"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
+                    <div style="display: flex; align-items: center; gap: 6px;"><span>📝</span><span>Reader_01.txt</span></div>
+                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
                 </div>
                 <div class="win-content">
-                    <div class="brand-hero">
-                        <h1 class="hero-title">Push The Door</h1>
-                        <p class="hero-slogan">Capturing imaginations at the edge ✴</p>
-                        <div class="ip-house">🏠</div>
-                        <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center;">
-                            <div class="stat-tag">EST. 2022.07</div>
-                            <div class="stat-tag" style="background: var(--y2k-mint);">48 ISSUES IN TOTAL</div>
-                        </div>
-                        <div class="intro-text">
-                            <p>Founded in July 2022, this is a Chinese-language paid newsletter and the independent communication base of <strong>Elephlow</strong>.</p>
-                            <p>With words as our vessel, we navigate through the intersections of <strong>Hong Kong & Taiwan pop culture, independent publishing, film festival studies, and queer perspectives</strong>. Dedicating to high-quality cultural curation.</p>
-                            <p><strong>"The Room"</strong> is the starting point of privacy, while <strong>"Pushing the Door"</strong> is an action towards the public. When the next knock sounds, you are invited to push the door open with us and capture the neglected glimmers at the edge.</p>
-                        </div>
-                    </div>
+                    <strong style="font-size: 1.1rem;"># About "Girls"</strong><br><br>
+                    I really love <mark>the "Girls" section</mark>. To me, it feels like reading an <em>"I-novel"</em> (maybe not the best analogy), and I want to read them all 💖<br><br>
+                    I just went back to the archive and finished reading the very first issue. Coincidentally, my undergraduate major was also advertising. The concept of a <strong>"one-person company"</strong> at the end, along with your original intention for starting this newsletter, gave me a lot of encouragement. Thank you for your newsletter! 💖
                 </div>
             </div>
+
+            <div class="window draggable" style="width: 400px; left: 520px; top: 80px; z-index: 102;">
+                <div class="title-bar">
+                    <div style="display: flex; align-items: center; gap: 6px;"><span>📧</span><span>Mail_from_Reader.msg</span></div>
+                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
+                </div>
+                <div class="win-content" style="background-color: #f4f0ff;">
+                    Hello! Elephlow 👋 I'm reading your newsletter, and it's truly fascinating! Hope to read more interesting content in the future.<br><br>
+                    I completely agree with what you said—although more and more people are getting involved in <mark>making personal zines</mark>, many are just playing with the zine format, and <strong>genuinely good content is still lacking</strong>. I am also a magazine lover! I really want to make my own zine too~ Your content and format have inspired me so much 🤩
+                </div>
+            </div>
+
+            <div class="window draggable" style="width: 480px; left: 50px; top: 320px; z-index: 103;">
+                <div class="title-bar">
+                    <div style="display: flex; align-items: center; gap: 6px;"><span>💡</span><span>Feedback_03.doc</span></div>
+                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
+                </div>
+                <div class="win-content">
+                    One reason I think your shared content is amazing is that <em>you share many tools</em>, which implies an assumption that your readers can autonomously use these tools just like you do. This fits my needs perfectly. Of course, I also really enjoy your structured thoughts.<br><br>
+                    An author definitely has their corresponding readers. <mark>The scope of an author's influence radiates around themselves</mark>, and readers from other levels, if willing and proactive, will find the tools to climb up step by step.
+                </div>
+            </div>
+
+            <div class="window draggable" style="width: 380px; left: 560px; top: 400px; z-index: 104;">
+                <div class="title-bar">
+                    <div style="display: flex; align-items: center; gap: 6px;"><span>📌</span><span>Sticky_Note.txt</span></div>
+                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
+                </div>
+                <div class="win-content" style="background: #fff9c4;">
+                    Followed you on Weibo for a long time, and then stumbled upon your Red (Xiaohongshu) account. I was just thinking how great it is to find <strong>two such dedicated creators</strong>, only to realize later that <mark>they are the exact same person!</mark> 🐘✨
+                </div>
+            </div>
+
+            <div class="window draggable" style="width: 320px; left: 300px; top: 180px; z-index: 110;">
+                <div class="title-bar" style="background: linear-gradient(90deg, #FF66B3, #ff99cc);">
+                    <div style="display: flex; align-items: center; gap: 6px;"><span>📮</span><span>Write_Message.exe</span></div>
+                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
+                </div>
+                <div class="win-content" style="text-align: center; padding: 40px 20px;">
+                    <h3 style="color: var(--y2k-purple); margin-bottom: 15px; font-family: 'DotGothic16', sans-serif;">Leave Your Mark?</h3>
+                    <p style="font-size: 0.9rem; color: #555;">Write down what you want to say to Elephlow here.<br>Your message might be pinned to this desktop!</p>
+                    <a href="https://tally.so/r/RGvzrl" target="_blank" class="action-btn">✍️ Write a Letter</a>
+                </div>
+            </div>
+
         </div>
-        <div class="desktop-copyright">2022.07 - 2026.05 © Elephlow</div>
     </div>
 
     <footer class="taskbar">
         <a href="/en/" class="start-btn">🐘 Start</a>
-        <div class="taskbar-windows"><div class="taskbar-win-tab active"><span style="font-size: 13px;">🔑</span> Welcome.exe</div></div>
+        
+        <div class="taskbar-windows">
+            <div class="taskbar-win-tab active"><span>📝</span> Reader_01</div>
+            <div class="taskbar-win-tab active"><span>📧</span> Mail_02</div>
+            <div class="taskbar-win-tab active"><span>💡</span> Feedback</div>
+            <div class="taskbar-win-tab active"><span>📮</span> Write_Msg</div>
+        </div>
+
         <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">Subscribe Season 4</a>
+        
         <div class="system-tray">
             <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">INSTAGRAM</a>
             <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="social-link">RED: @Apollo11-</a>
             <div class="lang-switch">
-                <a href="/en/" class="lang-link active">EN</a><a href="/" class="lang-link">繁</a><a href="/zh-cn/" class="lang-link">简</a>
+                <a href="/en/guestbook" class="lang-link active">EN</a>
+                <a href="/zh-tw/guestbook" class="lang-link">繁</a>
+                <a href="/zh-cn/guestbook" class="lang-link">简</a>
             </div>
             <div class="clock" id="live-clock">00:00 AM</div>
         </div>
     </footer>
+
     <script is:inline>
         const windows = document.querySelectorAll('.draggable');
         let zIndexCounter = 200;
