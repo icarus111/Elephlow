@@ -9,50 +9,96 @@
     <title>推开部屋的门 | Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* 為保持回答簡潔，請複製 zh-tw 版本中的 CSS 樣式至此處 */
-        :root { --win-gray: #c0c0c0; --win-dark: #808080; --win-light: #ffffff; --y2k-purple: #4B2D8C; --y2k-pink: #FF66B3; --y2k-mint: #B2F5EA; --text: #1a1008; }
+        :root {
+            --win-gray: #c0c0c0; --win-dark: #808080; --win-light: #ffffff;
+            --y2k-purple: #4B2D8C; --y2k-pink: #FF66B3; --y2k-mint: #B2F5EA; 
+            --text: #1a1008;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
+        
         html, body { height: auto; min-height: 100%; }
-        body { background: linear-gradient(to right, #98fb98, #fffacd, #ffebcd, #ffb6c1, #e0b0ff); background-attachment: fixed; font-family: 'Noto Sans SC', sans-serif; overflow-x: hidden; overflow-y: auto; display: flex; flex-direction: column; }
+
+        body {
+            background: linear-gradient(to right, #98fb98, #fffacd, #ffebcd, #ffb6c1, #e0b0ff);
+            background-attachment: fixed; 
+            font-family: 'Noto Sans SC', sans-serif; 
+            overflow-x: hidden; overflow-y: auto; 
+            display: flex; flex-direction: column;
+        }
+
         .marquee-bar { background: var(--text); color: #fff; padding: 15px 0; min-height: 70px; display: flex; align-items: center; overflow: hidden; border-bottom: 3px solid #000; z-index: 2000; }
         .marquee-content { display: flex; white-space: nowrap; font-weight: 900; font-size: 1.4rem; animation: scroll 25s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
         .desktop-wrapper { display: flex; flex: 1; padding: 25px; gap: 25px; padding-bottom: 80px; min-height: 1000px; }
-        #sidebar { width: 280px; background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); box-shadow: 4px 4px 0 rgba(0,0,0,0.8); display: flex; flex-direction: column; flex-shrink: 0; z-index: 1500; position: sticky; top: 25px; height: fit-content; }
+
+        #sidebar { 
+            width: 280px; background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.8); display: flex; flex-direction: column; flex-shrink: 0; z-index: 1500;
+            position: sticky; top: 25px; height: fit-content;
+        }
         .side-title { background: linear-gradient(90deg, var(--y2k-purple), var(--y2k-pink)); color: white; padding: 8px 12px; font-weight: bold; font-size: 13px; }
         .nav-list { list-style: none; padding: 10px 0; flex: 1; }
         .nav-link { display: block; padding: 12px 20px; text-decoration: none; color: var(--text); font-weight: bold; font-size: 14px; }
         .nav-link:hover { background: rgba(255, 102, 179, 0.2); }
         .nav-active { background: var(--y2k-purple); color: white !important; }
+
         #playground { flex: 1; position: relative; }
-        .window { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); box-shadow: 5px 5px 0 rgba(0,0,0,0.8); display: flex; flex-direction: column; position: absolute; height: auto; min-height: 400px; }
+        .window {
+            background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.8); display: flex; flex-direction: column; position: absolute; height: auto; min-height: 400px;
+        }
         .title-bar { background: linear-gradient(90deg, var(--y2k-purple), var(--y2k-pink)); padding: 4px 10px; display: flex; justify-content: space-between; align-items: center; color: white; font-weight: bold; font-size: 13px; cursor: move; }
+        
         .win-controls { display: flex; gap: 4px; margin-left: 10px; }
         .win-btn { width: 22px; height: 22px; background-color: var(--win-gray); border: 2px solid; border-color: #fff #000 #000 #fff; color: #000; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; padding-bottom: 2px; }
         .win-btn:active { border-color: #000 #fff #fff #000; padding-top: 2px; padding-bottom: 0; }
+
         .win-content { flex: 1; background: white; padding: 45px; overflow: visible; }
+        
         .brand-hero { display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .hero-title { font-family: 'Noto Serif SC', serif; font-size: 4.8rem; font-weight: 600; color: var(--y2k-purple); line-height: 1.2; text-align: center; letter-spacing: 0.08em; text-shadow: 3px 3px 0px rgba(255, 102, 179, 0.15); }
         .hero-slogan { font-weight: 900; color: var(--y2k-pink); font-size: 1.3rem; letter-spacing: 0.4rem; margin-bottom: 25px; text-align: center;}
         .ip-house { margin: 20px 0; width: 140px; height: 140px; border: 4px solid var(--text); background: linear-gradient(135deg, var(--y2k-purple) 0%, var(--y2k-pink) 100%); display: flex; align-items: center; justify-content: center; font-size: 4.5rem; box-shadow: 12px 12px 0px var(--y2k-mint); }
         .stat-tag { border: 2px solid #000; padding: 6px 18px; font-size: 0.8rem; background: #f0f0f0; font-weight: 900; text-align: center;}
+
         .intro-text { max-width: 580px; margin-top: 35px; color: #333; line-height: 1.8; text-align: justify; font-size: 0.95rem; border-top: 1px dashed var(--win-dark); padding-top: 25px; }
         .intro-text p { margin-bottom: 15px; }
         .intro-text strong { color: var(--y2k-purple); font-weight: 700;}
+
         .taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 48px; background: var(--win-gray); border-top: 2px solid var(--win-light); display: flex; align-items: center; padding: 0 12px; z-index: 3000; box-shadow: 0 -2px 0 var(--win-dark); }
-        .start-btn { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); padding: 3px 15px; font-weight: 900; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #000; font-size: 14px; box-shadow: 1px 1px 0 #000; }
+        .start-btn { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); padding: 3px 15px; font-weight: 900; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #000; font-size: 14px; box-shadow: 1px 1px 0 #000; flex-shrink: 0;}
+
         .taskbar-windows { display: flex; gap: 5px; margin-left: 15px; flex: 1; }
         .taskbar-win-tab { background: #dfdfdf; border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); padding: 4px 15px; font-size: 12px; font-weight: bold; color: #333; box-shadow: 1px 1px 0 #000; display: flex; align-items: center; gap: 6px; cursor: pointer; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .taskbar-win-tab.active { border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark); background: #d0d0d0; box-shadow: none; color: #000; background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, #c0c0c0 2px, #c0c0c0 4px); }
-        .subscribe-pill { background: var(--y2k-pink); color: white; padding: 6px 22px; border-radius: 25px; text-decoration: none; font-weight: 900; margin-left: auto; font-size: 13px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
-        .system-tray { margin-left: 15px; display: flex; gap: 12px; align-items: center; }
+
+        .subscribe-pill { background: var(--y2k-pink); color: white; padding: 6px 22px; border-radius: 25px; text-decoration: none; font-weight: 900; margin-left: auto; font-size: 13px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; flex-shrink: 0;}
+        .system-tray { margin-left: 15px; display: flex; gap: 12px; align-items: center; flex-shrink: 0;}
         .social-link { color: #000; text-decoration: none; font-size: 11px; font-weight: 900; border: 1px solid var(--win-dark); padding: 3px 8px; background: #eee; }
         .social-link:hover { background: #ddd; }
+        
         .lang-switch { display: flex; gap: 8px; align-items: center; border: 1px solid var(--win-dark); padding: 3px 8px; background: #eee; font-size: 11px; font-weight: bold; }
         .lang-link { color: #888; text-decoration: none; }
         .lang-link:hover { color: var(--y2k-pink); }
         .lang-link.active { color: #000; font-weight: 900; text-decoration: underline; }
+        
         .clock { font-size: 12px; font-weight: bold; border-left: 1px solid var(--win-dark); padding-left: 12px; font-family: monospace; }
+
+        @media (max-width: 900px) {
+            .desktop-wrapper { flex-direction: column; padding: 15px; padding-bottom: 70px; min-height: auto; }
+            #sidebar { width: 100%; position: relative; top: 0; height: auto; }
+            .window { position: relative !important; width: 100% !important; left: 0 !important; top: 0 !important; min-height: auto; }
+            .win-content { padding: 30px 20px; }
+            .hero-title { font-size: 3.2rem; }
+            .hero-slogan { font-size: 1rem; letter-spacing: 0.1rem; }
+            .ip-house { width: 100px; height: 100px; font-size: 3rem; }
+            .taskbar { padding: 0 10px; overflow-x: auto; white-space: nowrap; gap: 12px; justify-content: flex-start; }
+            .taskbar::-webkit-scrollbar { display: none; }
+            .taskbar-windows { display: none; }
+            .subscribe-pill { margin-left: 0; }
+            .system-tray { margin-left: 0; }
+        }
     </style>
 </head>
 <body>
@@ -100,7 +146,7 @@
                         <div class="intro-text">
                             <p>这是一份创办于 2022 年 7 月的中文付费电子报，也是<strong>小象（Elephlow）</strong>的独立通讯基地。</p>
                             <p>我们以文字为载体，穿梭于<strong>港台流行文化、独立出版、影展研究及酷儿视角书写</strong>的隙缝之中。不仰赖演算法，我们致力于打破资讯差，为你筛选并整合高品质的文化资讯，提供一个真实、有温度的阅读陪伴。</p>
-                            <p><strong>「部屋」</strong>是私密的起点，而<strong>「推开门」</strong>则是通往公共的行动。我们致力于将偏见所隔绝的万事万物重新拉近，当下一次敲门声响起，邀请你一同推开门，在时代的边缘捕捉那些被忽视的微光。</p>
+                            <p><strong>「部屋」</strong>是私密的起点，而<strong>「推开门」</strong>則是通往公共的行动。我们致力于将偏见所隔绝的万事万物重新拉近，当下一次敲门声响起，邀请你一同推开门，在时代的边缘捕捉那些被忽视的微光。</p>
                         </div>
                     </div>
                 </div>
@@ -121,7 +167,7 @@
             
             <div class="lang-switch">
                 <a href="/en/" class="lang-link">EN</a>
-                <a href="/zh-tw/" class="lang-link">繁</a>
+                <a href="/" class="lang-link">繁</a>
                 <a href="/zh-cn/" class="lang-link active">简</a>
             </div>
 
@@ -135,6 +181,7 @@
         windows.forEach(win => {
             const titleBar = win.querySelector('.title-bar');
             titleBar.onmousedown = (e) => {
+                if (window.innerWidth <= 900) return; 
                 if (e.target.classList.contains('win-btn')) return;
                 win.style.zIndex = ++zIndexCounter;
                 let shiftX = e.clientX - win.getBoundingClientRect().left;
