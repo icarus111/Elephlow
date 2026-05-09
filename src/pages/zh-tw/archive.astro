@@ -5,173 +5,224 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>往期目錄 | 推開部屋的門</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --win-gray: #c0c0c0; --y2k-purple: #4B2D8C; --y2k-pink: #FF66B3;
-            --y2k-mint: #B2F5EA; --bg: #E0D7FF; --text: #1a1008;
+            --win-gray: #c0c0c0; --win-dark: #808080; --win-light: #ffffff;
+            --win-blue: #000080; --y2k-purple: #4B2D8C; --y2k-pink: #FF66B3; 
+            --y2k-mint: #B2F5EA; --text: #000000;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
+        html, body { height: auto; min-height: 100%; }
+
         body {
-            background-color: var(--bg); height: 100vh; overflow: hidden;
-            display: flex; flex-direction: column; font-family: 'Noto Sans TC', sans-serif;
-            background-image: linear-gradient(var(--y2k-mint) 1px, transparent 1px), linear-gradient(90deg, var(--y2k-mint) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background: linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(to right, #98fb98, #fffacd, #ffebcd, #ffb6c1, #e0b0ff);
+            background-size: 20px 20px, 20px 20px, 100% 100%;
+            background-attachment: fixed; 
+            font-family: 'DotGothic16', 'PMingLiU', '細明體', sans-serif; 
+            overflow-x: hidden; overflow-y: auto; display: flex; flex-direction: column;
         }
 
-        /* --- 跑馬燈：找回視覺重點 --- */
-        .marquee-bar {
-            background: var(--text); color: #fff; padding: 15px 0; min-height: 70px;
-            display: flex; align-items: center; overflow: hidden; border-bottom: 3px solid #000; z-index: 2000;
-        }
-        .marquee-content {
-            display: flex; white-space: nowrap; font-weight: 900; font-size: 1.4rem;
-            animation: scroll 25s linear infinite;
-        }
+        .marquee-bar { background: #000; color: #0f0; padding: 12px 0; min-height: 60px; display: flex; align-items: center; overflow: hidden; border-bottom: 3px solid var(--win-dark); z-index: 2000; }
+        .marquee-content { display: flex; white-space: nowrap; font-size: 1.2rem; animation: scroll 25s linear infinite; letter-spacing: 2px;}
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .desktop-wrapper { display: flex; flex: 1; min-height: 0; padding: 25px; gap: 25px; padding-bottom: 60px; }
+        .desktop-wrapper { display: flex; flex: 1; padding: 25px; gap: 40px; padding-bottom: 80px; min-height: 1200px; position: relative; }
 
-        /* --- 側邊欄導航 --- */
-        #sidebar { 
-            width: 280px; background: var(--win-gray); border: 2px solid; 
-            border-color: #fff #808080 #808080 #fff; box-shadow: 4px 4px 0 #000;
-            display: flex; flex-direction: column; flex-shrink: 0;
-        }
-        .side-title { background: linear-gradient(90deg, var(--y2k-purple), var(--y2k-pink)); color: white; padding: 8px 12px; font-weight: bold; font-size: 13px; }
-        .nav-link { display: block; padding: 12px 20px; text-decoration: none; color: var(--text); font-weight: bold; }
-        .nav-link:hover { background: rgba(255, 102, 179, 0.2); }
-        .nav-active { background: var(--y2k-purple); color: white !important; }
+        /* 左側固定導航捷徑 */
+        .fixed-nav-icons { display: flex; flex-direction: column; gap: 20px; width: 100px; border-right: 1px dotted rgba(255,255,255,0.5); padding-right: 20px; z-index: 10; }
+        
+        /* 桌面內容資料夾網格 */
+        .folder-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); grid-auto-rows: 110px; gap: 30px; padding-left: 20px; z-index: 5; }
 
-        /* --- 主桌面區：文件夾陣列 --- */
-        #desktop-grid {
-            flex: 1; display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            grid-template-rows: repeat(auto-fill, 150px);
-            gap: 20px; padding: 20px; overflow-y: auto;
-        }
+        .desktop-icon { display: flex; flex-direction: column; align-items: center; text-decoration: none; width: 90px; padding: 5px; cursor: pointer; }
+        .icon-emoji { font-size: 40px; margin-bottom: 5px; filter: drop-shadow(2px 2px 0px #000); }
+        .icon-text { color: #fff; background-color: var(--win-blue); font-size: 12px; text-align: center; padding: 1px 6px; border: 1px dotted transparent; }
+        .desktop-icon:hover .icon-text { background-color: var(--y2k-purple); border-color: #fff; }
 
-        .folder-item {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; transition: 0.1s; border: 1px solid transparent; padding: 10px;
+        /* --- 🌟 真正的立體視窗設計 --- */
+        .window {
+            background: var(--win-gray); border: 2px solid; border-color: var(--win-light) #000 #000 var(--win-light);
+            box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 var(--win-dark), 4px 4px 0 rgba(0,0,0,0.5); 
+            display: none; flex-direction: column; position: absolute; padding: 3px; z-index: 100;
         }
-        .folder-item:hover { background: rgba(255, 255, 255, 0.3); border: 1px dashed var(--y2k-purple); }
+        .window.active { display: flex; }
+        
+        .title-bar { background: linear-gradient(90deg, var(--win-blue), #1084d0); padding: 3px 8px; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 13px; cursor: move; }
+        .win-btn { width: 18px; height: 18px; background-color: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); color: #000; font-size: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 1px 1px 0 #000; cursor: pointer;}
 
-        .folder-icon {
-            width: 70px; height: 55px; background: #FFD700; position: relative;
-            border: 2px solid #000; box-shadow: 4px 4px 0 var(--y2k-mint); margin-bottom: 15px;
-        }
-        .folder-icon::after {
-            content: ''; position: absolute; top: -10px; left: -2px; width: 25px; height: 10px;
-            background: #FFD700; border: 2px solid #000; border-bottom: none;
-        }
-        /* 閱讀小報專屬色 */
-        .folder-reading .folder-icon { background: var(--y2k-pink); }
-        .folder-reading .folder-icon::after { background: var(--y2k-pink); }
-
-        .folder-label { 
-            font-size: 0.9rem; font-weight: 900; color: var(--text); text-align: center;
-            line-height: 1.2; word-break: break-all;
+        .win-content { 
+            flex: 1; background: white; margin-top: 4px; padding: 20px; 
+            border: 2px solid; border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+            overflow-y: auto; max-height: 450px; font-family: 'Noto Serif TC', serif;
         }
 
-        /* --- 全域任務欄 --- */
-        .taskbar {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 45px;
-            background: var(--win-gray); border-top: 2px solid #fff;
-            display: flex; align-items: center; padding: 0 10px; z-index: 3000;
-            box-shadow: 0 -2px 0 #808080;
-        }
-        .start-btn {
-            background: var(--win-gray); border: 2px solid; border-color: #fff #808080 #808080 #fff;
-            padding: 2px 12px; font-weight: 900; display: flex; align-items: center; gap: 5px;
-            text-decoration: none; color: #000; font-size: 14px; box-shadow: 1px 1px 0 #000;
-        }
-        .start-btn:active { box-shadow: inset 1px 1px 0 #000; transform: translate(1px, 1px); }
+        /* 內容列表樣式 */
+        .issue-item { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px dashed #ccc; }
+        .issue-title { color: var(--y2k-purple); font-weight: 900; font-size: 1.1rem; margin-bottom: 5px; display: block; }
+        .issue-desc { font-size: 13px; color: #333; line-height: 1.6; }
 
-        .subscribe-pill {
-            background: var(--y2k-pink); color: white; padding: 5px 18px;
-            border-radius: 20px; text-decoration: none; font-weight: 900;
-            margin-left: 20px; font-size: 12px; border: 2px solid #000;
-            box-shadow: 2px 2px 0 #000;
-        }
+        .taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 42px; background: var(--win-gray); border-top: 2px solid var(--win-light); display: flex; align-items: center; padding: 0 6px; z-index: 3000; }
+        .start-btn { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); padding: 4px 12px; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #000; font-size: 15px; font-weight: bold; }
+        .taskbar-windows { display: flex; gap: 5px; margin-left: 10px; flex: 1; }
+        .taskbar-win-tab { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); padding: 4px 12px; font-size: 12px; min-width: 100px; display: none; align-items: center; gap: 6px; }
+        .taskbar-win-tab.visible { display: flex; }
+        .taskbar-win-tab.active { border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark); background:#d0d0d0; background-image: repeating-linear-gradient(45deg,transparent,transparent 2px,#c0c0c0 2px,#c0c0c0 4px); font-weight: bold; }
 
-        .system-tray { margin-left: auto; display: flex; gap: 12px; align-items: center; }
-        .social-link { color: #000; text-decoration: none; font-size: 11px; font-weight: 900; border: 1px solid #808080; padding: 2px 6px; background: #eee; }
-        .clock { font-size: 12px; font-weight: bold; border-left: 1px solid #808080; padding-left: 10px; font-family: monospace; }
+        .system-tray { border: 2px solid; border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark); padding: 2px 10px; display: flex; gap: 8px; align-items: center; font-size: 13px; }
+        .lang-link { color: var(--win-dark); text-decoration: none; }
+        .lang-link.active { color: #000; font-weight: bold; text-decoration: underline; }
+
+        @media (max-width: 900px) {
+            .desktop-wrapper { flex-direction: column; padding: 10px; }
+            .fixed-nav-icons { flex-direction: row; width: 100%; border-right: none; border-bottom: 1px dotted #fff; padding-bottom: 15px; justify-content: center; }
+            .folder-grid { padding-left: 0; padding-top: 20px; justify-content: center; }
+            .window { width: 95% !important; left: 2.5% !important; top: 10px !important; position: relative !important; margin-bottom: 20px; }
+            .taskbar-windows { display: none; }
+        }
     </style>
 </head>
 <body>
-
     <div class="marquee-bar">
-        <div class="marquee-content">
-            ✦ <span style="color:var(--y2k-pink);">第四季早鳥價</span> 即將於 <span style="color:var(--y2k-mint);">2026年5月17日</span> 結束 ✦ <span style="color:var(--y2k-pink);">36期正刊 + 12期閱讀小報</span> ✦ 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;
-            ✦ <span style="color:var(--y2k-pink);">第四季早鳥價</span> 即將於 <span style="color:var(--y2k-mint);">2026年5月17日</span> 結束 ✦ <span style="color:var(--y2k-pink);">36期正刊 + 12期閱讀小報</span> ✦ 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;
-        </div>
+        <div class="marquee-content">>> SYSTEM_EXPLORER: 往期目錄資料庫讀取中... [OK] // 全新第四季早鳥活動進行中 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
     </div>
 
     <div class="desktop-wrapper">
-        <aside id="sidebar">
-            <div class="side-title">Explorer</div>
-            <nav class="nav-list">
-                <a href="/zh-tw/" class="nav-link">🏠 主頁 / HOME</a>
-                <a href="/zh-tw/about" class="nav-link">📝 關於小報 / ABOUT</a>
-                <a href="/zh-tw/archive" class="nav-link nav-active">📂 往期目錄 / ARCHIVE</a>
-            </nav>
-            <div style="margin-top: auto; padding: 15px; border-top: 1px solid #808080; font-size: 11px; color:#666;">
-                2022.07 - 2026.05 © elephlow
-            </div>
-        </aside>
+        <div class="fixed-nav-icons">
+            <a href="/" class="desktop-icon"><span class="icon-emoji">🏠</span><span class="icon-text">主頁</span></a>
+            <a href="/zh-tw/about" class="desktop-icon"><span class="icon-emoji">🐘</span><span class="icon-text">關於小象</span></a>
+            <a href="/zh-tw/archive" class="desktop-icon"><span class="icon-emoji">📂</span><span class="icon-text">往期目錄</span></a>
+            <a href="/zh-tw/guestbook" class="desktop-icon"><span class="icon-emoji">💬</span><span class="icon-text">留言板</span></a>
+        </div>
 
-        <main id="desktop-grid">
-            <a href="/zh-tw/archive-main" class="folder-item">
-                <div class="folder-icon"></div>
-                <span class="folder-label">港台流行音樂<br>& 歌單專題</span>
-            </a>
-            <a href="/zh-tw/archive-main" class="folder-item">
-                <div class="folder-icon"></div>
-                <span class="folder-label">獨立雜誌<br>& 書店走訪</span>
-            </a>
-            <a href="/zh-tw/archive-main" class="folder-item">
-                <div class="folder-icon"></div>
-                <span class="folder-label">紀錄片影展<br>& 作者研究</span>
-            </a>
-            <a href="/zh-tw/archive-main" class="folder-item">
-                <div class="folder-icon"></div>
-                <span class="folder-label">女性主義<br>& 酷兒書寫</span>
-            </a>
-            <a href="/zh-tw/archive-main" class="folder-item">
-                <div class="folder-icon"></div>
-                <span class="folder-label">AI 行業實踐<br>& 技術田野</span>
-            </a>
-            <a href="/zh-tw/archive-reading" class="folder-item folder-reading">
-                <div class="folder-icon"></div>
-                <span class="folder-label">【閱讀小報】<br>深度書單資源</span>
-            </a>
-        </main>
+        <div class="folder-grid">
+            <div class="desktop-icon" onclick="openWindow('music-win')"><span class="icon-emoji">🎧</span><span class="icon-text">流行音樂</span></div>
+            <div class="desktop-icon" onclick="openWindow('mag-win')"><span class="icon-emoji">📖</span><span class="icon-text">獨立雜誌</span></div>
+            <div class="desktop-icon" onclick="openWindow('film-win')"><span class="icon-emoji">🎞️</span><span class="icon-text">影展研究</span></div>
+            <div class="desktop-icon" onclick="openWindow('queer-win')"><span class="icon-emoji">♀️</span><span class="icon-text">酷兒書寫</span></div>
+            <div class="desktop-icon" onclick="openWindow('ai-win')"><span class="icon-emoji">⚙️</span><span class="icon-text">AI實踐</span></div>
+            <div class="desktop-icon" onclick="openWindow('zine-win')"><span class="icon-emoji">🗂️</span><span class="icon-text">閱讀小報</span></div>
+        </div>
+
+        <div id="playground">
+            <div id="music-win" class="window draggable" style="width: 550px; left: 40px; top: 20px;">
+                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>🎧</span><span>Music_Archive.txt</span></div><div class="win-btn" onclick="closeWindow('music-win')">×</div></div>
+                <div class="win-content">
+                    <div class="issue-item"><span class="issue-title">Issue#04 重返昨日世界</span><p class="issue-desc">The Playlist of My life / 雜誌社 004：音樂殖民地</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#06 Winter Sweet</span><p class="issue-desc">播放器：冬日的 Citypop / 粵語流行曲研究</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#10 一期一會</span><p class="issue-desc">播放器：霓虹旋律 / 我的日本文化知識庫</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#35 每當變幻時</span><p class="issue-desc">2025年年度音樂大賞 / 年度心水華語播客</p></div>
+                </div>
+            </div>
+
+            <div id="mag-win" class="window draggable" style="width: 550px; left: 80px; top: 60px;">
+                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>📖</span><span>Magazine_Store.doc</span></div><div class="win-btn" onclick="closeWindow('mag-win')">×</div></div>
+                <div class="win-content">
+                    <div class="issue-item"><span class="issue-title">Issue#01 我們的飛地</span><p class="issue-desc">雜誌社 001：《聯合文學》、《新活水》</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#02 荒蕪中起舞</span><p class="issue-desc">雜誌社 002：VERSE / 知識庫：Zine文化</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#13 永遠困惑，永遠好奇</span><p class="issue-desc">遊書店 001：田園城市風格書店 / 如何製作 Zine</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#20 成長代價</span><p class="issue-desc">我所鍾意的台灣人文學術期刊分享</p></div>
+                </div>
+            </div>
+
+            <div id="film-win" class="window draggable" style="width: 550px; left: 120px; top: 100px;">
+                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>🎞️</span><span>Film_Festival.log</span></div><div class="win-btn" onclick="closeWindow('film-win')">×</div></div>
+                <div class="win-content">
+                    <div class="issue-item"><span class="issue-title">Issue#07 春天終將來臨</span><p class="issue-desc">觀影展 001：臺北文學·閱影展</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#11 以身為度 如是我做</span><p class="issue-desc">觀影展 005：台灣國際女性影展</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#17 新年來信</span><p class="issue-desc">2023年度觀影總結 / 再一次拼圖楊德昌</p></div>
+                </div>
+            </div>
+
+            <div id="queer-win" class="window draggable" style="width: 550px; left: 160px; top: 140px;">
+                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>♀️</span><span>Queer_Writing.txt</span></div><div class="win-btn" onclick="closeWindow('queer-win')">×</div></div>
+                <div class="win-content">
+                    <div class="issue-item"><span class="issue-title">Issue#08 遊移之身</span><p class="issue-desc">女孩們：母與女 / TIDF 紀錄片影展</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#23 萍聚霧散</span><p class="issue-desc">走入公共的訴求與行動 / 2024女性影展</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#30 夏日紀事</span><p class="issue-desc">世界各地的線上 Zine-Library（女性與酷兒）</p></div>
+                </div>
+            </div>
+
+            <div id="ai-win" class="window draggable" style="width: 550px; left: 200px; top: 180px;">
+                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>⚙️</span><span>AI_Fieldwork.sys</span></div><div class="win-btn" onclick="closeWindow('ai-win')">×</div></div>
+                <div class="win-content">
+                    <div class="issue-item"><span class="issue-title">Issue#32 拒絕闡釋</span><p class="issue-desc">文科生轉人工智能行業工作實踐報告</p></div>
+                    <div class="issue-item"><span class="issue-title">Issue#31 愛</span><p class="issue-desc">工具箱：免費獲取 Gemini、Perplexity PRO</p></div>
+                </div>
+            </div>
+
+            <div id="zine-win" class="window draggable" style="width: 550px; left: 240px; top: 220px;">
+                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>🗂️</span><span>Reading_Zine.msg</span></div><div class="win-btn" onclick="closeWindow('zine-win')">×</div></div>
+                <div class="win-content">
+                    <div class="issue-item"><span class="issue-title">閱讀小報 001</span><p class="issue-desc">當女性執起筆，看見整個時代</p></div>
+                    <div class="issue-item"><span class="issue-title">閱讀小報 002</span><p class="issue-desc">正發生：圖解酷兒史 / 漫畫大革命</p></div>
+                    <div class="issue-item"><span class="issue-title">閱讀小報 004</span><p class="issue-desc">香港來信：香港看 Zine（14本）</p></div>
+                    <div class="issue-item"><span class="issue-title">閱讀小報 009</span><p class="issue-desc">「別」的世界 / 血汗 AI 隱性勞工</p></div>
+                    <div class="issue-item"><span class="issue-title">閱讀小報 012</span><p class="issue-desc">無用之用：草率季 Taipei Art Book Fair</p></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="taskbar">
-        <a href="/zh-tw/" class="start-btn">🏠 Start</a>
-        <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">立即訂閱第四季早鳥</a>
-        
+        <a href="/" class="start-btn">🐘 Start</a>
+        <div class="taskbar-windows" id="taskbar-tabs">
+            <div class="taskbar-win-tab" id="tab-music-win"><span>🎧</span> Music</div>
+            <div class="taskbar-win-tab" id="tab-mag-win"><span>📖</span> Magazine</div>
+            <div class="taskbar-win-tab" id="tab-film-win"><span>🎞️</span> Film</div>
+            <div class="taskbar-win-tab" id="tab-queer-win"><span>♀️</span> Queer</div>
+            <div class="taskbar-win-tab" id="tab-ai-win"><span>⚙️</span> AI</div>
+            <div class="taskbar-win-tab" id="tab-zine-win"><span>🗂️</span> Zine</div>
+        </div>
         <div class="system-tray">
-            <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">IG: icarusrooted...</a>
-            <a href="#" class="social-link">RED: @Apollo11-</a>
-            <div class="clock" id="live-clock">00:00</div>
+            <div class="lang-switch">
+                <a href="/en/archive" class="lang-link">EN</a>
+                <a href="/zh-tw/archive" class="lang-link active">繁</a>
+                <a href="/zh-cn/archive" class="lang-link">简</a>
+            </div>
+            <div id="live-clock">00:00 AM</div>
         </div>
     </footer>
 
     <script is:inline>
+        let zIndexCounter = 100;
+        function openWindow(id) {
+            const win = document.getElementById(id);
+            const tab = document.getElementById('tab-' + id);
+            win.classList.add('active');
+            if(tab) tab.classList.add('visible', 'active');
+            zIndexCounter++;
+            win.style.zIndex = zIndexCounter;
+        }
+        function closeWindow(id) {
+            document.getElementById(id).classList.remove('active');
+            const tab = document.getElementById('tab-' + id);
+            if(tab) tab.classList.remove('visible', 'active');
+        }
+        const windows = document.querySelectorAll('.draggable');
+        windows.forEach(win => {
+            const titleBar = win.querySelector('.title-bar');
+            titleBar.onmousedown = (e) => {
+                if (window.innerWidth <= 900) return;
+                zIndexCounter++;
+                win.style.zIndex = zIndexCounter;
+                let shiftX = e.clientX - win.getBoundingClientRect().left;
+                let shiftY = e.clientY - win.getBoundingClientRect().top;
+                function moveAt(pageX, pageY) { win.style.left = (pageX - shiftX) + 'px'; win.style.top = (pageY - shiftY - 60) + 'px'; }
+                document.onmousemove = (e) => moveAt(e.pageX, e.pageY);
+                document.onmouseup = () => { document.onmousemove = null; };
+            };
+            win.onmousedown = () => { zIndexCounter++; win.style.zIndex = zIndexCounter; };
+        });
         function updateClock() {
             const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('live-clock').innerText = `${h}:${m}`;
+            let h = now.getHours(); let m = String(now.getMinutes()).padStart(2, '0');
+            let ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+            document.getElementById('live-clock').innerText = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
     </script>
 </body>
 </html>
