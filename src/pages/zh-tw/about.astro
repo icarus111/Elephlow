@@ -1,4 +1,3 @@
----
 // src/pages/zh-tw/about.astro
 ---
 <!DOCTYPE html>
@@ -6,188 +5,521 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>關於小報 | 推開部屋的門</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>關於小象 | 推開部屋的門</title>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --win-gray: #c0c0c0; --y2k-purple: #4B2D8C; --y2k-pink: #FF66B3;
-            --y2k-mint: #B2F5EA; --bg: #E0D7FF; --text: #1a1008;
+        :root{
+            /* 🎨 全局 XP/Y2K OS 立體配色 (銀色主題) */
+            --os-title-start: #e0e0e0; --os-title-end: #b0b0b0; /* 具有金屬光澤的漸變 */
+            --os-win-body: #f5f5f5; /* 略帶溫暖的白 */
+            --os-border: #808080; --os-dark-shadow: #333333; --os-light-shadow: #ffffff;
+            --win-blue: #000080; --win-gray: #c0c0c0; /* 保留一些 Win95 配色做過渡 */
+
+            /* 🎨 重新引入的板块顏色 (進度條) */
+            --skill-pink: #F19CBB; --skill-purple: #CDB4DB; --skill-yellow: #FAD961; --skill-blue: #A2D2FF; --skill-green: #B9FBC0;
+
+            /* 🌐 內部大膽撞色 (清晰度優先) */
+            --pop-ig-inner-bg: #FFEAD2; --pop-ig-inner-ink: #5C3A21; /* IG (左上): 杏桃黃底 × 深咖字 */
+            --pop-red-inner-bg: #D4EDD9; --pop-red-inner-ink: #1B4332; /* 小紅書 (右側): 開心果綠底 × 深墨綠字 */
+            --pop-th-inner-bg: #FAD4D8; --pop-th-inner-ink: #2E1B4E; /* Threads (左下): 櫻花柔粉底 × 深靛藍字 */
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
-        body {
-            background-color: var(--bg); background-image: linear-gradient(var(--y2k-mint) 1px, transparent 1px), linear-gradient(90deg, var(--y2k-mint) 1px, transparent 1px);
-            background-size: 30px 30px; font-family: 'Noto Sans TC', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column;
+        *{margin:0;padding:0;box-sizing:border-box;cursor:default;}
+        html,body{height:auto;min-height:100%; overflow-x:hidden;}
+        
+        body{
+            background:linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px),
+                       linear-gradient(to right,#98fb98,#fffacd,#ffebcd,#ffb6c1,#e0b0ff);
+            background-size:20px 20px,20px 20px,100% 100%;
+            background-attachment:fixed;
+            font-family:'DotGothic16','PMingLiU','MingLiU','細明體','SimSun',sans-serif;
+            display:flex; flex-direction:column;
         }
 
-        /* --- 跑馬燈：找回彩色重點 --- */
-        .marquee-bar { 
-            background: var(--text); color: #fff; padding: 15px 0; min-height: 70px; 
-            display: flex; align-items: center; overflow: hidden; border-bottom: 3px solid #000; z-index: 2000;
-        }
-        .marquee-content { display: flex; white-space: nowrap; font-weight: 900; font-size: 1.4rem; animation: scroll 25s linear infinite; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* 跑馬燈 */
+        .marquee-bar{background:#000;color:#0f0;padding:12px 0;min-height:60px;display:flex;align-items:center;overflow:hidden;border-bottom:3px solid var(--win-dark);z-index:2000; position:relative;}
+        .marquee-content{display:flex;white-space:nowrap;font-size:1.2rem;animation:scroll 25s linear infinite;letter-spacing:2px;}
+        @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
-        .desktop-wrapper { display: flex; flex: 1; min-height: 0; padding: 25px; gap: 25px; padding-bottom: 60px; }
+        .desktop-wrapper{display:flex;flex:1;padding:25px;position:relative;min-height:900px;}
+        
+        /* 桌面圖標 */
+        .desktop-grid { display: flex; flex-direction: column; flex-wrap: wrap; gap: 20px; height: 800px; width: 120px; z-index: 10; align-content: flex-start;}
+        .desktop-icon{display:flex;flex-direction:column;align-items:center;text-decoration:none;padding:8px 5px;cursor:pointer; width: 100px;}
+        .desktop-icon .icon-emoji{font-size:40px;margin-bottom:5px;filter:drop-shadow(2px 2px 0px rgba(0,0,0,1)); transition: transform 0.1s;}
+        .icon-text{color:#fff;background-color:var(--win-blue);font-size:13px;text-align:center;padding:2px 6px;border:1px dotted transparent; word-break: break-all;}
+        .desktop-icon:hover .icon-emoji { transform: scale(1.1); }
+        .desktop-icon:hover .icon-text { border: 1px dotted #fff; background-color: #4B2D8C; }
 
-        /* --- 固定側邊欄 --- */
-        #sidebar { 
-            width: 280px; background: var(--win-gray); border: 2px solid; border-color: #fff #808080 #808080 #fff;
-            box-shadow: 4px 4px 0 #000; display: flex; flex-direction: column; flex-shrink: 0; z-index: 1500;
-        }
-        .side-title { background: linear-gradient(90deg, var(--y2k-purple), var(--y2k-pink)); color: white; padding: 8px 12px; font-weight: bold; font-size: 13px; }
-        .nav-list { list-style: none; padding: 10px 0; flex: 1; }
-        .nav-link { display: block; padding: 12px 20px; text-decoration: none; color: var(--text); font-weight: bold; }
-        .nav-link:hover { background: rgba(255, 102, 179, 0.2); }
-        .nav-active { background: var(--y2k-purple); color: white !important; }
-
-        /* --- 視窗區域 --- */
-        #playground { flex: 1; position: relative; overflow: hidden; }
+        /* ==========================================
+           🗂️ 全局 XP/Y2K OS 立體視窗通用樣式
+           ========================================== */
         .window {
-            background: var(--win-gray); border: 2px solid; border-color: #fff #808080 #808080 #fff;
-            box-shadow: 4px 4px 0 #000; display: flex; flex-direction: column; position: absolute;
+            background: var(--os-win-body);
+            border: 2px solid var(--os-border);
+            border-radius: 6px; /* 賦予 XP 圓角 */
+            box-shadow: 
+                3px 3px 6px rgba(0,0,0,0.4), /* 外部柔軟陰影 */
+                inset 1px 1px 1px var(--os-light-shadow), /* 內部高光 */
+                inset -1px -1px 1px rgba(0,0,0,0.2); /* 內部陰影 */
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            z-index: 100;
+            padding: 2px;
+            overflow: hidden; /* 確保內容不會溢出圓角 */
         }
-        .title-bar { background: linear-gradient(90deg, var(--y2k-purple), var(--y2k-pink)); padding: 4px 8px; display: flex; justify-content: space-between; align-items: center; color: white; font-weight: bold; font-size: 12px; cursor: move; }
-        .win-controls { display: flex; gap: 3px; }
-        .win-btn { width: 18px; height: 16px; background: var(--win-gray); border: 1px solid; border-color: #fff #808080 #808080 #fff; color: black; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 1px 1px 0 #000; }
-
-        .win-content { flex: 1; overflow-y: auto; background: white; padding: 35px; line-height: 1.8; }
         
-        .header-title { font-family: 'Noto Serif TC'; font-size: 2.8rem; color: var(--y2k-purple); margin-bottom: 10px; line-height: 1.2; }
-        .highlight-pink { color: var(--y2k-pink); font-weight: 900; font-size: 1.1rem; display: block; margin-bottom: 20px; }
-        .manifesto-p { margin-bottom: 20px; color: #333; text-align: justify; }
+        .title-bar {
+            background: linear-gradient(180deg, var(--os-title-start), var(--os-title-end));
+            border-bottom: 2px solid var(--os-border);
+            border-radius: 4px 4px 0 0;
+            color: #000;
+            padding: 6px 10px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            user-select: none;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        .win-controls { display: flex; flex-direction: row; gap: 4px; }
+        .win-btn {
+            width: 20px; height: 20px;
+            background: linear-gradient(180deg, #f0f0f0, #c0c0c0);
+            border: 1px solid var(--os-border);
+            border-radius: 3px;
+            color: #000;
+            font-family: 'Pixel', sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+        }
+        .win-btn:active {
+            background: linear-gradient(180deg, #c0c0c0, #f0f0f0);
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.6);
+            transform: translate(1px, 1px);
+        }
         
-        .season-block { border-left: 5px solid var(--y2k-purple); padding-left: 20px; margin-bottom: 40px; }
-        .season-header { font-family: 'Noto Serif TC'; font-size: 1.5rem; color: var(--y2k-purple); margin-bottom: 5px; }
-        .season-date { font-weight: 900; font-size: 0.85rem; color: var(--y2k-pink); margin-bottom: 10px; }
-        .feature-box { background: #f9f9f9; padding: 15px; border: 1px dashed var(--y2k-purple); margin-top: 10px; font-size: 0.9rem; }
+        .sys-menu, .paint-menu { display: flex; gap: 10px; padding: 4px 8px; font-size: 12px; border-bottom: 1px solid var(--win-dark); color: #000;}
+        .sys-menu span, .paint-menu span { padding: 2px 6px; cursor: pointer; border-radius: 2px;}
+        .sys-menu span:first-letter, .paint-menu span:first-letter { text-decoration: underline; }
+        .sys-menu span:hover, .paint-menu span:hover { background-color: var(--win-blue); color: #fff; }
 
-        /* --- 全域任務欄 (Taskbar) --- */
-        .taskbar {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 48px;
-            background: var(--win-gray); border-top: 2px solid #fff;
-            display: flex; align-items: center; padding: 0 12px; z-index: 3000;
-            box-shadow: 0 -2px 0 #808080;
+        /* ==========================================
+           🎨 中央小畫家視窗 (Canvas.exe)
+           ========================================== */
+        #paint-win { width: 660px; left: 28%; top: 12%; z-index: 150;}
+        .paint-body { display: flex; flex-direction: row; background: var(--os-win-body); border: 2px inset var(--win-light); border-radius: 0 0 4px 4px; }
+        
+        .paint-tools { width: 52px; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px; padding: 3px; background: var(--os-win-body); border-radius: 0 0 0 4px; }
+        .tool-btn { width: 22px; height: 22px; border: 1px outset var(--win-light); background: #eee; font-size: 12px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .tool-btn:hover { background: #ddd; }
+        .tool-btn.active { border: 1px inset var(--win-light); background: #d0d0d0; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); }
+        
+        .paint-workspace { flex: 1; display: flex; flex-direction: column; padding-left: 2px; border-left: 1px solid var(--win-dark); border-radius: 0 0 4px 0;}
+        
+        .paint-canvas-container { flex: 1; background: #949494; padding: 4px; overflow: hidden; position: relative; min-height: 380px;}
+        .paint-canvas { background: #fff; width: 100%; height: 100%; border: 2px dashed #888; overflow-y: auto; padding: 25px; position: relative; font-family: 'Noto Serif TC', serif; }
+        
+        .paint-palette-bar { height: 45px; display: flex; align-items: center; gap: 8px; padding: 4px 6px; background: var(--os-win-body); border-top: 1px solid var(--win-light);}
+        .color-indicator { width: 32px; height: 32px; border: 2px inset var(--win-light); background: var(--os-win-body); position: relative; flex-shrink: 0;}
+        .color-bg { position: absolute; right: 2px; bottom: 2px; width: 14px; height: 14px; background: #ffffff; border: 1px inset #888; }
+        .color-fg { position: absolute; left: 2px; top: 2px; width: 14px; height: 14px; background: #000000; border: 1px inset #888; z-index: 2; }
+        .color-grid { display: flex; flex-wrap: wrap; width: 200px; gap: 1px; align-content: flex-start;}
+        .color-box { width: 13px; height: 13px; border: 1px inset var(--win-light); }
+        
+        .canvas-section { display: none; animation: fadeIn 0.3s; }
+        .canvas-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 畫布內容排版 */
+        .intro-slogan { font-family: 'DotGothic16', sans-serif; font-size: 22px; color: var(--win-blue); font-weight: bold; margin-bottom: 15px; border-bottom: 2px solid var(--win-blue); padding-bottom: 5px; display: inline-block;}
+        .y2k-tag { font-family: 'DotGothic16', sans-serif; font-size: 13px; background: #fff; color: var(--win-blue); padding: 2px 8px; border: 1px solid var(--win-blue); margin-right: 5px; display: inline-block; margin-bottom: 15px; font-weight: bold;}
+        
+        /* 🎨 重新引入並應用板块顏色的進度條 */
+        .skill-title { font-size: 14px; font-weight: bold; margin-bottom: 6px; color: var(--win-blue); font-family: 'DotGothic16', sans-serif;}
+        .skill-bar { margin-bottom: 18px; }
+        .bar-bg { display: block; width: 100%; height: 16px; border: 2px inset var(--win-dark); background: #f9f9f9; }
+        .bar-fill { display: block; height: 100%; }
+
+        .philosophy-box { background: #fdfbf7; border: 1px dashed #ccc; padding: 20px; margin-top: 15px; font-size: 14.5px; line-height: 1.8;}
+        .status-bar { padding: 4px 10px; font-size: 12px; background: var(--os-win-body); border-top: 1px solid var(--win-dark); color: #333; font-family: 'PMingLiU', sans-serif; border-radius: 0 0 4px 4px; }
+
+        /* ==========================================
+           🌐 社群媒體矩陣視窗 (XP 立體外框 + 內部大膽撞色)
+           打破統一長寬，呈現亂中有序的設計感
+           ========================================== */
+        .social-content {
+            border: 2px solid;
+            border-color: var(--os-dark-shadow) var(--os-light-shadow) var(--os-light-shadow) var(--os-dark-shadow); /* 內部內凹 Inset border */
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 15px;
+            font-family: 'PMingLiU', '細明體', serif;
+            min-height: 180px;
+            justify-content: center;
+            border-radius: 0 0 4px 4px;
         }
-        .start-btn {
-            background: var(--win-gray); border: 2px solid; border-color: #fff #808080 #808080 #fff;
-            padding: 3px 15px; font-weight: 900; display: flex; align-items: center; gap: 8px;
-            text-decoration: none; color: #000; font-size: 14px; box-shadow: 1px 1px 0 #000;
+        
+        .social-content h2 { font-family: 'DotGothic16', sans-serif; font-size: 24px; margin: 0; letter-spacing: 1px; }
+        .social-content p { font-size: 13px; margin: 8px 0; font-weight: bold; letter-spacing: 1px; }
+        
+        .os-btn {
+            display: inline-block;
+            padding: 6px 18px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 15px;
+            font-family: 'PMingLiU', sans-serif;
+            border: 2px solid;
+            border-color: var(--win-light) var(--os-dark-shadow) var(--os-dark-shadow) var(--win-light);
+            border-radius: 3px;
+            transition: 0.1s;
         }
-        .subscribe-pill {
-            background: var(--y2k-pink); color: white; padding: 6px 22px;
-            border-radius: 25px; text-decoration: none; font-weight: 900;
-            margin-left: 20px; font-size: 13px; border: 2px solid #000; box-shadow: 2px 2px 0 #000;
+        .os-btn:active { transform: translate(1px, 1px); box-shadow: inset 1px 1px 2px rgba(0,0,0,0.6); }
+
+        /* ✨ Instagram (左側): 杏桃黃底 × 深咖字 (不同長寬: 280x280) */
+        #ig-win { left: 10%; top: 8%; width: 280px; height: 280px; }
+        #ig-win .social-content { background-color: var(--pop-ig-inner-bg); color: var(--pop-ig-inner-ink); }
+        #ig-win h2, #ig-win p { color: var(--pop-ig-inner-ink); }
+        #ig-win .os-btn { background-color: #ffd7aa; color: var(--pop-ig-inner-ink); border-color: #ffd7aa #5C3A21 #5C3A21 #ffd7aa;}
+        #ig-win .os-btn:hover { background-color: var(--pop-ig-inner-ink); color: var(--pop-ig-inner-bg); border-color: var(--pop-ig-inner-ink);}
+
+        /* ✨ 小紅書 (右側): 開心果綠底 × 深墨綠字 (不同長寬: 240x300) */
+        #red-win { left: 68%; top: 22%; width: 240px; height: 300px; }
+        #red-win .social-content { background-color: var(--pop-red-inner-bg); color: var(--pop-red-inner-ink); }
+        #red-win h2, #red-win p { color: var(--pop-red-inner-ink); }
+        #red-win .os-btn { background-color: #a8dbae; color: var(--pop-red-inner-ink); border-color: #a8dbae #1B4332 #1B4332 #a8dbae;}
+        #red-win .os-btn:hover { background-color: var(--pop-red-inner-ink); color: var(--pop-red-inner-bg); border-color: var(--pop-red-inner-ink);}
+
+        /* ✨ Threads (左下): 櫻花柔粉底 × 深靛藍字 (不同長寬: 300x240) */
+        #threads-win { left: 14%; top: 58%; width: 300px; height: 240px; }
+        #threads-win .social-content { background-color: var(--pop-th-inner-bg); color: var(--pop-th-inner-ink); }
+        #threads-win h2, #threads-win p { color: var(--pop-th-inner-ink); }
+        #threads-win .os-btn { background-color: #f7b4b9; color: var(--pop-th-inner-ink); border-color: #f7b4b9 #2E1B4E #2E1B4E #f7b4b9;}
+        #threads-win .os-btn:hover { background-color: var(--pop-th-inner-ink); color: var(--pop-th-inner-bg); border-color: var(--pop-th-inner-ink);}
+
+        /* ==========================================
+           📌 任務欄與底部元素 (回歸全局 XP OS 立體感)
+           ========================================== */
+        .taskbar{position:fixed;bottom:0;left:0;right:0;height:42px;background:linear-gradient(180deg, #f0f0f0, #c0c0c0);border-top:2px solid var(--os-border);display:flex;align-items:center;padding:0 6px;z-index:3000;box-shadow:inset 0 1px 0 #dfdfdf;}
+        
+        .start-btn{background:linear-gradient(180deg, #f0f0f0, #c0c0c0);border:2px solid;border-color:var(--win-light) var(--os-dark-shadow) var(--os-dark-shadow) var(--win-light);padding:4px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;color:#000;font-size:15px;font-weight:bold;flex-shrink:0;border-radius: 4px; box-shadow: 1px 1px 1px rgba(0,0,0,0.5);}
+        .start-btn:active{border-color:var(--os-dark-shadow) var(--win-light) var(--win-light) var(--os-dark-shadow);padding:5px 11px 3px 13px; box-shadow: inset 1px 1px 1px rgba(0,0,0,0.5);}
+        
+        .taskbar-windows{display:flex;gap:5px;margin-left:10px;flex:1;overflow-x:auto;}
+        
+        .taskbar-win-tab{background:linear-gradient(180deg, #f0f0f0, #c0c0c0);border:2px solid;border-color:var(--win-light) var(--os-dark-shadow) var(--os-dark-shadow) var(--win-light);padding:4px 12px;font-size:13px;color:#000;display:none;align-items:center;gap:6px;cursor:pointer;max-width:140px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; user-select: none; border-radius: 3px; box-shadow: 1px 1px 1px rgba(0,0,0,0.5);}
+        .taskbar-win-tab.visible { display: flex; }
+        .taskbar-win-tab.active{border-color:var(--os-dark-shadow) var(--win-light) var(--win-light) var(--os-dark-shadow);background:#d0d0d0;font-weight:bold;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,#c0c0c0 2px,#c0c0c0 4px); box-shadow: inset 1px 1px 1px rgba(0,0,0,0.5);}
+        
+        .subscribe-pill{background:linear-gradient(180deg, #ff66b3, #db2c88);color:white;padding:4px 15px;text-decoration:none;border:2px solid #000;box-shadow:2px 2px 0 #000;flex-shrink:0;font-size:13px; font-weight: bold; border-radius: 4px;}
+        .subscribe-pill:active { transform: translate(1px, 1px); box-shadow: 0px 0px 0 #000; }
+
+        .system-tray{margin-left:10px;display:flex;gap:8px;align-items:center;flex-shrink:0;border:2px solid;border-color:var(--os-dark-shadow) var(--win-light) var(--win-light) var(--os-dark-shadow);padding:2px 10px;height:32px;border-radius: 3px; box-shadow: 1px 1px 1px rgba(0,0,0,0.5);}
+        .social-link{color:#000;text-decoration:none;font-size:12px; font-weight: bold;}
+        .social-link:hover{color:var(--win-blue);text-decoration:underline;}
+        
+        .lang-switch{display:flex;gap:6px;align-items:center;border-left:1px solid var(--win-dark);border-right:1px solid var(--win-light);padding:0 10px;font-size:13px;}
+        .lang-link{color:var(--win-dark);text-decoration:none;}
+        .lang-link.active{color:#000;font-weight:bold;text-decoration:underline;}
+        
+        .clock{font-size:13px;color:#000; margin-left: 5px;}
+
+        @media (max-width: 900px) {
+            .social-win { display: none !important; }
+            .window { width: 90vw !important; left: 5vw !important; position: absolute !important; top: 10vh !important; }
+            .desktop-grid { flex-direction: row; height: auto; width: 100%; justify-content: center; }
+            .subscribe-pill { display: none; }
         }
-        .system-tray { margin-left: auto; display: flex; gap: 12px; align-items: center; }
-        .social-link { color: #000; text-decoration: none; font-size: 11px; font-weight: 900; border: 1px solid #808080; padding: 3px 8px; background: #eee; }
-        .clock { font-size: 12px; font-weight: bold; border-left: 1px solid #808080; padding-left: 12px; font-family: monospace; }
     </style>
 </head>
 <body>
+    
     <div class="marquee-bar">
         <div class="marquee-content">
-            ✦ <span style="color:var(--y2k-pink);">第四季早鳥活動</span> 進行中 ✦ 即將於 <span style="color:var(--y2k-mint);">2026年5月17日</span> 結束 ✦ <span style="color:var(--y2k-pink);">36期正刊 + 12期閱讀小報</span> ✦ 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;
+            >> SYSTEM.MSG: [ <span style="color:var(--skill-pink);">第四季早鳥活動</span> ] 進行中_ // ENDS_ON: <span style="color:var(--skill-green);">2026.05.17</span> // [ <span style="color:var(--skill-purple);">全新主題策展正刊 ＋ 雜誌通信副刊</span> ] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            >> SYSTEM.MSG: [ <span style="color:var(--skill-pink);">第四季早鳥活動</span> ] 進行中_ // ENDS_ON: <span style="color:var(--skill-green);">2026.05.17</span> // [ <span style="color:var(--skill-purple);">全新主題策展正刊 ＋ 雜誌通信副刊</span> ] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
     </div>
-    <div class="desktop-wrapper">
-        <aside id="sidebar">
-            <div class="side-title">Explorer</div>
-            <nav class="nav-list">
-                <a href="/zh-tw/" class="nav-link">🏠 主頁 / HOME</a>
-                <a href="/zh-tw/about" class="nav-link nav-active">📝 關於小報 / ABOUT</a>
-                <a href="/zh-tw/archive" class="nav-link">📂 往期目錄 / ARCHIVE</a>
-            </nav>
-            <div style="margin-top: auto; padding: 15px; border-top: 1px solid #808080; font-size: 11px;">2022.07 - 2026.05 © elephlow</div>
-        </aside>
 
-        <div id="playground">
-            <div id="manifesto-win" class="window draggable" style="width: 580px; height: 450px; left: 40px; top: 30px; z-index: 100;">
-                <div class="title-bar">
-                    <span>About_Push_The_Door.txt</span>
-                    <div class="win-controls">
-                        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div>
-                    </div>
+    <div class="desktop-wrapper">
+        <div class="desktop-grid">
+            <a href="/" class="desktop-icon"><span class="icon-emoji">🏠</span><span class="icon-text">主頁</span></a>
+            <a href="/zh-tw/about" class="desktop-icon"><span class="icon-emoji">🐘</span><span class="icon-text">關於小象</span></a>
+            <a href="/zh-tw/archive" class="desktop-icon"><span class="icon-emoji">📂</span><span class="icon-text">往期目錄</span></a>
+            <a href="/zh-tw/guestbook" class="desktop-icon"><span class="icon-emoji">💬</span><span class="icon-text">留言板</span></a>
+            
+            <div style="height: 10px;"></div>
+            
+            <div class="desktop-icon" onclick="openApp('ig-win')"><span class="icon-emoji">📷</span><span class="icon-text">Instagram</span></div>
+            <div class="desktop-icon" onclick="openApp('red-win')"><span class="icon-emoji">📕</span><span class="icon-text">小紅書</span></div>
+            <div class="desktop-icon" onclick="openApp('threads-win')"><span class="icon-emoji">🧵</span><span class="icon-text">Threads</span></div>
+        </div>
+
+        <div id="ig-win" class="window social-win" style="display: flex;">
+            <div class="title-bar drag-handle">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span>📷</span><span>Instagram.exe</span>
                 </div>
-                <div class="win-content">
-                    <h1 class="header-title">推開部屋的門</h1>
-                    <span class="highlight-pink">在邊緣捕捉與想像 ✴</span>
-                    <p class="manifesto-p">這是一份創辦於 2022 年 7 月的中文付費電子報。我們關注港台流行音樂、獨立出版、影展研究及酷兒視角書寫。</p>
-                    <p class="manifesto-p"><strong>「部屋」</strong>是私密的起點，而<strong>「推開門」</strong>則是通往公共的行動。我們致力於將偏見所隔絕的萬事萬物重新拉近，在邊緣捕捉那些被忽視的微光。</p>
+                <div class="win-controls">
+                    <div class="win-btn">_</div>
+                    <div class="win-btn">□</div>
+                    <div class="win-btn" onclick="closeApp('ig-win')">×</div>
                 </div>
             </div>
+            <div class="social-content">
+                <div style="font-size: 45px; margin-bottom: 5px;">📸</div>
+                <h2>Instagram</h2>
+                <p>@icarusrootedbutflow</p>
+                <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="os-btn">Execute / 執行</a>
+            </div>
+        </div>
 
-            <div id="timeline-win" class="window draggable" style="width: 620px; height: 600px; left: 200px; top: 100px; z-index: 50;">
-                <div class="title-bar">
-                    <span>Evolution_Report.doc</span>
-                    <div class="win-controls">
-                        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div>
-                    </div>
+        <div id="red-win" class="window social-win" style="display: flex;">
+            <div class="title-bar drag-handle">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span>📕</span><span>Xiaohongshu.app</span>
                 </div>
-                <div class="win-content">
-                    <div class="season-block">
-                        <h3 class="season-header">第一至二季：文化基底</h3>
-                        <p class="season-date">2022.07 - 2024.09</p>
-                        <p style="font-size:0.95rem;">建立固定欄目：播放器、雜誌社、逛書店。關注港台期刊考古與影展研究。</p>
-                    </div>
-                    <div class="season-block" style="border-left-color: var(--y2k-pink);">
-                        <h3 class="season-header">第三季：深度閱讀與生命共鳴</h3>
-                        <p class="season-date">2024.12 - 2026.05</p>
-                        <div class="feature-box">
-                            <strong>核心變革：【閱讀小報】正式啟動</strong>
-                            <p>不僅是補充，更是產品線的全新延伸。以書單+資源合集形式分享海內外好書，打破月刊週期限制。</p>
+                <div class="win-controls">
+                    <div class="win-btn">_</div>
+                    <div class="win-btn">□</div>
+                    <div class="win-btn" onclick="closeApp('red-win')">×</div>
+                </div>
+            </div>
+            <div class="social-content">
+                <div style="font-size: 45px; margin-bottom: 5px;">📔</div>
+                <h2>小紅書 RED</h2>
+                <p>@Apollo11-</p>
+                <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="os-btn">Execute / 執行</a>
+            </div>
+        </div>
+
+        <div id="threads-win" class="window social-win" style="display: flex;">
+            <div class="title-bar drag-handle">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span>🧵</span><span>Threads.sys</span>
+                </div>
+                <div class="win-controls">
+                    <div class="win-btn">_</div>
+                    <div class="win-btn">□</div>
+                    <div class="win-btn" onclick="closeApp('threads-win')">×</div>
+                </div>
+            </div>
+            <div class="social-content">
+                <div style="font-size: 45px; margin-bottom: 5px;">🕸️</div>
+                <h2>Threads</h2>
+                <p>@icarusrootedbutflow</p>
+                <a href="https://www.threads.net/@icarusrootedbutflow" target="_blank" class="os-btn">Execute / 執行</a>
+            </div>
+        </div>
+
+        <div id="paint-win" class="window" style="display: flex;">
+            <div class="title-bar drag-handle">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span>🎨</span><span>Canvas.exe - 關於創作者</span>
+                </div>
+                <div class="win-controls">
+                    <div class="win-btn">_</div>
+                    <div class="win-btn">□</div>
+                    <div class="win-btn" onclick="closeApp('paint-win')">×</div>
+                </div>
+            </div>
+            <div class="paint-menu">
+                <span>File</span><span>Edit</span><span>View</span><span>Image</span><span>Options</span><span>Help</span>
+            </div>
+            
+            <div class="paint-body">
+                <div class="paint-tools">
+                    <div class="tool-btn active" onclick="switchCanvas('section-intro', this)" title="個人簡介">✏️</div>
+                    <div class="tool-btn" onclick="switchCanvas('section-radar', this)" title="寫作板塊">📊</div>
+                    <div class="tool-btn" onclick="switchCanvas('section-philosophy', this)" title="創作理念">💡</div>
+                    <div class="tool-btn">🔍</div><div class="tool-btn">✂</div><div class="tool-btn">⬚</div>
+                    <div class="tool-btn">🖌</div><div class="tool-btn">A</div><div class="tool-btn">🖍</div><div class="tool-btn">🪣</div>
+                </div>
+                
+                <div class="paint-workspace">
+                    <div class="paint-canvas-container">
+                        <div class="paint-canvas">
+                            
+                            <div id="section-intro" class="canvas-section active">
+                                <div class="intro-slogan">Elephlow / 小象</div><br>
+                                <span class="y2k-tag">CREATOR</span>
+                                <span class="y2k-tag">EDITOR</span>
+                                
+                                <div style="margin-top: 15px; line-height: 1.8; color: #111; font-size: 15px;">
+                                    <p>你好，歡迎推開這扇門。我是小象，一名內容創意工作者。</p>
+                                    <p style="margin-top: 10px;">這裡不僅僅是字與圖的集散地，更像是一座虛擬的橋樑。我專注於獨立出版、東亞文學與邊緣視角的書寫，帶著相機與筆記本，在城市巷弄與藝文展會間穿梭。</p>
+                                    <p style="margin-top: 10px;">我相信真實的記錄擁有打破偏見的力量。透過這份通訊，我試圖在喧囂的網絡演算法之外，建立一個靜謐、真誠的交流場域，把那些容易被遺忘的聲音與風景，安放進每一期的字裡行間。</p>
+                                </div>
+                            </div>
+
+                            <div id="section-radar" class="canvas-section">
+                                <p style="margin-bottom: 20px; color: #333; font-family: 'DotGothic16', sans-serif; font-weight: bold;">> 當前核心觀測領域與寫作板塊：</p>
+                                
+                                <div class="skill-bar">
+                                    <div class="skill-title">📚 獨立出版與 Zine 現場</div>
+                                    <div class="bar-bg"><div class="bar-fill" style="width: 95%; background: var(--skill-pink);"></div></div>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-title">⚧ 女性主義與酷兒書寫</div>
+                                    <div class="bar-bg"><div class="bar-fill" style="width: 90%; background: var(--skill-purple);"></div></div>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-title">🖋️ 東亞文學與跨地政治</div>
+                                    <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: var(--skill-yellow);"></div></div>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-title">🎞️ 紀錄片影展與作者研究</div>
+                                    <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: var(--skill-blue);"></div></div>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-title">🎧 流行音樂與海外播客</div>
+                                    <div class="bar-bg"><div class="bar-fill" style="width: 80%; background: var(--skill-green);"></div></div>
+                                </div>
+                            </div>
+
+                            <div id="section-philosophy" class="canvas-section">
+                                <div class="intro-slogan">💡 關於創作與載體</div>
+                                <div class="philosophy-box">
+                                    <p style="font-weight: 900; margin-bottom: 8px; color: #000; font-size: 15px;">為什麼選擇傳統的形式？</p>
+                                    <p>比起依賴主流平台，只有自己建立平台才能長久、持續地運營。我不遵循既有平台設定的遊戲規則，在這裡，我是制定規則的人。</p>
+                                    <p style="margin-top: 15px;">這是一份不摻雜商業利益的內容篩選，一個普通的、同齡的活人的真實閱讀世界。我希望提供的不僅是零散的資訊，而是將事物與城市、歷史串聯起來的整合性視角，以及一份真實的陪伴感。</p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="season-block" style="border-left: 5px dashed var(--y2k-purple);">
-                        <h3 class="season-header">第四季：主題策展化</h3>
-                        <p class="season-date">2026.05.17 LAUNCH</p>
-                        <p style="font-size:0.95rem;">正刊轉向主題策展；副刊升級為高頻的「雜誌通信」；邀請更多在地寫作者供稿。</p>
+                    
+                    <div class="paint-palette-bar">
+                        <div class="color-indicator">
+                            <div class="color-bg"></div>
+                            <div class="color-fg"></div>
+                        </div>
+                        <div class="color-grid">
+                            <div class="color-box" style="background:#000000;"></div><div class="color-box" style="background:#808080;"></div><div class="color-box" style="background:#800000;"></div><div class="color-box" style="background:#808000;"></div><div class="color-box" style="background:#008000;"></div><div class="color-box" style="background:#008080;"></div><div class="color-box" style="background:#000080;"></div><div class="color-box" style="background:#800080;"></div><div class="color-box" style="background:#808040;"></div><div class="color-box" style="background:#004040;"></div><div class="color-box" style="background:#0080FF;"></div><div class="color-box" style="background:#004080;"></div><div class="color-box" style="background:#4000FF;"></div><div class="color-box" style="background:#804000;"></div>
+                            <div class="color-box" style="background:#ffffff;"></div><div class="color-box" style="background:#c0c0c0;"></div><div class="color-box" style="background:#ff0000;"></div><div class="color-box" style="background:#ffff00;"></div><div class="color-box" style="background:#00ff00;"></div><div class="color-box" style="background:#00ffff;"></div><div class="color-box" style="background:#0000ff;"></div><div class="color-box" style="background:#ff00ff;"></div><div class="color-box" style="background:#ffff80;"></div><div class="color-box" style="background:#00ff80;"></div><div class="color-box" style="background:#80ffff;"></div><div class="color-box" style="background:#8080ff;"></div><div class="color-box" style="background:#ff0080;"></div><div class="color-box" style="background:#ff8040;"></div>
+                        </div>
                     </div>
-                    <div style="height:50px;"></div>
                 </div>
             </div>
+            <div class="status-bar">For Help, click Help Topics on the Help Menu.</div>
         </div>
     </div>
 
     <footer class="taskbar">
-        <a href="/zh-tw/" class="start-btn">🏠 Start</a>
+        <a href="/" class="start-btn">🐘 Start</a>
+        <div class="taskbar-windows">
+            <div class="taskbar-win-tab visible active" id="tab-paint-win" onclick="bringToFront('paint-win')"><span>🎨</span> Canvas.exe</div>
+            <div class="taskbar-win-tab visible" id="tab-ig-win" onclick="bringToFront('ig-win')"><span>📷</span> Instagram</div>
+            <div class="taskbar-win-tab visible" id="tab-red-win" onclick="bringToFront('red-win')"><span>📕</span> Xiaohongshu</div>
+            <div class="taskbar-win-tab visible" id="tab-threads-win" onclick="bringToFront('threads-win')"><span>🧵</span> Threads</div>
+        </div>
+        
         <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">立即訂閱第四季早鳥</a>
+        
         <div class="system-tray">
             <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">INSTAGRAM</a>
-            <a href="#" class="social-link">RED: @Apollo11-</a>
-            <div class="clock" id="live-clock">00:00</div>
+            <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="social-link">RED: @Apollo11-</a>
+            
+            <div class="lang-switch">
+                <a href="/en/about" class="lang-link">EN</a><a href="/zh-tw/about" class="lang-link active">繁</a><a href="/zh-cn/about" class="lang-link">简</a>
+            </div>
+            <div class="clock" id="live-clock">00:00 AM</div>
         </div>
     </footer>
 
     <script is:inline>
-        // 拖拽邏輯
-        const windows = document.querySelectorAll('.draggable');
-        let zIndexCounter = 200;
-        windows.forEach(win => {
-            const titleBar = win.querySelector('.title-bar');
-            titleBar.onmousedown = (e) => {
-                if (e.target.classList.contains('win-btn')) return;
+        let zIndexCounter = 300;
+
+        function openApp(winId) {
+            const win = document.getElementById(winId);
+            const tab = document.getElementById('tab-' + winId);
+            if (win) {
+                win.style.display = 'flex';
                 win.style.zIndex = ++zIndexCounter;
-                let shiftX = e.clientX - win.getBoundingClientRect().left;
-                let shiftY = e.clientY - win.getBoundingClientRect().top;
-                function moveAt(pageX, pageY) {
-                    win.style.left = (pageX - shiftX - 280) + 'px';
-                    win.style.top = (pageY - shiftY - 70) + 'px';
-                }
-                document.onmousemove = (e) => moveAt(e.pageX, e.pageY);
-                document.onmouseup = () => { document.onmousemove = null; };
-            };
-            win.onmousedown = () => { win.style.zIndex = ++zIndexCounter; };
+            }
+            if (tab) {
+                tab.classList.add('visible');
+            }
+            bringToFront(winId);
+        }
+
+        function closeApp(winId) {
+            const win = document.getElementById(winId);
+            const tab = document.getElementById('tab-' + winId);
+            if (win) win.style.display = 'none';
+            if (tab) {
+                tab.classList.remove('visible');
+                tab.classList.remove('active');
+            }
+        }
+
+        function bringToFront(winId) {
+            const win = document.getElementById(winId);
+            if (win && win.style.display !== 'none') {
+                win.style.zIndex = ++zIndexCounter;
+            }
+            document.querySelectorAll('.taskbar-win-tab').forEach(t => t.classList.remove('active'));
+            const tab = document.getElementById('tab-' + winId);
+            if (tab && tab.classList.contains('visible')) {
+                tab.classList.add('active');
+            }
+        }
+
+        function switchCanvas(targetId, btnElement) {
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            
+            document.querySelectorAll('.canvas-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(targetId).classList.add('active');
+        }
+
+        // 綁定所有視窗（包括帶有 .title-bar 的拖曳把手）
+        const allWindows = document.querySelectorAll('.window');
+        allWindows.forEach(win => {
+            const dragHandle = win.querySelector('.drag-handle');
+            
+            win.addEventListener('mousedown', () => { bringToFront(win.id); });
+
+            if (dragHandle) {
+                dragHandle.addEventListener('mousedown', (e) => {
+                    if (e.target.closest('.win-btn')) return; 
+                    if (window.innerWidth <= 900) return; 
+
+                    let rect = win.getBoundingClientRect();
+                    let shiftX = e.clientX - rect.left;
+                    let shiftY = e.clientY - rect.top;
+
+                    function moveAt(clientX, clientY) { 
+                        win.style.left = (clientX - shiftX) + 'px'; 
+                        win.style.top = (clientY - shiftY) + 'px'; 
+                    }
+                    
+                    function onMouseMove(e) { moveAt(e.clientX, e.clientY); }
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', () => { document.removeEventListener('mousemove', onMouseMove); }, { once: true });
+                });
+            }
         });
 
-        // 時鐘邏輯
         function updateClock() {
-            const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('live-clock').innerText = `${h}:${m}`;
+            const now = new Date(); let h = now.getHours(); let m = String(now.getMinutes()).padStart(2, '0');
+            let ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12; h = h ? h : 12;
+            document.getElementById('live-clock').innerText = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
     </script>
 </body>
 </html>
