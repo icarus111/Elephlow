@@ -9,217 +9,715 @@
     <title>往期目錄 | 推開部屋的門</title>
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --win-gray: #c0c0c0; --win-dark: #808080; --win-light: #ffffff;
-            --win-blue: #000080; --y2k-purple: #4B2D8C; --y2k-pink: #FF66B3; 
-            --y2k-mint: #B2F5EA; --text: #000000;
+        :root{
+            --win-gray:#c0c0c0;
+            --win-dark:#808080;
+            --win-light:#ffffff;
+            --win-blue:#000080;
+            --y2k-purple:#4B2D8C;
+            --y2k-pink:#FF66B3;
+            --y2k-mint:#B2F5EA;
+            --text:#000000;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
-        html, body { height: auto; min-height: 100%; }
-
-        body {
-            background: linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(to right, #98fb98, #fffacd, #ffebcd, #ffb6c1, #e0b0ff);
-            background-size: 20px 20px, 20px 20px, 100% 100%;
-            background-attachment: fixed; 
-            font-family: 'DotGothic16', 'PMingLiU', '細明體', sans-serif; 
-            overflow-x: hidden; overflow-y: auto; display: flex; flex-direction: column;
+        *{margin:0;padding:0;box-sizing:border-box;cursor:default;}
+        html,body{height:auto;min-height:100%;}
+        body{
+            background:linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px),
+                       linear-gradient(to right,#98fb98,#fffacd,#ffebcd,#ffb6c1,#e0b0ff);
+            background-size:20px 20px,20px 20px,100% 100%;
+            background-attachment:fixed;
+            font-family:'DotGothic16','PMingLiU','MingLiU','細明體','SimSun',sans-serif;
+            overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;
         }
-
-        .marquee-bar { background: #000; color: #0f0; padding: 12px 0; min-height: 60px; display: flex; align-items: center; overflow: hidden; border-bottom: 3px solid var(--win-dark); z-index: 2000; }
-        .marquee-content { display: flex; white-space: nowrap; font-size: 1.2rem; animation: scroll 25s linear infinite; letter-spacing: 2px;}
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        .desktop-wrapper { display: flex; flex: 1; padding: 25px; gap: 40px; padding-bottom: 80px; min-height: 1200px; position: relative; }
-
-        /* 左側固定導航捷徑 */
-        .fixed-nav-icons { display: flex; flex-direction: column; gap: 20px; width: 100px; border-right: 1px dotted rgba(255,255,255,0.5); padding-right: 20px; z-index: 10; }
         
-        /* 桌面內容資料夾網格 */
-        .folder-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); grid-auto-rows: 110px; gap: 30px; padding-left: 20px; z-index: 5; }
+        .marquee-bar{background:#000;color:#0f0;padding:12px 0;min-height:60px;display:flex;align-items:center;overflow:hidden;border-bottom:3px solid var(--win-dark);z-index:2000; position:relative;}
+        .marquee-content{display:flex;white-space:nowrap;font-size:1.2rem;animation:scroll 25s linear infinite;letter-spacing:2px;}
+        @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
-        .desktop-icon { display: flex; flex-direction: column; align-items: center; text-decoration: none; width: 90px; padding: 5px; cursor: pointer; }
-        .icon-emoji { font-size: 40px; margin-bottom: 5px; filter: drop-shadow(2px 2px 0px #000); }
-        .icon-text { color: #fff; background-color: var(--win-blue); font-size: 12px; text-align: center; padding: 1px 6px; border: 1px dotted transparent; }
-        .desktop-icon:hover .icon-text { background-color: var(--y2k-purple); border-color: #fff; }
+        .desktop-wrapper{display:flex;flex:1;padding:25px;gap:40px;padding-bottom:80px;min-height:1000px;position:relative;}
+        .desktop-copyright { position: fixed; bottom: 60px; right: 20px; font-size: 12px; color: #555; text-shadow: 1px 1px 0px rgba(255,255,255,0.8); z-index: 10; }
 
-        /* --- 🌟 真正的立體視窗設計 --- */
-        .window {
-            background: var(--win-gray); border: 2px solid; border-color: var(--win-light) #000 #000 var(--win-light);
-            box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 var(--win-dark), 4px 4px 0 rgba(0,0,0,0.5); 
-            display: none; flex-direction: column; position: absolute; padding: 3px; z-index: 100;
-        }
+        .desktop-icons{display:flex;flex-direction:column;gap:25px;width:100px;padding-top:10px;z-index:10;}
+        .desktop-icon{display:flex;flex-direction:column;align-items:center;text-decoration:none;padding:10px 5px;cursor:pointer;}
+        .desktop-icons .icon-emoji{font-size:45px;margin-bottom:5px;filter:drop-shadow(2px 2px 0px rgba(0,0,0,1));}
+        .icon-text{color:#fff;background-color:var(--win-blue);font-size:13px;text-align:center;padding:2px 6px;border:1px dotted transparent;}
+        .desktop-icon:hover .icon-text { border: 1px dotted #fff; background-color: var(--y2k-purple); }
+        
+        .archive-folders { display: flex; flex-wrap: wrap; gap: 20px 30px; padding: 20px; align-content: flex-start; max-width: 450px;}
+        .folder-btn { display: flex; flex-direction: column; align-items: center; width: 90px; cursor: pointer; }
+        .folder-btn .icon-emoji { font-size: 32px; margin-bottom: 5px; filter: drop-shadow(1px 1px 0px rgba(0,0,0,1)); transition: transform 0.1s;}
+        .folder-text { color: #000; font-family: 'DotGothic16', sans-serif; font-size: 13px; text-align: center; padding: 2px 6px; background: rgba(255,255,255,0.5); border: 1px dashed var(--win-dark); margin-top: 5px; }
+        .folder-btn:hover .icon-emoji { transform: translateY(-2px); }
+        .folder-btn:hover .folder-text { background-color: var(--y2k-mint); border: 1px solid #000; box-shadow: 2px 2px 0 var(--y2k-pink); font-weight: bold; }
+
+        #playground{flex:1;position:relative; z-index: 50;}
+        
+        .window{background:var(--win-gray);border:2px solid;border-color:var(--win-light) #000 #000 var(--win-light);box-shadow:inset 1px 1px 0 #dfdfdf,inset -1px -1px 0 var(--win-dark),2px 2px 0 rgba(0,0,0,0.5);display:none;flex-direction:column;position:fixed;height:auto;padding:3px;z-index:100;}
         .window.active { display: flex; }
+        .title-bar{background:linear-gradient(90deg,var(--win-blue),#1084d0);padding:3px 6px;display:flex;justify-content:space-between;align-items:center;color:white;font-size:13px;cursor:move;letter-spacing:1px; user-select: none;}
+        .win-controls{display:flex;gap:2px;margin-left:10px;}
+        .win-btn{width:18px;height:18px;background-color:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);color:#000;font-family:'Pixel',sans-serif;font-size:10px;font-weight:bold;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:1px 1px 0 #000;}
+        .win-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding-top:2px;padding-left:2px;box-shadow:none;}
         
-        .title-bar { background: linear-gradient(90deg, var(--win-blue), #1084d0); padding: 3px 8px; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 13px; cursor: move; }
-        .win-btn { width: 18px; height: 18px; background-color: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); color: #000; font-size: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 1px 1px 0 #000; cursor: pointer;}
+        /* 基礎內部內容區與卡片 */
+        .win-content{flex:1;margin-top:4px;padding:15px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);overflow-y: auto; max-height: 480px;}
+        .archive-card { background: #fff; border: 2px solid #000; padding: 15px; margin-bottom: 15px; box-shadow: 3px 3px 0px var(--win-gray); display: flex; flex-direction: column;}
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;}
+        .card-title { font-family: 'Noto Serif TC', serif; font-weight: 900; color: var(--win-blue); font-size: 1.15rem; border-bottom: 3px solid var(--y2k-mint); padding-bottom: 2px; line-height: 1.3;}
+        .card-tag { font-family: 'DotGothic16', sans-serif; font-size: 11px; background: #FFE4F2; color: var(--y2k-purple); padding: 3px 10px; border: 1px solid var(--y2k-purple); border-radius: 20px; font-weight: bold; box-shadow: inset -1px -1px 3px rgba(0,0,0,0.1), inset 1px 1px 2px #fff; letter-spacing: 0.5px;}
+        .card-desc { font-family: 'Noto Serif TC', serif; color: #333; font-size: 0.95rem; margin-bottom: 15px; line-height: 1.6; flex: 1;}
+        .card-desc strong { color: var(--y2k-purple); font-weight: 900;}
+        .card-desc ul { margin-left: 20px; margin-top: 5px; color: #555; font-size: 0.9rem; }
+        
+        .card-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: auto; border-top: 1px dashed #ccc; padding-top: 10px; }
+        .btn-unlock { background: var(--y2k-pink); color: #fff; border: 2px solid #000; box-shadow: 2px 2px 0 #000; padding: 4px 12px; font-size: 12px; text-decoration: none; font-weight: bold; }
+        .btn-unlock:active { transform: translate(1px,1px); box-shadow: 0px 0px 0 #000; }
+        .btn-preview { background: var(--y2k-mint); color: #000; border: 2px solid #000; box-shadow: 2px 2px 0 #000; padding: 4px 12px; font-size: 12px; text-decoration: none; font-weight: bold; }
+        .btn-preview:active { transform: translate(1px,1px); box-shadow: 0px 0px 0 #000; }
 
-        .win-content { 
-            flex: 1; background: white; margin-top: 4px; padding: 20px; 
-            border: 2px solid; border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
-            overflow-y: auto; max-height: 450px; font-family: 'Noto Serif TC', serif;
-        }
 
-        /* 內容列表樣式 */
-        .issue-item { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px dashed #ccc; }
-        .issue-title { color: var(--y2k-purple); font-weight: 900; font-size: 1.1rem; margin-bottom: 5px; display: block; }
-        .issue-desc { font-size: 13px; color: #333; line-height: 1.6; }
+        /* ==========================================================
+           🔥 8 大主題專屬定製 CSS (高權重覆蓋，確保每個窗口都不一樣) 🔥 
+           ========================================================== */
+           
+        /* 1. 紙本通信：復古信箋本風格 */
+        #mag-win .win-content { background: repeating-linear-gradient(transparent, transparent 24px, #ccc 24px, #ccc 25px), #fefefe; }
+        #mag-win .archive-card { border: 2px dashed #4169E1; box-shadow: 3px 3px 0 rgba(65, 105, 225, 0.2); }
+        #mag-win .btn-unlock { background: #4169E1; }
 
-        .taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 42px; background: var(--win-gray); border-top: 2px solid var(--win-light); display: flex; align-items: center; padding: 0 6px; z-index: 3000; }
-        .start-btn { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); padding: 4px 12px; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #000; font-size: 15px; font-weight: bold; }
-        .taskbar-windows { display: flex; gap: 5px; margin-left: 10px; flex: 1; }
-        .taskbar-win-tab { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); padding: 4px 12px; font-size: 12px; min-width: 100px; display: none; align-items: center; gap: 6px; }
+        /* 2. 書店現場：暖色波點手帳風 */
+        #bookstore-win .win-content { background-color: #FFF5E1; background-image: radial-gradient(#FFA07A 15%, transparent 15%); background-size: 15px 15px; }
+        #bookstore-win .archive-card { background: #FFFAF0; border-color: #D2691E; }
+        #bookstore-win .btn-unlock { background: #FF8C00; } 
+
+        /* 3. 展場漫遊：千禧粉糖果條紋 */
+        #fair-win .win-content { background: repeating-linear-gradient(45deg, #FFE4E1, #FFE4E1 10px, #FFF0F5 10px, #FFF0F5 20px); }
+        #fair-win .archive-card { box-shadow: 4px 4px 0 #FF1493; border-color: #FF1493; }
+        #fair-win .btn-unlock { background: #FF1493; }
+
+        /* 4. 數位生存：黑客帝國代碼風 (全套暗黑系) */
+        #resource-win .win-content { background-color: #111; background-image: linear-gradient(#0f0 1px, transparent 1px), linear-gradient(90deg, #0f0 1px, transparent 1px); background-size: 20px 20px; }
+        #resource-win .archive-card { background: #222; border: 2px solid #0f0; box-shadow: 3px 3px 0 #0f0; }
+        #resource-win .card-title { color: #0f0; border-bottom: 2px dashed #0f0; }
+        #resource-win .card-desc { color: #aaa; }
+        #resource-win .card-desc strong { color: #fff; }
+        #resource-win .card-tag { background: #000; color: #0f0; border: 1px solid #0f0; box-shadow: none; }
+        #resource-win .card-actions { border-top: 1px dashed #444; }
+        #resource-win .btn-unlock { background: #0f0; color: #000; box-shadow: 2px 2px 0 #005500; }
+
+        /* 5. 聽覺切片：Y2K 迷幻漸變 */
+        #music-win .win-content { background: linear-gradient(135deg, #E6E6FA, #FFF0F5, #E0FFFF); }
+        #music-win .archive-card { border-radius: 10px; border-color: #9370DB; }
+        #music-win .btn-unlock { background: #8A2BE2; }
+
+        /* 6. 光影放映：膠片影院風格 */
+        #film-win .win-content { background: #333; padding-left: 20px; padding-right: 20px; position: relative; }
+        #film-win .win-content::before { content:''; position:absolute; top:0; bottom:0; left:2px; width:10px; background: repeating-linear-gradient(transparent, transparent 10px, #fff 10px, #fff 20px); }
+        #film-win .win-content::after { content:''; position:absolute; top:0; bottom:0; right:2px; width:10px; background: repeating-linear-gradient(transparent, transparent 10px, #fff 10px, #fff 20px); }
+        #film-win .archive-card { background: #FFF8DC; border-color: #000; }
+        #film-win .btn-unlock { background: #B22222; }
+
+        /* 7. 真實定格：牛皮紙檔案袋色調 */
+        #doc-win .win-content { background: #DEB887; box-shadow: inset 0 0 30px rgba(0,0,0,0.1); }
+        #doc-win .archive-card { background: #F5F5DC; border-style: dashed; }
+        #doc-win .btn-unlock { background: #8B4513; }
+
+        /* 8. 聲音頻率：美式復古青波紋 */
+        #podcast-win .win-content { background-color: #E0FFFF; background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #E0FFFF 10px, #AFEEEE 10px, #AFEEEE 20px); }
+        #podcast-win .btn-unlock { background: #20B2AA; }
+
+
+        .taskbar{position:fixed;bottom:0;left:0;right:0;height:42px;background:var(--win-gray);border-top:2px solid var(--win-light);display:flex;align-items:center;padding:0 6px;z-index:3000;box-shadow:inset 0 1px 0 #dfdfdf;}
+        .start-btn{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;color:#000;font-size:15px;font-weight:bold;flex-shrink:0;}
+        .start-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:5px 11px 3px 13px;}
+        .taskbar-windows{display:flex;gap:5px;margin-left:10px;flex:1;overflow-x:auto;}
+        .taskbar-win-tab{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;font-size:13px;color:#000;display:none;align-items:center;gap:6px;cursor:pointer;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; user-select: none;}
         .taskbar-win-tab.visible { display: flex; }
-        .taskbar-win-tab.active { border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark); background:#d0d0d0; background-image: repeating-linear-gradient(45deg,transparent,transparent 2px,#c0c0c0 2px,#c0c0c0 4px); font-weight: bold; }
-
-        .system-tray { border: 2px solid; border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark); padding: 2px 10px; display: flex; gap: 8px; align-items: center; font-size: 13px; }
-        .lang-link { color: var(--win-dark); text-decoration: none; }
-        .lang-link.active { color: #000; font-weight: bold; text-decoration: underline; }
+        .taskbar-win-tab.active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);background:#d0d0d0;font-weight:bold;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,#c0c0c0 2px,#c0c0c0 4px);}
+        .subscribe-pill{background:var(--y2k-pink);color:white;padding:4px 15px;text-decoration:none;border:2px solid #000;box-shadow:2px 2px 0 #000;flex-shrink:0;font-size:13px;}
+        .system-tray{margin-left:10px;display:flex;gap:8px;align-items:center;flex-shrink:0;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:2px 10px;height:32px;}
+        .social-link{color:#000;text-decoration:none;font-size:12px;}
+        .social-link:hover{color:var(--win-blue);text-decoration:underline;}
+        .lang-switch{display:flex;gap:6px;align-items:center;border-left:1px solid var(--win-dark);border-right:1px solid var(--win-light);padding:0 10px;font-size:13px;}
+        .lang-link{color:var(--win-dark);text-decoration:none;}
+        .lang-link.active{color:#000;font-weight:bold;text-decoration:underline;}
+        .clock{font-size:13px;color:#000;}
 
         @media (max-width: 900px) {
-            .desktop-wrapper { flex-direction: column; padding: 10px; }
-            .fixed-nav-icons { flex-direction: row; width: 100%; border-right: none; border-bottom: 1px dotted #fff; padding-bottom: 15px; justify-content: center; }
-            .folder-grid { padding-left: 0; padding-top: 20px; justify-content: center; }
-            .window { width: 95% !important; left: 2.5% !important; top: 10px !important; position: relative !important; margin-bottom: 20px; }
+            .desktop-wrapper { flex-direction: column; padding: 15px; padding-bottom: 70px; min-height: auto; }
+            .desktop-icons { flex-direction: row; flex-wrap: wrap; width: 100%; justify-content: center; gap: 15px; padding-bottom: 20px; }
+            .desktop-icon { width: 80px; padding: 5px; }
+            .archive-folders { justify-content: center; padding: 10px; gap: 15px; max-width: 100%;}
+            .window { position: fixed !important; width: 90vw !important; left: 5vw !important; top: 10vh !important; }
+            .taskbar { padding: 0 6px; overflow-x: auto; white-space: nowrap; gap: 8px; justify-content: flex-start; height: 48px; }
+            .taskbar::-webkit-scrollbar { display: none; }
             .taskbar-windows { display: none; }
+            .subscribe-pill { margin-left: 0; }
+            .system-tray { margin-left: 0; }
+            .desktop-copyright { position: static; text-align: center; margin: 20px 0; }
         }
     </style>
 </head>
 <body>
     <div class="marquee-bar">
-        <div class="marquee-content">>> SYSTEM_EXPLORER: 往期目錄資料庫讀取中... [OK] // 全新第四季早鳥活動進行中 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <div class="marquee-content">
+            >> SYSTEM.MSG: [ <span style="color:var(--y2k-pink);">第四季早鳥活動</span> ] 進行中_ // ENDS_ON: <span style="color:var(--y2k-mint);">2026.05.17</span> // [ <span style="color:var(--y2k-pink);">全新主題策展正刊 ＋ 雜誌通信副刊</span> ] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            >> SYSTEM.MSG: [ <span style="color:var(--y2k-pink);">第四季早鳥活動</span> ] 進行中_ // ENDS_ON: <span style="color:var(--y2k-mint);">2026.05.17</span> // [ <span style="color:var(--y2k-pink);">全新主題策展正刊 ＋ 雜誌通信副刊</span> ] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
     </div>
 
     <div class="desktop-wrapper">
-        <div class="fixed-nav-icons">
+        <div class="desktop-icons">
             <a href="/" class="desktop-icon"><span class="icon-emoji">🏠</span><span class="icon-text">主頁</span></a>
             <a href="/zh-tw/about" class="desktop-icon"><span class="icon-emoji">🐘</span><span class="icon-text">關於小象</span></a>
             <a href="/zh-tw/archive" class="desktop-icon"><span class="icon-emoji">📂</span><span class="icon-text">往期目錄</span></a>
             <a href="/zh-tw/guestbook" class="desktop-icon"><span class="icon-emoji">💬</span><span class="icon-text">留言板</span></a>
         </div>
 
-        <div class="folder-grid">
-            <div class="desktop-icon" onclick="openWindow('music-win')"><span class="icon-emoji">🎧</span><span class="icon-text">流行音樂</span></div>
-            <div class="desktop-icon" onclick="openWindow('mag-win')"><span class="icon-emoji">📖</span><span class="icon-text">獨立雜誌</span></div>
-            <div class="desktop-icon" onclick="openWindow('film-win')"><span class="icon-emoji">🎞️</span><span class="icon-text">影展研究</span></div>
-            <div class="desktop-icon" onclick="openWindow('queer-win')"><span class="icon-emoji">♀️</span><span class="icon-text">酷兒書寫</span></div>
-            <div class="desktop-icon" onclick="openWindow('ai-win')"><span class="icon-emoji">⚙️</span><span class="icon-text">AI實踐</span></div>
-            <div class="desktop-icon" onclick="openWindow('zine-win')"><span class="icon-emoji">🗂️</span><span class="icon-text">閱讀小報</span></div>
+        <div class="archive-folders">
+            <div class="folder-btn" onclick="bringToFront('mag-win')"><span class="icon-emoji">📖</span><span class="folder-text">紙本通信</span></div>
+            <div class="folder-btn" onclick="bringToFront('bookstore-win')"><span class="icon-emoji">🏡</span><span class="folder-text">書店現場</span></div>
+            <div class="folder-btn" onclick="bringToFront('fair-win')"><span class="icon-emoji">🎪</span><span class="folder-text">展場漫遊</span></div>
+            <div class="folder-btn" onclick="bringToFront('resource-win')"><span class="icon-emoji">🎒</span><span class="folder-text">數位生存</span></div>
+            <div class="folder-btn" onclick="bringToFront('music-win')"><span class="icon-emoji">🎧</span><span class="folder-text">聽覺切片</span></div>
+            <div class="folder-btn" onclick="bringToFront('film-win')"><span class="icon-emoji">🎞️</span><span class="folder-text">光影放映</span></div>
+            <div class="folder-btn" onclick="bringToFront('doc-win')"><span class="icon-emoji">📽️</span><span class="folder-text">真實定格</span></div>
+            <div class="folder-btn" onclick="bringToFront('podcast-win')"><span class="icon-emoji">📻</span><span class="folder-text">聲音頻率</span></div>
         </div>
 
         <div id="playground">
-            <div id="music-win" class="window draggable" style="width: 550px; left: 40px; top: 20px;">
-                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>🎧</span><span>Music_Archive.txt</span></div><div class="win-btn" onclick="closeWindow('music-win')">×</div></div>
+            
+            <div id="mag-win" class="window draggable" style="width: 480px; left: 15vw; top: 10vh;">
+                <div class="title-bar"><span>📖 Zines_Comm.doc</span><div class="win-btn" onclick="closeWin('mag-win')">×</div></div>
                 <div class="win-content">
-                    <div class="issue-item"><span class="issue-title">Issue#04 重返昨日世界</span><p class="issue-desc">The Playlist of My life / 雜誌社 004：音樂殖民地</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#06 Winter Sweet</span><p class="issue-desc">播放器：冬日的 Citypop / 粵語流行曲研究</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#10 一期一會</span><p class="issue-desc">播放器：霓虹旋律 / 我的日本文化知識庫</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#35 每當變幻時</span><p class="issue-desc">2025年年度音樂大賞 / 年度心水華語播客</p></div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#01 我們的飛地</span>
+                            <span class="card-tag">LITERATURE</span>
+                        </div>
+                        <div class="card-desc">
+                            從文學期刊出發，探討 <strong>《聯合文學》</strong> 與 <strong>《新活水》</strong>，並附港台期刊、博碩士論文查閱方式。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://elephlow1217.notion.site/Issue-01-1-35115431c08d8120ba20f72b2be8571d?source=copy_link" target="_blank" class="btn-preview">✨ 免費試閱</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#15 與異見共存</span>
+                            <span class="card-tag">MAGAZINE</span>
+                        </div>
+                        <div class="card-desc">
+                            關注對岸非營利組織機構，並翻閱 <strong>《薰風》</strong> 雜誌。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://elephlow1217.notion.site/Issue-15-35115431c08d81c9ba18f44e4a6a26c9?source=copy_link" target="_blank" class="btn-preview">✨ 免費試閱</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">閱讀小報 002：正發生</span>
+                            <span class="card-tag">ZINE & PUB</span>
+                        </div>
+                        <div class="card-desc">
+                            圖解酷兒史、Garo漫畫大革命，以及 <strong>VOP 攝影之聲</strong> 等出版物梳理。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://elephlow1217.notion.site/002-35415431c08d80f8888dd173b80840a3?source=copy_link" target="_blank" class="btn-preview">✨ 免費試閱</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#18 甜美生活</span>
+                            <span class="card-tag">EARLY PUB</span>
+                        </div>
+                        <div class="card-desc">
+                            翻阅早期台湾流行文化杂志，深度探索 <strong>《漢聲》雜誌</strong>，以及早期的出版生态。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#19 沉默之聲</span>
+                            <span class="card-tag">PUBLISHING</span>
+                        </div>
+                        <div class="card-desc">
+                            逃离与失声：探讨 <strong>《皇冠》雜誌</strong> 历史与其背后的出版帝国。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="mag-win" class="window draggable" style="width: 550px; left: 80px; top: 60px;">
-                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>📖</span><span>Magazine_Store.doc</span></div><div class="win-btn" onclick="closeWindow('mag-win')">×</div></div>
+            <div id="bookstore-win" class="window draggable" style="width: 480px; left: 20vw; top: 15vh;">
+                <div class="title-bar"><span>🏡 Bookstores_Live.exe</span><div class="win-btn" onclick="closeWin('bookstore-win')">×</div></div>
                 <div class="win-content">
-                    <div class="issue-item"><span class="issue-title">Issue#01 我們的飛地</span><p class="issue-desc">雜誌社 001：《聯合文學》、《新活水》</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#02 荒蕪中起舞</span><p class="issue-desc">雜誌社 002：VERSE / 知識庫：Zine文化</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#13 永遠困惑，永遠好奇</span><p class="issue-desc">遊書店 001：田園城市風格書店 / 如何製作 Zine</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#20 成長代價</span><p class="issue-desc">我所鍾意的台灣人文學術期刊分享</p></div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#13 永遠困惑，永遠好奇。</span>
+                            <span class="card-tag">TAIPEI</span>
+                        </div>
+                        <div class="card-desc">
+                            遊書店 001：走入充滿設計與獨立出版生命力的 <strong>田園城市風格書店</strong>。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#14 隨波逐流</span>
+                            <span class="card-tag">TAIPEI</span>
+                        </div>
+                        <div class="card-desc">
+                            遊書店 002：走進台灣歷史悠久的外文書店 <strong>書林書店</strong>。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#24 越洋電話</span>
+                            <span class="card-tag">SEOUL</span>
+                        </div>
+                        <div class="card-desc">
+                            遊書店 009：韓國首爾 <strong>今日書房（책방오늘）</strong>，並開箱來自韓國的獨立出版品。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#28 落腳點</span>
+                            <span class="card-tag">HONG KONG</span>
+                        </div>
+                        <div class="card-desc">
+                            香港獨立書店巡禮，特別推薦 <strong>Zine Coop</strong> 及超齊全的台港海外獨立書店名單。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">日本書店遊記系列 (合集)</span>
+                            <span class="card-tag">JAPAN</span>
+                        </div>
+                        <div class="card-desc">
+                            跟著小羊漫遊日本獨立書店：
+                            <ul>
+                                <li>Day 1: 純真地反抗 (Issue#28)</li>
+                                <li>Day 2: 大阪的快樂老家 (Issue#30)</li>
+                                <li>Day 4: 京都的禮物 (Issue#31)</li>
+                            </ul>
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖全系列</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="film-win" class="window draggable" style="width: 550px; left: 120px; top: 100px;">
-                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>🎞️</span><span>Film_Festival.log</span></div><div class="win-btn" onclick="closeWindow('film-win')">×</div></div>
+            <div id="fair-win" class="window draggable" style="width: 480px; left: 25vw; top: 20vh;">
+                <div class="title-bar"><span>🎪 Exhibitions_Tour.txt</span><div class="win-btn" onclick="closeWin('fair-win')">×</div></div>
                 <div class="win-content">
-                    <div class="issue-item"><span class="issue-title">Issue#07 春天終將來臨</span><p class="issue-desc">觀影展 001：臺北文學·閱影展</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#11 以身為度 如是我做</span><p class="issue-desc">觀影展 005：台灣國際女性影展</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#17 新年來信</span><p class="issue-desc">2023年度觀影總結 / 再一次拼圖楊德昌</p></div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">閱讀小報 012：無用之用</span>
+                            <span class="card-tag">ART BOOK FAIR</span>
+                        </div>
+                        <div class="card-desc">
+                            特輯企劃：<strong>草率季 Taipei Art Book Fair</strong> 現場導覽與深度觀察。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#11 以身為度 如是我做</span>
+                            <span class="card-tag">BOOK FAIR</span>
+                        </div>
+                        <div class="card-desc">
+                            <strong>Hong Kong Book Fair 香港書展</strong> 現場觀察與出版物推薦。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#17 新年來信</span>
+                            <span class="card-tag">EXHIBITION</span>
+                        </div>
+                        <div class="card-desc">
+                            阅览室：<strong>台灣國際書展</strong> 現場報導，及 TIDF 台灣國際影展入圍名單觀察。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#07 春天終將來臨</span>
+                            <span class="card-tag">FILM FESTIVAL</span>
+                        </div>
+                        <div class="card-desc">
+                            觀影展 001 ：<strong>臺北文學·閱影展</strong> (Taipei Literature Film Festival) 選片指南。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="queer-win" class="window draggable" style="width: 550px; left: 160px; top: 140px;">
-                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>♀️</span><span>Queer_Writing.txt</span></div><div class="win-btn" onclick="closeWindow('queer-win')">×</div></div>
+            <div id="resource-win" class="window draggable" style="width: 480px; left: 30vw; top: 25vh;">
+                <div class="title-bar"><span>🎒 Digital_Survival.zip</span><div class="win-btn" onclick="closeWin('resource-win')">×</div></div>
                 <div class="win-content">
-                    <div class="issue-item"><span class="issue-title">Issue#08 遊移之身</span><p class="issue-desc">女孩們：母與女 / TIDF 紀錄片影展</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#23 萍聚霧散</span><p class="issue-desc">走入公共的訴求與行動 / 2024女性影展</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#30 夏日紀事</span><p class="issue-desc">世界各地的線上 Zine-Library（女性與酷兒）</p></div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#31 & 32：工具箱特輯</span>
+                            <span class="card-tag">HACK & AI</span>
+                        </div>
+                        <div class="card-desc">
+                            文科生實用指南：<strong>免費閱讀世界雜誌與電子書攻略</strong>，以及獲取 Gemini、Perplexity PRO 的 AI 使用場景。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#03 & 06：自學特輯</span>
+                            <span class="card-tag">COURSES</span>
+                        </div>
+                        <div class="card-desc">
+                            收藏的 <strong>台灣開放式課程彙總分享</strong> 與寒假港台自學課程特輯。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#16 享受碰撞</span>
+                            <span class="card-tag">PLATFORMS</span>
+                        </div>
+                        <div class="card-desc">
+                            阅览室资源：港台 <strong>電子書平台</strong> 综合使用体验与优劣势横评。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#23 萍聚霧散</span>
+                            <span class="card-tag">LIBRARY</span>
+                        </div>
+                        <div class="card-desc">
+                            收藏夾：分享找 <strong>漫畫資源的方法渠道</strong>，以及香港獨立書店精選輯。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="ai-win" class="window draggable" style="width: 550px; left: 200px; top: 180px;">
-                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>⚙️</span><span>AI_Fieldwork.sys</span></div><div class="win-btn" onclick="closeWindow('ai-win')">×</div></div>
+            <div id="music-win" class="window draggable" style="width: 480px; left: 35vw; top: 15vh;">
+                <div class="title-bar"><span>🎧 Auditory_Slices.wav</span><div class="win-btn" onclick="closeWin('music-win')">×</div></div>
                 <div class="win-content">
-                    <div class="issue-item"><span class="issue-title">Issue#32 拒絕闡釋</span><p class="issue-desc">文科生轉人工智能行業工作實踐報告</p></div>
-                    <div class="issue-item"><span class="issue-title">Issue#31 愛</span><p class="issue-desc">工具箱：免費獲取 Gemini、Perplexity PRO</p></div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#36 折返</span>
+                            <span class="card-tag">MUSICIAN</span>
+                        </div>
+                        <div class="card-desc">
+                            島嶼之間，設計香港。女性藝術家 010：持續耕耘，彳亍前行——<strong>馮穎琪 Vicky</strong>。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://elephlow1217.notion.site/Issue-36-39e15431c08d831f8c6281af440ecc69?source=copy_link" target="_blank" class="btn-preview">✨ 免費試閱</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#04 重返昨日世界</span>
+                            <span class="card-tag">MUSIC HISTORY</span>
+                        </div>
+                        <div class="card-desc">
+                            雜誌社 004：<strong>音樂殖民地</strong>（1994-2004），The Playlist of My life。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#34 創造未來</span>
+                            <span class="card-tag">INDIE POP</span>
+                        </div>
+                        <div class="card-desc">
+                            女性藝術家 009：自在的流動，「離譜」的輕盈——<strong>Kiri T 謝曉盈</strong>。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#31 愛</span>
+                            <span class="card-tag">VOCALIST</span>
+                        </div>
+                        <div class="card-desc">
+                            女性藝術家 005：理智面具下的情感暗湧——<strong>洪佩瑜</strong>，沉醉悲情的歌单推荐。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#29 在愛與恨的邊緣</span>
+                            <span class="card-tag">LOCAL VOICES</span>
+                        </div>
+                        <div class="card-desc">
+                            播放器特别企划：<strong>地方女聲</strong> 音乐推荐。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="zine-win" class="window draggable" style="width: 550px; left: 240px; top: 220px;">
-                <div class="title-bar"><div style="display:flex;align-items:center;gap:5px;"><span>🗂️</span><span>Reading_Zine.msg</span></div><div class="win-btn" onclick="closeWindow('zine-win')">×</div></div>
+            <div id="film-win" class="window draggable" style="width: 480px; left: 40vw; top: 20vh;">
+                <div class="title-bar"><span>🎞️ Cinema_Projection.mp4</span><div class="win-btn" onclick="closeWin('film-win')">×</div></div>
                 <div class="win-content">
-                    <div class="issue-item"><span class="issue-title">閱讀小報 001</span><p class="issue-desc">當女性執起筆，看見整個時代</p></div>
-                    <div class="issue-item"><span class="issue-title">閱讀小報 002</span><p class="issue-desc">正發生：圖解酷兒史 / 漫畫大革命</p></div>
-                    <div class="issue-item"><span class="issue-title">閱讀小報 004</span><p class="issue-desc">香港來信：香港看 Zine（14本）</p></div>
-                    <div class="issue-item"><span class="issue-title">閱讀小報 009</span><p class="issue-desc">「別」的世界 / 血汗 AI 隱性勞工</p></div>
-                    <div class="issue-item"><span class="issue-title">閱讀小報 012</span><p class="issue-desc">無用之用：草率季 Taipei Art Book Fair</p></div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#07 春天終將來臨</span>
+                            <span class="card-tag">FILM FESTIVAL</span>
+                        </div>
+                        <div class="card-desc">
+                            觀影展 001 ：<strong>臺北文學·閱影展</strong> (Taipei Literature Film Festival) 選片指南。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#29 在愛與恨的邊緣</span>
+                            <span class="card-tag">QUEER CINEMA</span>
+                        </div>
+                        <div class="card-desc">
+                            Happy Pride Month！盤點 <strong>4 位酷兒導演與 31 部酷兒影視</strong>。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#17 新年來信</span>
+                            <span class="card-tag">AWARDS</span>
+                        </div>
+                        <div class="card-desc">
+                            2023年度觀影總結（完整篇），以及再一次拼圖 <strong>楊德昌</strong>。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#35 每當變幻時</span>
+                            <span class="card-tag">BEST OF 2025</span>
+                        </div>
+                        <div class="card-desc">
+                            放映廳企划：<strong>2025年年度私人影视大賞</strong> 榜单大公开。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div id="doc-win" class="window draggable" style="width: 480px; left: 45vw; top: 25vh;">
+                <div class="title-bar"><span>📽️ Reality_Freeze.avi</span><div class="win-btn" onclick="closeWin('doc-win')">×</div></div>
+                <div class="win-content">
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#08 遊移之身</span>
+                            <span class="card-tag">DOCUMENTARY</span>
+                        </div>
+                        <div class="card-desc">
+                            觀影展 002 ：深度解析 <strong>TIDF 台灣國際紀錄片影展</strong>。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#12 自斷裂處接續生長</span>
+                            <span class="card-tag">ARTS DOC</span>
+                        </div>
+                        <div class="card-desc">
+                            觀影展 007：<strong>嘉義國際藝術紀錄影展</strong>，與“再”見楊德昌影展彩蛋。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">閱讀小報 002：正發生</span>
+                            <span class="card-tag">NETWORK</span>
+                        </div>
+                        <div class="card-desc">
+                            擴展本土：<strong>東亞紀錄片電影節網絡</strong> 的发展与观察。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://elephlow1217.notion.site/002-35415431c08d80f8888dd173b80840a3?source=copy_link" target="_blank" class="btn-preview">✨ 免費試閱</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="podcast-win" class="window draggable" style="width: 480px; left: 50vw; top: 30vh;">
+                <div class="title-bar"><span>📻 Sound_Freq.mp3</span><div class="win-btn" onclick="closeWin('podcast-win')">×</div></div>
+                <div class="win-content">
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#35 每當變幻時</span>
+                            <span class="card-tag">AWARDS 2025</span>
+                        </div>
+                        <div class="card-desc">
+                            收音機特企：<strong>2025年年度心水華語播客大賞</strong> 榜單揭曉。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#17 新年來信</span>
+                            <span class="card-tag">AWARDS 2023</span>
+                        </div>
+                        <div class="card-desc">
+                            播放器：2023年度歌曲與 <strong>2023年度播客（完整篇）</strong> 推薦。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                    <div class="archive-card">
+                        <div class="card-header">
+                            <span class="card-title">Issue#26 生長不痛</span>
+                            <span class="card-tag">AWARDS 2024</span>
+                        </div>
+                        <div class="card-desc">
+                            年度盘点特辑：<strong>2024年度播客內容大賞</strong>，那些陪伴在耳边的声音。
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 解鎖本期</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        
+        <div class="desktop-copyright">2022.07 - 2026.05 © Elephlow</div>
     </div>
 
     <footer class="taskbar">
         <a href="/" class="start-btn">🐘 Start</a>
-        <div class="taskbar-windows" id="taskbar-tabs">
-            <div class="taskbar-win-tab" id="tab-music-win"><span>🎧</span> Music</div>
-            <div class="taskbar-win-tab" id="tab-mag-win"><span>📖</span> Magazine</div>
-            <div class="taskbar-win-tab" id="tab-film-win"><span>🎞️</span> Film</div>
-            <div class="taskbar-win-tab" id="tab-queer-win"><span>♀️</span> Queer</div>
-            <div class="taskbar-win-tab" id="tab-ai-win"><span>⚙️</span> AI</div>
-            <div class="taskbar-win-tab" id="tab-zine-win"><span>🗂️</span> Zine</div>
+        <div class="taskbar-windows">
+            <div class="taskbar-win-tab" id="tab-mag-win" onclick="bringToFront('mag-win')"><span>📖</span> 紙本通信</div>
+            <div class="taskbar-win-tab" id="tab-bookstore-win" onclick="bringToFront('bookstore-win')"><span>🏡</span> 書店現場</div>
+            <div class="taskbar-win-tab" id="tab-fair-win" onclick="bringToFront('fair-win')"><span>🎪</span> 展場漫遊</div>
+            <div class="taskbar-win-tab" id="tab-resource-win" onclick="bringToFront('resource-win')"><span>🎒</span> 數位生存</div>
+            <div class="taskbar-win-tab" id="tab-music-win" onclick="bringToFront('music-win')"><span>🎧</span> 聽覺切片</div>
+            <div class="taskbar-win-tab" id="tab-film-win" onclick="bringToFront('film-win')"><span>🎞️</span> 光影放映</div>
+            <div class="taskbar-win-tab" id="tab-doc-win" onclick="bringToFront('doc-win')"><span>📽️</span> 真實定格</div>
+            <div class="taskbar-win-tab" id="tab-podcast-win" onclick="bringToFront('podcast-win')"><span>📻</span> 聲音頻率</div>
         </div>
+        <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">立即訂閱第四季早鳥</a>
         <div class="system-tray">
+            <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">INSTAGRAM</a>
+            <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="social-link">RED: @Apollo11-</a>
             <div class="lang-switch">
-                <a href="/en/archive" class="lang-link">EN</a>
-                <a href="/zh-tw/archive" class="lang-link active">繁</a>
-                <a href="/zh-cn/archive" class="lang-link">简</a>
+                <a href="/en/archive" class="lang-link">EN</a><a href="/zh-tw/archive" class="lang-link active">繁</a><a href="/zh-cn/archive" class="lang-link">简</a>
             </div>
-            <div id="live-clock">00:00 AM</div>
+            <div class="clock" id="live-clock">00:00 AM</div>
         </div>
     </footer>
 
     <script is:inline>
-        let zIndexCounter = 100;
-        function openWindow(id) {
+        let zIndexCounter = 200;
+        
+        function bringToFront(id) {
             const win = document.getElementById(id);
             const tab = document.getElementById('tab-' + id);
-            win.classList.add('active');
-            if(tab) tab.classList.add('visible', 'active');
-            zIndexCounter++;
-            win.style.zIndex = zIndexCounter;
+            if(win) {
+                if(!win.classList.contains('active')) {
+                    win.classList.add('active');
+                }
+                win.style.zIndex = ++zIndexCounter;
+            }
+            if(tab) {
+                tab.classList.add('visible', 'active');
+            }
         }
-        function closeWindow(id) {
-            document.getElementById(id).classList.remove('active');
+        
+        function closeWin(id) {
+            const win = document.getElementById(id);
             const tab = document.getElementById('tab-' + id);
+            if(win) win.classList.remove('active');
             if(tab) tab.classList.remove('visible', 'active');
         }
+
         const windows = document.querySelectorAll('.draggable');
         windows.forEach(win => {
             const titleBar = win.querySelector('.title-bar');
             titleBar.onmousedown = (e) => {
-                if (window.innerWidth <= 900) return;
-                zIndexCounter++;
-                win.style.zIndex = zIndexCounter;
-                let shiftX = e.clientX - win.getBoundingClientRect().left;
-                let shiftY = e.clientY - win.getBoundingClientRect().top;
-                function moveAt(pageX, pageY) { win.style.left = (pageX - shiftX) + 'px'; win.style.top = (pageY - shiftY - 60) + 'px'; }
-                document.onmousemove = (e) => moveAt(e.pageX, e.pageY);
+                // 【修復關鍵】：防止點擊按鈕時觸發拖拽
+                if (e.target.closest('.win-btn')) return;
+
+                if (window.innerWidth <= 900) return; 
+                win.style.zIndex = ++zIndexCounter;
+                
+                let rect = win.getBoundingClientRect();
+                let shiftX = e.clientX - rect.left;
+                let shiftY = e.clientY - rect.top;
+
+                function moveAt(clientX, clientY) { 
+                    win.style.left = (clientX - shiftX) + 'px'; 
+                    win.style.top = (clientY - shiftY) + 'px'; 
+                }
+                
+                document.onmousemove = (e) => moveAt(e.clientX, e.clientY);
                 document.onmouseup = () => { document.onmousemove = null; };
             };
-            win.onmousedown = () => { zIndexCounter++; win.style.zIndex = zIndexCounter; };
+            
+            win.onmousedown = () => { win.style.zIndex = ++zIndexCounter; };
         });
+        
         function updateClock() {
-            const now = new Date();
-            let h = now.getHours(); let m = String(now.getMinutes()).padStart(2, '0');
-            let ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+            const now = new Date(); let h = now.getHours(); let m = String(now.getMinutes()).padStart(2, '0');
+            let ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12; h = h ? h : 12;
             document.getElementById('live-clock').innerText = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
         }
         setInterval(updateClock, 1000); updateClock();
