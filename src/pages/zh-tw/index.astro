@@ -1,0 +1,441 @@
+---
+import '../../styles/global.css';
+import CalendarWidget from '../../components/CalendarWidget.astro';
+---
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>推開部屋的門 | elephlow</title>
+  <meta name="description" content="一份中文付費電子報，小象（Elephlow）的獨立通訊基地。" />
+</head>
+<body>
+
+  <main class="home-window">
+
+    <!-- 窗子顶部 - 标题栏 -->
+    <header class="window-titlebar">
+      <div class="titlebar-left">
+        <span class="title-dots">● ● ●</span>
+        <span class="titlebar-text">elephlow.cc / 推開部屋的門</span>
+      </div>
+      <div class="titlebar-right">
+        <a href="/zh-cn/" class="lang-link">简</a>
+        <a href="/zh-tw/" class="lang-link lang-active">繁</a>
+        <a href="/en/" class="lang-link">EN</a>
+      </div>
+    </header>
+
+    <!-- 窗子中部 - 内容 -->
+    <div class="window-content">
+
+      <!-- Welcome Banner -->
+      <section class="welcome-banner">
+        <div class="welcome-inner">
+          <div class="pixel-icon">🐘</div>
+          <div class="welcome-text">
+            <p class="welcome-line1">✿ Welcome to ✿</p>
+            <h1 class="site-title">elephlow's homepage</h1>
+            <p class="welcome-line2">since 2022.07 · ☘ 推開部屋的門 ☘</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Grid -->
+      <div class="main-grid">
+
+        <!-- 左侧 -->
+        <aside class="left-column">
+          <div class="deco-icons">
+            <span>📕</span><span>☘</span><span>✦</span>
+            <span>📩</span><span>🍵</span><span>♬</span>
+          </div>
+          <CalendarWidget />
+          <div class="status-info">
+            <p>last update: 2026.05.11</p>
+            <p>currently: 第四季籌備中</p>
+            <p>contact: hello@elephlow.cc</p>
+          </div>
+        </aside>
+
+        <!-- 中间 -->
+        <section class="center-column">
+          <div class="intro-card">
+            <h2 class="intro-title">≋ 推開部屋的門 ≋</h2>
+            <p class="intro-tagline">在邊緣捕捉與想像 ✦</p>
+            <div class="intro-body">
+              <p>這是一份創辦於 2022 年 7 月的中文付費電子報，也是小象（Elephlow）的獨立通訊基地。</p>
+              <p>我們以文字為載體，穿梭於港台流行文化、獨立出版、影展研究及酷兒視角書寫的隙縫之中。不仰賴演算法，我們致力於打破資訊差，為你篩選並整合高品質的文化資訊，提供一個真實、有溫度的閱讀陪伴。</p>
+              <p>「部屋」是私密的起點，而「推開門」則是通往公共的行動。我們致力於將偏見所隔絕的萬事萬物重新拉近，當下一次敲門聲響起，邀請你一同推開門，<strong>在時代的邊緣捕捉那些被忽視的微光。</strong></p>
+            </div>
+            <div class="cta-row">
+              <a href="https://tally.so/r/4415XB" class="cta-button cta-primary">★ 訂閱第四季 ★</a>
+              <a href="/zh-tw/archive" class="cta-button cta-secondary">看往期目錄 →</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- 右侧 -->
+        <aside class="right-column">
+          <div class="menu-card">
+            <h3 class="menu-title">▼ MENU ▼</h3>
+            <ul class="menu-list">
+              <li><a href="/zh-tw/about" class="menu-mint">about 小象</a></li>
+              <li><a href="/zh-tw/archive" class="menu-aqua">往期目錄</a></li>
+              <li><a href="/zh-tw/guestbook" class="menu-pink">留言板</a></li>
+              <li><a href="https://tally.so/r/4415XB" class="menu-purple">★ 訂閱 ★</a></li>
+            </ul>
+          </div>
+
+          <div class="guestbook-card">
+            <a href="/zh-tw/guestbook">
+              <span class="gb-icon">✉</span>
+              <span class="gb-text">sign my guestbook</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- 窗子底部 - pastel 任务栏 -->
+    <footer class="window-taskbar">
+      <div class="taskbar-left">
+        <span class="taskbar-start">⊞ START</span>
+        <span class="taskbar-item">▣ 推開部屋的門</span>
+      </div>
+      <div class="taskbar-right">
+        <span class="taskbar-status">☘ currently online</span>
+        <span class="taskbar-clock" id="clock">--:--</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script is:inline>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('clock');
+      if (el) el.innerText = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+  </script>
+
+  <style>
+    /* === Home Window 容器 === */
+    .home-window {
+      max-width: 1180px;
+      margin: 24px auto;
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-purple);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(199, 179, 232, 0.35);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === Window 标题栏（Win 风 pastel 版） === */
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+
+    .titlebar-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .titlebar-text { letter-spacing: 1px; }
+
+    .titlebar-right { display: flex; gap: 4px; }
+    .lang-link {
+      padding: 2px 8px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 3px;
+      background: transparent;
+    }
+    .lang-link:hover { background: var(--candy-cream); }
+    .lang-active { background: var(--candy-cream); font-weight: 700; }
+
+    /* === Window 内容区 === */
+    .window-content {
+      padding: 24px;
+    }
+
+    /* === Welcome Banner === */
+    .welcome-banner {
+      background: var(--candy-mint);
+      background-image: repeating-linear-gradient(
+        135deg,
+        var(--candy-mint), var(--candy-mint) 16px,
+        var(--candy-aqua) 16px, var(--candy-aqua) 32px,
+        var(--candy-cream) 32px, var(--candy-cream) 48px,
+        var(--candy-pink) 48px, var(--candy-pink) 64px
+      );
+      padding: 0;
+      border-radius: 12px;
+      border: 2px dashed var(--candy-purple);
+      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.5);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .welcome-inner {
+      background: var(--soft-white);
+      margin: 6px;
+      padding: 20px 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .pixel-icon { font-size: 48px; flex-shrink: 0; }
+
+    .welcome-line1 {
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      color: var(--candy-purple);
+      margin: 0;
+    }
+
+    .site-title {
+      font-family: var(--font-bubble);
+      font-size: 32px;
+      color: var(--ink-light);
+      text-shadow: 2px 2px 0 var(--candy-peach);
+      margin: 4px 0;
+      line-height: 1.1;
+      letter-spacing: 1px;
+    }
+
+    .welcome-line2 {
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink-light);
+      margin: 0;
+    }
+
+    /* === Main Grid === */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* === 左侧 === */
+    .deco-icons {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      padding: 10px 8px;
+      background: var(--soft-white);
+      border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .status-info {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink-light);
+      padding: 12px;
+      background: var(--candy-mint);
+      border-radius: 8px;
+      line-height: 1.8;
+      margin-top: 12px;
+    }
+    .status-info p { margin: 0; }
+
+    /* === 中间介绍卡 === */
+    .intro-card {
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-mint);
+      border-radius: 12px;
+      padding: 24px 28px;
+      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
+      max-height: 540px;
+      overflow-y: auto;
+    }
+
+    .intro-title {
+      font-family: var(--font-mochi);
+      font-size: 22px;
+      color: var(--ink-light);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .intro-tagline {
+      text-align: center;
+      font-family: var(--font-rounded);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--candy-purple);
+      margin-bottom: 20px;
+    }
+
+    .intro-body p {
+      font-family: var(--font-serif-tc), var(--font-serif-sc);
+      line-height: 1.9;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .intro-body strong {
+      color: var(--ink);
+      background: linear-gradient(transparent 60%, var(--candy-aqua) 60%);
+      font-weight: 700;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-family: var(--font-rounded);
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1.5px dashed var(--candy-purple);
+      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4);
+      transition: transform 0.15s;
+      color: var(--ink);
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+
+    .cta-button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 rgba(199, 179, 232, 0.5);
+      text-decoration: none;
+    }
+
+    .cta-primary { background: var(--candy-mint); }
+    .cta-secondary { background: var(--candy-cream); }
+
+    /* === 右侧菜单 === */
+    .menu-card {
+      background: var(--soft-white);
+      border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .menu-title {
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      text-align: center;
+      padding: 8px 4px;
+      margin: 0 0 6px;
+      color: var(--ink-light);
+      background: var(--candy-cream);
+      border-radius: 6px;
+    }
+
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-list li { margin-bottom: 4px; }
+
+    .menu-list a {
+      display: block;
+      padding: 10px 12px;
+      text-align: center;
+      font-family: var(--font-rounded);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 8px;
+      border: 1.5px dashed var(--candy-purple);
+      transition: transform 0.15s;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+
+    .menu-list a:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4);
+      text-decoration: none;
+    }
+
+    .menu-mint { background: var(--candy-mint); }
+    .menu-aqua { background: var(--candy-aqua); }
+    .menu-pink { background: var(--candy-pink); }
+    .menu-purple { background: var(--candy-purple); }
+
+    /* === Guestbook 卡 === */
+    .guestbook-card a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px;
+      background: var(--candy-cream);
+      border: 1.5px dashed var(--candy-pink);
+      border-radius: 12px;
+      box-shadow: 3px 3px 0 rgba(255, 182, 217, 0.4);
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .guestbook-card a:hover { text-decoration: none; }
+    .gb-icon { font-size: 24px; margin-bottom: 4px; }
+    .gb-text {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink-light);
+    }
+
+    /* === Window 任务栏 === */
+    .window-taskbar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .taskbar-left { display: flex; gap: 12px; align-items: center; }
+    .taskbar-right { display: flex; gap: 12px; align-items: center; }
+    .taskbar-start {
+      background: var(--candy-cream);
+      padding: 2px 8px;
+      border-radius: 3px;
+      border: 1px dashed var(--candy-purple);
+    }
+    .taskbar-item { color: var(--ink-light); }
+    .taskbar-status { color: var(--ink-light); }
+    .taskbar-clock { font-weight: 700; }
+
+    /* === 响应式 === */
+    @media (max-width: 900px) {
+      .main-grid { grid-template-columns: 1fr; }
+      .home-window { margin: 12px; }
+      .site-title { font-size: 24px; }
+    }
+  </style>
+
+</body>
+</html>
