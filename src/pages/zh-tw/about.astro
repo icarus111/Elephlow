@@ -1,155 +1,174 @@
 // src/pages/zh-tw/about.astro
 ---
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>關於小象 | 推開部屋的門</title>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>关于小象 | 推开部屋的门</title>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root{
-            /* 經典 OS 全局配色 */
-            --win-gray:#c0c0c0; --win-dark:#808080; --win-light:#ffffff;
-            --win-blue:#000080; --y2k-purple:#4B2D8C; --y2k-pink:#FF66B3; --y2k-mint:#B2F5EA;
+            /* 💾 经典 OS 全局配色 (用于外层桌面与视窗框) */
+            --win-gray: #c0c0c0; 
+            --win-dark: #808080; 
+            --win-light: #ffffff;
+            --win-blue: #000080;
             
-            /* 🎨 獨立窗格內部撞色配色 (高對比跳色) */
-            --bg-ig: #B2F5EA; --ink-ig: #000080;   /* 左側: 薄荷藍 x 深藍 */
-            --bg-red: #FDF1B8; --ink-red: #8A2828; /* 右側 (粉紫背景): 奶油黃 x 深磚紅 (高對比) */
-            --bg-th: #E6E6FA; --ink-th: #4B2D8C;   /* 左下 (綠黃背景): 薰衣草紫 x 深紫 (高對比) */
+            /* 🍭 内部 Y2K 浏览器马卡龙配色 */
+            --m-green: #B5E48C;
+            --m-pink: #FFB5A7;
+            --m-blue: #A2D2FF;
+            --m-yellow: #FFF5BA;
+            --m-purple: #CDB4DB;
         }
         *{margin:0;padding:0;box-sizing:border-box;cursor:default;}
         html,body{height:auto;min-height:100%; overflow-x:hidden;}
         
+        /* 🌍 保留你原始的桌面背景 */
         body{
             background:linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),
                        linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px),
                        linear-gradient(to right,#98fb98,#fffacd,#ffebcd,#ffb6c1,#e0b0ff);
             background-size:20px 20px,20px 20px,100% 100%;
             background-attachment:fixed;
-            font-family:'DotGothic16','PMingLiU','MingLiU','細明體','SimSun',sans-serif;
+            font-family:'DotGothic16','PMingLiU','MingLiU','细明体','SimSun',sans-serif;
             display:flex; flex-direction:column;
         }
 
-        /* 跑馬燈 */
-        .marquee-bar{background:#000;color:#0f0;padding:12px 0;min-height:60px;display:flex;align-items:center;overflow:hidden;border-bottom:3px solid var(--win-dark);z-index:2000; position:relative;}
-        .marquee-content{display:flex;white-space:nowrap;font-size:1.2rem;animation:scroll 25s linear infinite;letter-spacing:2px;}
-        @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-
         .desktop-wrapper{display:flex;flex:1;padding:25px;position:relative;min-height:900px;}
         
-        /* 桌面圖標排版 */
-        .desktop-grid { display: flex; flex-direction: column; gap: 15px; width: 120px; z-index: 10;}
-        
-        /* 📍 修改點：桌面圖標層級分隔 */
-        .desktop-divider { height: 2px; border-bottom: 2px dashed rgba(0,0,0,0.3); margin: 10px 0; width: 80%; align-self: center; }
+        /* ==========================================
+           🗂️ 桌面图标排版 (像素化大改造)
+           ========================================== */
+        .desktop-grid { display: flex; flex-direction: column; gap: 15px; width: 100px; z-index: 10;}
+        .desktop-divider { height: 2px; border-bottom: 2px dashed rgba(0,0,0,0.3); margin: 5px 0; width: 80%; align-self: center; }
         .desktop-group-title { background: var(--win-light); border: 1px solid var(--win-dark); padding: 2px 6px; font-size: 11px; font-weight: bold; text-align: center; color: var(--win-dark); width: 80%; align-self: center; margin-bottom: 5px;}
 
-        .desktop-icon{display:flex;flex-direction:column;align-items:center;text-decoration:none;padding:8px 5px;cursor:pointer; width: 100%;}
-        .desktop-icon .icon-emoji{font-size:40px;margin-bottom:5px;filter:drop-shadow(2px 2px 0px rgba(0,0,0,1)); transition: transform 0.1s;}
-        .icon-text{color:#fff;background-color:var(--win-blue);font-size:13px;text-align:center;padding:2px 6px;border:1px dotted transparent; word-break: break-all;}
-        .desktop-icon:hover .icon-emoji { transform: scale(1.1); }
-        .desktop-icon:hover .icon-text { border: 1px dotted #fff; background-color: var(--y2k-purple); }
+        .desktop-icon {
+            display: flex; flex-direction: column; align-items: center; text-decoration: none; 
+            padding: 8px 5px; cursor: pointer; width: 100%; gap: 6px;
+        }
+        
+        /* 真正的像素图标样式 */
+        .pixel-icon {
+            width: 36px; height: 36px; 
+            image-rendering: pixelated; /* 保持像素边缘锋利 */
+            filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.3)); 
+            transition: transform 0.1s;
+        }
+        
+        .icon-text {
+            color: #fff; background-color: transparent; font-size: 13px; text-align: center; 
+            padding: 2px 4px; border: 1px dotted transparent; word-break: break-all;
+        }
+        
+        /* 选中/Hover 状态还原经典 Windows */
+        .desktop-icon:hover .pixel-icon { transform: scale(1.05); filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.5));}
+        .desktop-icon:hover .icon-text { background-color: var(--win-blue); border: 1px dotted #fff; }
 
         /* ==========================================
-           🗂️ 獨立視窗通用樣式 (經典 OS 灰框)
+           🗂️ 核心视窗通用样式 (经典 OS 灰框)
            ========================================== */
-        .window { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) #000 #000 var(--win-light); box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 var(--win-dark), 2px 2px 0 rgba(0,0,0,0.5); display: flex; flex-direction: column; position: absolute; z-index: 100; padding: 3px; }
+        .window { 
+            background: var(--win-gray); 
+            border: 2px solid; border-color: var(--win-light) #000 #000 var(--win-light); 
+            box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 var(--win-dark), 4px 4px 0 rgba(0,0,0,0.3); 
+            display: flex; flex-direction: column; position: absolute; z-index: 100; padding: 3px; 
+        }
         
         .title-bar { background: linear-gradient(90deg, var(--win-blue), #1084d0); color: white; padding: 4px 6px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; cursor: move; user-select: none; letter-spacing: 1px; font-weight: bold;}
         .win-controls { display: flex; flex-direction: row; gap: 3px; }
         .win-btn { width: 18px; height: 18px; background-color: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); color: #000; font-family: 'Pixel', sans-serif; font-size: 10px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 1px 1px 0 #000; }
         .win-btn:active { border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark); padding-top: 2px; padding-left: 2px; box-shadow: none; }
         
-        .sys-menu, .paint-menu { display: flex; gap: 10px; padding: 3px 6px; font-size: 12px; border-bottom: 1px solid var(--win-dark); color: #000;}
-        .sys-menu span, .paint-menu span { padding: 2px 6px; cursor: pointer;}
-        .sys-menu span:first-letter, .paint-menu span:first-letter { text-decoration: underline; }
-        .sys-menu span:hover, .paint-menu span:hover { background-color: var(--win-blue); color: #fff; }
+        .sys-menu { display: flex; gap: 10px; padding: 3px 6px; font-size: 12px; border-bottom: 1px solid var(--win-dark); color: #000;}
+        .sys-menu span { padding: 2px 6px; cursor: pointer;}
+        .sys-menu span:first-letter { text-decoration: underline; }
+        .sys-menu span:hover { background-color: var(--win-blue); color: #fff; }
 
         /* ==========================================
-           🎨 中央小畫家視窗 (Canvas.exe)
+           🎨 视窗内部：固定尺寸的 Y2K 盒中盒
            ========================================== */
-        #paint-win { width: 660px; left: 28%; top: 12%; z-index: 150;}
-        .paint-body { display: flex; flex-direction: row; background: var(--win-gray); border: 2px inset var(--win-light); }
+        #about-win { width: 850px; height: 580px; left: calc(50% - 425px); top: 8vh; z-index: 150;}
         
-        .paint-tools { width: 52px; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px; padding: 3px; background: var(--win-gray); }
-        .tool-btn { width: 22px; height: 22px; border: 1px outset var(--win-light); background: #eee; font-size: 12px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        .tool-btn:hover { background: #ddd; }
-        .tool-btn.active { border: 1px inset var(--win-light); background: #d0d0d0; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); }
+        .kawaii-inner { 
+            background: #fafafa; display: flex; flex-direction: column; flex: 1; 
+            overflow: hidden; border: 2px inset var(--win-dark); margin-top: 2px;
+        }
         
-        .paint-workspace { flex: 1; display: flex; flex-direction: column; padding-left: 2px; border-left: 1px solid var(--win-dark);}
-        
-        .paint-canvas-container { flex: 1; background: #949494; padding: 4px; overflow: hidden; position: relative; min-height: 380px;}
-        .paint-canvas { background: #fff; width: 100%; height: 100%; border: 2px dashed #888; overflow-y: auto; padding: 25px; position: relative; font-family: 'Noto Serif TC', serif; }
-        
-        .paint-palette-bar { height: 45px; display: flex; align-items: center; gap: 8px; padding: 4px 6px; background: var(--win-gray); border-top: 1px solid var(--win-light);}
-        .color-indicator { width: 32px; height: 32px; border: 2px inset var(--win-light); background: var(--win-gray); position: relative; flex-shrink: 0;}
-        .color-bg { position: absolute; right: 2px; bottom: 2px; width: 14px; height: 14px; background: #ffffff; border: 1px inset #888; }
-        .color-fg { position: absolute; left: 2px; top: 2px; width: 14px; height: 14px; background: #000000; border: 1px inset #888; z-index: 2; }
-        .color-grid { display: flex; flex-wrap: wrap; width: 200px; gap: 1px; align-content: flex-start;}
-        .color-box { width: 13px; height: 13px; border: 1px inset var(--win-light); }
-        
-        .canvas-section { display: none; animation: fadeIn 0.3s; }
-        .canvas-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* 可爱工具列 (地址列 + 语言切换) */
+        .kawaii-toolbar { 
+            display: flex; padding: 10px 15px; background: #fff; 
+            border-bottom: 2px dashed var(--m-green); align-items: center; gap: 15px; 
+        }
+        .url-pill { 
+            border: 2px solid #ccc; border-radius: 20px; padding: 4px 15px; flex: 1; 
+            font-family: 'DotGothic16'; color: #666; font-size: 14px; display: flex; align-items: center; gap: 8px;
+        }
+        .lang-toggles { display: flex; gap: 6px; }
+        .lang-btn { 
+            border: 2px solid #ccc; border-radius: 15px; padding: 2px 10px; font-size: 12px; 
+            font-weight: bold; text-decoration: none; color: #555; transition: 0.2s;
+        }
+        .lang-btn.active { background: var(--m-green); color: #333; border-color: var(--m-green); }
 
-        /* 畫布內容排版 */
-        .intro-slogan { font-family: 'DotGothic16', sans-serif; font-size: 22px; color: var(--win-blue); font-weight: bold; margin-bottom: 15px; border-bottom: 2px solid var(--win-blue); padding-bottom: 5px; display: inline-block;}
+        /* 视窗内部双栏布局 */
+        .kawaii-body { display: flex; flex: 1; overflow: hidden; }
         
-        .y2k-tag { font-family: 'DotGothic16', sans-serif; font-size: 13px; padding: 2px 8px; border: 1px solid #000; margin-right: 5px; display: inline-block; margin-bottom: 15px; font-weight: bold; box-shadow: 2px 2px 0 rgba(0,0,0,0.15);}
-        .tag-creator { background: var(--win-blue); color: #fff; }
-        .tag-editor { background: var(--y2k-pink); color: #fff; }
+        /* 👉 左侧：固定不滑动 (解决空荡问题) */
+        .k-sidebar { 
+            width: 240px; padding: 25px 20px; background: #fff; 
+            border-right: 2px dashed var(--m-green); display: flex; flex-direction: column; 
+            gap: 15px; overflow-y: auto; text-align: center;
+        }
+        .k-sidebar h1 { font-family: 'DotGothic16'; color: var(--m-pink); font-size: 24px; text-shadow: 1px 1px 0 #eee; margin-bottom: 5px;}
+        .k-sidebar p { font-size: 13px; color: #888; margin-bottom: 15px;}
         
-        .skill-title { font-size: 14px; font-weight: bold; margin-bottom: 6px; color: var(--win-blue); font-family: 'DotGothic16', sans-serif;}
-        .skill-bar { margin-bottom: 18px; }
-        .bar-bg { display: block; width: 100%; height: 16px; border: 2px inset var(--win-dark); background: #f9f9f9; }
-        .bar-fill { display: block; height: 100%; }
+        .k-link-title { font-weight: bold; color: var(--m-blue); font-size: 15px; margin-top: 10px; border-bottom: 2px dotted var(--m-blue); padding-bottom: 5px; display: inline-block;}
+        
+        /* 马卡龙社交药丸按钮 */
+        .social-pills { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .k-link-btn { 
+            display: flex; align-items: center; justify-content: center; gap: 8px; 
+            padding: 10px; border-radius: 25px; text-decoration: none; font-weight: bold; 
+            font-size: 13px; color: #333; box-shadow: 2px 3px 0 rgba(0,0,0,0.1); border: 1px solid #ddd; transition: 0.1s;
+        }
+        .k-link-btn:active { transform: translate(1px,2px); box-shadow: none; }
+        .k-ig { background: var(--m-green); }
+        .k-red { background: var(--m-pink); }
+        .k-th { background: var(--m-blue); }
 
-        .philosophy-box { background: #fdfbf7; border: 1px dashed #ccc; padding: 20px; margin-top: 15px; font-size: 14.5px; line-height: 1.8;}
-        .status-bar { padding: 3px 6px; font-size: 12px; background: var(--win-gray); border-top: 1px solid var(--win-dark); color: #333; font-family: 'PMingLiU', sans-serif; }
+        /* 👉 右侧：独立滑动的文章区 (绝对不溢出) */
+        .k-content { 
+            flex: 1; padding: 35px 40px; background: #FEFEFE; 
+            overflow-y: auto; line-height: 2; font-size: 15px; font-family: 'Noto Serif SC', serif; color: #444;
+        }
+        
+        /* 定制超可爱粉色滚动条 */
+        .k-content::-webkit-scrollbar { width: 12px; }
+        .k-content::-webkit-scrollbar-track { background: #fdfdfd; border-left: 1px solid #eee; }
+        .k-content::-webkit-scrollbar-thumb { background: var(--m-pink); border-radius: 6px; border: 2px solid #fff;}
+
+        /* 右侧文章细节排版 */
+        .section-title { font-family: 'DotGothic16'; color: var(--m-pink); font-size: 20px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
+        .cute-divider { text-align: center; color: var(--m-blue); letter-spacing: 5px; margin: 35px 0; }
+        .y2k-tag { font-family: 'DotGothic16'; font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: bold; background: var(--m-yellow); border: 1px solid #ddd; margin-right: 6px;}
+        
+        /* 观测领域进度条 */
+        .skill-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; font-size: 14px; font-family: 'DotGothic16';}
+        .skill-name { width: 130px; font-weight: bold; color: #555;}
+        .bar-bg { flex: 1; height: 12px; background: #f0f0f0; border-radius: 6px; overflow: hidden; border: 1px solid #ddd;}
+        .bar-fill { height: 100%; border-radius: 6px;}
+
+        /* Q&A 样式 */
+        .qa-box { background: #F8F5FF; border: 1px dashed #CDB4DB; border-radius: 12px; padding: 20px; margin-top: 15px;}
+        .qa-item { margin-bottom: 15px; }
+        .qa-q { font-weight: bold; color: #8A2BE2; display: block; margin-bottom: 5px;}
+        .qa-a { color: #555; display: block; padding-left: 15px; border-left: 3px solid var(--m-purple);}
 
         /* ==========================================
-           🌐 社群媒體矩陣視窗：無 Emoji 復古程式風
-           ========================================== */
-        .social-win { padding: 3px; display: flex; flex-direction: column; position: absolute; z-index: 100;}
-        
-        .social-inner-content {
-            margin-top: 2px;
-            border: 2px inset var(--win-light);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100%; padding: 20px; text-align: center; cursor: pointer;
-            font-family: 'PMingLiU', '細明體', serif;
-            position: relative;
-        }
-
-        .social-inner-content p { font-size: 13px; font-weight: bold; letter-spacing: 1px; margin: 8px 0; }
-
-        .execute-btn {
-            display: inline-block; padding: 4px 16px; text-decoration: none; font-size: 12px; font-weight: bold; margin-top: 15px;
-            font-family: 'PMingLiU', sans-serif; border: 2px solid #000; box-shadow: 2px 2px 0 #000; color: #000; background: #fff; transition: 0.1s;
-        }
-        .execute-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 transparent; }
-
-        /* 📸 Instagram: 橫向長方形 (340x240) */
-        #ig-win { width: 340px; height: 240px; left: 8%; top: 10%; }
-        #ig-win .social-inner-content { background: var(--bg-ig); color: var(--ink-ig); }
-        .ig-retro-box { border: 2px dashed var(--ink-ig); padding: 10px 20px; margin-bottom: 10px; width: 90%; background: rgba(255,255,255,0.4); }
-        .ig-retro-box h2 { font-family: 'DotGothic16', sans-serif; font-size: 22px; margin: 0; letter-spacing: 2px; }
-        
-        /* 📕 小紅書: 窄高長方形 (220x360) - 換成高對比奶油黃 */
-        #red-win { width: 220px; height: 360px; left: 70%; top: 15%; }
-        #red-win .social-inner-content { background: var(--bg-red); color: var(--ink-red); }
-        .red-retro-line { width: 100%; height: 3px; background: var(--ink-red); margin: 10px 0; }
-        #red-win h2 { font-family: 'DotGothic16', sans-serif; font-size: 18px; margin: 0; border: 1px solid var(--ink-red); padding: 4px 10px; background: rgba(255,255,255,0.5);}
-
-        /* 🧵 Threads: 正方形 (250x250) - 換成高對比薰衣草紫 */
-        #threads-win { width: 250px; height: 250px; left: 14%; top: 58%; }
-        #threads-win .social-inner-content { background: var(--bg-th); color: var(--ink-th); }
-        #threads-win h2 { font-family: 'DotGothic16', sans-serif; font-size: 20px; margin: 0; letter-spacing: 1px; }
-        .th-retro-bracket { font-family: 'DotGothic16', sans-serif; font-size: 16px; opacity: 0.7; margin-bottom: 10px; }
-
-        /* ==========================================
-           📌 任務欄與底部元素
+           📌 任务栏与底部元素 (完全保留你的原版设计)
            ========================================== */
         .taskbar{position:fixed;bottom:0;left:0;right:0;height:42px;background:var(--win-gray);border-top:2px solid var(--win-light);display:flex;align-items:center;padding:0 6px;z-index:3000;box-shadow:inset 0 1px 0 #dfdfdf;}
         
@@ -169,207 +188,176 @@
         .social-link{color:#000;text-decoration:none;font-size:12px; font-weight: bold;}
         .social-link:hover{color:var(--win-blue);text-decoration:underline;}
         
-        .lang-switch{display:flex;gap:6px;align-items:center;border-left:1px solid var(--win-dark);border-right:1px solid var(--win-light);padding:0 10px;font-size:13px;}
-        .lang-link{color:var(--win-dark);text-decoration:none;}
-        .lang-link.active{color:#000;font-weight:bold;text-decoration:underline;}
-        
-        .clock{font-size:13px;color:#000; margin-left: 5px;}
+        .clock{font-size:13px;color:#000; margin-left: 5px; font-weight: bold; font-family: 'PMingLiU', sans-serif;}
 
         @media (max-width: 900px) {
-            .social-win { display: none !important; }
-            .window { width: 90vw !important; left: 5vw !important; position: absolute !important; top: 10vh !important; }
             .desktop-grid { flex-direction: row; height: auto; width: 100%; justify-content: center; }
             .desktop-divider, .desktop-group-title { display: none; }
             .subscribe-pill { display: none; }
+            
+            /* 手机版视窗自动充满画面，内部改为上下排列 */
+            #about-win { width: 95vw !important; height: 80vh !important; left: 2.5vw !important; top: 10vh !important; position: absolute !important; }
+            .kawaii-body { flex-direction: column; }
+            .k-sidebar { width: 100%; border-right: none; border-bottom: 2px dashed var(--m-green); padding: 15px; }
+            .social-pills { flex-direction: row; flex-wrap: wrap; justify-content: center;}
+            .k-link-btn { flex: 1; min-width: 100px; padding: 6px; }
+            .k-content { padding: 20px 15px; }
         }
     </style>
 </head>
 <body>
     
-    <div class="marquee-bar">
-        <div class="marquee-content">
-            >> SYSTEM.MSG: [ <span style="color:var(--y2k-pink);">第四季早鳥活動</span> ] 進行中_ // ENDS_ON: <span style="color:var(--y2k-mint);">2026.05.17</span> // [ <span style="color:var(--y2k-pink);">全新主題策展正刊 ＋ 雜誌通信副刊</span> ] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            >> SYSTEM.MSG: [ <span style="color:var(--y2k-pink);">第四季早鳥活動</span> ] 進行中_ // ENDS_ON: <span style="color:var(--y2k-mint);">2026.05.17</span> // [ <span style="color:var(--y2k-pink);">全新主題策展正刊 ＋ 雜誌通信副刊</span> ] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-    </div>
-
     <div class="desktop-wrapper">
+        
         <div class="desktop-grid">
-            <a href="/" class="desktop-icon"><span class="icon-emoji">🏠</span><span class="icon-text">主頁</span></a>
-            <a href="/zh-tw/about" class="desktop-icon"><span class="icon-emoji">🐘</span><span class="icon-text">關於小象</span></a>
-            <a href="/zh-tw/archive" class="desktop-icon"><span class="icon-emoji">📂</span><span class="icon-text">往期目錄</span></a>
-            <a href="/zh-tw/guestbook" class="desktop-icon"><span class="icon-emoji">💬</span><span class="icon-text">留言板</span></a>
+            <a href="/" class="desktop-icon">
+                <img src="https://win98icons.alexmeub.com/icons/computer_explorer-5.png" alt="Home" class="pixel-icon">
+                <span class="icon-text">主页</span>
+            </a>
+            <a href="/zh-tw/about" class="desktop-icon">
+                <img src="https://win98icons.alexmeub.com/icons/notepad-1.png" alt="About" class="pixel-icon">
+                <span class="icon-text">关于小象</span>
+            </a>
+            <a href="/zh-tw/archive" class="desktop-icon">
+                <img src="https://win98icons.alexmeub.com/icons/directory_closed-4.png" alt="Archive" class="pixel-icon">
+                <span class="icon-text">往期目录</span>
+            </a>
+            <a href="/zh-tw/guestbook" class="desktop-icon">
+                <img src="https://win98icons.alexmeub.com/icons/network_internet_pcs_installer-2.png" alt="Guestbook" class="pixel-icon">
+                <span class="icon-text">留言板</span>
+            </a>
             
             <div class="desktop-divider"></div>
-            <div class="desktop-group-title">NETWORK</div>
+            <div class="desktop-group-title">SYSTEM</div>
             
-            <div class="desktop-icon" onclick="openApp('ig-win')"><span class="icon-emoji">📷</span><span class="icon-text">Instagram</span></div>
-            <div class="desktop-icon" onclick="openApp('red-win')"><span class="icon-emoji">📕</span><span class="icon-text">小紅書</span></div>
-            <div class="desktop-icon" onclick="openApp('threads-win')"><span class="icon-emoji">🧵</span><span class="icon-text">Threads</span></div>
-        </div>
-
-        <div id="ig-win" class="window social-win" style="display: flex;">
-            <div class="title-bar drag-handle">
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <span style="font-size: 10px;">▣</span><span>Instagram.exe</span>
-                </div>
-                <div class="win-controls"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn" onclick="closeApp('ig-win')">×</div></div>
-            </div>
-            <div class="social-inner-content" onclick="playIg(this)">
-                <div class="ig-retro-box">
-                    <h2>INSTAGRAM</h2>
-                </div>
-                <p>USR: @icarusrootedbutflow</p>
-                <div id="ig-vibe" style="margin-top: 5px; font-size: 12px; font-family: 'DotGothic16'; opacity: 0.8;">[ STATUS: ACTIVE ]</div>
-                <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="execute-btn" onclick="event.stopPropagation()">RUN PROGRAM</a>
+            <div class="desktop-icon" onclick="openApp('about-win')">
+                <img src="https://win98icons.alexmeub.com/icons/application_hourglass-1.png" alt="App" class="pixel-icon">
+                <span class="icon-text">About_Me.exe</span>
             </div>
         </div>
 
-        <div id="red-win" class="window social-win" style="display: flex;">
+        <div id="about-win" class="window" style="display: flex;">
+            
             <div class="title-bar drag-handle">
                 <div style="display: flex; align-items: center; gap: 6px;">
-                    <span style="font-size: 10px;">▣</span><span>Xiaohongshu.app</span>
-                </div>
-                <div class="win-controls"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn" onclick="closeApp('red-win')">×</div></div>
-            </div>
-            <div class="social-inner-content" onclick="playRed(this)">
-                <h2>小紅書 RED</h2>
-                <div class="red-retro-line"></div>
-                <p style="font-family: 'DotGothic16'; font-size: 14px;">ID: Apollo11-</p>
-                <div class="red-retro-line"></div>
-                <div id="red-status" style="margin-top: 10px; font-size: 12px; border: 1px dotted var(--ink-red); padding: 4px 8px;">[ 點擊載入新動態 ]</div>
-                <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="execute-btn" onclick="event.stopPropagation()">EXECUTE</a>
-            </div>
-        </div>
-
-        <div id="threads-win" class="window social-win" style="display: flex;">
-            <div class="title-bar drag-handle">
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <span style="font-size: 10px;">▣</span><span>Threads.sys</span>
-                </div>
-                <div class="win-controls"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn" onclick="closeApp('threads-win')">×</div></div>
-            </div>
-            <div class="social-inner-content" onclick="playThreads(this)">
-                <div class="th-retro-bracket">&lt;system_log&gt;</div>
-                <h2>THREADS</h2>
-                <p style="font-family: 'DotGothic16';">@icarusrootedbutflow</p>
-                <div id="th-quote" style="margin-top: 10px; font-size: 12px; background: rgba(0,0,0,0.1); padding: 4px; width: 100%;">[ Awaiting input... ]</div>
-                <div class="th-retro-bracket" style="margin-top: 10px; margin-bottom: 0;">&lt;/system_log&gt;</div>
-                <a href="https://www.threads.net/@icarusrootedbutflow" target="_blank" class="execute-btn" onclick="event.stopPropagation()">CONNECT</a>
-            </div>
-        </div>
-
-        <div id="paint-win" class="window" style="display: flex;">
-            <div class="title-bar drag-handle">
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <span>🎨</span><span>Canvas.exe - 關於創作者</span>
+                    <img src="https://win98icons.alexmeub.com/icons/application_hourglass-1.png" style="width: 14px; height: 14px; image-rendering: pixelated;">
+                    <span>About_Me.exe - Elephlow Network</span>
                 </div>
                 <div class="win-controls">
                     <div class="win-btn">_</div>
                     <div class="win-btn">□</div>
-                    <div class="win-btn" onclick="closeApp('paint-win')">×</div>
+                    <div class="win-btn" onclick="closeApp('about-win')">×</div>
                 </div>
-            </div>
-            <div class="paint-menu">
-                <span>File</span><span>Edit</span><span>View</span><span>Image</span><span>Options</span><span>Help</span>
             </div>
             
-            <div class="paint-body">
-                <div class="paint-tools">
-                    <div class="tool-btn active" onclick="switchCanvas('section-intro', this)" title="個人簡介">✏️</div>
-                    <div class="tool-btn" onclick="switchCanvas('section-radar', this)" title="寫作板塊">📊</div>
-                    <div class="tool-btn" onclick="switchCanvas('section-philosophy', this)" title="創作理念">💡</div>
-                    <div class="tool-btn">🔍</div><div class="tool-btn">✂</div><div class="tool-btn">⬚</div>
-                    <div class="tool-btn">🖌</div><div class="tool-btn">A</div><div class="tool-btn">🖍</div><div class="tool-btn">🪣</div>
-                </div>
-                
-                <div class="paint-workspace">
-                    <div class="paint-canvas-container">
-                        <div class="paint-canvas">
-                            
-                            <div id="section-intro" class="canvas-section active">
-                                <div class="intro-slogan">Elephlow / 小象</div><br>
-                                <span class="y2k-tag tag-creator">CREATOR</span>
-                                <span class="y2k-tag tag-editor">EDITOR</span>
-                                
-                                <div style="margin-top: 15px; line-height: 1.8; color: #111; font-size: 15px;">
-                                    <p>你好，歡迎推開這扇門。我是小象，一名內容創意工作者。</p>
-                                    <p style="margin-top: 10px;">這裡不僅僅是字與圖的集散地，更像是一座虛擬的橋樑。我專注於獨立出版、東亞文學與邊緣視角的書寫，帶著相機與筆記本，在城市巷弄與藝文展會間穿梭。</p>
-                                    <p style="margin-top: 10px;">我相信真實的記錄擁有打破偏見的力量。透過這份通訊，我試圖在喧囂的網絡演算法之外，建立一個靜謐、真誠的交流場域，把那些容易被遺忘的聲音與風景，安放進每一期的字裡行間。</p>
-                                </div>
-                            </div>
-
-                            <div id="section-radar" class="canvas-section">
-                                <p style="margin-bottom: 20px; color: #333; font-family: 'DotGothic16', sans-serif; font-weight: bold;">> 當前核心觀測領域與寫作板塊：</p>
-                                
-                                <div class="skill-bar">
-                                    <div class="skill-title">📚 獨立出版與 Zine 現場</div>
-                                    <div class="bar-bg"><div class="bar-fill" style="width: 95%; background: #F19CBB;"></div></div>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-title">⚧ 女性主義與酷兒書寫</div>
-                                    <div class="bar-bg"><div class="bar-fill" style="width: 90%; background: #CDB4DB;"></div></div>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-title">🖋️ 東亞文學與跨地政治</div>
-                                    <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: #FAD961;"></div></div>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-title">🎞️ 紀錄片影展與作者研究</div>
-                                    <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: #A2D2FF;"></div></div>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-title">🎧 流行音樂與海外播客</div>
-                                    <div class="bar-bg"><div class="bar-fill" style="width: 80%; background: #B9FBC0;"></div></div>
-                                </div>
-                            </div>
-
-                            <div id="section-philosophy" class="canvas-section">
-                                <div class="intro-slogan">💡 關於創作與載體</div>
-                                <div class="philosophy-box">
-                                    <p style="font-weight: 900; margin-bottom: 8px; color: #000; font-size: 15px;">為什麼選擇傳統的形式？</p>
-                                    <p>比起依賴主流平台，只有自己建立平台才能長久、持續地運營。我不遵循既有平台設定的遊戲規則，在這裡，我是制定規則的人。</p>
-                                    <p style="margin-top: 15px;">這是一份不摻雜商業利益的內容篩選，一個普通的、同齡的活人的真實閱讀世界。我希望提供的不僅是零散的資訊，而是將事物與城市、歷史串聯起來的整合性視角，以及一份真實的陪伴感。</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    
-                    <div class="paint-palette-bar">
-                        <div class="color-indicator">
-                            <div class="color-bg"></div>
-                            <div class="color-fg"></div>
-                        </div>
-                        <div class="color-grid">
-                            <div class="color-box" style="background:#000000;"></div><div class="color-box" style="background:#808080;"></div><div class="color-box" style="background:#800000;"></div><div class="color-box" style="background:#808000;"></div><div class="color-box" style="background:#008000;"></div><div class="color-box" style="background:#008080;"></div><div class="color-box" style="background:#000080;"></div><div class="color-box" style="background:#800080;"></div><div class="color-box" style="background:#808040;"></div><div class="color-box" style="background:#004040;"></div><div class="color-box" style="background:#0080FF;"></div><div class="color-box" style="background:#004080;"></div><div class="color-box" style="background:#4000FF;"></div><div class="color-box" style="background:#804000;"></div>
-                            <div class="color-box" style="background:#ffffff;"></div><div class="color-box" style="background:#c0c0c0;"></div><div class="color-box" style="background:#ff0000;"></div><div class="color-box" style="background:#ffff00;"></div><div class="color-box" style="background:#00ff00;"></div><div class="color-box" style="background:#00ffff;"></div><div class="color-box" style="background:#0000ff;"></div><div class="color-box" style="background:#ff00ff;"></div><div class="color-box" style="background:#ffff80;"></div><div class="color-box" style="background:#00ff80;"></div><div class="color-box" style="background:#80ffff;"></div><div class="color-box" style="background:#8080ff;"></div><div class="color-box" style="background:#ff0080;"></div><div class="color-box" style="background:#ff8040;"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="sys-menu">
+                <span>File</span><span>Edit</span><span>View</span><span>Help</span>
             </div>
-            <div class="status-bar">For Help, click Help Topics on the Help Menu.</div>
+            
+            <div class="kawaii-inner">
+                
+                <div class="kawaii-toolbar">
+                    <div class="url-pill">
+                        <span style="color: #A2D2FF;">🌐</span> https://elephlow.cc/about
+                    </div>
+                    <div class="lang-toggles">
+                        <a href="/en/about" class="lang-btn">EN</a>
+                        <a href="/zh-tw/about" class="lang-btn active">繁</a>
+                        <a href="/zh-cn/about" class="lang-btn">简</a>
+                    </div>
+                </div>
+
+                <div class="kawaii-body">
+                    
+                    <div class="k-sidebar">
+                        <img src="https://win98icons.alexmeub.com/icons/users-1.png" style="width: 48px; height: 48px; margin: 0 auto 5px auto; image-rendering: pixelated;">
+                        <h1>Elephlow</h1>
+                        <p>Independent Creator<br>& Editor</p>
+                        
+                        <div class="k-link-title">✧ Links ✧</div>
+                        <div class="social-pills">
+                            <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="k-link-btn k-ig">
+                                INSTAGRAM
+                            </a>
+                            <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="k-link-btn k-red">
+                                RedNote
+                            </a>
+                            <a href="https://www.threads.net/@icarusrootedbutflow" target="_blank" class="k-link-btn k-th">
+                                THREADS
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="k-content">
+                        
+                        <div class="section-title">🌸 关于我 About Me</div>
+                        <div style="margin-bottom: 15px;">
+                            <span class="y2k-tag">CREATOR</span>
+                            <span class="y2k-tag">EDITOR</span>
+                        </div>
+                        <p>你好，欢迎推开这扇门。我是小象，一名内容创意工作者。</p>
+                        <p style="margin-top: 10px;">这里不仅仅是字与图的集散地，更像是一座虚拟的桥梁 ☁️。我专注于独立出版、东亚文学与边缘视角的书写，带着相机与笔记本，在城市巷弄与艺文展会间穿梭。</p>
+                        <p style="margin-top: 10px;">我相信真实的记录拥有打破偏见的力量 ✨。透过这份通讯，我试图在喧嚣的网络算法之外，建立一个静谧、真诚的交流场域，把那些容易被遗忘的声音与风景，安放进每一期的字里行间。</p>
+
+                        <div class="cute-divider">⋆｡°✩ ⋆⁺₊⋆ ☾ ⋆⁺₊⋆ ✩°｡⋆</div>
+
+                        <div class="section-title">📊 核心观测领域</div>
+                        <div class="skill-row">
+                            <span class="skill-name">独立出版与 Zine</span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 95%; background: var(--m-pink);"></div></div>
+                        </div>
+                        <div class="skill-row">
+                            <span class="skill-name">女性与酷儿书写</span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 90%; background: var(--m-blue);"></div></div>
+                        </div>
+                        <div class="skill-row">
+                            <span class="skill-name">东亚文学与政治</span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: var(--m-yellow);"></div></div>
+                        </div>
+                        <div class="skill-row">
+                            <span class="skill-name">纪录片与作者研究</span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: var(--m-green);"></div></div>
+                        </div>
+                        <div class="skill-row">
+                            <span class="skill-name">流行音乐与播客</span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 80%; background: var(--m-purple);"></div></div>
+                        </div>
+
+                        <div class="cute-divider">⋆｡°✩ ⋆⁺₊⋆ ☾ ⋆⁺₊⋆ ✩°｡⋆</div>
+
+                        <div class="section-title">💡 关于创作与载体</div>
+                        <div class="qa-box">
+                            <div class="qa-item">
+                                <span class="qa-q">Q: 为什么选择传统的形式？</span>
+                                <span class="qa-a">比起依赖主流平台，只有自己建立平台才能长久、持续地运营。我不遵循既有平台设定的游戏规则，在这里，我是制定规则的人。</span>
+                            </div>
+                            <div class="qa-item">
+                                <span class="qa-q">Q: 这份通讯的目标是什么？</span>
+                                <span class="qa-a">这是一份不掺杂商业利益的内容筛选，一个普通的、同龄的活人的真实阅读世界。我希望提供的不仅是零散的资讯，而是将事物与城市、历史串联起来的整合性视角，以及一份真实的陪伴感 (◡‿◡✿)。</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div> </div>
+            <div style="padding: 3px 6px; font-size: 12px; background: var(--win-gray); border-top: 1px solid var(--win-dark); color: #333; font-family: 'PMingLiU', sans-serif;">For Help, click Help Topics on the Help Menu.</div>
         </div>
     </div>
 
     <footer class="taskbar">
-        <a href="/" class="start-btn">🐘 Start</a>
+        <a href="/" class="start-btn">
+            <img src="https://win98icons.alexmeub.com/icons/windows-0.png" style="width:16px; height:16px; image-rendering:pixelated;"> Start
+        </a>
         <div class="taskbar-windows">
-            <div class="taskbar-win-tab visible active" id="tab-paint-win" onclick="bringToFront('paint-win')"><span>🎨</span> Canvas.exe</div>
-            <div class="taskbar-win-tab visible" id="tab-ig-win" onclick="bringToFront('ig-win')"><span>▣</span> Instagram</div>
-            <div class="taskbar-win-tab visible" id="tab-red-win" onclick="bringToFront('red-win')"><span>▣</span> Xiaohongshu</div>
-            <div class="taskbar-win-tab visible" id="tab-threads-win" onclick="bringToFront('threads-win')"><span>▣</span> Threads</div>
+            <div class="taskbar-win-tab visible active" id="tab-about-win" onclick="bringToFront('about-win')">
+                <img src="https://win98icons.alexmeub.com/icons/application_hourglass-1.png" style="width:14px; height:14px; image-rendering:pixelated;"> About_Me.exe
+            </div>
         </div>
         
-        <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">立即訂閱第四季早鳥</a>
+        <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">立即订阅第四季早鸟</a>
         
         <div class="system-tray">
             <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">INSTAGRAM</a>
-            <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="social-link">RED: @Apollo11-</a>
-            
-            <div class="lang-switch">
-                <a href="/en/about" class="lang-link">EN</a><a href="/zh-tw/about" class="lang-link active">繁</a><a href="/zh-cn/about" class="lang-link">简</a>
-            </div>
+            <span style="color:var(--win-dark);">|</span>
             <div class="clock" id="live-clock">00:00 AM</div>
         </div>
     </footer>
@@ -377,30 +365,11 @@
     <script is:inline>
         let zIndexCounter = 300;
 
-        // 獨立窗格點擊互動玩法
-        function playIg(el) {
-            const vibes = ['[ 紀錄城市切片 ]', '[ 整理膠片中... ]', '[ 光影捕捉 ]', '[ STATUS: ACTIVE ]'];
-            document.getElementById('ig-vibe').innerText = vibes[Math.floor(Math.random() * vibes.length)];
-        }
-        function playRed(el) {
-            const mottos = ['> 系統更新：新文章發佈', '> 載入中：湖南漫遊指南', '> 狀態：閱讀與筆記', '[ 點擊載入新動態 ]'];
-            document.getElementById('red-status').innerText = mottos[Math.floor(Math.random() * mottos.length)];
-        }
-        function playThreads(el) {
-            const thoughts = ['[ 在邊緣捕捉與想像 ]', '[ 思考獨立出版的未來 ]', '[ 構思下一期 Newsletter ]', '[ Awaiting input... ]'];
-            document.getElementById('th-quote').innerText = thoughts[Math.floor(Math.random() * thoughts.length)];
-        }
-
         function openApp(winId) {
             const win = document.getElementById(winId);
             const tab = document.getElementById('tab-' + winId);
-            if (win) {
-                win.style.display = 'flex';
-                win.style.zIndex = ++zIndexCounter;
-            }
-            if (tab) {
-                tab.classList.add('visible');
-            }
+            if (win) { win.style.display = 'flex'; win.style.zIndex = ++zIndexCounter; }
+            if (tab) { tab.classList.add('visible'); }
             bringToFront(winId);
         }
 
@@ -408,37 +377,21 @@
             const win = document.getElementById(winId);
             const tab = document.getElementById('tab-' + winId);
             if (win) win.style.display = 'none';
-            if (tab) {
-                tab.classList.remove('visible');
-                tab.classList.remove('active');
-            }
+            if (tab) { tab.classList.remove('visible'); tab.classList.remove('active'); }
         }
 
         function bringToFront(winId) {
             const win = document.getElementById(winId);
-            if (win && win.style.display !== 'none') {
-                win.style.zIndex = ++zIndexCounter;
-            }
+            if (win && win.style.display !== 'none') { win.style.zIndex = ++zIndexCounter; }
             document.querySelectorAll('.taskbar-win-tab').forEach(t => t.classList.remove('active'));
             const tab = document.getElementById('tab-' + winId);
-            if (tab && tab.classList.contains('visible')) {
-                tab.classList.add('active');
-            }
+            if (tab && tab.classList.contains('visible')) { tab.classList.add('active'); }
         }
 
-        function switchCanvas(targetId, btnElement) {
-            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-            btnElement.classList.add('active');
-            
-            document.querySelectorAll('.canvas-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(targetId).classList.add('active');
-        }
-
-        // 綁定所有視窗拖曳把手
-        const allWindows = document.querySelectorAll('.window, .social-win');
+        // 绑定视窗拖拽把手 (经典代码完美保留)
+        const allWindows = document.querySelectorAll('.window');
         allWindows.forEach(win => {
             const dragHandle = win.querySelector('.drag-handle');
-            
             win.addEventListener('mousedown', () => { bringToFront(win.id); });
 
             if (dragHandle) {
@@ -453,6 +406,7 @@
                     function moveAt(clientX, clientY) { 
                         win.style.left = (clientX - shiftX) + 'px'; 
                         win.style.top = (clientY - shiftY) + 'px'; 
+                        win.style.transform = 'none'; /* 拖拽时取消居中 transform 防止跳动 */
                     }
                     
                     function onMouseMove(e) { moveAt(e.clientX, e.clientY); }
