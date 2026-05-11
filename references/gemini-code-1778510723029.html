@@ -121,7 +121,7 @@ import '../../styles/global.css';
                   <span class="issue-title">Issue#19 沉默之聲</span>
                   <span class="issue-tag bg-mint">PUBLISHING</span>
                 </div>
-                <p class="issue-desc">逃離與失聲：探討 <strong>《皇冠》雜誌</strong> 歷史與其背後的出版帝國。</p>
+                <p class="issue-desc">逃离与失声：探讨 <strong>《皇冠》雜誌</strong> 历史与其背后的出版帝国。</p>
                 <div class="issue-actions">
                   <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
                 </div>
@@ -367,7 +367,7 @@ import '../../styles/global.css';
   </main>
 
   <script is:inline>
-    // 監聽時間
+    // 监听时间
     function updateClock() {
       const now = new Date();
       const h = String(now.getHours()).padStart(2, '0');
@@ -378,7 +378,7 @@ import '../../styles/global.css';
     updateClock();
     setInterval(updateClock, 30000);
 
-    // 平滑滾動
+    // 平滑滚动
     document.querySelectorAll('.cat-nav a').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -392,7 +392,7 @@ import '../../styles/global.css';
   </script>
 
   <style>
-    /* === 基礎容器 (繼承自關於頁面) === */
+    /* === 基础容器 (继承自关于页面) === */
     .home-window {
       max-width: 1180px;
       margin: 24px auto;
@@ -432,7 +432,7 @@ import '../../styles/global.css';
       align-items: start;
     }
 
-    /* === 吸頂跟隨 === */
+    /* === 吸顶跟随 === */
     .sticky-sidebar {
       position: sticky;
       top: 24px;
@@ -450,7 +450,7 @@ import '../../styles/global.css';
       border-bottom: 1px dashed currentColor;
     }
 
-    /* === 左側元素 === */
+    /* === 左侧元素 === */
     .elephant-portrait {
       background: var(--soft-white); border: 2px dashed var(--candy-pink); border-radius: 12px;
       padding: 20px 16px; text-align: center; box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.35); margin-bottom: 14px;
@@ -467,7 +467,7 @@ import '../../styles/global.css';
     .persona-list dt:first-child { margin-top: 0; }
     .persona-list dd { font-size: 12.5px; margin-left: 0; margin-top: 2px; line-height: 1.5; }
 
-    /* 側邊欄：分類目錄導航 */
+    /* 侧边栏：分类目录导航 */
     .index-card {
       background: var(--candy-cream); border: 1.5px dashed var(--candy-peach); border-radius: 12px;
       padding: 16px; box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.5);
@@ -488,7 +488,7 @@ import '../../styles/global.css';
     .bg-purple { background-color: var(--candy-purple); }
     .bg-cream { background-color: var(--candy-cream); }
 
-    /* === 中間：往期目錄文章列表 === */
+    /* === 中间：往期目录文章列表 === */
     .board-card {
       background: var(--soft-white); border: 2px dashed var(--candy-mint); border-radius: 12px;
       padding: 28px 32px; box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
@@ -543,7 +543,7 @@ import '../../styles/global.css';
 
     .board-footer { text-align: center; margin-top: 30px; padding-top: 16px; border-top: 1px dashed var(--candy-mint); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); letter-spacing: 2px; }
 
-    /* === 右側 Tabs === */
+    /* === 右侧 Tabs (白边描边) === */
     .vertical-tabs { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
     .vtab {
       display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 0 16px 16px 0;
@@ -581,7 +581,7 @@ import '../../styles/global.css';
     .kp-btn:hover { background: var(--candy-cream); }
     .kp-play { background: var(--candy-pink); color: white; border-color: transparent; }
 
-    /* === 訪客計數器 === */
+    /* === 访客计数器 === */
     .kawaii-counter {
       background: var(--candy-cream); border: 2px dashed var(--candy-peach); border-radius: 12px;
       padding: 12px; text-align: center; box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.4);
@@ -590,7 +590,7 @@ import '../../styles/global.css';
     .kc-digits { display: flex; justify-content: center; gap: 3px; }
     .kc-digits span { background: var(--soft-white); color: var(--candy-pink); font-family: var(--font-pixel); font-size: 16px; padding: 4px 6px; border: 1.5px solid var(--candy-pink); border-radius: 4px; font-weight: bold; }
 
-    /* === 底部狀態欄 === */
+    /* === 底部状态栏 === */
     .window-taskbar {
       background: var(--candy-mint); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;
       border-top: 2px dashed var(--candy-mint); border-radius: 0 0 13px 13px; font-family: var(--font-pixel); font-size: 11px; color: var(--ink);
