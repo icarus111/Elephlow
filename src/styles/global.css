@@ -51,27 +51,39 @@
 
 body {
   background-color: var(--cream-paper);
-  background-image: repeating-linear-gradient(
-    90deg,
-    transparent 0,
-    transparent 24px,
-    rgba(200, 233, 176, 0.55) 24px,
-    rgba(200, 233, 176, 0.55) 52px,
-    transparent 52px,
-    transparent 68px,
-    rgba(255, 182, 217, 0.5) 68px,
-    rgba(255, 182, 217, 0.5) 82px,
-    transparent 82px,
-    transparent 106px,
-    rgba(181, 232, 224, 0.55) 106px,
-    rgba(181, 232, 224, 0.55) 154px,
-    transparent 154px,
-    transparent 168px,
-    rgba(199, 179, 232, 0.45) 168px,
-    rgba(199, 179, 232, 0.45) 188px,
-    transparent 188px,
-    transparent 208px
-  );
+  background-image:
+    /* 竖向条纹 */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 24px,
+      rgba(200, 233, 176, 0.22) 24px,
+      rgba(200, 233, 176, 0.22) 52px,
+      transparent 52px,
+      transparent 80px,
+      rgba(255, 182, 217, 0.18) 80px,
+      rgba(255, 182, 217, 0.18) 96px,
+      transparent 96px,
+      transparent 120px,
+      rgba(181, 232, 224, 0.22) 120px,
+      rgba(181, 232, 224, 0.22) 168px,
+      transparent 168px,
+      transparent 196px
+    ),
+    /* 横向条纹 */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 32px,
+      rgba(199, 179, 232, 0.18) 32px,
+      rgba(199, 179, 232, 0.18) 56px,
+      transparent 56px,
+      transparent 100px,
+      rgba(255, 233, 182, 0.22) 100px,
+      rgba(255, 233, 182, 0.22) 124px,
+      transparent 124px,
+      transparent 156px
+    );
   color: var(--ink);
   font-family: var(--font-serif-sc), var(--font-rounded);
   line-height: 1.7;
