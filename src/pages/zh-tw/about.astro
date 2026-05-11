@@ -27,11 +27,10 @@ import '../../styles/global.css';
 
     <div class="window-content about-layout">
 
-      <!-- 左侧：像素小象 + persona + 興趣領域 -->
-      <aside class="about-left">
+      <aside class="about-left sticky-sidebar">
 
         <div class="elephant-portrait">
-          <svg viewBox="0 0 100 80" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" shape-rendering="crispEdges">
+          <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
             <text x="8" y="12" fill="#FFB6D9" font-size="10">✦</text>
             <text x="78" y="16" fill="#C7B3E8" font-size="8">✦</text>
             <text x="6" y="65" fill="#B5E8E0" font-size="9">·</text>
@@ -59,30 +58,56 @@ import '../../styles/global.css';
           <h3 class="card-title">✦ persona ✦</h3>
           <dl class="persona-list">
             <dt>handle</dt><dd>小象 / Elephlow</dd>
-            <dt>identity</dt><dd>queer woman ♡</dd>
-            <dt>making</dt><dd>推開部屋的門</dd>
-            <dt>since</dt><dd>2022.07</dd>
-            <dt>season</dt><dd>4 · 2026 啟動 ✦</dd>
-            <dt>focus</dt><dd>港台日韓 · 獨立文化邊緣</dd>
+            <dt>sign</dt><dd>射手座 · INFJ</dd>
+            <dt>bio</dt>
+            <dd>
+              Omnivorous editor at the margins 🌿<br/>
+              From the islands, arriving everywhere 🏝️<br/>
+              Bringing closer what prejudice keeps apart 🌈
+            </dd>
           </dl>
         </div>
 
         <div class="interests-card">
-          <h3 class="card-title">✿ 興趣領域 ✿</h3>
-          <div class="tag-list">
-            <span class="tag">港台流行音樂</span>
-            <span class="tag">獨立雜誌與書店</span>
-            <span class="tag">紀錄片影展</span>
-            <span class="tag">酷兒書寫</span>
-            <span class="tag">Zine 與藝術書展</span>
-            <span class="tag">東亞文學脈絡</span>
-            <span class="tag">同齡女孩對談</span>
+          <h3 class="card-title">✿ interests ✿</h3>
+          <div class="pixel-bars">
+            <div class="p-bar-group">
+              <div class="p-bar-label"><span>港台流行音樂</span><span>85%</span></div>
+              <div class="p-bar-track"><div class="p-bar-fill" style="width: 85%; background-color: var(--candy-pink);"></div></div>
+            </div>
+            <div class="p-bar-group">
+              <div class="p-bar-label"><span>獨立雜誌與書店</span><span>95%</span></div>
+              <div class="p-bar-track"><div class="p-bar-fill" style="width: 95%; background-color: var(--candy-mint);"></div></div>
+            </div>
+            <div class="p-bar-group">
+              <div class="p-bar-label"><span>紀錄片影展</span><span>75%</span></div>
+              <div class="p-bar-track"><div class="p-bar-fill" style="width: 75%; background-color: var(--candy-aqua);"></div></div>
+            </div>
+            <div class="p-bar-group">
+              <div class="p-bar-label"><span>酷兒書寫</span><span>80%</span></div>
+              <div class="p-bar-track"><div class="p-bar-fill" style="width: 80%; background-color: var(--candy-purple);"></div></div>
+            </div>
+            <div class="p-bar-group">
+              <div class="p-bar-label"><span>Zine與藝術書展</span><span>90%</span></div>
+              <div class="p-bar-track"><div class="p-bar-fill" style="width: 90%; background-color: var(--candy-cream);"></div></div>
+            </div>
           </div>
         </div>
 
+        <div class="retro-stickers-area">
+          <span class="r-sticker sticker-a">✄ 100% Zine Lover</span>
+          <span class="r-sticker sticker-b">Queer & Proud ♡</span>
+        </div>
+
+        <a href="https://tally.so/r/4415XB" target="_blank" class="retro-s4-banner">
+          <div class="s4-banner-inner">
+            <span class="blink-text">✦ SEASON 04 ✦</span><br/>
+            熱烈徵訂中 · 點擊訂閱
+          </div>
+        </a>
+
       </aside>
 
-      <!-- 中间：5問5答 -->
       <section class="about-center">
         <div class="qa-card">
           <h2 class="qa-title">⌒ 五問五答 ⌒</h2>
@@ -92,7 +117,7 @@ import '../../styles/global.css';
 
             <div class="qa-item qa-item-mint">
               <p class="qa-question"><span class="q-icon">☘</span> Q1 · 你是誰？</p>
-              <p class="qa-answer">大家好，我是小象（Elephlow）。一個酷兒女性、獨立寫作者，常年穿梭於港台流行文化、獨立出版、影展研究與酷兒書寫之間。網路上找我，在 IG / Threads 叫 <a href="[https://www.instagram.com/icarusrootedbutflow/](https://www.instagram.com/icarusrootedbutflow/)" target="_blank">@icarusrootedbutflow</a>。</p>
+              <p class="qa-answer">大家好，我是小象（Elephlow）。一個酷兒女性、獨立寫作者，常年穿梭於港台流行文化、獨立出版、影展研究與酷兒書寫之間。網路上找我，在 IG / Threads 叫 <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank">@icarusrootedbutflow</a>。</p>
             </div>
 
             <div class="text-divider">✿ ⋆ ✿ ⋆ ✿</div>
@@ -106,7 +131,7 @@ import '../../styles/global.css';
 
             <div class="qa-item qa-item-pink">
               <p class="qa-question"><span class="q-icon">✿</span> Q3 · 為什麼寫這份小報？</p>
-              <p class="qa-answer">平台的演算法把好東西藏起來，把不需要的東西推到你面前。我想反過來 ── 選好的、慢的、不必走紅但值得看的東西，寫給願意慢下來讀的人。</p>
+              <p class="qa-answer">平台的演算法把好東西藏起來，把不需要的東西推到你面前。我想反過來 ── 選好的、慢的、不必走紅但值得看的東西，寫給願意慢下来讀的人。</p>
               <p class="qa-answer">讀者收到的不是熱搜上能看到的東西，而是：</p>
               <ul class="qa-list-inner">
                 <li>✿ 打破資訊差的整合性內容</li>
@@ -132,8 +157,8 @@ import '../../styles/global.css';
             <div class="qa-item qa-item-purple">
               <p class="qa-question"><span class="q-icon">✶</span> Q5 · 怎麼找到我？</p>
               <p class="qa-answer">
-                ✉ 訂閱第四季：<a href="[https://tally.so/r/4415XB](https://tally.so/r/4415XB)" target="_blank">tally.so/r/4415XB</a><br/>
-                ◉ instagram / threads：<a href="[https://www.instagram.com/icarusrootedbutflow/](https://www.instagram.com/icarusrootedbutflow/)" target="_blank">@icarusrootedbutflow</a><br/>
+                ✉ 訂閱第四季：<a href="https://tally.so/r/4415XB" target="_blank">tally.so/r/4415XB</a><br/>
+                ◉ instagram / threads：<a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank">@icarusrootedbutflow</a><br/>
                 ◉ 小紅書：搜「流星小飛象」<br/>
                 ◉ 撰稿、採訪、合作邀請：透過上面任一管道私訊
               </p>
@@ -147,8 +172,7 @@ import '../../styles/global.css';
         </div>
       </section>
 
-      <!-- 右侧：minihome 垂直 tabs（繁体 + 强色彩分隔） -->
-      <aside class="about-right">
+      <aside class="about-right sticky-sidebar">
         <nav class="vertical-tabs">
           <a href="/zh-tw/" class="vtab vtab-home">
             <span class="vtab-icon">🏠</span>
@@ -166,10 +190,6 @@ import '../../styles/global.css';
             <span class="vtab-icon">✉</span>
             <span class="vtab-label">留言板</span>
           </a>
-          <a href="[https://tally.so/r/4415XB](https://tally.so/r/4415XB)" class="vtab vtab-subscribe" target="_blank">
-            <span class="vtab-icon">★</span>
-            <span class="vtab-label">訂閱</span>
-          </a>
         </nav>
 
         <div class="minihome-deco">
@@ -180,12 +200,29 @@ import '../../styles/global.css';
           </div>
         </div>
 
-        <div class="season-banner">
-          <p class="season-line1">✦ NEW ✦</p>
-          <p class="season-line2">SEASON</p>
-          <p class="season-line3">04</p>
-          <p class="season-line4">2026.05.17</p>
+        <div class="kawaii-player">
+          <div class="kp-header">
+            <span class="kp-dot"></span>♫ NOW PLAYING<span class="kp-dot"></span>
+          </div>
+          <div class="kp-screen">
+            <div class="kp-marquee">
+              <span>馮穎琪 - 彳亍 ✿ 馮穎琪 - 彳亍 ✿</span>
+            </div>
+          </div>
+          <div class="kp-controls">
+            <span class="kp-btn">⏮</span>
+            <span class="kp-btn kp-play">▶</span>
+            <span class="kp-btn">⏭</span>
+          </div>
         </div>
+
+        <div class="kawaii-counter">
+          <p class="kc-title">✿ VISITORS ✿</p>
+          <div class="kc-digits">
+            <span>0</span><span>0</span><span>1</span><span>4</span><span>2</span><span>6</span>
+          </div>
+        </div>
+
       </aside>
 
     </div>
@@ -193,7 +230,6 @@ import '../../styles/global.css';
     <footer class="window-taskbar">
       <div class="taskbar-left">
         <span class="taskbar-start">⊞ START</span>
-        <span class="taskbar-item">▣ 關於小象.exe</span>
       </div>
       <div class="taskbar-right">
         <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
@@ -216,15 +252,15 @@ import '../../styles/global.css';
   </script>
 
   <style>
-    /* === Home Window 容器 === */
+    /* === 基础容器 === */
     .home-window {
       max-width: 1180px;
       margin: 24px auto;
       background: var(--soft-white);
-      border: 2px dashed var(--candy-purple);
+      border: 3px dashed var(--candy-mint);
       border-radius: 16px;
-      box-shadow: 6px 6px 0 rgba(199, 179, 232, 0.35);
-      overflow: hidden;
+      box-shadow: 6px 6px 0 rgba(181, 232, 224, 0.6);
+      /* 注意：这里删除了 overflow: hidden; 这是保证 sticky 吸顶生效的关键！ */
       display: flex;
       flex-direction: column;
     }
@@ -234,7 +270,8 @@ import '../../styles/global.css';
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px dashed var(--candy-purple);
+      border-bottom: 2px dashed var(--candy-mint);
+      border-radius: 13px 13px 0 0; /* 手动给顶部加上圆角 */
       font-family: var(--font-pixel);
       font-size: 11px;
       color: var(--ink);
@@ -249,20 +286,25 @@ import '../../styles/global.css';
       text-decoration: none;
       border-radius: 3px;
     }
-    .lang-link:hover { background: var(--candy-cream); }
-    .lang-active { background: var(--candy-cream); font-weight: 700; }
+    .lang-link:hover { background: rgba(255, 255, 255, 0.4); }
+    .lang-active { background: rgba(255, 255, 255, 0.6); font-weight: 700; }
 
     .window-content { padding: 24px; }
 
-    /* === About 页三栏 === */
     .about-layout {
       display: grid;
       grid-template-columns: 240px 1fr 200px;
       gap: 24px;
-      align-items: start;
+      align-items: start; /* 必须是 start，这样边栏自身高度才不会被拉伸，才能滑动！ */
     }
 
-    /* === 左侧通用卡片标题 === */
+    /* === 【核心魔法】：吸顶跟随 === */
+    .sticky-sidebar {
+      position: sticky;
+      top: 24px; /* 距离浏览器顶部 24px 处悬停 */
+      height: fit-content;
+    }
+
     .card-title {
       font-family: var(--font-pixel);
       font-size: 12px;
@@ -274,7 +316,7 @@ import '../../styles/global.css';
       border-bottom: 1px dashed currentColor;
     }
 
-    /* === 左侧：像素小象 === */
+    /* === 左侧卡片 === */
     .elephant-portrait {
       background: var(--soft-white);
       border: 2px dashed var(--candy-pink);
@@ -293,13 +335,12 @@ import '../../styles/global.css';
       letter-spacing: 2px;
     }
 
-    /* === Persona card === */
     .persona-card {
       background: var(--candy-mint);
       border: 1.5px dashed var(--candy-purple);
       border-radius: 12px;
       padding: 16px;
-      box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.35);
+      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.6);
       margin-bottom: 14px;
     }
     .persona-list {
@@ -317,38 +358,98 @@ import '../../styles/global.css';
     }
     .persona-list dt:first-child { margin-top: 0; }
     .persona-list dd {
-      font-size: 13px;
+      font-size: 12.5px; /* 稍微缩小一点点字号适应长英文 */
       margin-left: 0;
       margin-top: 2px;
       line-height: 1.5;
     }
 
-    /* === Interests card === */
     .interests-card {
       background: var(--candy-cream);
       border: 1.5px dashed var(--candy-peach);
       border-radius: 12px;
       padding: 16px;
-      box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3);
+      box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.5);
     }
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      justify-content: center;
+    .pixel-bars { display: flex; flex-direction: column; gap: 12px; }
+    .p-bar-group { width: 100%; display: block; }
+    .p-bar-label {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-serif-tc); font-size: 11px;
+      color: var(--ink); margin-bottom: 4px; font-weight: 700;
     }
-    .tag {
-      display: inline-block;
-      padding: 4px 10px;
-      background: var(--soft-white);
+    .p-bar-track {
+      width: 100%; height: 14px;
+      background-color: rgba(255, 255, 255, 0.8);
       border: 1px dashed var(--candy-purple);
-      border-radius: 999px;
-      font-family: var(--font-serif-tc);
+      border-radius: 8px; padding: 2px; box-sizing: border-box; 
+    }
+    .p-bar-fill { height: 100%; border-radius: 4px; }
+
+    /* 手账小贴纸 */
+    .retro-stickers-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+      padding: 0 10px;
+    }
+    .r-sticker {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: var(--font-mochi);
       font-size: 11px;
       color: var(--ink);
+      padding: 6px 12px;
+      border: 1.5px dashed rgba(0,0,0,0.15);
+      border-radius: 0 12px 12px 12px; 
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+      cursor: default;
     }
+    .r-sticker:hover { transform: scale(1.05) rotate(0deg) !important; }
+    .sticker-a { background: var(--candy-pink); transform: rotate(-3deg); }
+    .sticker-b { background: var(--candy-aqua); align-self: flex-end; transform: rotate(4deg); }
 
-    /* === 中间：5問5答 === */
+    /* 彩色炫动 Banner */
+    .retro-s4-banner {
+      display: block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--candy-cream),
+        var(--candy-cream) 10px,
+        #fff 10px,
+        #fff 20px
+      );
+      padding: 6px;
+      border: 2px dashed var(--candy-purple);
+      border-radius: 8px;
+      box-shadow: 4px 4px 0 var(--candy-mint);
+      animation: candy-stripe 3s linear infinite;
+    }
+    .s4-banner-inner {
+      background: var(--candy-purple);
+      color: var(--soft-white);
+      text-align: center;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      line-height: 1.6;
+      letter-spacing: 1px;
+    }
+    .blink-text {
+      color: var(--candy-peach);
+      font-size: 14px;
+      font-weight: bold;
+      animation: retro-blink 1.5s infinite;
+    }
+    @keyframes candy-stripe { 0% { background-position: 0 0; } 100% { background-position: 28px 28px; } }
+    @keyframes retro-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.5; } }
+
+    /* === 中间 QA === */
     .qa-card {
       background: var(--soft-white);
       border: 2px dashed var(--candy-mint);
@@ -377,11 +478,11 @@ import '../../styles/global.css';
       border-radius: 10px;
       margin: 0 -8px;
     }
-    .qa-item-mint   { background: rgba(200, 233, 176, 0.15); }
-    .qa-item-aqua   { background: rgba(181, 232, 224, 0.15); }
-    .qa-item-pink   { background: rgba(255, 182, 217, 0.15); }
-    .qa-item-cream  { background: rgba(255, 233, 182, 0.2); }
-    .qa-item-purple { background: rgba(199, 179, 232, 0.15); }
+    .qa-item-mint   { background: rgba(200, 233, 176, 0.25); }
+    .qa-item-aqua   { background: rgba(181, 232, 224, 0.25); }
+    .qa-item-pink   { background: rgba(255, 182, 217, 0.25); }
+    .qa-item-cream  { background: rgba(255, 233, 182, 0.3); }
+    .qa-item-purple { background: rgba(199, 179, 232, 0.25); }
 
     .qa-question {
       font-family: var(--font-mochi);
@@ -443,7 +544,7 @@ import '../../styles/global.css';
       letter-spacing: 2px;
     }
 
-    /* === 右侧 vertical tabs（每个 tab 不同糖果色背景） === */
+    /* === 右侧 Tabs (加上白色外描边) === */
     .vertical-tabs {
       display: flex;
       flex-direction: column;
@@ -464,6 +565,7 @@ import '../../styles/global.css';
       font-weight: 700;
       font-size: 13px;
       transition: transform 0.15s;
+      /* 这里恢复了文字好看的白色发光描边！ */
       text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
     }
     .vtab:hover { transform: translateX(4px); text-decoration: none; }
@@ -473,9 +575,7 @@ import '../../styles/global.css';
     .vtab-active    { background: var(--candy-purple); border-left-color: #9B7BC9; border-left-width: 7px; font-weight: 800; }
     .vtab-archive   { background: var(--candy-aqua);   border-left-color: #7DC2B8; }
     .vtab-guestbook { background: var(--candy-pink);   border-left-color: #E89BC0; }
-    .vtab-subscribe { background: var(--candy-cream);  border-left-color: #E6B870; }
 
-    /* === Deco card === */
     .minihome-deco {
       background: var(--candy-cream);
       border: 1.5px dashed var(--candy-peach);
@@ -483,7 +583,7 @@ import '../../styles/global.css';
       padding: 16px 12px;
       text-align: center;
       box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .deco-row {
       font-size: 14px;
@@ -498,53 +598,106 @@ import '../../styles/global.css';
       margin: 2px 0;
     }
 
-    /* === Season banner === */
-    .season-banner {
-      background: var(--candy-purple);
-      border: 1.5px dashed var(--ink-light);
+    /* === 纯正糖果色迷你播放器 === */
+    .kawaii-player {
+      background: var(--candy-mint);
+      border: 2px dashed var(--candy-purple);
       border-radius: 12px;
-      padding: 14px 8px;
-      text-align: center;
-      box-shadow: 3px 3px 0 var(--candy-pink);
+      padding: 12px;
+      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.8);
+      margin-bottom: 16px;
     }
-    .season-banner p { margin: 0; }
-    .season-line1 {
+    .kp-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
       font-family: var(--font-pixel);
       font-size: 10px;
-      color: var(--ink);
-      letter-spacing: 3px;
-    }
-    .season-line2 {
-      font-family: var(--font-bubble);
-      font-size: 16px;
-      color: var(--soft-white);
-      text-shadow: 1px 1px 0 var(--ink-light);
-      letter-spacing: 2px;
-      margin: 2px 0;
-    }
-    .season-line3 {
-      font-family: var(--font-bubble);
-      font-size: 36px;
-      color: var(--soft-white);
-      text-shadow: 2px 2px 0 var(--ink-light);
-      line-height: 1;
-    }
-    .season-line4 {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--ink);
+      color: var(--ink-light);
+      margin-bottom: 8px;
       letter-spacing: 1px;
-      margin-top: 4px;
+    }
+    .kp-dot {
+      width: 4px; height: 4px;
+      background: var(--candy-pink);
+      border-radius: 50%;
+    }
+    .kp-screen {
+      background: var(--soft-white);
+      border: 1.5px solid var(--candy-purple);
+      border-radius: 6px;
+      padding: 6px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .kp-marquee {
+      font-family: var(--font-serif-tc);
+      font-size: 12px;
+      color: var(--candy-purple);
+      font-weight: bold;
+      white-space: nowrap;
+      animation: marquee-scroll 6s linear infinite;
+    }
+    @keyframes marquee-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    .kp-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+    .kp-btn {
+      display: inline-flex; justify-content: center; align-items: center;
+      width: 24px; height: 24px;
+      background: var(--soft-white);
+      border: 1.5px dashed var(--candy-purple);
+      border-radius: 50%;
+      font-size: 10px; color: var(--candy-purple);
+      cursor: pointer;
+    }
+    .kp-btn:hover { background: var(--candy-cream); }
+    .kp-play { background: var(--candy-pink); color: white; border-color: transparent; }
+
+    /* === 马卡龙色像素访客计数器 === */
+    .kawaii-counter {
+      background: var(--candy-cream);
+      border: 2px dashed var(--candy-peach);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.4);
+    }
+    .kc-title {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink-light);
+      margin: 0 0 8px 0;
+      letter-spacing: 2px;
+    }
+    .kc-digits {
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+    }
+    .kc-digits span {
+      background: var(--soft-white);
+      color: var(--candy-pink); 
+      font-family: var(--font-pixel);
+      font-size: 16px;
+      padding: 4px 6px;
+      border: 1.5px solid var(--candy-pink);
+      border-radius: 4px;
+      font-weight: bold;
     }
 
-    /* === Window 任务栏 === */
+    /* 底部状态栏 */
     .window-taskbar {
       background: var(--candy-mint);
       padding: 8px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 2px dashed var(--candy-purple);
+      border-top: 2px dashed var(--candy-mint);
+      border-radius: 0 0 13px 13px; /* 手动给底部加上圆角 */
       font-family: var(--font-pixel);
       font-size: 11px;
       color: var(--ink);
@@ -552,17 +705,17 @@ import '../../styles/global.css';
     .taskbar-left { display: flex; gap: 12px; align-items: center; }
     .taskbar-right { display: flex; gap: 12px; align-items: center; }
     .taskbar-start {
-      background: var(--candy-cream);
+      background: rgba(255, 255, 255, 0.5);
       padding: 2px 8px;
       border-radius: 3px;
       border: 1px dashed var(--candy-purple);
     }
-    .taskbar-item, .taskbar-status { color: var(--ink-light); }
-    .taskbar-clock { font-weight: 700; }
+    .taskbar-status, .taskbar-clock { color: var(--ink); font-weight: 700; }
 
     @media (max-width: 900px) {
       .about-layout { grid-template-columns: 1fr; }
       .home-window { margin: 12px; }
+      .sticky-sidebar { position: relative; top: 0; } /* 手机端取消吸顶 */
     }
   </style>
 
