@@ -1,0 +1,172 @@
+---
+import { schedule } from '../data/publishing-schedule';
+
+const today = new Date();
+const currentMonth = today.getMonth();
+const currentYear = today.getFullYear();
+const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+const todayDate = today.getDate();
+const monthName = `${currentYear} 年 ${currentMonth + 1} 月`;
+
+type Cell = { day: number; events: typeof schedule; isToday: boolean } | null;
+const cells: Cell[] = [];
+
+for (let i = 0; i < firstDay; i++) {
+  cells.push(null);
+}
+
+for (let day = 1; day <= daysInMonth; day++) {
+  const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  const events = schedule.filter(e => e.date === dateStr);
+  cells.push({ day, events, isToday: day === todayDate });
+}
+---
+
+<div class="calendar-widget">
+  <div class="cal-header">
+    <span>📅</span>
+    <span>{monthName}</span>
+  </div>
+
+  <div class="cal-weekdays">
+    <span>日</span><span>一</span><span>二</span>
+    <span>三</span><span>四</span><span>五</span><span>六</span>
+  </div>
+
+  <div class="cal-grid">
+    {cells.map(cell => {
+      if (!cell) return <div class="cal-empty"></div>;
+      const hasLetter = cell.events.some(e => e.type === 'letter');
+      const hasIssue = cell.events.some(e => e.type === 'issue');
+      const title = cell.events.map(e => e.title).join(' · ');
+      const classes = ['cal-cell'];
+      if (cell.isToday) classes.push('cal-today');
+      if (hasLetter) classes.push('cal-letter');
+      if (hasIssue) classes.push('cal-issue');
+      return (
+        <div class={classes.join(' ')} title={title}>
+          <span class="cal-day">{cell.day}</span>
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="cal-legend">
+    <div class="legend-row">
+      <span class="legend-dot legend-letter"></span>
+      <span>杂志通信</span>
+    </div>
+    <div class="legend-row">
+      <span class="legend-dot legend-issue"></span>
+      <span>正刊</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .calendar-widget {
+    background: var(--soft-white);
+    border: 2px solid var(--candy-mint);
+    border-radius: var(--radius-soft);
+    padding: 14px;
+    box-shadow: 3px 3px 0 var(--candy-aqua);
+  }
+
+  .cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--candy-mint);
+    margin-bottom: 8px;
+    font-family: var(--font-mochi);
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+
+  .cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    font-family: var(--font-pixel);
+    font-size: 9px;
+    color: var(--ink-light);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  .cal-empty {
+    aspect-ratio: 1;
+  }
+
+  .cal-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: var(--ink);
+    border-radius: 3px;
+    background: var(--cream-paper);
+    cursor: default;
+  }
+
+  .cal-today {
+    border: 1.5px solid var(--ink-light);
+    font-weight: 700;
+  }
+
+  .cal-letter {
+    background: var(--candy-mint);
+  }
+
+  .cal-issue {
+    background: var(--candy-purple);
+  }
+
+  .cal-letter.cal-issue {
+    background: linear-gradient(135deg, var(--candy-mint) 50%, var(--candy-purple) 50%);
+  }
+
+  .cal-legend {
+    padding-top: 8px;
+    margin-top: 8px;
+    border-top: 1px dashed var(--candy-mint);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: var(--ink-light);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .legend-letter {
+    background: var(--candy-mint);
+  }
+
+  .legend-issue {
+    background: var(--candy-purple);
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import '../../styles/global.css';
+import CalendarWidget from '../../components/CalendarWidget.astro';
 ---
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -42,11 +43,7 @@ import '../../styles/global.css';
           <span>📩</span><span>🍵</span><span>♬</span>
         </div>
 
-        <!-- 日历占位（阶段 4 建组件） -->
-        <div class="calendar-placeholder">
-          <div class="calendar-title">📅 2026年 5月</div>
-          <p class="placeholder-note">日历组件 · 下阶段建好</p>
-        </div>
+        <CalendarWidget />
 
         <!-- 状态信息 -->
         <div class="status-info">
@@ -154,8 +151,8 @@ import '../../styles/global.css';
     .site-title {
       font-family: var(--font-bubble);
       font-size: 36px;
-      color: var(--candy-mint);
-      text-shadow: 2px 2px 0 var(--candy-purple);
+      color: var(--ink-light);
+      text-shadow: 2px 2px 0 var(--candy-peach);
       margin: 6px 0;
       line-height: 1.1;
       letter-spacing: 1px;
@@ -189,33 +186,6 @@ import '../../styles/global.css';
       margin-bottom: 16px;
       text-align: center;
       font-size: 18px;
-    }
-
-    .calendar-placeholder {
-      background: var(--soft-white);
-      border: 2px solid var(--candy-mint);
-      border-radius: var(--radius-soft);
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 3px 3px 0 var(--candy-aqua);
-    }
-
-    .calendar-title {
-      font-family: var(--font-mochi);
-      font-size: 15px;
-      text-align: center;
-      padding-bottom: 10px;
-      border-bottom: 1px dashed var(--candy-mint);
-      color: var(--candy-purple);
-    }
-
-    .placeholder-note {
-      text-align: center;
-      color: var(--ink-light);
-      font-size: 12px;
-      font-family: var(--font-pixel);
-      padding: 16px 0 8px;
-      margin: 0;
     }
 
     .status-info {
