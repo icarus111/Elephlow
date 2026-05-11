@@ -32,11 +32,16 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
 
       <!-- Welcome Banner -->
       <section class="welcome-banner">
+        <span class="corner corner-tl">✿</span>
+        <span class="corner corner-tr">✦</span>
+        <span class="corner corner-bl">☘</span>
+        <span class="corner corner-br">♡</span>
         <div class="welcome-inner">
           <div class="pixel-icon">🐘</div>
           <div class="welcome-text">
-            <p class="welcome-line1">✿ Welcome to ✿</p>
+            <p class="welcome-line1">(｡♡‿♡｡) ✿ Welcome to ✿</p>
             <h1 class="site-title">elephlow's homepage</h1>
+            <div class="welcome-divider">⋆ ˚｡⋆ ୨ ˚୧ ⋆ ˚｡⋆</div>
             <p class="welcome-line2">since 2022.07 · ☘ 推開部屋的門 ☘</p>
           </div>
         </div>
@@ -53,9 +58,9 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
           </div>
           <CalendarWidget />
           <div class="status-info">
-            <p>last update: 2026.05.11</p>
-            <p>currently: 第四季籌備中</p>
-            <p>contact: hello@elephlow.cc</p>
+            <p>ʚ♡ɞ last update: 2026.05.11</p>
+            <p>(｡◕‿◕｡) currently: 第四季籌備中</p>
+            <p>✉ hello@elephlow.cc</p>
           </div>
         </aside>
 
@@ -66,7 +71,9 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
             <p class="intro-tagline">在邊緣捕捉與想像 ✦</p>
             <div class="intro-body">
               <p>這是一份創辦於 2022 年 7 月的中文付費電子報，也是小象（Elephlow）的獨立通訊基地。</p>
+              <div class="text-divider">✿ ⋆ ✿ ⋆ ✿</div>
               <p>我們以文字為載體，穿梭於港台流行文化、獨立出版、影展研究及酷兒視角書寫的隙縫之中。不仰賴演算法，我們致力於打破資訊差，為你篩選並整合高品質的文化資訊，提供一個真實、有溫度的閱讀陪伴。</p>
+              <div class="text-divider">✦ ⋆ ✦ ⋆ ✦</div>
               <p>「部屋」是私密的起點，而「推開門」則是通往公共的行動。我們致力於將偏見所隔絕的萬事萬物重新拉近，當下一次敲門聲響起，邀請你一同推開門，<strong>在時代的邊緣捕捉那些被忽視的微光。</strong></p>
             </div>
             <div class="cta-row">
@@ -106,7 +113,7 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
         <span class="taskbar-item">▣ 推開部屋的門</span>
       </div>
       <div class="taskbar-right">
-        <span class="taskbar-status">☘ currently online</span>
+        <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
         <span class="taskbar-clock" id="clock">--:--</span>
       </div>
     </footer>
@@ -174,6 +181,7 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
 
     /* === Welcome Banner === */
     .welcome-banner {
+      position: relative;
       background: var(--candy-mint);
       background-image: repeating-linear-gradient(
         135deg,
@@ -188,6 +196,25 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.5);
       margin-bottom: 24px;
       overflow: hidden;
+    }
+
+    .corner {
+      position: absolute;
+      font-size: 18px;
+      z-index: 2;
+      color: var(--candy-purple);
+    }
+    .corner-tl { top: 6px; left: 10px; }
+    .corner-tr { top: 6px; right: 10px; color: var(--candy-pink); }
+    .corner-bl { bottom: 6px; left: 10px; color: var(--candy-mint); }
+    .corner-br { bottom: 6px; right: 10px; color: var(--candy-peach); }
+
+    .welcome-divider {
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--candy-purple);
+      letter-spacing: 4px;
+      margin: 6px 0;
     }
 
     .welcome-inner {
@@ -272,11 +299,13 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
     }
 
     .intro-title {
-      font-family: var(--font-mochi);
-      font-size: 22px;
+      font-family: var(--font-serif-tc), var(--font-serif-sc);
+      font-size: 26px;
+      font-weight: 700;
       color: var(--ink-light);
       text-align: center;
       margin-bottom: 6px;
+      letter-spacing: 6px;
     }
 
     .intro-tagline {
@@ -300,6 +329,16 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       color: var(--ink);
       background: linear-gradient(transparent 60%, var(--candy-aqua) 60%);
       font-weight: 700;
+    }
+
+    .text-divider {
+      text-align: center;
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--candy-purple);
+      letter-spacing: 6px;
+      margin: 16px 0;
+      opacity: 0.7;
     }
 
     .cta-row {
