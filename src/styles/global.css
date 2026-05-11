@@ -51,10 +51,19 @@
 
 body {
   background-color: var(--cream-paper);
-  background-image:
-    radial-gradient(circle at 8px 8px, rgba(255, 182, 217, 0.18) 1px, transparent 1px),
-    radial-gradient(circle at 16px 16px, rgba(199, 179, 232, 0.12) 1px, transparent 1px);
-  background-size: 24px 24px, 32px 32px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--candy-mint) 0,
+    var(--candy-mint) 48px,
+    var(--candy-cream) 48px,
+    var(--candy-cream) 80px,
+    var(--candy-pink) 80px,
+    var(--candy-pink) 112px,
+    var(--candy-aqua) 112px,
+    var(--candy-aqua) 160px,
+    var(--candy-purple) 160px,
+    var(--candy-purple) 192px
+  );
   color: var(--ink);
   font-family: var(--font-serif-sc), var(--font-rounded);
   line-height: 1.7;
