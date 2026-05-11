@@ -1,427 +1,570 @@
-// src/pages/zh-tw/about.astro
+---
+import '../../styles/global.css';
 ---
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-tw">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>关于小象 | 推开部屋的门</title>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root{
-            /* 💾 经典 OS 全局配色 (用于外层桌面与视窗框) */
-            --win-gray: #c0c0c0; 
-            --win-dark: #808080; 
-            --win-light: #ffffff;
-            --win-blue: #000080;
-            
-            /* 🍭 内部 Y2K 浏览器马卡龙配色 */
-            --m-green: #B5E48C;
-            --m-pink: #FFB5A7;
-            --m-blue: #A2D2FF;
-            --m-yellow: #FFF5BA;
-            --m-purple: #CDB4DB;
-        }
-        *{margin:0;padding:0;box-sizing:border-box;cursor:default;}
-        html,body{height:auto;min-height:100%; overflow-x:hidden;}
-        
-        /* 🌍 保留你原始的桌面背景 */
-        body{
-            background:linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),
-                       linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px),
-                       linear-gradient(to right,#98fb98,#fffacd,#ffebcd,#ffb6c1,#e0b0ff);
-            background-size:20px 20px,20px 20px,100% 100%;
-            background-attachment:fixed;
-            font-family:'DotGothic16','PMingLiU','MingLiU','细明体','SimSun',sans-serif;
-            display:flex; flex-direction:column;
-        }
-
-        .desktop-wrapper{display:flex;flex:1;padding:25px;position:relative;min-height:900px;}
-        
-        /* ==========================================
-           🗂️ 桌面图标排版 (像素化大改造)
-           ========================================== */
-        .desktop-grid { display: flex; flex-direction: column; gap: 15px; width: 100px; z-index: 10;}
-        .desktop-divider { height: 2px; border-bottom: 2px dashed rgba(0,0,0,0.3); margin: 5px 0; width: 80%; align-self: center; }
-        .desktop-group-title { background: var(--win-light); border: 1px solid var(--win-dark); padding: 2px 6px; font-size: 11px; font-weight: bold; text-align: center; color: var(--win-dark); width: 80%; align-self: center; margin-bottom: 5px;}
-
-        .desktop-icon {
-            display: flex; flex-direction: column; align-items: center; text-decoration: none; 
-            padding: 8px 5px; cursor: pointer; width: 100%; gap: 6px;
-        }
-        
-        /* 真正的像素图标样式 */
-        .pixel-icon {
-            width: 36px; height: 36px; 
-            image-rendering: pixelated; /* 保持像素边缘锋利 */
-            filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.3)); 
-            transition: transform 0.1s;
-        }
-        
-        .icon-text {
-            color: #fff; background-color: transparent; font-size: 13px; text-align: center; 
-            padding: 2px 4px; border: 1px dotted transparent; word-break: break-all;
-        }
-        
-        /* 选中/Hover 状态还原经典 Windows */
-        .desktop-icon:hover .pixel-icon { transform: scale(1.05); filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.5));}
-        .desktop-icon:hover .icon-text { background-color: var(--win-blue); border: 1px dotted #fff; }
-
-        /* ==========================================
-           🗂️ 核心视窗通用样式 (经典 OS 灰框)
-           ========================================== */
-        .window { 
-            background: var(--win-gray); 
-            border: 2px solid; border-color: var(--win-light) #000 #000 var(--win-light); 
-            box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 var(--win-dark), 4px 4px 0 rgba(0,0,0,0.3); 
-            display: flex; flex-direction: column; position: absolute; z-index: 100; padding: 3px; 
-        }
-        
-        .title-bar { background: linear-gradient(90deg, var(--win-blue), #1084d0); color: white; padding: 4px 6px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; cursor: move; user-select: none; letter-spacing: 1px; font-weight: bold;}
-        .win-controls { display: flex; flex-direction: row; gap: 3px; }
-        .win-btn { width: 18px; height: 18px; background-color: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); color: #000; font-family: 'Pixel', sans-serif; font-size: 10px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 1px 1px 0 #000; }
-        .win-btn:active { border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark); padding-top: 2px; padding-left: 2px; box-shadow: none; }
-        
-        .sys-menu { display: flex; gap: 10px; padding: 3px 6px; font-size: 12px; border-bottom: 1px solid var(--win-dark); color: #000;}
-        .sys-menu span { padding: 2px 6px; cursor: pointer;}
-        .sys-menu span:first-letter { text-decoration: underline; }
-        .sys-menu span:hover { background-color: var(--win-blue); color: #fff; }
-
-        /* ==========================================
-           🎨 视窗内部：固定尺寸的 Y2K 盒中盒
-           ========================================== */
-        #about-win { width: 850px; height: 580px; left: calc(50% - 425px); top: 8vh; z-index: 150;}
-        
-        .kawaii-inner { 
-            background: #fafafa; display: flex; flex-direction: column; flex: 1; 
-            overflow: hidden; border: 2px inset var(--win-dark); margin-top: 2px;
-        }
-        
-        /* 可爱工具列 (地址列 + 语言切换) */
-        .kawaii-toolbar { 
-            display: flex; padding: 10px 15px; background: #fff; 
-            border-bottom: 2px dashed var(--m-green); align-items: center; gap: 15px; 
-        }
-        .url-pill { 
-            border: 2px solid #ccc; border-radius: 20px; padding: 4px 15px; flex: 1; 
-            font-family: 'DotGothic16'; color: #666; font-size: 14px; display: flex; align-items: center; gap: 8px;
-        }
-        .lang-toggles { display: flex; gap: 6px; }
-        .lang-btn { 
-            border: 2px solid #ccc; border-radius: 15px; padding: 2px 10px; font-size: 12px; 
-            font-weight: bold; text-decoration: none; color: #555; transition: 0.2s;
-        }
-        .lang-btn.active { background: var(--m-green); color: #333; border-color: var(--m-green); }
-
-        /* 视窗内部双栏布局 */
-        .kawaii-body { display: flex; flex: 1; overflow: hidden; }
-        
-        /* 👉 左侧：固定不滑动 (解决空荡问题) */
-        .k-sidebar { 
-            width: 240px; padding: 25px 20px; background: #fff; 
-            border-right: 2px dashed var(--m-green); display: flex; flex-direction: column; 
-            gap: 15px; overflow-y: auto; text-align: center;
-        }
-        .k-sidebar h1 { font-family: 'DotGothic16'; color: var(--m-pink); font-size: 24px; text-shadow: 1px 1px 0 #eee; margin-bottom: 5px;}
-        .k-sidebar p { font-size: 13px; color: #888; margin-bottom: 15px;}
-        
-        .k-link-title { font-weight: bold; color: var(--m-blue); font-size: 15px; margin-top: 10px; border-bottom: 2px dotted var(--m-blue); padding-bottom: 5px; display: inline-block;}
-        
-        /* 马卡龙社交药丸按钮 */
-        .social-pills { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .k-link-btn { 
-            display: flex; align-items: center; justify-content: center; gap: 8px; 
-            padding: 10px; border-radius: 25px; text-decoration: none; font-weight: bold; 
-            font-size: 13px; color: #333; box-shadow: 2px 3px 0 rgba(0,0,0,0.1); border: 1px solid #ddd; transition: 0.1s;
-        }
-        .k-link-btn:active { transform: translate(1px,2px); box-shadow: none; }
-        .k-ig { background: var(--m-green); }
-        .k-red { background: var(--m-pink); }
-        .k-th { background: var(--m-blue); }
-
-        /* 👉 右侧：独立滑动的文章区 (绝对不溢出) */
-        .k-content { 
-            flex: 1; padding: 35px 40px; background: #FEFEFE; 
-            overflow-y: auto; line-height: 2; font-size: 15px; font-family: 'Noto Serif SC', serif; color: #444;
-        }
-        
-        /* 定制超可爱粉色滚动条 */
-        .k-content::-webkit-scrollbar { width: 12px; }
-        .k-content::-webkit-scrollbar-track { background: #fdfdfd; border-left: 1px solid #eee; }
-        .k-content::-webkit-scrollbar-thumb { background: var(--m-pink); border-radius: 6px; border: 2px solid #fff;}
-
-        /* 右侧文章细节排版 */
-        .section-title { font-family: 'DotGothic16'; color: var(--m-pink); font-size: 20px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
-        .cute-divider { text-align: center; color: var(--m-blue); letter-spacing: 5px; margin: 35px 0; }
-        .y2k-tag { font-family: 'DotGothic16'; font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: bold; background: var(--m-yellow); border: 1px solid #ddd; margin-right: 6px;}
-        
-        /* 观测领域进度条 */
-        .skill-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; font-size: 14px; font-family: 'DotGothic16';}
-        .skill-name { width: 130px; font-weight: bold; color: #555;}
-        .bar-bg { flex: 1; height: 12px; background: #f0f0f0; border-radius: 6px; overflow: hidden; border: 1px solid #ddd;}
-        .bar-fill { height: 100%; border-radius: 6px;}
-
-        /* Q&A 样式 */
-        .qa-box { background: #F8F5FF; border: 1px dashed #CDB4DB; border-radius: 12px; padding: 20px; margin-top: 15px;}
-        .qa-item { margin-bottom: 15px; }
-        .qa-q { font-weight: bold; color: #8A2BE2; display: block; margin-bottom: 5px;}
-        .qa-a { color: #555; display: block; padding-left: 15px; border-left: 3px solid var(--m-purple);}
-
-        /* ==========================================
-           📌 任务栏与底部元素 (完全保留你的原版设计)
-           ========================================== */
-        .taskbar{position:fixed;bottom:0;left:0;right:0;height:42px;background:var(--win-gray);border-top:2px solid var(--win-light);display:flex;align-items:center;padding:0 6px;z-index:3000;box-shadow:inset 0 1px 0 #dfdfdf;}
-        
-        .start-btn{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;color:#000;font-size:15px;font-weight:bold;flex-shrink:0;}
-        .start-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:5px 11px 3px 13px;}
-        
-        .taskbar-windows{display:flex;gap:5px;margin-left:10px;flex:1;overflow-x:auto;}
-        
-        .taskbar-win-tab{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;font-size:13px;color:#000;display:none;align-items:center;gap:6px;cursor:pointer;max-width:140px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; user-select: none;}
-        .taskbar-win-tab.visible { display: flex; }
-        .taskbar-win-tab.active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);background:#d0d0d0;font-weight:bold;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,#c0c0c0 2px,#c0c0c0 4px);}
-        
-        .subscribe-pill{background:var(--y2k-pink);color:white;padding:4px 15px;text-decoration:none;border:2px solid #000;box-shadow:2px 2px 0 #000;flex-shrink:0;font-size:13px; font-weight: bold;}
-        .subscribe-pill:active { transform: translate(1px, 1px); box-shadow: 0px 0px 0 #000; }
-
-        .system-tray{margin-left:10px;display:flex;gap:8px;align-items:center;flex-shrink:0;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:2px 10px;height:32px;}
-        .social-link{color:#000;text-decoration:none;font-size:12px; font-weight: bold;}
-        .social-link:hover{color:var(--win-blue);text-decoration:underline;}
-        
-        .clock{font-size:13px;color:#000; margin-left: 5px; font-weight: bold; font-family: 'PMingLiU', sans-serif;}
-
-        @media (max-width: 900px) {
-            .desktop-grid { flex-direction: row; height: auto; width: 100%; justify-content: center; }
-            .desktop-divider, .desktop-group-title { display: none; }
-            .subscribe-pill { display: none; }
-            
-            /* 手机版视窗自动充满画面，内部改为上下排列 */
-            #about-win { width: 95vw !important; height: 80vh !important; left: 2.5vw !important; top: 10vh !important; position: absolute !important; }
-            .kawaii-body { flex-direction: column; }
-            .k-sidebar { width: 100%; border-right: none; border-bottom: 2px dashed var(--m-green); padding: 15px; }
-            .social-pills { flex-direction: row; flex-wrap: wrap; justify-content: center;}
-            .k-link-btn { flex: 1; min-width: 100px; padding: 6px; }
-            .k-content { padding: 20px 15px; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>關於小象 | elephlow</title>
+  <meta name="description" content="關於小象（Elephlow）與「推開部屋的門」電子報" />
 </head>
 <body>
-    
-    <div class="desktop-wrapper">
-        
-        <div class="desktop-grid">
-            <a href="/" class="desktop-icon">
-                <img src="https://win98icons.alexmeub.com/icons/computer_explorer-5.png" alt="Home" class="pixel-icon">
-                <span class="icon-text">主页</span>
-            </a>
-            <a href="/zh-tw/about" class="desktop-icon">
-                <img src="https://win98icons.alexmeub.com/icons/notepad-1.png" alt="About" class="pixel-icon">
-                <span class="icon-text">关于小象</span>
-            </a>
-            <a href="/zh-tw/archive" class="desktop-icon">
-                <img src="https://win98icons.alexmeub.com/icons/directory_closed-4.png" alt="Archive" class="pixel-icon">
-                <span class="icon-text">往期目录</span>
-            </a>
-            <a href="/zh-tw/guestbook" class="desktop-icon">
-                <img src="https://win98icons.alexmeub.com/icons/network_internet_pcs_installer-2.png" alt="Guestbook" class="pixel-icon">
-                <span class="icon-text">留言板</span>
-            </a>
-            
-            <div class="desktop-divider"></div>
-            <div class="desktop-group-title">SYSTEM</div>
-            
-            <div class="desktop-icon" onclick="openApp('about-win')">
-                <img src="https://win98icons.alexmeub.com/icons/application_hourglass-1.png" alt="App" class="pixel-icon">
-                <span class="icon-text">About_Me.exe</span>
-            </div>
+
+  <main class="home-window">
+
+    <header class="window-titlebar">
+      <div class="titlebar-left">
+        <span class="title-dots">● ● ●</span>
+        <span class="titlebar-text">elephlow.cc / 關於小象</span>
+      </div>
+      <div class="titlebar-right">
+        <a href="/zh-cn/about" class="lang-link">简</a>
+        <a href="/zh-tw/about" class="lang-link lang-active">繁</a>
+        <a href="/en/about" class="lang-link">EN</a>
+      </div>
+    </header>
+
+    <div class="window-content about-layout">
+
+      <!-- 左侧：像素小象 + persona + 興趣領域 -->
+      <aside class="about-left">
+
+        <div class="elephant-portrait">
+          <svg viewBox="0 0 100 80" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" shape-rendering="crispEdges">
+            <text x="8" y="12" fill="#FFB6D9" font-size="10">✦</text>
+            <text x="78" y="16" fill="#C7B3E8" font-size="8">✦</text>
+            <text x="6" y="65" fill="#B5E8E0" font-size="9">·</text>
+            <text x="82" y="60" fill="#FFE9B6" font-size="10">·</text>
+            <rect x="30" y="26" width="8" height="10" fill="#C7B3E8"/>
+            <rect x="58" y="26" width="8" height="10" fill="#C7B3E8"/>
+            <rect x="34" y="24" width="28" height="18" fill="#C7B3E8"/>
+            <rect x="48" y="40" width="6" height="14" fill="#C7B3E8"/>
+            <rect x="48" y="52" width="4" height="4" fill="#C7B3E8"/>
+            <rect x="40" y="30" width="3" height="3" fill="#2A1F18"/>
+            <rect x="52" y="30" width="3" height="3" fill="#2A1F18"/>
+            <rect x="38" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
+            <rect x="55" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
+            <rect x="32" y="42" width="32" height="20" fill="#C7B3E8"/>
+            <rect x="34" y="62" width="6" height="8" fill="#C7B3E8"/>
+            <rect x="56" y="62" width="6" height="8" fill="#C7B3E8"/>
+            <rect x="44" y="40" width="2" height="2" fill="#FFB6D9"/>
+            <rect x="50" y="40" width="2" height="2" fill="#FFB6D9"/>
+            <rect x="46" y="42" width="4" height="1" fill="#FFB6D9"/>
+          </svg>
+          <p class="elephant-caption">小象 / Elephlow</p>
         </div>
 
-        <div id="about-win" class="window" style="display: flex;">
-            
-            <div class="title-bar drag-handle">
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <img src="https://win98icons.alexmeub.com/icons/application_hourglass-1.png" style="width: 14px; height: 14px; image-rendering: pixelated;">
-                    <span>About_Me.exe - Elephlow Network</span>
-                </div>
-                <div class="win-controls">
-                    <div class="win-btn">_</div>
-                    <div class="win-btn">□</div>
-                    <div class="win-btn" onclick="closeApp('about-win')">×</div>
-                </div>
-            </div>
-            
-            <div class="sys-menu">
-                <span>File</span><span>Edit</span><span>View</span><span>Help</span>
-            </div>
-            
-            <div class="kawaii-inner">
-                
-                <div class="kawaii-toolbar">
-                    <div class="url-pill">
-                        <span style="color: #A2D2FF;">🌐</span> https://elephlow.cc/about
-                    </div>
-                    <div class="lang-toggles">
-                        <a href="/en/about" class="lang-btn">EN</a>
-                        <a href="/zh-tw/about" class="lang-btn active">繁</a>
-                        <a href="/zh-cn/about" class="lang-btn">简</a>
-                    </div>
-                </div>
-
-                <div class="kawaii-body">
-                    
-                    <div class="k-sidebar">
-                        <img src="https://win98icons.alexmeub.com/icons/users-1.png" style="width: 48px; height: 48px; margin: 0 auto 5px auto; image-rendering: pixelated;">
-                        <h1>Elephlow</h1>
-                        <p>Independent Creator<br>& Editor</p>
-                        
-                        <div class="k-link-title">✧ Links ✧</div>
-                        <div class="social-pills">
-                            <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="k-link-btn k-ig">
-                                INSTAGRAM
-                            </a>
-                            <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="k-link-btn k-red">
-                                RedNote
-                            </a>
-                            <a href="https://www.threads.net/@icarusrootedbutflow" target="_blank" class="k-link-btn k-th">
-                                THREADS
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="k-content">
-                        
-                        <div class="section-title">🌸 关于我 About Me</div>
-                        <div style="margin-bottom: 15px;">
-                            <span class="y2k-tag">CREATOR</span>
-                            <span class="y2k-tag">EDITOR</span>
-                        </div>
-                        <p>你好，欢迎推开这扇门。我是小象，一名内容创意工作者。</p>
-                        <p style="margin-top: 10px;">这里不仅仅是字与图的集散地，更像是一座虚拟的桥梁 ☁️。我专注于独立出版、东亚文学与边缘视角的书写，带着相机与笔记本，在城市巷弄与艺文展会间穿梭。</p>
-                        <p style="margin-top: 10px;">我相信真实的记录拥有打破偏见的力量 ✨。透过这份通讯，我试图在喧嚣的网络算法之外，建立一个静谧、真诚的交流场域，把那些容易被遗忘的声音与风景，安放进每一期的字里行间。</p>
-
-                        <div class="cute-divider">⋆｡°✩ ⋆⁺₊⋆ ☾ ⋆⁺₊⋆ ✩°｡⋆</div>
-
-                        <div class="section-title">📊 核心观测领域</div>
-                        <div class="skill-row">
-                            <span class="skill-name">独立出版与 Zine</span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 95%; background: var(--m-pink);"></div></div>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-name">女性与酷儿书写</span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 90%; background: var(--m-blue);"></div></div>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-name">东亚文学与政治</span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: var(--m-yellow);"></div></div>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-name">纪录片与作者研究</span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: var(--m-green);"></div></div>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-name">流行音乐与播客</span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 80%; background: var(--m-purple);"></div></div>
-                        </div>
-
-                        <div class="cute-divider">⋆｡°✩ ⋆⁺₊⋆ ☾ ⋆⁺₊⋆ ✩°｡⋆</div>
-
-                        <div class="section-title">💡 关于创作与载体</div>
-                        <div class="qa-box">
-                            <div class="qa-item">
-                                <span class="qa-q">Q: 为什么选择传统的形式？</span>
-                                <span class="qa-a">比起依赖主流平台，只有自己建立平台才能长久、持续地运营。我不遵循既有平台设定的游戏规则，在这里，我是制定规则的人。</span>
-                            </div>
-                            <div class="qa-item">
-                                <span class="qa-q">Q: 这份通讯的目标是什么？</span>
-                                <span class="qa-a">这是一份不掺杂商业利益的内容筛选，一个普通的、同龄的活人的真实阅读世界。我希望提供的不仅是零散的资讯，而是将事物与城市、历史串联起来的整合性视角，以及一份真实的陪伴感 (◡‿◡✿)。</span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div> </div>
-            <div style="padding: 3px 6px; font-size: 12px; background: var(--win-gray); border-top: 1px solid var(--win-dark); color: #333; font-family: 'PMingLiU', sans-serif;">For Help, click Help Topics on the Help Menu.</div>
+        <div class="persona-card">
+          <h3 class="card-title">✦ persona ✦</h3>
+          <dl class="persona-list">
+            <dt>handle</dt><dd>小象 / Elephlow</dd>
+            <dt>identity</dt><dd>queer woman ♡</dd>
+            <dt>making</dt><dd>推開部屋的門</dd>
+            <dt>since</dt><dd>2022.07</dd>
+            <dt>season</dt><dd>4 · 2026 啟動 ✦</dd>
+            <dt>focus</dt><dd>港台日韓 · 獨立文化邊緣</dd>
+          </dl>
         </div>
+
+        <div class="interests-card">
+          <h3 class="card-title">✿ 興趣領域 ✿</h3>
+          <div class="tag-list">
+            <span class="tag">港台流行音樂</span>
+            <span class="tag">獨立雜誌與書店</span>
+            <span class="tag">紀錄片影展</span>
+            <span class="tag">酷兒書寫</span>
+            <span class="tag">Zine 與藝術書展</span>
+            <span class="tag">東亞文學脈絡</span>
+            <span class="tag">同齡女孩對談</span>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- 中间：5問5答 -->
+      <section class="about-center">
+        <div class="qa-card">
+          <h2 class="qa-title">⌒ 五問五答 ⌒</h2>
+          <p class="qa-subtitle">獨自進行的訪談 ｡^‿^｡</p>
+
+          <div class="qa-list">
+
+            <div class="qa-item qa-item-mint">
+              <p class="qa-question"><span class="q-icon">☘</span> Q1 · 你是誰？</p>
+              <p class="qa-answer">大家好，我是小象（Elephlow）。一個酷兒女性、獨立寫作者，常年穿梭於港台流行文化、獨立出版、影展研究與酷兒書寫之間。網路上找我，在 IG / Threads 叫 <a href="[https://www.instagram.com/icarusrootedbutflow/](https://www.instagram.com/icarusrootedbutflow/)" target="_blank">@icarusrootedbutflow</a>。</p>
+            </div>
+
+            <div class="text-divider">✿ ⋆ ✿ ⋆ ✿</div>
+
+            <div class="qa-item qa-item-aqua">
+              <p class="qa-question"><span class="q-icon">✦</span> Q2 · 「推開部屋的門」是什麼？</p>
+              <p class="qa-answer">一份創辦於 2022 年 7 月的中文付費電子報。<strong>三季已完結，共 48 期</strong>，第四季 2026 啟動。內容圍繞港台日韓獨立文化的邊緣 ── 書店、Zine、酷兒、聲響、影像。第四季從固定欄目轉向<strong>主題策展</strong>，每一期都像一本小型獨立雜誌的單期：做得窄，做得深。</p>
+            </div>
+
+            <div class="text-divider">✦ ⋆ ✦ ⋆ ✦</div>
+
+            <div class="qa-item qa-item-pink">
+              <p class="qa-question"><span class="q-icon">✿</span> Q3 · 為什麼寫這份小報？</p>
+              <p class="qa-answer">平台的演算法把好東西藏起來，把不需要的東西推到你面前。我想反過來 ── 選好的、慢的、不必走紅但值得看的東西，寫給願意慢下來讀的人。</p>
+              <p class="qa-answer">讀者收到的不是熱搜上能看到的東西，而是：</p>
+              <ul class="qa-list-inner">
+                <li>✿ 打破資訊差的整合性內容</li>
+                <li>✦ 不摻商業利益的誠實寫作</li>
+                <li>☘ 一個真實的人的陪伴感</li>
+              </ul>
+            </div>
+
+            <div class="text-divider">☘ ⋆ ☘ ⋆ ☘</div>
+
+            <div class="qa-item qa-item-cream">
+              <p class="qa-question"><span class="q-icon">♡</span> Q4 · 第四季有什麼不一樣？</p>
+              <p class="qa-answer">三件大事：</p>
+              <ul class="qa-list-inner">
+                <li>☘ <strong>正刊轉向主題策展</strong>：每期一個切入點 ── 某件物、某個文學人物、某種音樂風格 ── 當成小型策展的中心。</li>
+                <li>✦ <strong>雜誌通信頻率加快</strong>：副刊從月更變成每月多期，每篇 1000 字左右，聚焦某本雜誌的某一期具體在做什麼。</li>
+                <li>✿ <strong>外部供稿者加入</strong>：邀請更多中港台寫作者，讓多元、在地的聲音進來。</li>
+              </ul>
+            </div>
+
+            <div class="text-divider">♡ ⋆ ♡ ⋆ ♡</div>
+
+            <div class="qa-item qa-item-purple">
+              <p class="qa-question"><span class="q-icon">✶</span> Q5 · 怎麼找到我？</p>
+              <p class="qa-answer">
+                ✉ 訂閱第四季：<a href="[https://tally.so/r/4415XB](https://tally.so/r/4415XB)" target="_blank">tally.so/r/4415XB</a><br/>
+                ◉ instagram / threads：<a href="[https://www.instagram.com/icarusrootedbutflow/](https://www.instagram.com/icarusrootedbutflow/)" target="_blank">@icarusrootedbutflow</a><br/>
+                ◉ 小紅書：搜「流星小飛象」<br/>
+                ◉ 撰稿、採訪、合作邀請：透過上面任一管道私訊
+              </p>
+            </div>
+
+          </div>
+
+          <div class="qa-footer">
+            <p>(｡♡‿♡｡) thanks for reading ✿</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 右侧：minihome 垂直 tabs（繁体 + 强色彩分隔） -->
+      <aside class="about-right">
+        <nav class="vertical-tabs">
+          <a href="/zh-tw/" class="vtab vtab-home">
+            <span class="vtab-icon">🏠</span>
+            <span class="vtab-label">主頁</span>
+          </a>
+          <a href="/zh-tw/about" class="vtab vtab-active">
+            <span class="vtab-icon">👤</span>
+            <span class="vtab-label">簡介</span>
+          </a>
+          <a href="/zh-tw/archive" class="vtab vtab-archive">
+            <span class="vtab-icon">📚</span>
+            <span class="vtab-label">目錄</span>
+          </a>
+          <a href="/zh-tw/guestbook" class="vtab vtab-guestbook">
+            <span class="vtab-icon">✉</span>
+            <span class="vtab-label">留言板</span>
+          </a>
+          <a href="[https://tally.so/r/4415XB](https://tally.so/r/4415XB)" class="vtab vtab-subscribe" target="_blank">
+            <span class="vtab-icon">★</span>
+            <span class="vtab-label">訂閱</span>
+          </a>
+        </nav>
+
+        <div class="minihome-deco">
+          <div class="deco-row">✦ ✿ ☘ ♡ ✦</div>
+          <div class="deco-text">
+            <p>this is a quiet</p>
+            <p>little room ｡^‿^｡</p>
+          </div>
+        </div>
+
+        <div class="season-banner">
+          <p class="season-line1">✦ NEW ✦</p>
+          <p class="season-line2">SEASON</p>
+          <p class="season-line3">04</p>
+          <p class="season-line4">2026.05.17</p>
+        </div>
+      </aside>
+
     </div>
 
-    <footer class="taskbar">
-        <a href="/" class="start-btn">
-            <img src="https://win98icons.alexmeub.com/icons/windows-0.png" style="width:16px; height:16px; image-rendering:pixelated;"> Start
-        </a>
-        <div class="taskbar-windows">
-            <div class="taskbar-win-tab visible active" id="tab-about-win" onclick="bringToFront('about-win')">
-                <img src="https://win98icons.alexmeub.com/icons/application_hourglass-1.png" style="width:14px; height:14px; image-rendering:pixelated;"> About_Me.exe
-            </div>
-        </div>
-        
-        <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">立即订阅第四季早鸟</a>
-        
-        <div class="system-tray">
-            <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">INSTAGRAM</a>
-            <span style="color:var(--win-dark);">|</span>
-            <div class="clock" id="live-clock">00:00 AM</div>
-        </div>
+    <footer class="window-taskbar">
+      <div class="taskbar-left">
+        <span class="taskbar-start">⊞ START</span>
+        <span class="taskbar-item">▣ 關於小象.exe</span>
+      </div>
+      <div class="taskbar-right">
+        <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
+        <span class="taskbar-clock" id="clock">--:--</span>
+      </div>
     </footer>
 
-    <script is:inline>
-        let zIndexCounter = 300;
+  </main>
 
-        function openApp(winId) {
-            const win = document.getElementById(winId);
-            const tab = document.getElementById('tab-' + winId);
-            if (win) { win.style.display = 'flex'; win.style.zIndex = ++zIndexCounter; }
-            if (tab) { tab.classList.add('visible'); }
-            bringToFront(winId);
-        }
+  <script is:inline>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('clock');
+      if (el) el.innerText = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+  </script>
 
-        function closeApp(winId) {
-            const win = document.getElementById(winId);
-            const tab = document.getElementById('tab-' + winId);
-            if (win) win.style.display = 'none';
-            if (tab) { tab.classList.remove('visible'); tab.classList.remove('active'); }
-        }
+  <style>
+    /* === Home Window 容器 === */
+    .home-window {
+      max-width: 1180px;
+      margin: 24px auto;
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-purple);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(199, 179, 232, 0.35);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .titlebar-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .titlebar-text { letter-spacing: 1px; }
+    .titlebar-right { display: flex; gap: 4px; }
+    .lang-link {
+      padding: 2px 8px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 3px;
+    }
+    .lang-link:hover { background: var(--candy-cream); }
+    .lang-active { background: var(--candy-cream); font-weight: 700; }
 
-        function bringToFront(winId) {
-            const win = document.getElementById(winId);
-            if (win && win.style.display !== 'none') { win.style.zIndex = ++zIndexCounter; }
-            document.querySelectorAll('.taskbar-win-tab').forEach(t => t.classList.remove('active'));
-            const tab = document.getElementById('tab-' + winId);
-            if (tab && tab.classList.contains('visible')) { tab.classList.add('active'); }
-        }
+    .window-content { padding: 24px; }
 
-        // 绑定视窗拖拽把手 (经典代码完美保留)
-        const allWindows = document.querySelectorAll('.window');
-        allWindows.forEach(win => {
-            const dragHandle = win.querySelector('.drag-handle');
-            win.addEventListener('mousedown', () => { bringToFront(win.id); });
+    /* === About 页三栏 === */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr 200px;
+      gap: 24px;
+      align-items: start;
+    }
 
-            if (dragHandle) {
-                dragHandle.addEventListener('mousedown', (e) => {
-                    if (e.target.closest('.win-btn')) return; 
-                    if (window.innerWidth <= 900) return; 
+    /* === 左侧通用卡片标题 === */
+    .card-title {
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      color: var(--ink-light);
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed currentColor;
+    }
 
-                    let rect = win.getBoundingClientRect();
-                    let shiftX = e.clientX - rect.left;
-                    let shiftY = e.clientY - rect.top;
+    /* === 左侧：像素小象 === */
+    .elephant-portrait {
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-pink);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.35);
+      margin-bottom: 14px;
+    }
+    .elephant-portrait svg { width: 120px; height: auto; }
+    .elephant-caption {
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink-light);
+      margin-top: 8px;
+      letter-spacing: 2px;
+    }
 
-                    function moveAt(clientX, clientY) { 
-                        win.style.left = (clientX - shiftX) + 'px'; 
-                        win.style.top = (clientY - shiftY) + 'px'; 
-                        win.style.transform = 'none'; /* 拖拽时取消居中 transform 防止跳动 */
-                    }
-                    
-                    function onMouseMove(e) { moveAt(e.clientX, e.clientY); }
-                    document.addEventListener('mousemove', onMouseMove);
-                    document.addEventListener('mouseup', () => { document.removeEventListener('mousemove', onMouseMove); }, { once: true });
-                });
-            }
-        });
+    /* === Persona card === */
+    .persona-card {
+      background: var(--candy-mint);
+      border: 1.5px dashed var(--candy-purple);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.35);
+      margin-bottom: 14px;
+    }
+    .persona-list {
+      font-family: var(--font-serif-tc);
+      font-size: 12px;
+      color: var(--ink);
+      margin: 0;
+    }
+    .persona-list dt {
+      font-family: var(--font-pixel);
+      font-size: 9px;
+      color: var(--candy-purple);
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+    .persona-list dt:first-child { margin-top: 0; }
+    .persona-list dd {
+      font-size: 13px;
+      margin-left: 0;
+      margin-top: 2px;
+      line-height: 1.5;
+    }
 
-        function updateClock() {
-            const now = new Date(); let h = now.getHours(); let m = String(now.getMinutes()).padStart(2, '0');
-            let ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12; h = h ? h : 12;
-            document.getElementById('live-clock').innerText = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
-        }
-        setInterval(updateClock, 1000); updateClock();
-    </script>
+    /* === Interests card === */
+    .interests-card {
+      background: var(--candy-cream);
+      border: 1.5px dashed var(--candy-peach);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3);
+    }
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--soft-white);
+      border: 1px dashed var(--candy-purple);
+      border-radius: 999px;
+      font-family: var(--font-serif-tc);
+      font-size: 11px;
+      color: var(--ink);
+    }
+
+    /* === 中间：5問5答 === */
+    .qa-card {
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-mint);
+      border-radius: 12px;
+      padding: 28px 32px;
+      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
+    }
+    .qa-title {
+      font-family: var(--font-serif-tc);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink-light);
+      text-align: center;
+      margin-bottom: 4px;
+      letter-spacing: 6px;
+    }
+    .qa-subtitle {
+      text-align: center;
+      font-family: var(--font-rounded);
+      font-size: 13px;
+      color: var(--candy-purple);
+      margin-bottom: 24px;
+    }
+    .qa-item {
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin: 0 -8px;
+    }
+    .qa-item-mint   { background: rgba(200, 233, 176, 0.15); }
+    .qa-item-aqua   { background: rgba(181, 232, 224, 0.15); }
+    .qa-item-pink   { background: rgba(255, 182, 217, 0.15); }
+    .qa-item-cream  { background: rgba(255, 233, 182, 0.2); }
+    .qa-item-purple { background: rgba(199, 179, 232, 0.15); }
+
+    .qa-question {
+      font-family: var(--font-mochi);
+      font-size: 15px;
+      color: var(--candy-purple);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .q-icon { margin-right: 4px; }
+    .qa-answer {
+      font-family: var(--font-serif-tc);
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .qa-answer:last-child { margin-bottom: 0; }
+    .qa-answer strong {
+      color: var(--ink);
+      background: linear-gradient(transparent 60%, var(--candy-aqua) 60%);
+    }
+    .qa-answer a {
+      color: var(--candy-purple);
+      border-bottom: 1px dashed var(--candy-purple);
+      text-decoration: none;
+    }
+    .qa-answer a:hover { background: var(--candy-cream); }
+    .qa-list-inner {
+      font-family: var(--font-serif-tc);
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: var(--ink);
+      padding-left: 0;
+      list-style: none;
+      margin-top: 4px;
+    }
+    .qa-list-inner li { margin-bottom: 6px; }
+    .qa-list-inner strong {
+      color: var(--ink);
+      background: linear-gradient(transparent 60%, var(--candy-aqua) 60%);
+    }
+    .text-divider {
+      text-align: center;
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--candy-purple);
+      letter-spacing: 6px;
+      margin: 16px 0;
+      opacity: 0.7;
+    }
+    .qa-footer {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--candy-mint);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 2px;
+    }
+
+    /* === 右侧 vertical tabs（每个 tab 不同糖果色背景） === */
+    .vertical-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+    .vtab {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 0 16px 16px 0;
+      border: 1.5px dashed rgba(0,0,0,0.1);
+      border-left: 5px solid;
+      text-decoration: none;
+      color: var(--ink);
+      font-family: var(--font-rounded);
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform 0.15s;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+    .vtab:hover { transform: translateX(4px); text-decoration: none; }
+    .vtab-icon { font-size: 16px; }
+
+    .vtab-home      { background: var(--candy-mint);   border-left-color: #7BB85E; }
+    .vtab-active    { background: var(--candy-purple); border-left-color: #9B7BC9; border-left-width: 7px; font-weight: 800; }
+    .vtab-archive   { background: var(--candy-aqua);   border-left-color: #7DC2B8; }
+    .vtab-guestbook { background: var(--candy-pink);   border-left-color: #E89BC0; }
+    .vtab-subscribe { background: var(--candy-cream);  border-left-color: #E6B870; }
+
+    /* === Deco card === */
+    .minihome-deco {
+      background: var(--candy-cream);
+      border: 1.5px dashed var(--candy-peach);
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+      box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3);
+      margin-bottom: 14px;
+    }
+    .deco-row {
+      font-size: 14px;
+      color: var(--candy-purple);
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+    }
+    .deco-text p {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink-light);
+      margin: 2px 0;
+    }
+
+    /* === Season banner === */
+    .season-banner {
+      background: var(--candy-purple);
+      border: 1.5px dashed var(--ink-light);
+      border-radius: 12px;
+      padding: 14px 8px;
+      text-align: center;
+      box-shadow: 3px 3px 0 var(--candy-pink);
+    }
+    .season-banner p { margin: 0; }
+    .season-line1 {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink);
+      letter-spacing: 3px;
+    }
+    .season-line2 {
+      font-family: var(--font-bubble);
+      font-size: 16px;
+      color: var(--soft-white);
+      text-shadow: 1px 1px 0 var(--ink-light);
+      letter-spacing: 2px;
+      margin: 2px 0;
+    }
+    .season-line3 {
+      font-family: var(--font-bubble);
+      font-size: 36px;
+      color: var(--soft-white);
+      text-shadow: 2px 2px 0 var(--ink-light);
+      line-height: 1;
+    }
+    .season-line4 {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink);
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* === Window 任务栏 === */
+    .window-taskbar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .taskbar-left { display: flex; gap: 12px; align-items: center; }
+    .taskbar-right { display: flex; gap: 12px; align-items: center; }
+    .taskbar-start {
+      background: var(--candy-cream);
+      padding: 2px 8px;
+      border-radius: 3px;
+      border: 1px dashed var(--candy-purple);
+    }
+    .taskbar-item, .taskbar-status { color: var(--ink-light); }
+    .taskbar-clock { font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .about-layout { grid-template-columns: 1fr; }
+      .home-window { margin: 12px; }
+    }
+  </style>
+
 </body>
 </html>
