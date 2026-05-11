@@ -53,16 +53,24 @@ body {
   background-color: var(--cream-paper);
   background-image: repeating-linear-gradient(
     90deg,
-    var(--candy-mint) 0,
-    var(--candy-mint) 48px,
-    var(--candy-cream) 48px,
-    var(--candy-cream) 80px,
-    var(--candy-pink) 80px,
-    var(--candy-pink) 112px,
-    var(--candy-aqua) 112px,
-    var(--candy-aqua) 160px,
-    var(--candy-purple) 160px,
-    var(--candy-purple) 192px
+    transparent 0,
+    transparent 24px,
+    rgba(200, 233, 176, 0.55) 24px,
+    rgba(200, 233, 176, 0.55) 52px,
+    transparent 52px,
+    transparent 68px,
+    rgba(255, 182, 217, 0.5) 68px,
+    rgba(255, 182, 217, 0.5) 82px,
+    transparent 82px,
+    transparent 106px,
+    rgba(181, 232, 224, 0.55) 106px,
+    rgba(181, 232, 224, 0.55) 154px,
+    transparent 154px,
+    transparent 168px,
+    rgba(199, 179, 232, 0.45) 168px,
+    rgba(199, 179, 232, 0.45) 188px,
+    transparent 188px,
+    transparent 208px
   );
   color: var(--ink);
   font-family: var(--font-serif-sc), var(--font-rounded);
