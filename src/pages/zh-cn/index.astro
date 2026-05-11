@@ -8,152 +8,223 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>推开部屋的门 | elephlow</title>
-  <meta name="description" content="一份中文付费电子报，写在港台日韩独立文化的边缘。" />
+  <meta name="description" content="一份中文付费电子报，小象（Elephlow）的独立通讯基地。" />
 </head>
 <body>
 
-  <div class="page-container">
+  <main class="home-window">
 
-    <!-- ═══════════════════════════════
-         WELCOME BANNER（绿色条纹基底）
-         ═══════════════════════════════ -->
-    <header class="welcome-banner">
-      <div class="welcome-inner">
-        <div class="pixel-icon">
-          <span style="font-size: 48px;">🐘</span>
-        </div>
-        <div class="welcome-text">
-          <p class="welcome-line1">✿ Welcome to ✿</p>
-          <h1 class="site-title">elephlow's homepage</h1>
-          <p class="welcome-line2">since 2022.07 · ☘ 推开部屋的门 ☘</p>
-        </div>
+    <header class="window-titlebar">
+      <div class="titlebar-left">
+        <span class="title-dots">● ● ●</span>
+        <span class="titlebar-text">elephlow.cc / 推开部屋的门</span>
+      </div>
+      <div class="titlebar-right">
+        <a href="/zh-cn/" class="lang-link lang-active">简</a>
+        <a href="/zh-tw/" class="lang-link">繁</a>
+        <a href="/en/" class="lang-link">EN</a>
       </div>
     </header>
 
-    <!-- ═══════════════════════════════
-         MAIN GRID（三栏：左侧栏 / 主内容 / 右侧菜单）
-         ═══════════════════════════════ -->
-    <div class="main-grid">
+    <div class="window-content">
 
-      <!-- 左侧栏 -->
-      <aside class="left-column">
-        <!-- icons row 装饰 -->
-        <div class="deco-icons">
-          <span>📕</span><span>☘</span><span>✦</span>
-          <span>📩</span><span>🍵</span><span>♬</span>
-        </div>
-
-        <CalendarWidget />
-
-        <!-- 状态信息 -->
-        <div class="status-info">
-          <p>last update: 2026.05.11</p>
-          <p>currently: 第四季筹备中</p>
-          <p>contact: hello@elephlow.cc</p>
-        </div>
-      </aside>
-
-      <!-- 中间主内容 -->
-      <main class="center-column">
-        <div class="intro-card">
-          <div class="intro-tabs">
-            <span class="tab tab-active">≋ 推开部屋的门 ≋</span>
-          </div>
-          <p class="intro-tagline">在边缘捕捉与想象 ✦</p>
-          <div class="intro-body">
-            <p>这是一份创办于 2022 年 7 月的中文付费电子报，写在港台日韩独立文化的边缘。</p>
-            <p>从独立书店、播客电台、小型乐团、Zine 到酷儿艺术——记录作为编辑、读者、行者、酷儿女性的所见所感。</p>
-            <p>三季已完结，共 48 期。<strong>第四季 2026 启动。</strong></p>
-          </div>
-          <div class="cta-row">
-            <a href="https://tally.so/r/4415XB" class="cta-button cta-primary">★ 订阅第四季 ★</a>
-            <a href="/zh-cn/archive" class="cta-button cta-secondary">看往期目录 →</a>
+      <section class="welcome-banner">
+        <span class="corner corner-tl">✿</span>
+        <span class="corner corner-tr">✦</span>
+        <span class="corner corner-bl">☘</span>
+        <span class="corner corner-br">♡</span>
+        <div class="welcome-inner">
+          <div class="pixel-icon">🐘</div>
+          <div class="welcome-text">
+            <p class="welcome-line1">(｡♡‿♡｡) ✿ Welcome to ✿</p>
+            <h1 class="site-title">elephlow's homepage</h1>
+            <div class="welcome-divider">⋆ ˚｡⋆ ୨ ˚୧ ⋆ ˚｡⋆</div>
+            <p class="welcome-line2">since 2022.07 · ☘ 推开部屋的门 ☘</p>
           </div>
         </div>
-      </main>
+      </section>
 
-      <!-- 右侧菜单（致敬 yotsu's Homepage 的 colored MENU） -->
-      <aside class="right-column">
-        <div class="menu-card">
-          <h3 class="menu-title">▼ MENU ▼</h3>
-          <ul class="menu-list">
-            <li><a href="/zh-cn/about" class="menu-mint">about 小象</a></li>
-            <li><a href="/zh-cn/archive" class="menu-aqua">往期目录</a></li>
-            <li><a href="/zh-cn/guestbook" class="menu-pink">留言板</a></li>
-            <li><a href="https://tally.so/r/4415XB" class="menu-purple">★ 订阅 ★</a></li>
-          </ul>
-        </div>
+      <div class="main-grid">
 
-        <!-- guestbook 小卡片 -->
-        <div class="guestbook-card">
-          <a href="/zh-cn/guestbook">
-            <span class="gb-icon">✉</span>
-            <span class="gb-text">sign my guestbook</span>
-          </a>
-        </div>
-      </aside>
+        <aside class="left-column">
+          <div class="deco-icons">
+            <span>📕</span><span>☘</span><span>✦</span>
+            <span>📩</span><span>🍵</span><span>♬</span>
+          </div>
+          <CalendarWidget />
+          <div class="status-info">
+            <p>ʚ♡ɞ last update: 2026.05.11</p>
+            <p>(｡◕‿◕｡) currently: 第四季筹备中</p>
+            <p>✉ hello@elephlow.cc</p>
+          </div>
+        </aside>
 
+        <section class="center-column">
+          <div class="intro-card">
+            <h2 class="intro-title">≋ 推开部屋的门 ≋</h2>
+            <p class="intro-tagline">在边缘捕捉与想象 ✦</p>
+            <div class="intro-body">
+              <p>这是一份创办于 2022 年 7 月的中文付费电子报，也是小象（Elephlow）的独立通讯基地。</p>
+              <div class="text-divider">✿ ⋆ ✿ ⋆ ✿</div>
+              <p>我们以文字为载体，穿梭于港台流行文化、独立出版、影展研究及酷儿视角书写的隙缝之中。不仰赖演算法，我们致力于打破资讯差，为你筛选并整合高品质的文化资讯，提供一个真实、有温度的阅读陪伴。</p>
+              <div class="text-divider">✦ ⋆ ✦ ⋆ ✦</div>
+              <p>「部屋」是私密的起点，而「推开门」则是通往公共的行动。我们致力于将偏见所隔绝的万事万物重新拉近，当下一次敲门声响起，邀请你一同推开门，<strong>在时代的边缘捕捉那些被忽视的微光。</strong></p>
+            </div>
+            <div class="cta-row">
+              <a href="https://tally.so/r/4415XB" class="cta-button cta-primary">★ 订阅第四季 ★</a>
+              <a href="/zh-cn/archive" class="cta-button cta-secondary">看往期目录 →</a>
+            </div>
+          </div>
+        </section>
+
+        <aside class="right-column">
+          <div class="menu-card">
+            <h3 class="menu-title">▼ MENU ▼</h3>
+            <ul class="menu-list">
+              <li><a href="/zh-cn/about" class="menu-mint">about 小象</a></li>
+              <li><a href="/zh-cn/archive" class="menu-aqua">往期目录</a></li>
+              <li><a href="/zh-cn/guestbook" class="menu-pink">留言板</a></li>
+              <li><a href="https://tally.so/r/4415XB" class="menu-purple">★ 订阅 ★</a></li>
+            </ul>
+          </div>
+          <div class="guestbook-card">
+            <a href="/zh-cn/guestbook">
+              <span class="gb-icon">✉</span>
+              <span class="gb-text">sign my guestbook</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
     </div>
 
-  </div>
+    <footer class="window-taskbar">
+      <div class="taskbar-left">
+        <span class="taskbar-start">⊞ START</span>
+        <span class="taskbar-item">▣ 推开部屋的门</span>
+      </div>
+      <div class="taskbar-right">
+        <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
+        <span class="taskbar-clock" id="clock">--:--</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script is:inline>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('clock');
+      if (el) el.innerText = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+  </script>
 
   <style>
-    /* === 容器 === */
-    .page-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 32px 24px 80px;
+    .home-window {
+      max-width: 1180px;
+      margin: 24px auto;
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-purple);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(199, 179, 232, 0.35);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* === Welcome Banner（绿色条纹） === */
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .titlebar-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .titlebar-text { letter-spacing: 1px; }
+    .titlebar-right { display: flex; gap: 4px; }
+    .lang-link {
+      padding: 2px 8px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 3px;
+      background: transparent;
+    }
+    .lang-link:hover { background: var(--candy-cream); }
+    .lang-active { background: var(--candy-cream); font-weight: 700; }
+
+    .window-content { padding: 24px; }
+
     .welcome-banner {
-      background-color: var(--candy-mint);
+      position: relative;
+      background: var(--candy-mint);
       background-image: repeating-linear-gradient(
         135deg,
-        var(--candy-mint),
-        var(--candy-mint) 16px,
-        var(--candy-aqua) 16px,
-        var(--candy-aqua) 32px,
-        var(--candy-cream) 32px,
-        var(--candy-cream) 48px,
-        var(--candy-pink) 48px,
-        var(--candy-pink) 64px
+        var(--candy-mint), var(--candy-mint) 16px,
+        var(--candy-aqua) 16px, var(--candy-aqua) 32px,
+        var(--candy-cream) 32px, var(--candy-cream) 48px,
+        var(--candy-pink) 48px, var(--candy-pink) 64px
       );
       padding: 0;
-      border-radius: var(--radius-soft);
-      border: 3px solid var(--ink);
-      box-shadow: 5px 5px 0 var(--ink);
-      margin-bottom: 32px;
+      border-radius: 12px;
+      border: 2px dashed var(--candy-purple);
+      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.5);
+      margin-bottom: 24px;
       overflow: hidden;
+    }
+
+    .corner {
+      position: absolute;
+      font-size: 18px;
+      z-index: 2;
+      color: var(--candy-purple);
+    }
+    .corner-tl { top: 6px; left: 10px; }
+    .corner-tr { top: 6px; right: 10px; color: var(--candy-pink); }
+    .corner-bl { bottom: 6px; left: 10px; color: var(--candy-mint); }
+    .corner-br { bottom: 6px; right: 10px; color: var(--candy-peach); }
+
+    .welcome-divider {
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--candy-purple);
+      letter-spacing: 4px;
+      margin: 6px 0;
     }
 
     .welcome-inner {
       background: var(--soft-white);
-      margin: 8px;
-      padding: 24px 32px;
-      border-radius: 6px;
+      margin: 6px;
+      padding: 20px 28px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       gap: 24px;
     }
 
-    .pixel-icon {
-      flex-shrink: 0;
-    }
+    .pixel-icon { font-size: 48px; flex-shrink: 0; }
 
     .welcome-line1 {
       font-family: var(--font-pixel);
-      font-size: 13px;
+      font-size: 12px;
       color: var(--candy-purple);
       margin: 0;
     }
 
     .site-title {
       font-family: var(--font-bubble);
-      font-size: 36px;
+      font-size: 32px;
       color: var(--ink-light);
       text-shadow: 2px 2px 0 var(--candy-peach);
-      margin: 6px 0;
+      margin: 4px 0;
       line-height: 1.1;
       letter-spacing: 1px;
     }
@@ -163,221 +234,214 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       font-size: 11px;
       color: var(--ink-light);
       margin: 0;
-      letter-spacing: 0.5px;
     }
 
-    /* === Main Grid === */
     .main-grid {
       display: grid;
       grid-template-columns: 220px 1fr 200px;
-      gap: 24px;
+      gap: 20px;
       align-items: start;
     }
 
-    /* === 左侧栏 === */
     .deco-icons {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 4px;
-      padding: 12px 8px;
+      padding: 10px 8px;
       background: var(--soft-white);
-      border: 2px dashed var(--candy-mint);
-      border-radius: var(--radius-soft);
-      margin-bottom: 16px;
+      border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px;
+      margin-bottom: 12px;
       text-align: center;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .status-info {
       font-family: var(--font-pixel);
-      font-size: 11px;
+      font-size: 10px;
       color: var(--ink-light);
-      padding: 14px 12px;
+      padding: 12px;
       background: var(--candy-mint);
-      border-radius: var(--radius-card);
+      border-radius: 8px;
       line-height: 1.8;
+      margin-top: 12px;
     }
+    .status-info p { margin: 0; }
 
-    .status-info p {
-      margin: 0;
-    }
-
-    /* === 中间主内容 === */
     .intro-card {
       background: var(--soft-white);
-      border: 3px solid var(--candy-mint);
-      border-radius: var(--radius-soft);
-      padding: 36px 40px;
-      box-shadow: 4px 4px 0 var(--candy-aqua);
+      border: 2px dashed var(--candy-mint);
+      border-radius: 12px;
+      padding: 24px 28px;
+      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
+      max-height: 540px;
+      overflow-y: auto;
     }
 
-    .intro-tabs {
+    .intro-title {
+      font-family: var(--font-serif-sc);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink-light);
       text-align: center;
-      margin-bottom: 8px;
-    }
-
-    .tab {
-      display: inline-block;
-      font-family: var(--font-mochi);
-      font-size: 22px;
-      color: var(--candy-purple);
-      padding: 4px 16px;
+      margin-bottom: 6px;
+      letter-spacing: 6px;
     }
 
     .intro-tagline {
       text-align: center;
       font-family: var(--font-rounded);
       font-weight: 700;
-      font-size: 16px;
-      color: var(--candy-pink);
-      margin-bottom: 28px;
+      font-size: 14px;
+      color: var(--candy-purple);
+      margin-bottom: 20px;
     }
 
     .intro-body p {
       font-family: var(--font-serif-sc);
-      line-height: 2;
-      margin-bottom: 14px;
-      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 12px;
+      font-size: 14px;
       color: var(--ink);
     }
 
     .intro-body strong {
-      color: var(--candy-purple);
+      color: var(--ink);
       background: linear-gradient(transparent 60%, var(--candy-aqua) 60%);
+      font-weight: 700;
+    }
+
+    .text-divider {
+      text-align: center;
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--candy-purple);
+      letter-spacing: 6px;
+      margin: 16px 0;
+      opacity: 0.7;
     }
 
     .cta-row {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
-      margin-top: 28px;
+      margin-top: 20px;
       flex-wrap: wrap;
     }
 
     .cta-button {
       display: inline-block;
-      padding: 12px 24px;
+      padding: 10px 20px;
       font-family: var(--font-rounded);
       font-weight: 700;
+      font-size: 13px;
       text-decoration: none;
-      border-radius: var(--radius-pill);
-      border: 2px solid var(--ink);
-      box-shadow: 3px 3px 0 var(--ink);
+      border-radius: 999px;
+      border: 1.5px dashed var(--candy-purple);
+      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4);
       transition: transform 0.15s;
+      color: var(--ink);
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
     }
-
     .cta-button:hover {
       transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 var(--ink);
+      box-shadow: 4px 4px 0 rgba(199, 179, 232, 0.5);
       text-decoration: none;
     }
+    .cta-primary { background: var(--candy-mint); }
+    .cta-secondary { background: var(--candy-cream); }
 
-    .cta-primary {
-      background: var(--candy-mint);
-      color: var(--ink);
-    }
-
-    .cta-secondary {
-      background: var(--soft-white);
-      color: var(--ink);
-    }
-
-    /* === 右侧菜单 === */
     .menu-card {
       background: var(--soft-white);
-      border: 2px solid var(--ink);
-      border-radius: var(--radius-soft);
+      border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px;
       padding: 8px;
-      box-shadow: 3px 3px 0 var(--ink);
-      margin-bottom: 16px;
+      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.4);
+      margin-bottom: 12px;
     }
-
     .menu-title {
       font-family: var(--font-pixel);
-      font-size: 13px;
+      font-size: 12px;
       text-align: center;
-      padding: 10px 4px;
+      padding: 8px 4px;
       margin: 0 0 6px;
-      color: var(--candy-purple);
-      background: var(--candy-mint);
-      border-radius: var(--radius-card);
+      color: var(--ink-light);
+      background: var(--candy-cream);
+      border-radius: 6px;
     }
-
-    .menu-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .menu-list li {
-      margin-bottom: 4px;
-    }
-
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-list li { margin-bottom: 4px; }
     .menu-list a {
       display: block;
-      padding: 12px 14px;
+      padding: 10px 12px;
       text-align: center;
       font-family: var(--font-rounded);
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       color: var(--ink);
       text-decoration: none;
-      border-radius: var(--radius-card);
-      border: 1.5px solid var(--ink);
-      transition: transform 0.15s, box-shadow 0.15s;
+      border-radius: 8px;
+      border: 1.5px dashed var(--candy-purple);
+      transition: transform 0.15s;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
     }
-
     .menu-list a:hover {
       transform: translate(-2px, -2px);
-      box-shadow: 3px 3px 0 var(--ink);
+      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4);
       text-decoration: none;
     }
-
     .menu-mint { background: var(--candy-mint); }
     .menu-aqua { background: var(--candy-aqua); }
     .menu-pink { background: var(--candy-pink); }
     .menu-purple { background: var(--candy-purple); }
 
-    /* === Guestbook 小卡片 === */
     .guestbook-card a {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px;
+      padding: 14px;
       background: var(--candy-cream);
-      border: 2px solid var(--ink);
-      border-radius: var(--radius-soft);
-      box-shadow: 3px 3px 0 var(--candy-pink);
+      border: 1.5px dashed var(--candy-pink);
+      border-radius: 12px;
+      box-shadow: 3px 3px 0 rgba(255, 182, 217, 0.4);
       text-decoration: none;
       color: var(--ink);
-      transition: transform 0.15s;
     }
-
-    .guestbook-card a:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 var(--candy-pink);
-      text-decoration: none;
-    }
-
-    .gb-icon {
-      font-size: 28px;
-      margin-bottom: 4px;
-    }
-
+    .guestbook-card a:hover { text-decoration: none; }
+    .gb-icon { font-size: 24px; margin-bottom: 4px; }
     .gb-text {
       font-family: var(--font-pixel);
-      font-size: 11px;
-      color: var(--candy-purple);
+      font-size: 10px;
+      color: var(--ink-light);
     }
 
-    /* === 响应式 === */
+    .window-taskbar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .taskbar-left { display: flex; gap: 12px; align-items: center; }
+    .taskbar-right { display: flex; gap: 12px; align-items: center; }
+    .taskbar-start {
+      background: var(--candy-cream);
+      padding: 2px 8px;
+      border-radius: 3px;
+      border: 1px dashed var(--candy-purple);
+    }
+    .taskbar-item { color: var(--ink-light); }
+    .taskbar-status { color: var(--ink-light); }
+    .taskbar-clock { font-weight: 700; }
+
     @media (max-width: 900px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-      .site-title {
-        font-size: 28px;
-      }
+      .main-grid { grid-template-columns: 1fr; }
+      .home-window { margin: 12px; }
+      .site-title { font-size: 24px; }
     }
   </style>
 
