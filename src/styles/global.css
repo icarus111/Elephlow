@@ -1,0 +1,65 @@
+/* ====================================
+   elephlow.cc — Heisei Retro Design System
+   v0.2 — 2026-05-11
+==================================== */
+
+/* 字体加载 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=DotGothic16&family=Inter:wght@400;500;600&family=Bungee&family=M+PLUS+Rounded+1c:wght@400;700&family=Mochiy+Pop+One&display=swap');
+
+:root {
+  /* === 平成复古主调 === */
+  --cream-paper: #FFF9E8;
+  --soft-white: #FFFCF5;
+  --ink: #2A1F18;
+  --ink-light: #6B5847;
+
+  /* === 糖果色（cloverheart 调色） === */
+  --candy-cream: #FFE9B6;
+  --candy-peach: #FFC8C8;
+  --candy-pink: #FFB6D9;
+  --candy-purple: #C7B3E8;
+  --candy-aqua: #B5E8E0;
+  --candy-mint: #C8E9B0;
+
+  /* === 渐变 === */
+  --gradient-rainbow: linear-gradient(90deg, #FFE9B6, #FFC8C8, #FFB6D9, #C7B3E8, #B5E8E0, #C8E9B0);
+  --gradient-sunset: linear-gradient(135deg, #FFB6D9 0%, #C7B3E8 50%, #B5E8E0 100%);
+
+  /* === minihome / catalog tab 色 === */
+  --tab-green: #98D982;
+  --tab-orange: #FFA940;
+  --tab-pink: #FFB6C1;
+  --tab-blue: #B0D4E8;
+  --tab-yellow: #FFE066;
+
+  /* === 字体变量 === */
+  --font-serif-sc: 'Noto Serif SC', serif;
+  --font-serif-tc: 'Noto Serif TC', serif;
+  --font-pixel: 'DotGothic16', monospace;
+  --font-sans-en: 'Inter', sans-serif;
+  --font-bubble: 'Bungee', cursive;
+  --font-rounded: 'M PLUS Rounded 1c', sans-serif;
+  --font-mochi: 'Mochiy Pop One', sans-serif;
+
+  /* === 圆角 === */
+  --radius-soft: 12px;
+  --radius-card: 8px;
+  --radius-pill: 999px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--cream-paper);
+  background-image:
+    radial-gradient(circle at 8px 8px, rgba(255, 182, 217, 0.18) 1px, transparent 1px),
+    radial-gradient(circle at 16px 16px, rgba(199, 179, 232, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px, 32px 32px;
+  color: var(--ink);
+  font-family: var(--font-serif-sc), var(--font-rounded);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--candy-purple); text-decoration: none; }
+a:hover { color: var(--candy-pink); text-decoration: underline; }

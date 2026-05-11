@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-Content \"C:\\\\Users\\\\Asus\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\F--projects-elephlow\\\\fe5210b2-ed1c-4832-836c-5593e3c93547\\\\tasks\\\\b3txgxzhw.output\" -Raw)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
