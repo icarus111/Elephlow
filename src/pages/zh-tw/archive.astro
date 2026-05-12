@@ -1,5 +1,79 @@
 ---
 import '../../styles/global.css';
+import archiveData from '../../data/archive.json';
+
+interface ArchiveEntry {
+  id: string;
+  issue: string;
+  titleTw: string;
+  highlight: string;
+  tags: string[];
+  categories: string[];
+  summary: Record<string, string>;
+}
+
+interface CatSection {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  border: string;
+  tag: string;
+  entries: ArchiveEntry[];
+}
+
+const rawData: ArchiveEntry[] = archiveData as unknown as ArchiveEntry[];
+
+function highlight(text: string): string {
+  // 優先：《》書刊/影片名，只取第一個
+  const m1 = text.match(/《[^》]+》/);
+  if (m1) return text.replace(m1[0], `<span class="hl-primary">${m1[0]}</span>`);
+
+  // 次選：「：專有名詞——」模式，取兩個中文引號之間的 2-8 字中文名
+  const m2 = text.match(/[：:]([一-鿿·・]{2,8})——/);
+  if (m2 && m2[1]) {
+    return text.replace(m2[1] + '——', `<span class="hl-primary">${m2[1]}</span>——`);
+  }
+
+  // 三選：「」引號內的人名/特殊詞，只取第一個
+  const m3 = text.match(/「[^」]+」/);
+  if (m3) return text.replace(m3[0], `<span class="hl-primary">${m3[0]}</span>`);
+
+  return text;
+}
+
+const LOCK_URL = 'https://tally.so/r/4415XB';
+const PREVIEW_LINKS: Record<string, string> = {
+  'issue-01':     'https://elephlow1217.notion.site/Issue-01-1-35115431c08d8120ba20f72b2be8571d',
+  'issue-36':     'https://elephlow1217.notion.site/Issue-36-39e15431c08d831f8c6281af440ecc69',
+  'reading-002':  'https://elephlow1217.notion.site/002-35415431c08d80f8888dd173b80840a3',
+};
+
+const TAG_COLORS: Record<string, string> = {
+  '台灣':   '#FFB3B3',
+  '香港':   '#FFD0A0',
+  '日本':   '#FFF0A0',
+  '韓國':   '#D0F0A8',
+  '酷兒':   '#A8F0E0',
+  '女性主義': '#A8D4F0',
+  '年度回顧': '#C8A8F0',
+  '連載':   '#F0A8D8',
+};
+const ALL_TAGS = ['台灣', '香港', '日本', '韓國', '酷兒', '女性主義', '年度回顧', '連載'];
+
+// 在 frontmatter 完成所有篩選，JSX 只做渲染
+const catSections: CatSection[] = [
+  { id: 'zine',      name: '紙本通信', icon: '📖', color: 'mint',   border: 'border-mint',   tag: 'bg-mint'   },
+  { id: 'bookstore', name: '書店現場', icon: '🏡', color: 'peach',  border: 'border-peach',  tag: 'bg-peach'  },
+  { id: 'fair',      name: '展場漫遊', icon: '🎪', color: 'pink',   border: 'border-pink',   tag: 'bg-pink'   },
+  { id: 'digital',   name: '數位生存', icon: '🎒', color: 'aqua',   border: 'border-aqua',   tag: 'bg-aqua'   },
+  { id: 'music',     name: '聽覺切片', icon: '🎧', color: 'purple', border: 'border-purple', tag: 'bg-purple' },
+  { id: 'film',      name: '光影放映', icon: '🎞️', color: 'cream',  border: 'border-cream',  tag: 'bg-cream'  },
+  { id: 'doc',       name: '真實定格', icon: '📽️', color: 'mint',   border: 'border-mint',   tag: 'bg-mint'   },
+  { id: 'podcast',   name: '聲音頻率', icon: '📻', color: 'aqua',   border: 'border-aqua',   tag: 'bg-aqua'   },
+  { id: 'profile',   name: '人物筆記', icon: '✍️', color: 'pink',   border: 'border-pink',   tag: 'bg-pink'   },
+  { id: 'special',   name: '特輯',     icon: '⭐', color: 'purple', border: 'border-purple', tag: 'bg-purple' },
+].map(cat => ({ ...cat, entries: rawData.filter(e => e.categories.includes(cat.name)) }));
 ---
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -27,29 +101,30 @@ import '../../styles/global.css';
 
     <div class="window-content archive-layout">
 
+      <!-- ═══ 左側 ═══ -->
       <aside class="archive-left sticky-sidebar">
 
         <div class="elephant-portrait">
           <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-            <text x="8" y="12" fill="#FFB6D9" font-size="10">✦</text>
+            <text x="8"  y="12" fill="#FFB6D9" font-size="10">✦</text>
             <text x="78" y="16" fill="#C7B3E8" font-size="8">✦</text>
-            <text x="6" y="65" fill="#B5E8E0" font-size="9">·</text>
+            <text x="6"  y="65" fill="#B5E8E0" font-size="9">·</text>
             <text x="82" y="60" fill="#FFE9B6" font-size="10">·</text>
-            <rect x="30" y="26" width="8" height="10" fill="#C7B3E8"/>
-            <rect x="58" y="26" width="8" height="10" fill="#C7B3E8"/>
+            <rect x="30" y="26" width="8"  height="10" fill="#C7B3E8"/>
+            <rect x="58" y="26" width="8"  height="10" fill="#C7B3E8"/>
             <rect x="34" y="24" width="28" height="18" fill="#C7B3E8"/>
-            <rect x="48" y="40" width="6" height="14" fill="#C7B3E8"/>
-            <rect x="48" y="52" width="4" height="4" fill="#C7B3E8"/>
-            <rect x="40" y="30" width="3" height="3" fill="#2A1F18"/>
-            <rect x="52" y="30" width="3" height="3" fill="#2A1F18"/>
-            <rect x="38" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
-            <rect x="55" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
+            <rect x="48" y="40" width="6"  height="14" fill="#C7B3E8"/>
+            <rect x="48" y="52" width="4"  height="4"  fill="#C7B3E8"/>
+            <rect x="40" y="30" width="3"  height="3"  fill="#2A1F18"/>
+            <rect x="52" y="30" width="3"  height="3"  fill="#2A1F18"/>
+            <rect x="38" y="34" width="3"  height="2"  fill="#FFB6D9" opacity="0.6"/>
+            <rect x="55" y="34" width="3"  height="2"  fill="#FFB6D9" opacity="0.6"/>
             <rect x="32" y="42" width="32" height="20" fill="#C7B3E8"/>
-            <rect x="34" y="62" width="6" height="8" fill="#C7B3E8"/>
-            <rect x="56" y="62" width="6" height="8" fill="#C7B3E8"/>
-            <rect x="44" y="40" width="2" height="2" fill="#FFB6D9"/>
-            <rect x="50" y="40" width="2" height="2" fill="#FFB6D9"/>
-            <rect x="46" y="42" width="4" height="1" fill="#FFB6D9"/>
+            <rect x="34" y="62" width="6"  height="8"  fill="#C7B3E8"/>
+            <rect x="56" y="62" width="6"  height="8"  fill="#C7B3E8"/>
+            <rect x="44" y="40" width="2"  height="2"  fill="#FFB6D9"/>
+            <rect x="50" y="40" width="2"  height="2"  fill="#FFB6D9"/>
+            <rect x="46" y="42" width="4"  height="1"  fill="#FFB6D9"/>
           </svg>
           <p class="elephant-caption">小象 / Elephlow</p>
         </div>
@@ -57,8 +132,6 @@ import '../../styles/global.css';
         <div class="persona-card">
           <h3 class="card-title">✦ persona ✦</h3>
           <dl class="persona-list">
-            <dt>handle</dt><dd>小象 / Elephlow</dd>
-            <dt>sign</dt><dd>射手座 · INFJ</dd>
             <dt>bio</dt>
             <dd>
               Omnivorous editor at the margins 🌿<br/>
@@ -71,260 +144,105 @@ import '../../styles/global.css';
         <div class="index-card">
           <h3 class="card-title">✿ category ✿</h3>
           <nav class="cat-nav">
-            <a href="#cat-zine"><span class="cat-dot bg-mint"></span>📖 紙本通信</a>
-            <a href="#cat-bookstore"><span class="cat-dot bg-peach"></span>🏡 書店現場</a>
-            <a href="#cat-fair"><span class="cat-dot bg-pink"></span>🎪 展場漫遊</a>
-            <a href="#cat-resource"><span class="cat-dot bg-aqua"></span>🎒 數位生存</a>
-            <a href="#cat-music"><span class="cat-dot bg-purple"></span>🎧 聽覺切片</a>
-            <a href="#cat-film"><span class="cat-dot bg-cream"></span>🎞️ 光影放映</a>
-            <a href="#cat-doc"><span class="cat-dot bg-mint"></span>📽️ 真實定格</a>
-            <a href="#cat-podcast"><span class="cat-dot bg-aqua"></span>📻 聲音頻率</a>
+            {catSections.map(cat => (
+              <a href={`#cat-${cat.id}`}>
+                <span class="cat-dot" style={`background:var(--candy-${cat.color})`}></span>
+                {cat.icon} {cat.name}
+              </a>
+            ))}
           </nav>
         </div>
 
       </aside>
 
+      <!-- ═══ 中間主內容 ═══ -->
       <section class="archive-center">
         <div class="board-card">
           <h2 class="board-title">⌒ 往期目錄 ⌒</h2>
           <p class="board-subtitle">Past Issues & Newsletters ｡^‿^｡</p>
 
+          <!-- 彩虹 Tag 過濾條 -->
+          <div class="tag-filter-bar">
+            <span class="filter-label">TAG：</span>
+            <button class="filter-tag filter-all active" data-tag="all">全部</button>
+            {ALL_TAGS.map(tag => (
+              <button
+                class="filter-tag"
+                data-tag={tag}
+                style={`background:${TAG_COLORS[tag]};border-color:${TAG_COLORS[tag]};`}
+              >{tag}</button>
+            ))}
+          </div>
+
           <div class="board-content">
-
-            <div id="cat-zine" class="cat-section">
-              <h3 class="cat-heading mint-heading">📖 紙本通信</h3>
-              
-              <div class="issue-card border-mint">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#01 我們的飛地</span>
-                  <span class="issue-tag bg-mint">LITERATURE</span>
+            {catSections.map((cat, idx) => (
+              <details id={`cat-${cat.id}`} class="cat-section" open={idx === 0 ? true : undefined}>
+                <summary class="cat-summary">
+                  <span class="cat-emoji">{cat.icon}</span>
+                  <span class="cat-name">{cat.name}</span>
+                  {cat.entries.length > 0 && <span class="cat-count">✦ {cat.entries.length}</span>}
+                  <span class="cat-arrow">▾</span>
+                </summary>
+                <div class="cat-body">
+                  {cat.entries.length === 0 && (
+                    <p class="cat-empty">ˊ꒳ˋ* 內容整理中，敬請期待…</p>
+                  )}
+                  {cat.entries.map(entry => {
+                    const desc: string = entry.summary[cat.name] ?? '';
+                    const isPreview: boolean = entry.id in PREVIEW_LINKS;
+                    const link: string = isPreview ? PREVIEW_LINKS[entry.id] : LOCK_URL;
+                    return (
+                      <div class={`issue-card ${cat.border}`} data-tags={entry.tags.join(' ')}>
+                        <div class="issue-header">
+                          <span class="issue-title">{entry.issue}　{entry.titleTw}</span>
+                          <div class="issue-badges">
+                            {entry.tags.length > 0 && (
+                              <div class="issue-geo-tags">
+                                {entry.tags.map(tag => <span class="geo-tag">{tag}</span>)}
+                              </div>
+                            )}
+                            <span class={`issue-tag ${cat.tag}`}>{entry.highlight}</span>
+                          </div>
+                        </div>
+                        {desc && <p class="issue-desc" set:html={highlight(desc)} />}
+                        <div class="issue-actions">
+                          <a href={link} target="_blank" class={`issue-btn ${isPreview ? 'btn-preview' : 'btn-lock'}`}>
+                            {isPreview ? '✨ 免費試閱' : '🔒 解鎖本期'}
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                <p class="issue-desc">從文學期刊出發，探討 <strong>《聯合文學》</strong> 與 <strong>《新活水》</strong>，並附港台期刊、博碩士論文查閱方式。</p>
-                <div class="issue-actions">
-                  <a href="https://elephlow1217.notion.site/Issue-01-1-35115431c08d8120ba20f72b2be8571d" target="_blank" class="issue-btn btn-preview">✨ 免費試閱</a>
-                </div>
-              </div>
-
-              <div class="issue-card border-mint">
-                <div class="issue-header">
-                  <span class="issue-title">閱讀小報 002：正發生</span>
-                  <span class="issue-tag bg-mint">ZINE & PUB</span>
-                </div>
-                <p class="issue-desc">圖解酷兒史、Garo漫畫大革命，以及 <strong>VOP 攝影之聲</strong> 等出版物梳理。</p>
-                <div class="issue-actions">
-                  <a href="https://elephlow1217.notion.site/002-35415431c08d80f8888dd173b80840a3" target="_blank" class="issue-btn btn-preview">✨ 免費試閱</a>
-                </div>
-              </div>
-
-              <div class="issue-card border-mint">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#19 沉默之聲</span>
-                  <span class="issue-tag bg-mint">PUBLISHING</span>
-                </div>
-                <p class="issue-desc">逃離與失聲：探討 <strong>《皇冠》雜誌</strong> 歷史與其背後的出版帝國。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-            </div>
-
-            <div id="cat-bookstore" class="cat-section">
-              <h3 class="cat-heading peach-heading">🏡 書店現場</h3>
-              
-              <div class="issue-card border-peach">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#13 永遠困惑，永遠好奇。</span>
-                  <span class="issue-tag bg-peach">TAIPEI</span>
-                </div>
-                <p class="issue-desc">遊書店 001：走入充滿設計與獨立出版生命力的 <strong>田園城市風格書店</strong>。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-
-              <div class="issue-card border-peach">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#28 落腳點</span>
-                  <span class="issue-tag bg-peach">HONG KONG</span>
-                </div>
-                <p class="issue-desc">香港獨立書店巡禮，特別推薦 <strong>Zine Coop</strong> 及超齊全的台港海外獨立書店名單。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-
-              <div class="issue-card border-peach">
-                <div class="issue-header">
-                  <span class="issue-title">日本書店遊記系列 (合集)</span>
-                  <span class="issue-tag bg-peach">JAPAN</span>
-                </div>
-                <p class="issue-desc">跟著小羊漫遊日本獨立書店：<br/>• Day 1: 純真地反抗 (Issue#28)<br/>• Day 2: 大阪的快樂老家 (Issue#30)<br/>• Day 4: 京都的禮物 (Issue#31)</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖全系列</a>
-                </div>
-              </div>
-            </div>
-
-            <div id="cat-fair" class="cat-section">
-              <h3 class="cat-heading pink-heading">🎪 展場漫遊</h3>
-
-              <div class="issue-card border-pink">
-                <div class="issue-header">
-                  <span class="issue-title">閱讀小報 012：無用之用</span>
-                  <span class="issue-tag bg-pink">ART BOOK FAIR</span>
-                </div>
-                <p class="issue-desc">特輯企劃：<strong>草率季 Taipei Art Book Fair</strong> 現場導覽與深度觀察。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-              
-              <div class="issue-card border-pink">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#11 以身為度 如是我做</span>
-                  <span class="issue-tag bg-pink">BOOK FAIR</span>
-                </div>
-                <p class="issue-desc"><strong>Hong Kong Book Fair 香港書展</strong> 現場觀察與出版物推薦。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-            </div>
-
-            <div id="cat-resource" class="cat-section">
-              <h3 class="cat-heading aqua-heading">🎒 數位生存</h3>
-              
-              <div class="issue-card border-aqua">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#31 & 32：工具箱特輯</span>
-                  <span class="issue-tag bg-aqua">HACK & AI</span>
-                </div>
-                <p class="issue-desc">文科生實用指南：<strong>免費閱讀世界雜誌與電子書攻略</strong>，以及獲取 Gemini、Perplexity PRO 的 AI 使用場景。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-
-              <div class="issue-card border-aqua">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#23 萍聚霧散</span>
-                  <span class="issue-tag bg-aqua">LIBRARY</span>
-                </div>
-                <p class="issue-desc">收藏夾：分享找 <strong>漫畫資源的方法渠道</strong>，以及香港獨立書店精選輯。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-            </div>
-
-            <div id="cat-music" class="cat-section">
-              <h3 class="cat-heading purple-heading">🎧 聽覺切片</h3>
-
-              <div class="issue-card border-purple">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#36 折返</span>
-                  <span class="issue-tag bg-purple">MUSICIAN</span>
-                </div>
-                <p class="issue-desc">島嶼之間，設計香港。女性藝術家 010：持續耕耘，彳亍前行——<strong>馮穎琪 Vicky</strong>。</p>
-                <div class="issue-actions">
-                  <a href="https://elephlow1217.notion.site/Issue-36-39e15431c08d831f8c6281af440ecc69" target="_blank" class="issue-btn btn-preview">✨ 免費試閱</a>
-                </div>
-              </div>
-
-              <div class="issue-card border-purple">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#04 重返昨日世界</span>
-                  <span class="issue-tag bg-purple">MUSIC HISTORY</span>
-                </div>
-                <p class="issue-desc">雜誌社 004：<strong>音樂殖民地</strong>（1994-2004），The Playlist of My life。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-              
-              <div class="issue-card border-purple">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#34 創造未來</span>
-                  <span class="issue-tag bg-purple">INDIE POP</span>
-                </div>
-                <p class="issue-desc">女性藝術家 009：自在的流動，「離譜」的輕盈——<strong>Kiri T 謝曉盈</strong>。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-            </div>
-
-            <div id="cat-film" class="cat-section">
-              <h3 class="cat-heading cream-heading">🎞️ 影視與播客 (精選)</h3>
-
-              <div class="issue-card border-cream">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#29 在愛與恨的邊緣</span>
-                  <span class="issue-tag bg-cream">QUEER CINEMA</span>
-                </div>
-                <p class="issue-desc">Happy Pride Month！盤點 <strong>4 位酷兒導演與 31 部酷兒影視</strong>。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-
-              <div class="issue-card border-cream" id="cat-doc">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#08 遊移之身</span>
-                  <span class="issue-tag bg-mint">DOCUMENTARY</span>
-                </div>
-                <p class="issue-desc">觀影展 002 ：深度解析 <strong>TIDF 台灣國際紀錄片影展</strong>。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-
-              <div class="issue-card border-cream" id="cat-podcast">
-                <div class="issue-header">
-                  <span class="issue-title">Issue#35 每當變幻時</span>
-                  <span class="issue-tag bg-aqua">AWARDS 2025</span>
-                </div>
-                <p class="issue-desc">年度盤點特企：<strong>2025年私人影視大賞</strong> 及 <strong>華語播客大賞</strong> 榜單大公開。</p>
-                <div class="issue-actions">
-                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 解鎖本期</a>
-                </div>
-              </div>
-            </div>
-
+              </details>
+            ))}
           </div>
 
           <div class="board-footer">
-            <p>(｡♡‿♡｡) end of archive ✿</p>
+            <p>✿ ⋆ ✿ &nbsp; (｡♡‿♡｡) end of archive &nbsp; ✿ ⋆ ✿</p>
           </div>
         </div>
       </section>
 
+      <!-- ═══ 右側 — menu-card（主頁同款）═══ -->
       <aside class="archive-right sticky-sidebar">
-        <nav class="vertical-tabs">
-          <a href="/zh-tw/" class="vtab vtab-home">
-            <span class="vtab-icon">🏠</span>
-            <span class="vtab-label">主頁</span>
-          </a>
-          <a href="/zh-tw/about" class="vtab vtab-about">
-            <span class="vtab-icon">👤</span>
-            <span class="vtab-label">簡介</span>
-          </a>
-          <a href="/zh-tw/archive" class="vtab vtab-active">
-            <span class="vtab-icon">📚</span>
-            <span class="vtab-label">目錄</span>
-          </a>
-          <a href="/zh-tw/guestbook" class="vtab vtab-guestbook">
-            <span class="vtab-icon">✉</span>
-            <span class="vtab-label">留言板</span>
-          </a>
-        </nav>
 
-        <div class="minihome-deco">
-          <div class="deco-row">✦ ✿ ☘ ♡ ✦</div>
-          <div class="deco-text">
-            <p>this is a quiet</p>
-            <p>little room ｡^‿^｡</p>
-          </div>
+        <div class="menu-card">
+          <h3 class="menu-title">▼ MENU ▼</h3>
+          <ul class="menu-list">
+            <li><a href="/" class="menu-mint">🏠 主頁</a></li>
+            <li><a href="/zh-tw/about" class="menu-aqua">about 小象</a></li>
+            <li><span class="menu-pink menu-current">📚 往期目錄</span></li>
+            <li><a href="/zh-tw/guestbook" class="menu-purple">留言板</a></li>
+            <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ 訂閱 ★</a></li>
+          </ul>
+        </div>
+
+        <div class="guestbook-card">
+          <a href="/zh-tw/guestbook">
+            <span class="gb-icon">✉</span>
+            <span class="gb-text">sign my guestbook</span>
+          </a>
         </div>
 
         <div class="kawaii-player">
@@ -332,9 +250,7 @@ import '../../styles/global.css';
             <span class="kp-dot"></span>♫ NOW PLAYING<span class="kp-dot"></span>
           </div>
           <div class="kp-screen">
-            <div class="kp-marquee">
-              <span>馮穎琪 - 彳亍 ✿ 馮穎琪 - 彳亍 ✿</span>
-            </div>
+            <div class="kp-marquee"><span>馮穎琪 - 彳亍 ✿ 馮穎琪 - 彳亍 ✿</span></div>
           </div>
           <div class="kp-controls">
             <span class="kp-btn">⏮</span>
@@ -357,6 +273,7 @@ import '../../styles/global.css';
     <footer class="window-taskbar">
       <div class="taskbar-left">
         <span class="taskbar-start">⊞ START</span>
+        <span class="taskbar-item">▣ 往期目錄</span>
       </div>
       <div class="taskbar-right">
         <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
@@ -367,7 +284,6 @@ import '../../styles/global.css';
   </main>
 
   <script is:inline>
-    // 監聽時間
     function updateClock() {
       const now = new Date();
       const h = String(now.getHours()).padStart(2, '0');
@@ -378,198 +294,309 @@ import '../../styles/global.css';
     updateClock();
     setInterval(updateClock, 30000);
 
-    // 平滑滾動
     document.querySelectorAll('.cat-nav a').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const id = this.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) {
+          if (el.tagName === 'DETAILS') el.open = true;
+          setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 10);
         }
+      });
+    });
+
+    const filterBtns = document.querySelectorAll('.filter-tag');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tag = btn.dataset.tag;
+
+        document.querySelectorAll('.issue-card').forEach(card => {
+          if (tag === 'all') { card.style.display = ''; return; }
+          const cardTags = (card.dataset.tags || '').split(' ').filter(Boolean);
+          card.style.display = cardTags.includes(tag) ? '' : 'none';
+        });
+
+        document.querySelectorAll('.cat-section').forEach(section => {
+          if (tag === 'all') { section.style.display = ''; return; }
+          const cards = section.querySelectorAll('.issue-card');
+          if (cards.length === 0) { section.style.display = 'none'; return; }
+          const hasVisible = Array.from(cards).some(c => c.style.display !== 'none');
+          if (hasVisible) { section.style.display = ''; section.open = true; }
+          else section.style.display = 'none';
+        });
       });
     });
   </script>
 
   <style>
-    /* === 基礎容器 (繼承自關於頁面) === */
+    /* ── 視窗框架 ── */
     .home-window {
-      max-width: 1180px;
-      margin: 24px auto;
+      max-width: 1180px; margin: 24px auto;
       background: var(--soft-white);
-      border: 3px dashed var(--candy-mint);
-      border-radius: 16px;
-      box-shadow: 6px 6px 0 rgba(181, 232, 224, 0.6);
-      display: flex;
-      flex-direction: column;
+      border: 2px dashed var(--candy-purple); border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(199,179,232,0.35);
+      display: flex; flex-direction: column;
     }
     .window-titlebar {
-      background: var(--candy-mint);
-      padding: 8px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px dashed var(--candy-mint);
+      background: var(--candy-mint); padding: 8px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 2px dashed var(--candy-purple);
       border-radius: 13px 13px 0 0;
-      font-family: var(--font-pixel);
-      font-size: 11px;
-      color: var(--ink);
+      font-family: var(--font-pixel); font-size: 11px; color: var(--ink);
     }
     .titlebar-left { display: flex; align-items: center; gap: 12px; }
     .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
     .titlebar-text { letter-spacing: 1px; }
     .titlebar-right { display: flex; gap: 4px; }
     .lang-link { padding: 2px 8px; color: var(--ink); text-decoration: none; border-radius: 3px; }
-    .lang-link:hover { background: rgba(255, 255, 255, 0.4); }
-    .lang-active { background: rgba(255, 255, 255, 0.6); font-weight: 700; }
+    .lang-link:hover { background: rgba(255,255,255,0.45); }
+    .lang-active { background: rgba(255,255,255,0.65); font-weight: 700; }
 
     .window-content { padding: 24px; }
-
     .archive-layout {
-      display: grid;
-      grid-template-columns: 240px 1fr 200px;
-      gap: 24px;
-      align-items: start;
+      display: grid; grid-template-columns: 240px 1fr 200px; gap: 24px; align-items: start;
     }
+    .sticky-sidebar { position: sticky; top: 24px; height: fit-content; }
 
-    /* === 吸頂跟隨 === */
-    .sticky-sidebar {
-      position: sticky;
-      top: 24px;
-      height: fit-content;
-    }
-
+    /* ── 左側 ── */
     .card-title {
-      font-family: var(--font-pixel);
-      font-size: 12px;
-      color: var(--ink-light);
-      text-align: center;
-      letter-spacing: 4px;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed currentColor;
+      font-family: var(--font-pixel); font-size: 12px; color: var(--ink-light);
+      text-align: center; letter-spacing: 4px; margin-bottom: 12px;
+      padding-bottom: 8px; border-bottom: 1px dashed currentColor;
     }
-
-    /* === 左側元素 === */
     .elephant-portrait {
       background: var(--soft-white); border: 2px dashed var(--candy-pink); border-radius: 12px;
-      padding: 20px 16px; text-align: center; box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.35); margin-bottom: 14px;
+      padding: 20px 16px; text-align: center; box-shadow: 4px 4px 0 rgba(255,182,217,0.35); margin-bottom: 14px;
     }
     .elephant-portrait svg { width: 120px; height: auto; }
     .elephant-caption { font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); margin-top: 8px; letter-spacing: 2px; }
 
     .persona-card {
       background: var(--candy-mint); border: 1.5px dashed var(--candy-purple); border-radius: 12px;
-      padding: 16px; box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.6); margin-bottom: 14px;
+      padding: 16px; box-shadow: 3px 3px 0 rgba(181,232,224,0.6); margin-bottom: 14px;
     }
     .persona-list { font-family: var(--font-serif-tc); font-size: 12px; color: var(--ink); margin: 0; }
     .persona-list dt { font-family: var(--font-pixel); font-size: 9px; color: var(--candy-purple); letter-spacing: 1px; margin-top: 8px; }
     .persona-list dt:first-child { margin-top: 0; }
     .persona-list dd { font-size: 12.5px; margin-left: 0; margin-top: 2px; line-height: 1.5; }
 
-    /* 側邊欄：分類目錄導航 */
     .index-card {
       background: var(--candy-cream); border: 1.5px dashed var(--candy-peach); border-radius: 12px;
-      padding: 16px; box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.5);
+      padding: 16px; box-shadow: 3px 3px 0 rgba(255,233,182,0.5);
     }
-    .cat-nav { display: flex; flex-direction: column; gap: 8px; }
+    .cat-nav { display: flex; flex-direction: column; gap: 6px; }
     .cat-nav a {
       display: flex; align-items: center; gap: 8px; text-decoration: none;
       font-family: var(--font-rounded); font-size: 13px; font-weight: 700; color: var(--ink);
       padding: 6px 8px; border-radius: 8px; transition: background 0.2s;
     }
-    .cat-nav a:hover { background: rgba(255,255,255,0.6); }
-    .cat-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,0.1); }
-    
-    .bg-mint { background-color: var(--candy-mint); }
-    .bg-peach { background-color: var(--candy-peach); }
-    .bg-pink { background-color: var(--candy-pink); }
-    .bg-aqua { background-color: var(--candy-aqua); }
-    .bg-purple { background-color: var(--candy-purple); }
-    .bg-cream { background-color: var(--candy-cream); }
+    .cat-nav a:hover { background: rgba(255,255,255,0.65); }
+    .cat-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
 
-    /* === 中間：往期目錄文章列表 === */
+    /* ── board-card ── */
     .board-card {
-      background: var(--soft-white); border: 2px dashed var(--candy-mint); border-radius: 12px;
-      padding: 28px 32px; box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
+      background: var(--soft-white); border: 2px dashed var(--candy-purple);
+      border-radius: 14px; padding: 28px 32px;
+      box-shadow: 5px 5px 0 rgba(199,179,232,0.28);
     }
     .board-title {
-      font-family: var(--font-serif-tc); font-size: 26px; font-weight: 700; color: var(--ink-light);
-      text-align: center; margin-bottom: 4px; letter-spacing: 6px;
+      font-family: var(--font-serif-tc); font-size: 26px; font-weight: 700;
+      color: var(--ink-light); text-align: center; margin-bottom: 4px; letter-spacing: 6px;
     }
-    .board-subtitle { text-align: center; font-family: var(--font-rounded); font-size: 13px; color: var(--candy-purple); margin-bottom: 30px; }
-
-    .cat-section { margin-bottom: 32px; scroll-margin-top: 40px; }
-    .cat-heading {
-      font-family: var(--font-mochi); font-size: 16px; margin-bottom: 16px; padding-bottom: 6px;
-      border-bottom: 2px dashed #eee; color: var(--ink);
+    .board-subtitle {
+      text-align: center; font-family: var(--font-rounded); font-size: 13px;
+      color: var(--candy-purple); margin-bottom: 20px;
     }
-    .mint-heading { border-bottom-color: var(--candy-mint); }
-    .peach-heading { border-bottom-color: var(--candy-peach); }
-    .pink-heading { border-bottom-color: var(--candy-pink); }
-    .aqua-heading { border-bottom-color: var(--candy-aqua); }
-    .purple-heading { border-bottom-color: var(--candy-purple); }
-    .cream-heading { border-bottom-color: var(--candy-cream); }
 
+    /* ── 彩虹 Tag 過濾條 ── */
+    .tag-filter-bar {
+      display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+      margin-bottom: 22px; padding: 10px 14px;
+      background: linear-gradient(135deg, rgba(181,232,224,0.25), rgba(255,182,217,0.18));
+      border: 1.5px dashed var(--candy-pink); border-radius: 10px;
+    }
+    .filter-label { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); letter-spacing: 1px; }
+    .filter-tag {
+      font-family: var(--font-rounded); font-size: 12px; font-weight: 700; color: var(--ink);
+      border: 1.5px dashed; border-radius: 20px; padding: 3px 10px; cursor: pointer;
+      transition: filter 0.15s, transform 0.1s, box-shadow 0.15s;
+    }
+    .filter-tag:hover { filter: brightness(0.9); transform: translateY(-1px); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .filter-tag.active { filter: saturate(1.6) brightness(0.82); border-style: solid; }
+    .filter-all { background: var(--soft-white); border-color: #ccc; }
+    .filter-all.active { background: var(--candy-aqua); border-color: var(--candy-purple); filter: none; }
+
+    /* ── 折疊 Section ── */
+    .cat-section {
+      border: 2px dashed; border-radius: 12px; margin-bottom: 14px;
+      scroll-margin-top: 40px; overflow: hidden;
+    }
+
+    #cat-zine      { border-color: var(--candy-purple); }
+    #cat-bookstore { border-color: var(--candy-pink); }
+    #cat-fair      { border-color: var(--candy-mint); }
+    #cat-digital   { border-color: var(--candy-purple); }
+    #cat-music     { border-color: var(--candy-peach); }
+    #cat-film      { border-color: var(--candy-aqua); }
+    #cat-doc       { border-color: var(--candy-peach); }
+    #cat-podcast   { border-color: var(--candy-pink); }
+    #cat-profile   { border-color: var(--candy-purple); }
+    #cat-special   { border-color: var(--candy-mint); }
+
+    /* summary 頭部：斜條紋疊在各自底色上 */
+    .cat-summary {
+      list-style: none; padding: 11px 18px; cursor: pointer;
+      display: flex; align-items: center; gap: 10px; user-select: none;
+      background-image: repeating-linear-gradient(
+        -45deg, transparent 0px, transparent 5px,
+        rgba(255,255,255,0.22) 5px, rgba(255,255,255,0.22) 6px
+      );
+      box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+    }
+    .cat-summary::-webkit-details-marker { display: none; }
+    .cat-summary:focus { outline: none; }
+    .cat-summary:hover { filter: brightness(0.95); }
+
+    /* 各分類 底色（background-color 不覆蓋 background-image）*/
+    #cat-zine      > .cat-summary { background-color: var(--candy-mint); }
+    #cat-bookstore > .cat-summary { background-color: var(--candy-peach); }
+    #cat-fair      > .cat-summary { background-color: var(--candy-pink); }
+    #cat-digital   > .cat-summary { background-color: var(--candy-aqua); }
+    #cat-music     > .cat-summary { background-color: var(--candy-purple); }
+    #cat-film      > .cat-summary { background-color: var(--candy-cream); }
+    #cat-doc       > .cat-summary { background-color: #d4ede8; }
+    #cat-podcast   > .cat-summary { background-color: #c4e8f0; }
+    #cat-profile   > .cat-summary { background-color: #f8c8de; }
+    #cat-special   > .cat-summary { background-color: #f5e8b0; }
+
+    /* 深色底 → 白色文字 */
+    #cat-music > .cat-summary .cat-name,
+    #cat-music > .cat-summary .cat-count,
+    #cat-music > .cat-summary .cat-arrow { color: var(--soft-white); text-shadow: 0 1px 3px rgba(0,0,0,0.25); }
+
+    .cat-emoji { font-size: 20px; flex-shrink: 0; }
+    .cat-name {
+      flex: 1; font-family: var(--font-serif-tc); font-size: 17px;
+      font-weight: 700; letter-spacing: 5px; color: var(--ink);
+    }
+    .cat-count { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); letter-spacing: 1px; }
+    .cat-arrow { font-size: 16px; color: var(--ink-light); transition: transform 0.25s; flex-shrink: 0; }
+    details[open] > .cat-summary .cat-arrow { transform: rotate(180deg); }
+
+    /* cat-body 淡色底（25% 可見度）*/
+    .cat-body { padding: 18px 20px; }
+
+    #cat-zine      > .cat-body { background-color: rgba(181,232,224,0.25); border-top: 1.5px dashed rgba(181,232,224,0.7); }
+    #cat-bookstore > .cat-body { background-color: rgba(255,210,170,0.25); border-top: 1.5px dashed rgba(255,210,170,0.7); }
+    #cat-fair      > .cat-body { background-color: rgba(255,182,217,0.22); border-top: 1.5px dashed rgba(255,182,217,0.6); }
+    #cat-digital   > .cat-body { background-color: rgba(130,210,235,0.22); border-top: 1.5px dashed rgba(130,210,235,0.6); }
+    #cat-music     > .cat-body { background-color: rgba(199,179,232,0.25); border-top: 1.5px dashed rgba(199,179,232,0.6); }
+    #cat-film      > .cat-body { background-color: rgba(255,233,182,0.30); border-top: 1.5px dashed rgba(255,233,182,0.8); }
+    #cat-doc       > .cat-body { background-color: rgba(180,225,215,0.25); border-top: 1.5px dashed rgba(180,225,215,0.7); }
+    #cat-podcast   > .cat-body { background-color: rgba(150,215,235,0.22); border-top: 1.5px dashed rgba(150,215,235,0.6); }
+    #cat-profile   > .cat-body { background-color: rgba(255,155,200,0.18); border-top: 1.5px dashed rgba(255,155,200,0.5); }
+    #cat-special   > .cat-body { background-color: rgba(245,220,130,0.22); border-top: 1.5px dashed rgba(245,220,130,0.6); }
+
+    .cat-empty { font-family: var(--font-serif-tc); font-size: 13px; color: var(--ink-light); text-align: center; padding: 18px; letter-spacing: 1px; }
+
+    /* ── Issue 卡片 ── */
     .issue-card {
-      background: #fff; border: 2px dashed #eee; border-radius: 10px; padding: 16px 20px;
-      margin-bottom: 16px; transition: transform 0.2s, box-shadow 0.2s;
+      background: #fff; border: 2px dashed; border-radius: 10px; padding: 16px 20px;
+      margin-bottom: 14px; transition: transform 0.18s, box-shadow 0.18s;
     }
+    .issue-card:last-child { margin-bottom: 0; }
     .issue-card:hover { transform: translateY(-2px); }
-    
-    .border-mint { border-color: var(--candy-mint); box-shadow: 3px 3px 0 rgba(200, 233, 176, 0.3); }
-    .border-peach { border-color: var(--candy-peach); box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3); }
-    .border-pink { border-color: var(--candy-pink); box-shadow: 3px 3px 0 rgba(255, 182, 217, 0.3); }
-    .border-aqua { border-color: var(--candy-aqua); box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.3); }
-    .border-purple { border-color: var(--candy-purple); box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.3); }
-    .border-cream { border-color: var(--candy-cream); box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.3); }
 
-    .issue-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;}
-    .issue-title { font-family: var(--font-serif-tc); font-weight: 700; font-size: 16px; color: var(--ink); }
-    .issue-tag { font-family: var(--font-pixel); font-size: 10px; color: var(--ink); padding: 2px 8px; border-radius: 20px; border: 1px dashed rgba(0,0,0,0.1); }
-    
-    .issue-desc { font-family: var(--font-serif-tc); font-size: 14px; line-height: 1.7; color: #555; margin-bottom: 14px; }
-    .issue-desc strong { color: var(--ink); background: linear-gradient(transparent 60%, var(--candy-cream) 60%); }
-    
+    .border-mint   { border-color: var(--candy-mint);   box-shadow: 3px 3px 0 rgba(181,232,224,0.4); }
+    .border-peach  { border-color: var(--candy-peach);  box-shadow: 3px 3px 0 rgba(255,200,160,0.35); }
+    .border-pink   { border-color: var(--candy-pink);   box-shadow: 3px 3px 0 rgba(255,182,217,0.35); }
+    .border-aqua   { border-color: var(--candy-aqua);   box-shadow: 3px 3px 0 rgba(130,210,230,0.35); }
+    .border-purple { border-color: var(--candy-purple); box-shadow: 3px 3px 0 rgba(199,179,232,0.35); }
+    .border-cream  { border-color: var(--candy-cream);  box-shadow: 3px 3px 0 rgba(255,233,182,0.4); }
+
+    /* ── 文字高亮（:global 繞過 Astro scoped CSS）── */
+    /* 琥珀黃螢光筆效果：與所有卡片邊框色（薄荷/桃/粉/水藍/薰衣草/奶油）都有明顯區別 */
+    :global(.hl-primary) {
+      background: linear-gradient(transparent 54%, rgba(255, 195, 45, 0.72) 54%);
+      font-weight: 700; color: var(--ink); padding: 0 1px;
+    }
+
+    .issue-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 12px; }
+    .issue-title { font-family: var(--font-serif-tc); font-weight: 700; font-size: 15px; color: var(--ink); flex: 1; line-height: 1.45; letter-spacing: 0.5px; }
+
+    .issue-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+    .issue-geo-tags { display: flex; gap: 3px; flex-wrap: wrap; justify-content: flex-end; }
+    .geo-tag { font-family: var(--font-pixel); font-size: 8px; color: #888; padding: 1px 5px; border: 1px solid #e0e0e0; border-radius: 10px; background: #f8f8f8; white-space: nowrap; }
+    .issue-tag { font-family: var(--font-pixel); font-size: 10px; color: var(--ink); padding: 2px 8px; border-radius: 20px; border: 1px dashed rgba(0,0,0,0.12); white-space: nowrap; }
+
+    .bg-mint   { background-color: var(--candy-mint); }
+    .bg-peach  { background-color: var(--candy-peach); }
+    .bg-pink   { background-color: var(--candy-pink); }
+    .bg-aqua   { background-color: var(--candy-aqua); }
+    .bg-purple { background-color: var(--candy-purple); }
+    .bg-cream  { background-color: var(--candy-cream); }
+
+    .issue-desc { font-family: var(--font-serif-tc); font-size: 13.5px; line-height: 1.75; color: #555; margin-bottom: 14px; letter-spacing: 0.3px; }
+    .issue-desc strong { color: var(--ink); background: linear-gradient(transparent 58%, var(--candy-cream) 58%); }
+
     .issue-actions { display: flex; justify-content: flex-end; }
-    .issue-btn {
-      display: inline-block; padding: 4px 12px; font-family: var(--font-rounded); font-size: 12px; font-weight: 700;
-      border-radius: 999px; text-decoration: none; color: var(--ink); transition: transform 0.15s;
-    }
-    .issue-btn:hover { transform: scale(1.05); text-decoration: none; }
-    .btn-preview { background: var(--candy-aqua); border: 1.5px dashed var(--candy-purple); box-shadow: 2px 2px 0 rgba(181, 232, 224, 0.6); }
+    .issue-btn { display: inline-block; padding: 5px 14px; font-family: var(--font-rounded); font-size: 12px; font-weight: 700; border-radius: 999px; text-decoration: none; color: var(--ink); transition: transform 0.15s; }
+    .issue-btn:hover { transform: scale(1.05) translateY(-1px); text-decoration: none; }
+    .btn-preview { background: var(--candy-aqua); border: 1.5px dashed var(--candy-purple); box-shadow: 2px 2px 0 rgba(181,232,224,0.7); }
     .btn-lock { background: var(--soft-white); border: 1.5px dashed #ccc; color: #888; }
-    .btn-lock:hover { background: #f0f0f0; }
+    .btn-lock:hover { background: #f2f2f2; }
 
-    .board-footer { text-align: center; margin-top: 30px; padding-top: 16px; border-top: 1px dashed var(--candy-mint); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); letter-spacing: 2px; }
+    .board-footer { text-align: center; margin-top: 20px; padding-top: 14px; border-top: 1px dashed var(--candy-mint); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); letter-spacing: 2px; }
 
-    /* === 右側 Tabs === */
-    .vertical-tabs { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
-    .vtab {
-      display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 0 16px 16px 0;
-      border: 1.5px dashed rgba(0,0,0,0.1); border-left: 5px solid; text-decoration: none; color: var(--ink);
-      font-family: var(--font-rounded); font-weight: 700; font-size: 13px; transition: transform 0.15s;
-      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    /* ── 右側 menu-card（主頁同款）── */
+    .menu-card {
+      background: var(--soft-white); border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px; padding: 8px;
+      box-shadow: 3px 3px 0 rgba(181,232,224,0.4); margin-bottom: 12px;
     }
-    .vtab:hover { transform: translateX(4px); text-decoration: none; }
-    .vtab-icon { font-size: 16px; }
-
-    .vtab-home      { background: var(--candy-mint);   border-left-color: #7BB85E; }
-    .vtab-about     { background: var(--candy-purple); border-left-color: #9B7BC9; }
-    .vtab-active    { background: var(--candy-aqua);   border-left-color: #7DC2B8; border-left-width: 7px; font-weight: 800; }
-    .vtab-guestbook { background: var(--candy-pink);   border-left-color: #E89BC0; }
-
-    .minihome-deco {
-      background: var(--candy-cream); border: 1.5px dashed var(--candy-peach); border-radius: 12px;
-      padding: 16px 12px; text-align: center; box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3); margin-bottom: 16px;
+    .menu-title {
+      font-family: var(--font-pixel); font-size: 12px; text-align: center;
+      padding: 8px 4px; margin: 0 0 6px;
+      color: var(--ink-light); background: var(--candy-cream); border-radius: 6px;
     }
-    .deco-row { font-size: 14px; color: var(--candy-purple); letter-spacing: 4px; margin-bottom: 10px; }
-    .deco-text p { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin: 2px 0; }
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-list li { margin-bottom: 4px; }
+    .menu-list a, .menu-current {
+      display: block; padding: 10px 12px; text-align: center;
+      font-family: var(--font-rounded); font-weight: 700; font-size: 13px;
+      color: var(--ink); text-decoration: none; border-radius: 8px;
+      border: 1.5px dashed var(--candy-purple);
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white),
+                   -1px  1px 0 var(--soft-white), 1px  1px 0 var(--soft-white);
+    }
+    .menu-list a { transition: transform 0.15s, box-shadow 0.15s; }
+    .menu-list a:hover { transform: translate(-2px,-2px); box-shadow: 2px 2px 0 rgba(199,179,232,0.4); text-decoration: none; }
+    .menu-mint   { background: var(--candy-mint); }
+    .menu-aqua   { background: var(--candy-aqua); }
+    .menu-pink   { background: var(--candy-pink); }
+    .menu-purple { background: var(--candy-purple); }
+    .menu-cream  { background: var(--candy-cream); }
+    .menu-current { border-style: solid; border-width: 2px; cursor: default; }
 
-    /* === 迷你播放器 === */
+    .guestbook-card { margin-bottom: 14px; }
+    .guestbook-card a {
+      display: flex; flex-direction: column; align-items: center; padding: 12px;
+      background: var(--candy-cream); border: 1.5px dashed var(--candy-pink);
+      border-radius: 12px; box-shadow: 3px 3px 0 rgba(255,182,217,0.4);
+      text-decoration: none; color: var(--ink); transition: transform 0.15s;
+    }
+    .guestbook-card a:hover { transform: translate(-2px,-2px); text-decoration: none; }
+    .gb-icon { font-size: 22px; margin-bottom: 4px; }
+    .gb-text { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); }
+
+    /* ── 播放器 & 計數器 ── */
     .kawaii-player {
-      background: var(--candy-mint); border: 2px dashed var(--candy-purple); border-radius: 12px;
-      padding: 12px; box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.8); margin-bottom: 16px;
+      background: var(--candy-mint); border: 2px dashed var(--candy-purple);
+      border-radius: 12px; padding: 12px;
+      box-shadow: 3px 3px 0 rgba(181,232,224,0.8); margin-bottom: 16px;
     }
     .kp-header { display: flex; justify-content: center; align-items: center; gap: 6px; font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin-bottom: 8px; letter-spacing: 1px; }
     .kp-dot { width: 4px; height: 4px; background: var(--candy-pink); border-radius: 50%; }
@@ -581,24 +608,23 @@ import '../../styles/global.css';
     .kp-btn:hover { background: var(--candy-cream); }
     .kp-play { background: var(--candy-pink); color: white; border-color: transparent; }
 
-    /* === 訪客計數器 === */
-    .kawaii-counter {
-      background: var(--candy-cream); border: 2px dashed var(--candy-peach); border-radius: 12px;
-      padding: 12px; text-align: center; box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.4);
-    }
+    .kawaii-counter { background: var(--candy-cream); border: 2px dashed var(--candy-peach); border-radius: 12px; padding: 12px; text-align: center; box-shadow: 3px 3px 0 rgba(255,200,200,0.4); }
     .kc-title { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin: 0 0 8px 0; letter-spacing: 2px; }
     .kc-digits { display: flex; justify-content: center; gap: 3px; }
     .kc-digits span { background: var(--soft-white); color: var(--candy-pink); font-family: var(--font-pixel); font-size: 16px; padding: 4px 6px; border: 1.5px solid var(--candy-pink); border-radius: 4px; font-weight: bold; }
 
-    /* === 底部狀態欄 === */
+    /* ── 底部狀態欄 ── */
     .window-taskbar {
-      background: var(--candy-mint); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;
-      border-top: 2px dashed var(--candy-mint); border-radius: 0 0 13px 13px; font-family: var(--font-pixel); font-size: 11px; color: var(--ink);
+      background: var(--candy-mint); padding: 8px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 2px dashed var(--candy-purple); border-radius: 0 0 13px 13px;
+      font-family: var(--font-pixel); font-size: 11px; color: var(--ink);
     }
     .taskbar-left { display: flex; gap: 12px; align-items: center; }
     .taskbar-right { display: flex; gap: 12px; align-items: center; }
-    .taskbar-start { background: rgba(255, 255, 255, 0.5); padding: 2px 8px; border-radius: 3px; border: 1px dashed var(--candy-purple); }
-    .taskbar-status, .taskbar-clock { color: var(--ink); font-weight: 700; }
+    .taskbar-start { background: var(--candy-cream); padding: 2px 8px; border-radius: 3px; border: 1px dashed var(--candy-purple); }
+    .taskbar-item, .taskbar-status { color: var(--ink-light); }
+    .taskbar-clock { font-weight: 700; }
 
     @media (max-width: 900px) {
       .archive-layout { grid-template-columns: 1fr; }
