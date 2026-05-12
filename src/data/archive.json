@@ -3,835 +3,330 @@
     "id": "issue-01",
     "issue": "Issue #01",
     "titleTw": "我們的飛地",
-    "titleEn": "Our Enclave",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "光影放映", "聽覺切片", "數位生存", "人物筆記"],
-    "tags": ["台灣", "酷兒"],
     "highlight": "LITERATURE",
+    "tags": ["台灣", "酷兒"],
+    "categories": ["紙本通信"],
     "summary": {
-      "紙本通信": "從文學期刊出發，深入《聯合文學》與《新活水》兩本台灣指標性的純文學刊物。",
-      "光影放映": "Barbara Hammer《Tender Fictions》（柔情自白）：早期酷兒實驗影像的入口。",
-      "聽覺切片": "黃小楨、艾敬、邱晨——被封殺的台灣樂團與她們背後的中國聽眾。",
-      "數位生存": "港台期刊、博碩士論文及學術書籍的查閱方式。",
-      "人物筆記": "女孩們 001：那個呼喚自己為「小一」的女孩。"
-    }
-  },
-  {
-    "id": "issue-02",
-    "issue": "Issue #02",
-    "titleTw": "荒蕪中起舞",
-    "titleEn": "Dancing in the Wasteland",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "光影放映", "數位生存", "人物筆記"],
-    "tags": ["台灣", "女性主義"],
-    "highlight": "ZINE CULTURE",
-    "summary": {
-      "紙本通信": "雜誌社 002：VERSE × 《女性自畫像文化史》：女性如何在書寫中現形。",
-      "光影放映": "台灣電影學者及相關影評網站分享。",
-      "數位生存": "知識庫：女性主義、即興戲劇及 Zine 文化資源整理。",
-      "人物筆記": "女孩們 002：無法看進完全嚴肅的戲，是我一個人的問題嗎？"
-    }
-  },
-  {
-    "id": "issue-03",
-    "issue": "Issue #03",
-    "titleTw": "Don't worry, be happy",
-    "titleEn": "Don't Worry, Be Happy",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "數位生存",
-    "categories": ["數位生存", "紙本通信"],
-    "tags": ["台灣"],
-    "highlight": "OPEN COURSES",
-    "summary": {
-      "數位生存": "收藏的台灣開放式課程匯總分享。",
-      "紙本通信": "雜誌社 003:《文訊》。"
-    }
-  },
-  {
-    "id": "issue-04",
-    "issue": "Issue #04",
-    "titleTw": "重返昨日世界",
-    "titleEn": "Return to Yesterday's World",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "紙本通信", "聲音頻率", "數位生存", "人物筆記"],
-    "tags": ["香港", "台灣"],
-    "highlight": "MUSIC HISTORY",
-    "summary": {
-      "聽覺切片": "透過香港《音樂殖民地》（1994-2004）回看一個音樂時代。",
-      "紙本通信": "雜誌社 004：《音樂殖民地》——一本獨立音樂刊物的十年存在意義。",
-      "聲音頻率": "台灣值得聽的藝文 podcast 節目整理。",
-      "數位生存": "性別知情書單：理論與在地議題篇。",
-      "人物筆記": "女孩們 003：和鯉魚對話。"
-    }
-  },
-  {
-    "id": "issue-05",
-    "issue": "Issue #05",
-    "titleTw": "對抗單一的兩種生活",
-    "titleEn": "Two Ways Against Uniformity",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "紙本通信", "光影放映"],
-    "tags": ["香港", "台灣"],
-    "highlight": "CANTOPOP",
-    "summary": {
-      "聽覺切片": "周耀輝、10 後廣東歌、粵語流行曲研究專書介紹。",
-      "紙本通信": "雜誌社 005：《Fa 電影欣賞》。",
-      "光影放映": "克里斯馬克限時影展、亞際文化研究關注。"
+      "紙本通信": "**雜誌社 001**：從文學期刊出發，帶你深入台灣指標性純文學刊物==《聯合文學》==與==《新活水》==。本期探討紙本媒體如何在數位時代保留獨特的文化飛地。"
     }
   },
   {
     "id": "issue-06",
     "issue": "Issue #06",
     "titleTw": "Winter Sweet",
-    "titleEn": "Winter Sweet",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "聽覺切片", "數位生存"],
-    "tags": ["台灣", "日本"],
     "highlight": "JAPAN × TAIWAN",
-    "summary": {
-      "紙本通信": "雜誌社 006：《秋刀魚》——在台日交融中尋找生活的雜誌；港台書訊：《台灣八〇》、《一日一日：佩蒂‧史密斯的影像紀年》。",
-      "聽覺切片": "播放器：冬日的 city pop。",
-      "數位生存": "寒假自學課程特輯（上）。"
-    }
-  },
-  {
-    "id": "issue-07",
-    "issue": "Issue #07",
-    "titleTw": "春天終將來臨",
-    "titleEn": "Spring Will Come",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "光影放映",
-    "categories": ["光影放映", "聽覺切片", "紙本通信", "數位生存", "人物筆記"],
-    "tags": ["台灣", "香港", "女性主義"],
-    "highlight": "FILM × MUSIC",
-    "summary": {
-      "光影放映": "觀影展 001：臺北文學・閱影展深度導讀；TIDF 預告。",
-      "聽覺切片": "華語女性主義歌單 + Spoken Word 口語詩。",
-      "紙本通信": "雜誌社 007：香港《字花》及新刊預告。",
-      "數位生存": "寒假港台自學課程特輯（下）。",
-      "人物筆記": "女孩們：你的問題就是我的問題。"
-    }
-  },
-  {
-    "id": "issue-08",
-    "issue": "Issue #08",
-    "titleTw": "遊移之身",
-    "titleEn": "A Body in Transit",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "光影放映",
-    "categories": ["光影放映", "紙本通信", "人物筆記"],
-    "tags": ["台灣", "香港"],
-    "highlight": "DOCUMENTARY",
-    "summary": {
-      "光影放映": "觀影展 002：TIDF 台灣國際紀錄片影展深度報導；線上觀影 Hong Kong Lost or Found？",
-      "紙本通信": "雜誌社 008：《印刻文學生活志》與台灣出版獎項生態。",
-      "人物筆記": "女孩們：母與女。"
-    }
-  },
-  {
-    "id": "issue-09",
-    "issue": "Issue #09",
-    "titleTw": "播種吧！",
-    "titleEn": "Let's Plant Seeds!",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "光影放映",
-    "categories": ["光影放映", "紙本通信", "人物筆記"],
-    "tags": ["台灣"],
-    "highlight": "DOCUMENTARY",
-    "summary": {
-      "光影放映": "觀影展 003：南方影展 + 2023 母親影展。",
-      "紙本通信": "雜誌社 009：《Vibes》音樂雜誌的過去與未來。",
-      "人物筆記": "女孩們:邁出步伐，向前走。"
-    }
-  },
-  {
-    "id": "issue-10",
-    "issue": "Issue #10",
-    "titleTw": "一期一會",
-    "titleEn": "Once, a Lifetime",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "數位生存",
-    "categories": ["數位生存", "紙本通信", "光影放映"],
-    "tags": ["日本", "台灣"],
-    "highlight": "JP CULTURE",
-    "summary": {
-      "數位生存": "我的日本文化知識庫（上）：文學及音樂篇；持續更新的中文電子報清單。",
-      "紙本通信": "雜誌社 010：新竹《貢丸湯》——在小城寫出大世界。",
-      "光影放映": "觀影展 004：高雄電影節。"
-    }
-  },
-  {
-    "id": "issue-11",
-    "issue": "Issue #11",
-    "titleTw": "以身為度 如是我做",
-    "titleEn": "The Body as Measure",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "光影放映",
-    "categories": ["光影放映", "紙本通信", "真實定格", "展場漫遊", "數位生存", "人物筆記"],
-    "tags": ["台灣", "日本", "香港", "女性主義"],
-    "highlight": "WOMEN MAKE WAVES",
-    "summary": {
-      "光影放映": "觀影展 005：台灣國際女性影展 Women Make Waves International Film Festival。",
-      "紙本通信": "雜誌社 011：VOP《攝影之聲》。",
-      "真實定格": "VOP 攝影之聲：影像如何承載傷痛、疾病與身體。",
-      "展場漫遊": "香港書展 Hong Kong Book Fair 2023 現場觀察。",
-      "數位生存": "我的日本文化知識庫（下）：影視篇。",
-      "人物筆記": "女孩們：燥熱的青春，缺失的性教育。"
-    }
-  },
-  {
-    "id": "issue-12",
-    "issue": "Issue #12",
-    "titleTw": "自斷裂處接續生長",
-    "titleEn": "Growing from the Fracture",
-    "season": 1,
-    "type": "主報",
-    "primaryCategory": "光影放映",
-    "categories": ["光影放映", "紙本通信", "人物筆記"],
-    "tags": ["台灣"],
-    "highlight": "YANG DECHANG",
-    "summary": {
-      "光影放映": "「再」見楊德昌 × 觀影展 007：嘉義國際藝術紀錄影展。",
-      "紙本通信": "雜誌社 012：《地味手帖》——台灣地方學的紙本實踐。",
-      "人物筆記": "告別、設想與新的啟程。"
-    }
-  },
-  {
-    "id": "issue-13",
-    "issue": "Issue #13",
-    "titleTw": "永遠困惑，永遠好奇。",
-    "titleEn": "Always Confused, Always Curious.",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場", "紙本通信", "真實定格"],
-    "tags": ["台灣"],
-    "highlight": "BOOKSTORE",
-    "summary": {
-      "書店現場": "遊書店 001：田園城市風格書店——建築與設計的庇護所。",
-      "紙本通信": "雜誌架 013：Shopping Design 設計採買誌；How to Make a Zine？從零開始的指南。",
-      "真實定格": "解構薇薇安・邁爾：那位街拍的保姆。"
-    }
-  },
-  {
-    "id": "issue-14",
-    "issue": "Issue #14",
-    "titleTw": "隨波逐流",
-    "titleEn": "Going with the Flow",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場", "紙本通信", "聽覺切片", "光影放映"],
-    "tags": ["台灣"],
-    "highlight": "BOOKSTORE",
-    "summary": {
-      "書店現場": "遊書店 002：書林書店——歷史悠久的外文書店。",
-      "紙本通信": "雜誌架 014：《幼獅文藝》；Zine 的進行式 Free！",
-      "聽覺切片": "嘻哈台灣：聽見另一種台灣身體。",
-      "光影放映": "金馬六十：頒獎典禮之外。"
-    }
-  },
-  {
-    "id": "issue-15",
-    "issue": "Issue #15",
-    "titleTw": "與異見共存",
-    "titleEn": "Living with Dissent",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "數位生存"],
-    "tags": ["台灣"],
-    "highlight": "RESISTANCE",
-    "summary": {
-      "紙本通信": "雜誌架 015：《薰風》——台日文化跨時空對話；Zine 的進行式：用出版抵抗世界（書展打工日記）。",
-      "數位生存": "我所關注的來自對岸的非營利組織機構（上）。"
-    }
-  },
-  {
-    "id": "issue-16",
-    "issue": "Issue #16",
-    "titleTw": "享受碰撞",
-    "titleEn": "Embrace the Collision",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "聲音頻率", "展場漫遊", "真實定格", "數位生存"],
-    "tags": ["香港"],
-    "highlight": "HK CULTURE",
-    "summary": {
-      "紙本通信": "雜誌架 016：DPI 設計插畫誌；Zine 的進行式：從一張紙開始的 Zine 製作。",
-      "聲音頻率": "聊天室：對國內中文播客行業的觀察與我的拒絕。",
-      "展場漫遊": "變：梅艷芳與香港流行文化研討會。",
-      "真實定格": "閱覽室：譚蕙芸——在香港新聞紀實寫作中的稜角。",
-      "數位生存": "電子書平台觀察；對岸非營利組織機構（下）。"
-    }
-  },
-  {
-    "id": "issue-17",
-    "issue": "Issue #17",
-    "titleTw": "新年來信",
-    "titleEn": "New Year Letter",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "特輯",
-    "categories": ["特輯", "展場漫遊", "紙本通信"],
-    "tags": ["年度回顧"],
-    "highlight": "AWARDS 2023",
-    "summary": {
-      "特輯": "2023 年度歌曲、年度播客、年度閱讀、年度觀影完整總結。",
-      "展場漫遊": "逛展覽：再一次拼圖楊德昌。",
-      "紙本通信": "雜誌架 017：K 書；Zine 的進行式：地方出版的魅力。"
-    }
-  },
-  {
-    "id": "issue-18",
-    "issue": "Issue #18",
-    "titleTw": "甜美生活",
-    "titleEn": "Sweet Life",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場", "紙本通信", "數位生存", "人物筆記"],
     "tags": ["台灣", "日本"],
-    "highlight": "MANGA",
+    "categories": ["紙本通信"],
     "summary": {
-      "書店現場": "遊書店 003：Mangasick——漫畫地下文化的台北據點。",
-      "紙本通信": "雜誌架 018：《漢聲》雜誌與一則創刊訊息；Zine 的進行式：早期台灣流行文化雜誌史。",
-      "數位生存": "Gooblog 與「兼職不思考」。",
-      "人物筆記": "好多問題：離散時代的親密關係。"
-    }
-  },
-  {
-    "id": "issue-19",
-    "issue": "Issue #19",
-    "titleTw": "沉默之聲",
-    "titleEn": "Voice of Silence",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "書店現場", "真實定格"],
-    "tags": ["台灣"],
-    "highlight": "PUBLISHING",
-    "summary": {
-      "紙本通信": "雜誌架 019：《皇冠》雜誌歷史與其背後的出版帝國。",
-      "書店現場": "遊書店 004：唐山書店 & 唐山出版社——學術書與台灣思想史的據點。",
-      "真實定格": "閱覽室：隱形研究所、她的光影世界。"
-    }
-  },
-  {
-    "id": "issue-20",
-    "issue": "Issue #20",
-    "titleTw": "成長代價",
-    "titleEn": "The Cost of Growing Up",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場", "紙本通信", "數位生存", "真實定格"],
-    "tags": ["台灣", "日本"],
-    "highlight": "BOOKSTORE",
-    "summary": {
-      "書店現場": "遊書店 005：三餘書店——高雄獨立書店的標桿。",
-      "紙本通信": "雜誌架 020：《Nippon 所藏》；Zine 的進行式:編輯企劃。",
-      "數位生存": "我所鍾意的台灣人文學術期刊分享（上）。",
-      "真實定格": "報導者 X Giloo 免費觀影：紀錄片入口。"
-    }
-  },
-  {
-    "id": "issue-21",
-    "issue": "Issue #21",
-    "titleTw": "逃離，創造，照顧自己",
-    "titleEn": "Escape, Create, Care for Yourself",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場", "紙本通信", "數位生存", "人物筆記"],
-    "tags": ["台灣"],
-    "highlight": "BOOKSTORE",
-    "summary": {
-      "書店現場": "遊書店 006：瓦當人文書屋——人文與在地的微型空間。",
-      "紙本通信": "雜誌架 021：《釀電影》。",
-      "數位生存": "我所鍾意的台灣人文學術期刊分享（下）。",
-      "人物筆記": "女孩們：「迷茫」的文科求職應屆生。"
-    }
-  },
-  {
-    "id": "issue-22",
-    "issue": "Issue #22",
-    "titleTw": "多玩多得",
-    "titleEn": "Play More, Gain More",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "光影放映",
-    "categories": ["光影放映", "書店現場", "紙本通信", "真實定格"],
-    "tags": ["台灣"],
-    "highlight": "TW DRAMA",
-    "summary": {
-      "光影放映": "《聽海湧》：戰爭記憶的影像重訪。",
-      "書店現場": "遊書店 007：邊譜 / 東海書苑——兩家書店的氣質對照。",
-      "紙本通信": "雜誌架 022：La Vie。",
-      "真實定格": "閱覽室：朱天文《金沙的日子》。"
-    }
-  },
-  {
-    "id": "issue-23",
-    "issue": "Issue #23",
-    "titleTw": "萍聚霧散",
-    "titleEn": "Brief Meetings, Scattered Mist",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場", "光影放映", "紙本通信", "聲音頻率", "真實定格"],
-    "tags": ["台灣", "香港", "女性主義"],
-    "highlight": "FEMINIST FILM",
-    "summary": {
-      "書店現場": "遊書店 008：晴耕雨讀小書院 × 香港獨立書店精選輯。",
-      "光影放映": "2024 女性影展 × 《How to Have Feminist Sex？》。",
-      "紙本通信": "雜誌架 023：《The Big Issue Taiwan》大誌雜誌；來自香港的紙包開箱。",
-      "聲音頻率": "不只是女性主義第三季。",
-      "真實定格": "林靜一封面藝術觀察。"
-    }
-  },
-  {
-    "id": "issue-24",
-    "issue": "Issue #24",
-    "titleTw": "越洋電話",
-    "titleEn": "Overseas Call",
-    "season": 2,
-    "type": "主報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場", "聽覺切片", "紙本通信", "數位生存"],
-    "tags": ["韓國", "台灣"],
-    "highlight": "KR INDIE",
-    "summary": {
-      "書店現場": "遊書店 009：今日書房（책방오늘）——首爾的中文世界。",
-      "聽覺切片": "從 K-pop 到 K-indie：韓國音樂的另一種地圖。",
-      "紙本通信": "雜誌架 024：MOOKorea；出版社：漫遊者文化；來自韓國的獨立出版！",
-      "數位生存": "收藏夾：找漫畫資源的方法渠道。"
-    }
-  },
-  {
-    "id": "issue-25",
-    "issue": "Issue #25",
-    "titleTw": "如果在冬夜，一個旅/女人",
-    "titleEn": "If on a Winter's Night, a Traveler / Woman",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "書店現場", "紙本通信", "光影放映"],
-    "tags": ["台灣", "連載"],
-    "highlight": "FEMALE ARTIST",
-    "summary": {
-      "聽覺切片": "女性藝術家 001：金依依——野性、自然、原始的美麗（歌手專題）；用音樂見證時代 ▪ 2024 歌單。",
-      "書店現場": "遊書店 010：現流冊店 hiān-lâu tsheh-tiàm——獨立音樂與台灣文學的交融。",
-      "紙本通信": "雜誌架 025：用詼諧展示嚴肅——五花鹽 BaconPress；出版社 002：春山出版——看見台灣，看見編輯。",
-      "光影放映": "一月免費線上觀影 × 私人冷門影單；收藏夾：成為職場人——編輯的事說來話長。"
-    }
-  },
-  {
-    "id": "issue-26",
-    "issue": "Issue #26",
-    "titleTw": "生長不痛",
-    "titleEn": "Growing Without Pain",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "特輯",
-    "categories": ["特輯", "光影放映", "紙本通信"],
-    "tags": ["年度回顧", "連載", "香港"],
-    "highlight": "AWARDS 2024",
-    "summary": {
-      "特輯": "2024 年度播客大賞 × 年度閱讀大賞 × 年度影視大賞。",
-      "光影放映": "女性藝術家 002：鐘雪瑩——跟隨心聲去行動（香港演員專題）。",
-      "紙本通信": "閱覽室：中文世界實體 Zine 的獲取途徑。"
-    }
-  },
-  {
-    "id": "issue-27",
-    "issue": "Issue #27",
-    "titleTw": "我的「位置」",
-    "titleEn": "My 'Position'",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "書店現場", "紙本通信", "真實定格", "數位生存"],
-    "tags": ["台灣", "香港", "酷兒", "連載"],
-    "highlight": "QUEER",
-    "summary": {
-      "聽覺切片": "女性藝術家 003：余佩真——人如其名的「真真」（音樂/演員雙線專題）。",
-      "書店現場": "遊書店 011：Zine Coop（香港 Zine 文化集散地）。",
-      "紙本通信": "雜誌架 026：《推開部屋的門》× 屏東，我家鄉的名字；出版社 003：慢工文化。",
-      "真實定格": "備忘錄：譚蕙芸與她的家庭書寫經驗。",
-      "數位生存": "收藏夾：Queer Reads Library × 民間檔案館。"
-    }
-  },
-  {
-    "id": "issue-28",
-    "issue": "Issue #28",
-    "titleTw": "落腳點",
-    "titleEn": "A Place to Land",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "書店現場", "紙本通信", "數位生存", "真實定格"],
-    "tags": ["香港", "日本", "連載"],
-    "highlight": "HK FOCUS",
-    "summary": {
-      "聽覺切片": "女性藝術家 004：薛凱琪——外柔內剛的「普通」人類（香港歌手專題）。",
-      "書店現場": "小羊的日本書店遊記 Day 1：純真地反抗。",
-      "紙本通信": "雜誌架 027：境外生權益小組抗爭小誌；出版社 004：鄧小樺與 2046。",
-      "數位生存": "收藏夾：香港書店/作家/讀書會/平台/出版社超齊全 List。",
-      "真實定格": "閱覽室：生活在此處。"
-    }
-  },
-  {
-    "id": "issue-29",
-    "issue": "Issue #29",
-    "titleTw": "在愛與恨的邊緣",
-    "titleEn": "On the Edge of Love and Hate",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "光影放映",
-    "categories": ["光影放映", "特輯", "聽覺切片", "紙本通信", "書店現場"],
-    "tags": ["香港", "日本", "酷兒", "連載"],
-    "highlight": "QUEER CINEMA",
-    "summary": {
-      "光影放映": "Happy Pride Month 特輯：4 位酷兒導演與 31 部酷兒影視盤點——年度最強酷兒影單。",
-      "特輯": "Pride Month 酷兒影像專題，跨越四位導演的 31 部影視作品。",
-      "聽覺切片": "播放器：地方女聲歌單。",
-      "紙本通信": "雜誌架 028：香港《Breakazine 突破書誌》；出版社 005：鯨嶼文化。",
-      "書店現場": "小羊的日本書店遊記 Day 2：我和你，心連心，同住地球村。"
-    }
-  },
-  {
-    "id": "issue-30",
-    "issue": "Issue #30",
-    "titleTw": "夏日紀事",
-    "titleEn": "Summer Chronicles",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "特輯", "光影放映", "聲音頻率", "書店現場"],
-    "tags": ["台灣", "日本", "酷兒", "女性主義", "連載"],
-    "highlight": "ZINE LIBRARY",
-    "summary": {
-      "紙本通信": "六月七日：《一人出版》× 一人出版社 in TW；雜誌架：淡水的《淡淡》。",
-      "特輯": "六月三十一日：世界各地的線上 Zine-Library（女性的，酷兒的）。",
-      "光影放映": "七月七日：台北戲劇獎。",
-      "聲音頻率": "六月一日：兒歌與新鮮的 Magazine Podcast。",
-      "書店現場": "小羊的日本書店遊記 Day 3：大阪的快樂老家。"
-    }
-  },
-  {
-    "id": "issue-31",
-    "issue": "Issue #31",
-    "titleTw": "愛",
-    "titleEn": "Love",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "紙本通信", "真實定格", "數位生存", "書店現場"],
-    "tags": ["台灣", "日本", "連載"],
-    "highlight": "FEMALE ARTIST",
-    "summary": {
-      "聽覺切片": "女性藝術家 005：洪佩瑜——理智面具下的情感暗湧（台灣歌手專題）；播放器：沉醉悲情。",
-      "紙本通信": "雜誌架 030：《美印臺南 Made in Tainan》；出版社 007：南方家園出版社。",
-      "真實定格": "閱覽室：紛亂的世界，赤誠的新聞記者。",
-      "數位生存": "工具箱:免費獲取 Gemini、Perplexity Pro 及 AI 的使用場景。",
-      "書店現場": "小羊的日本書店遊記 Day 4：京都的禮物。"
-    }
-  },
-  {
-    "id": "issue-32",
-    "issue": "Issue #32",
-    "titleTw": "拒絕闡釋",
-    "titleEn": "Against Interpretation",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "數位生存",
-    "categories": ["數位生存", "特輯", "聽覺切片", "紙本通信", "書店現場"],
-    "tags": ["台灣", "日本", "連載"],
-    "highlight": "AI × CAREER",
-    "summary": {
-      "數位生存": "工具箱：一個 2025 免費閱讀世界雜誌/電子書攻略及思路。",
-      "特輯": "聊天室：文科生轉人工智能行業工作實踐報告。",
-      "聽覺切片": "女性藝術家 006：陳嫻靜——喜歡她的一些瞬間（台灣 rapper 專題）。",
-      "紙本通信": "雜誌架 031：香港《SAMPLE 樣本》；出版社 008：行人文化實驗室。",
-      "書店現場": "小羊的日本書店遊記特別篇：豐島遊記。"
-    }
-  },
-  {
-    "id": "issue-33",
-    "issue": "Issue #33",
-    "titleTw": "在極與極之間",
-    "titleEn": "Between Extremes",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "光影放映", "紙本通信", "真實定格", "書店現場"],
-    "tags": ["香港", "台灣", "日本", "酷兒", "連載"],
-    "highlight": "FEMALE ARTIST",
-    "summary": {
-      "聽覺切片": "女性藝術家 007：盧凱彤——你的左手，我的右手（香港歌手專題）；離島漂浮歌單。",
-      "光影放映": "女性藝術家 008：余靜萍——攝影師之眼（與盧凱彤合篇）。",
-      "紙本通信": "雜誌架 032：《眷村觀察學》；出版社 009：季風帶。",
-      "真實定格": "閱覽室：在場非虛構漫畫獎學金第一季獲獎作品評介。",
-      "書店現場": "小羊的日本書店遊記 Day 6：Be Kobe（神戶）。"
-    }
-  },
-  {
-    "id": "issue-34",
-    "issue": "Issue #34",
-    "titleTw": "創造未來",
-    "titleEn": "Creating the Future",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "紙本通信", "數位生存", "書店現場", "人物筆記"],
-    "tags": ["香港", "台灣", "日本", "連載"],
-    "highlight": "FEMALE ARTIST",
-    "summary": {
-      "聽覺切片": "女性藝術家 009：Kiri T 謝曉盈——自在的流動，「離譜」的輕盈（香港歌手專題）；播放器：溫暖的歌。",
-      "紙本通信": "雜誌架 033：《西哈誌 XI-HUB》；出版社 010：九歌出版。",
-      "數位生存": "閱覽室：把握 2025（年度資源整理）。",
-      "書店現場": "小羊的日本書店遊記 Day 7：高松篇——連接兩人的巨型郵輪。",
-      "人物筆記": "女孩們：@Ashley 為自己造路的人。"
-    }
-  },
-  {
-    "id": "issue-35",
-    "issue": "Issue #35",
-    "titleTw": "每當變幻時",
-    "titleEn": "When Things Change",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "特輯",
-    "categories": ["特輯"],
-    "tags": ["年度回顧"],
-    "highlight": "AWARDS 2025",
-    "summary": {
-      "特輯": "2025 年度音樂大賞 × 年度心水華語播客大賞 × 年度私人影視大賞 × 年度私人閱讀大賞 × 年度台灣雜誌心儀企劃大賞。"
-    }
-  },
-  {
-    "id": "issue-36",
-    "issue": "Issue #36",
-    "titleTw": "折返",
-    "titleEn": "Turning Back",
-    "season": 3,
-    "type": "主報",
-    "primaryCategory": "聽覺切片",
-    "categories": ["聽覺切片", "展場漫遊", "紙本通信", "真實定格", "聲音頻率", "書店現場", "人物筆記"],
-    "tags": ["香港", "台灣", "日本", "連載"],
-    "highlight": "DESIGN HK",
-    "summary": {
-      "聽覺切片": "女性藝術家 010：馮穎琪 Vicky——持續耕耘，彳亍前行（香港音樂人專題）。",
-      "展場漫遊": "聊天室：設計香港——一座城市的視覺檔案。",
-      "紙本通信": "雜誌架 034：《鄉間小路》；出版社 011：果力文化 Reveal Books 與蔣慧仙。",
-      "真實定格": "閱覽室：宏福苑火災發生之後（含現場觀察手記）。",
-      "聲音頻率": "播放器：島嶼之間（聲音作品）。",
-      "書店現場": "小羊的日本書店遊記:在幸福的迷途中活下去吧（連載終章）。",
-      "人物筆記": "蔣慧仙——果力文化編輯哲學的人物側寫。"
-    }
-  },
-  {
-    "id": "reading-001",
-    "issue": "閱讀小報 #001",
-    "titleTw": "當女性執起筆，看見整個時代。",
-    "titleEn": "When Women Write, We See the Age.",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "真實定格",
-    "categories": ["真實定格"],
-    "tags": ["女性主義"],
-    "highlight": "WOMEN'S WRITING",
-    "summary": {
-      "真實定格": "女族記事 × 她物誌 × 離散的植物 × 變成的人：女性書寫如何見證一個時代。"
+      "紙本通信": "**雜誌社 006**：翻閱==《秋刀魚》==，在台日文化交融的企劃中尋找生活靈感，探索這本雜誌獨特的紙本魅力與態度。"
     }
   },
   {
     "id": "reading-002",
     "issue": "閱讀小報 #002",
     "titleTw": "正發生",
-    "titleEn": "Happening Now",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "特輯"],
+    "highlight": "ZINE CULTURE",
     "tags": ["香港", "酷兒", "女性主義"],
-    "highlight": "ZINE & PUB",
-    "summary": {
-      "紙本通信": "圖解酷兒史 × GARO 漫畫大革命 × STATUS QUO 雜誌 × 攝影之聲傳教士影像專題等出版物梳理。",
-      "特輯": "香港國安法後的流行文化（2020-2022）× 2010 年代後華語地區的女性主義行動。"
-    }
-  },
-  {
-    "id": "reading-003",
-    "issue": "閱讀小報 #003",
-    "titleTw": "回望，前進",
-    "titleEn": "Look Back, Move Forward",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "真實定格",
-    "categories": ["真實定格"],
-    "tags": ["台灣", "酷兒"],
-    "highlight": "TW HISTORY",
-    "summary": {
-      "真實定格": "「殘酷兒」與「二二八」雙主題書單：台灣酷兒史與轉型正義的閱讀路徑。"
-    }
-  },
-  {
-    "id": "reading-004",
-    "issue": "閱讀小報 #004",
-    "titleTw": "香港來信",
-    "titleEn": "Letter from Hong Kong",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "紙本通信",
     "categories": ["紙本通信"],
-    "tags": ["香港"],
-    "highlight": "HK ZINE",
     "summary": {
-      "紙本通信": "香港看 Zine（14 本香港獨立 Zine 完整盤點）。"
+      "紙本通信": "深度梳理==《圖解酷兒史》== × ==《GARO漫畫大革命》== × ==《STATUS QUO》==雜誌，帶你一次看懂這些前衛出版物背後的文化脈絡。"
     }
   },
   {
-    "id": "reading-005",
-    "issue": "閱讀小報 #005",
-    "titleTw": "微小而確定的存在",
-    "titleEn": "Small but Certain Existence",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信"],
-    "tags": ["日本"],
-    "highlight": "JP PRINT",
+    "id": "issue-13",
+    "issue": "Issue #13",
+    "titleTw": "永遠困惑，永遠好奇。",
+    "highlight": "BOOKSTORE",
+    "tags": ["台灣"],
+    "categories": ["書店現場"],
     "summary": {
-      "紙本通信": "日本紙媒未來特輯 IDEA 407（雜誌、同人誌、little press 的人們）× 新書訊息。"
+      "書店現場": "**遊書店 001**：走進==田園城市風格書店==——這不僅是一家書店，更是建築與設計愛好者的庇護所，記錄空間陳設如何影響閱讀體驗。"
     }
   },
   {
-    "id": "reading-006",
-    "issue": "閱讀小報 #006",
-    "titleTw": "下個密碼",
-    "titleEn": "The Next Password",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "紙本通信",
-    "categories": ["紙本通信", "展場漫遊"],
-    "tags": [],
-    "highlight": "BOOK FAIR",
+    "id": "issue-25",
+    "issue": "Issue #25",
+    "titleTw": "如果在冬夜，一個旅/女人",
+    "highlight": "BOOKSTORE",
+    "tags": ["台灣", "連載"],
+    "categories": ["書店現場"],
     "summary": {
-      "紙本通信": "港台新書簡訊與書展前線報導。",
-      "展場漫遊": "書展前線：書展現場見聞。"
-    }
-  },
-  {
-    "id": "reading-007",
-    "issue": "閱讀小報 #007",
-    "titleTw": "愛與勇",
-    "titleEn": "Love and Courage",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "真實定格",
-    "categories": ["真實定格"],
-    "tags": ["香港", "台灣"],
-    "highlight": "READING NOTES",
-    "summary": {
-      "真實定格": "港台新書 × 閱讀記錄與相關思考。"
-    }
-  },
-  {
-    "id": "reading-008",
-    "issue": "閱讀小報 #008",
-    "titleTw": "強風吹拂",
-    "titleEn": "A Strong Wind Blows",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "特輯",
-    "categories": ["特輯", "紙本通信"],
-    "tags": ["香港", "台灣", "女性主義"],
-    "highlight": "GENDER & FILM",
-    "summary": {
-      "特輯": "台灣書旅：性別文化 × 第 32 屆女影手冊《破風景》。",
-      "紙本通信": "台港新書情報。"
-    }
-  },
-  {
-    "id": "reading-009",
-    "issue": "閱讀小報 #009",
-    "titleTw": "「別」的世界",
-    "titleEn": "The World of 'Other'",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "真實定格",
-    "categories": ["真實定格", "數位生存"],
-    "tags": ["香港"],
-    "highlight": "HK BOOKS",
-    "summary": {
-      "真實定格": "《光與線》《前面有落——圖說香港小巴史》《做死人生意這一行》《給未來藝術書展/節的備忘錄》。",
-      "數位生存": "《血汗 AI：為人工智慧提供動力的隱性人類勞工》。"
+      "書店現場": "**遊書店 010**：紙上探索==現流冊店==。從文字中感受獨立音樂與台灣文學在這個空間裡碰撞出的獨特火花，呈現多樣的閱讀風景。"
     }
   },
   {
     "id": "reading-010",
     "issue": "閱讀小報 #010",
     "titleTw": "閱讀現場",
-    "titleEn": "Reading on Site",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場"],
-    "tags": ["香港"],
     "highlight": "BOOK TRIP",
+    "tags": ["香港"],
+    "categories": ["書店現場"],
     "summary": {
-      "書店現場": "澳港深書旅完整紀錄。"
+      "書店現場": "**閱讀現場**：==澳港深書旅==完整紀錄。帶你穿梭三座城市，探尋隱藏在都市叢林裡的實體閱讀庇護所與書店靈魂。"
     }
   },
   {
-    "id": "reading-011",
-    "issue": "閱讀小報 #011",
-    "titleTw": "散步年年",
-    "titleEn": "Walking Every Year",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "書店現場",
-    "categories": ["書店現場", "特輯"],
-    "tags": ["香港", "台灣"],
-    "highlight": "URBAN WALK",
+    "id": "issue-17",
+    "issue": "Issue #17",
+    "titleTw": "新年來信",
+    "highlight": "YANG DECHANG",
+    "tags": ["年度回顧"],
+    "categories": ["展場漫遊"],
     "summary": {
-      "書店現場": "港台二手書、雜誌購買思路與方法。",
-      "特輯": "街市與攤販 × 街頭招牌與字體 × 街頭植物 × 街燈 × 文化地景觀察。"
+      "展場漫遊": "**逛展覽**：==再一次拼圖楊德昌==。在台北特展中重新凝視這位台灣新電影大師的影像遺產，解構他筆下的城市與時代。"
+    }
+  },
+  {
+    "id": "issue-36",
+    "issue": "Issue #36",
+    "titleTw": "折返",
+    "highlight": "DESIGN HK",
+    "tags": ["香港", "連載"],
+    "categories": ["展場漫遊"],
+    "summary": {
+      "展場漫遊": "**聊天室**：==設計香港==——一座城市的視覺檔案。透過漫步街頭的實地觀察，閱讀這座城市的歷史與美學變遷。"
     }
   },
   {
     "id": "reading-012",
     "issue": "閱讀小報 #012",
     "titleTw": "無用之用",
-    "titleEn": "The Use of Uselessness",
-    "season": null,
-    "type": "閱讀小報",
-    "primaryCategory": "展場漫遊",
-    "categories": ["展場漫遊", "紙本通信"],
-    "tags": ["台灣"],
     "highlight": "ART BOOK FAIR",
+    "tags": ["台灣"],
+    "categories": ["展場漫遊"],
     "summary": {
-      "展場漫遊": "草率季 Taipei Art Book Fair 2026 完整導覽。",
-      "紙本通信": "Ta 們的小報。"
+      "展場漫遊": "**無用之用**：==草率季 Taipei Art Book Fair 2026== 完整導覽，在全台最具野生生命力的藝術書展中進行一場紙上漫遊。"
+    }
+  },
+  {
+    "id": "issue-03",
+    "issue": "Issue #03",
+    "titleTw": "Don't worry, be happy",
+    "highlight": "OPEN COURSES",
+    "tags": ["台灣"],
+    "categories": ["數位生存"],
+    "summary": {
+      "數位生存": "**知識庫**：獨家收藏的==台灣開放式課程==彙總分享。在資訊過載的時代，建立屬於自己的數位學習與線上生存指南。"
+    }
+  },
+  {
+    "id": "issue-32",
+    "issue": "Issue #32",
+    "titleTw": "拒絕闡釋",
+    "highlight": "AI × CAREER",
+    "tags": ["台灣", "日本", "連載"],
+    "categories": ["數位生存"],
+    "summary": {
+      "數位生存": "**工具箱**：送上一份 2025 免費閱讀==世界雜誌與電子書==的超實用攻略，助你輕鬆打破學術與文化的資訊壁壘。"
+    }
+  },
+  {
+    "id": "reading-009",
+    "issue": "閱讀小報 #009",
+    "titleTw": "「別」的世界",
+    "highlight": "DIGITAL LABOR",
+    "tags": ["香港"],
+    "categories": ["數位生存"],
+    "summary": {
+      "數位生存": "深度探討==《血汗 AI：為人工智慧提供動力的隱性人類勞工》==，揭開科技繁榮背後的數位勞工困境與網路折疊現象。"
+    }
+  },
+  {
+    "id": "issue-24",
+    "issue": "Issue #24",
+    "titleTw": "越洋電話",
+    "highlight": "KR INDIE",
+    "tags": ["韓國", "台灣"],
+    "categories": ["聽覺切片"],
+    "summary": {
+      "聽覺切片": "**越洋電話**：從 K-pop 到 ==K-indie==，為你描繪韓國獨立音樂的另一種地圖，聽見主流工業之外的多元獨立聲音。"
+    }
+  },
+  {
+    "id": "issue-27",
+    "issue": "Issue #27",
+    "titleTw": "我的「位置」",
+    "highlight": "FEMALE ARTIST",
+    "tags": ["台灣", "香港", "酷兒", "連載"],
+    "categories": ["聽覺切片"],
+    "summary": {
+      "聽覺切片": "**女性藝術家 003**：~~余佩真~~——人如其名的「真真」，從音樂與演戲雙線出發，剖析她獨特而細膩的創作軌跡。"
+    }
+  },
+  {
+    "id": "issue-33",
+    "issue": "Issue #33",
+    "titleTw": "在極與極之間",
+    "highlight": "FEMALE ARTIST",
+    "tags": ["香港", "台灣", "酷兒", "連載"],
+    "categories": ["聽覺切片"],
+    "summary": {
+      "聽覺切片": "**女性藝術家 007**：~~盧凱彤~~——你的左手，我的右手。在離島漂浮的專屬歌單中，重溫她溫柔又有力量的吉他聲。"
+    }
+  },
+  {
+    "id": "issue-08",
+    "issue": "Issue #08",
+    "titleTw": "遊移之身",
+    "highlight": "DOCUMENTARY",
+    "tags": ["台灣", "香港"],
+    "categories": ["光影放映"],
+    "summary": {
+      "光影放映": "**觀影展 002**：直擊==TIDF 台灣國際紀錄片影展==，透過鏡頭與光影探討遊移之身與邊緣群體真實的生命處境。"
+    }
+  },
+  {
+    "id": "issue-26",
+    "issue": "Issue #26",
+    "titleTw": "生長不痛",
+    "highlight": "FEMALE ARTIST",
+    "tags": ["香港", "連載"],
+    "categories": ["光影放映"],
+    "summary": {
+      "光影放映": "**女性藝術家 002**：~~鐘雪瑩~~——跟隨心聲去行動，剖析這位香港新生代演員在銀幕上展現出的靈動與真誠。"
+    }
+  },
+  {
+    "id": "issue-29",
+    "issue": "Issue #29",
+    "titleTw": "在愛與恨的邊緣",
+    "highlight": "QUEER CINEMA",
+    "tags": ["香港", "日本", "酷兒", "連載"],
+    "categories": ["光影放映"],
+    "summary": {
+      "光影放映": "**Happy Pride Month 特輯**：精選 4 位酷兒導演與 31 部必看的==酷兒影視作品==，在愛與恨的邊緣捕捉彩虹光影。"
+    }
+  },
+  {
+    "id": "issue-16",
+    "issue": "Issue #16",
+    "titleTw": "享受碰撞",
+    "highlight": "NON-FICTION",
+    "tags": ["香港"],
+    "categories": ["真實定格"],
+    "summary": {
+      "真實定格": "**閱覽室**：~~譚蕙芸~~——在香港新聞紀實寫作中的稜角。探討記者如何在劇變的時代中，用文字精準定格那些真實的細節。"
+    }
+  },
+  {
+    "id": "issue-36-reportage",
+    "issue": "Issue #36",
+    "titleTw": "折返",
+    "highlight": "REPORTAGE",
+    "tags": ["香港", "連載"],
+    "categories": ["真實定格"],
+    "summary": {
+      "真實定格": "**閱覽室**：==宏福苑火災==發生之後（含現場觀察手記）。透過非虛構的筆觸，紀錄一場災難背後的社會觀察與人性微光。"
+    }
+  },
+ {
+    "id": "issue-31",
+    "issue": "Issue #31",
+    "titleTw": "愛",
+    "highlight": "JOURNALISM",
+    "tags": ["台灣", "日本", "連載"],
+    "categories": ["真實定格"],
+    "summary": {
+      "真實定格": "**閱覽室**：紛亂的世界，赤誠的==新聞記者==。聚焦新聞傳媒與紀實報導，探討在變動的時代中，媒體人如何堅守紀錄真實的底線。"
+    }
+  },
+  {
+    "id": "issue-07",
+    "issue": "Issue #07",
+    "titleTw": "春天終將來臨",
+    "highlight": "SPOKEN WORD",
+    "tags": ["女性主義"],
+    "categories": ["聲音頻率"],
+    "summary": {
+      "聲音頻率": "華語女性主義歌單與 ==Spoken Word (口語詩)== 特輯。探索聲音媒介如何承載性別議題，並為聽覺切片增添更多思維深度。"
+    }
+  },
+  {
+    "id": "issue-23",
+    "issue": "Issue #23",
+    "titleTw": "萍聚霧散",
+    "highlight": "FEMINIST POD",
+    "tags": ["台灣", "香港", "女性主義"],
+    "categories": ["聲音頻率"],
+    "summary": {
+      "聲音頻率": "**播客推薦**：==不只是女性主義==聽後感。在聲音頻率中探討女性主義的日常實踐與反思，記錄社群中的萍聚與霧散。"
+    }
+  },
+  {
+    "id": "issue-30",
+    "issue": "Issue #30",
+    "titleTw": "夏日紀事",
+    "highlight": "PODCAST",
+    "tags": ["台灣", "日本", "酷兒", "女性主義", "連載"],
+    "categories": ["聲音頻率"],
+    "summary": {
+      "聲音頻率": "**六月一日**：兒歌與新鮮的 ==Magazine Podcast==。帶你在夏日裡透過聲音尋找純真，並探索文化出版的跨界可能。"
+    }
+  },
+  {
+    "id": "issue-09",
+    "issue": "Issue #09",
+    "titleTw": "播種吧！",
+    "highlight": "GROWTH",
+    "tags": ["台灣"],
+    "categories": ["人物筆記"],
+    "summary": {
+      "人物筆記": "**女孩們**：邁出步伐，向前走。細膩記錄女孩們在成長過程中的困境、女性意識的覺醒，與在時代荒原中==播種未來==的勇氣。"
+    }
+  },
+  {
+    "id": "issue-21",
+    "issue": "Issue #21",
+    "titleTw": "逃離，創造，照顧自己",
+    "highlight": "CAREER",
+    "tags": ["台灣"],
+    "categories": ["人物筆記"],
+    "summary": {
+      "人物筆記": "**女孩們**：「迷茫」的文科求職應屆生。分享在職場邊緣的逃離與創造實踐，以及最重要的——如何好好==照顧自己==。"
+    }
+  },
+  {
+    "id": "issue-36-bio",
+    "issue": "Issue #36",
+    "titleTw": "折返",
+    "highlight": "EDITOR",
+    "tags": ["台灣", "連載"],
+    "categories": ["人物筆記"],
+    "summary": {
+      "人物筆記": "**人物側寫**：深入探討~~蔣慧仙~~與==果力文化==背後的編輯哲學。看她如何在出版的迷途中折返，堅持以內容推動改變。"
+    }
+  },
+  {
+    "id": "issue-35",
+    "issue": "Issue #35",
+    "titleTw": "每當變幻時",
+    "highlight": "AWARDS 2025",
+    "tags": ["年度回顧"],
+    "categories": ["特輯"],
+    "summary": {
+      "特輯": "**2025 年度大賞**：完整整理==年度音樂==、==年度播客==與私人閱讀總結，在變幻時節為讀者寫下這封誠摯的新年來信。"
+    }
+  },
+  {
+    "id": "japan-series",
+    "issue": "Issue #28-36",
+    "titleTw": "日本書店遊記",
+    "highlight": "JAPAN TRAVEL",
+    "tags": ["日本", "連載"],
+    "categories": ["特輯"],
+    "summary": {
+      "特輯": "**連載完結**：==小羊的日本書店遊記==系列（Day 1-7）。從東京到神戶，記錄一段在實體書店與獨立空間中「純真地反抗」的漫遊之旅。"
+    }
+  },
+  {
+    "id": "reading-011",
+    "issue": "閱讀小報 #011",
+    "titleTw": "散步年年",
+    "highlight": "CITY WALK",
+    "tags": ["香港", "台灣"],
+    "categories": ["特輯"],
+    "summary": {
+      "特輯": "**城市散步學**：從招牌字體到街頭植物，分享我紀錄城市的方法，讓==散步==成為一種對抗焦慮、感知當下的確定的存在。"
     }
   }
 ]

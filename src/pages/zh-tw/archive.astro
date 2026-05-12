@@ -25,21 +25,21 @@ interface CatSection {
 const rawData: ArchiveEntry[] = archiveData as unknown as ArchiveEntry[];
 
 function highlight(text: string): string {
-  // 優先：《》書刊/影片名，只取第一個
-  const m1 = text.match(/《[^》]+》/);
-  if (m1) return text.replace(m1[0], `<span class="hl-primary">${m1[0]}</span>`);
+  if (!text) return '';
+  let result = text;
 
-  // 次選：「：專有名詞——」模式，取兩個中文引號之間的 2-8 字中文名
-  const m2 = text.match(/[：:]([一-鿿·・]{2,8})——/);
-  if (m2 && m2[1]) {
-    return text.replace(m2[1] + '——', `<span class="hl-primary">${m2[1]}</span>——`);
-  }
+  // 1. ==特色內容==：給予最強烈的螢光感 (hl-feature)
+  // 用於：具體的雜誌名、具體的店名、核心主題
+  result = result.replace(/==([^=]+)==/g, `<span class="hl-feature">$1</span>`);
 
-  // 三選：「」引號內的人名/特殊詞，只取第一個
-  const m3 = text.match(/「[^」]+」/);
-  if (m3) return text.replace(m3[0], `<span class="hl-primary">${m3[0]}</span>`);
+  // 2. ~~關鍵人物~~：給予水藍色標註 (hl-person)
+  result = result.replace(/~~([^~]+)~~/g, `<span class="hl-person">$1</span>`);
 
-  return text;
+  // 3. **固定欄目**：僅加粗或給予極淡的底色 (hl-column)
+  // 用於：遊書店、雜誌架、閱覽室等重複出現的字樣
+  result = result.replace(/\*\*([^*]+)\*\*/g, `<span class="hl-column">$1</span>`);
+
+  return result;
 }
 
 const LOCK_URL = 'https://tally.so/r/4415XB';
@@ -146,7 +146,7 @@ const catSections: CatSection[] = [
           <nav class="cat-nav">
             {catSections.map(cat => (
               <a href={`#cat-${cat.id}`}>
-                <span class="cat-dot" style={`background:var(--candy-${cat.color})`}></span>
+                <span class="cat-dot" style={`background:var(--candy-${cat.colpushor})`}></span>
                 {cat.icon} {cat.name}
               </a>
             ))}
@@ -517,13 +517,33 @@ const catSections: CatSection[] = [
     .border-purple { border-color: var(--candy-purple); box-shadow: 3px 3px 0 rgba(199,179,232,0.35); }
     .border-cream  { border-color: var(--candy-cream);  box-shadow: 3px 3px 0 rgba(255,233,182,0.4); }
 
-    /* ── 文字高亮（:global 繞過 Astro scoped CSS）── */
-    /* 琥珀黃螢光筆效果：與所有卡片邊框色（薄荷/桃/粉/水藍/薰衣草/奶油）都有明顯區別 */
-    :global(.hl-primary) {
-      background: linear-gradient(transparent 54%, rgba(255, 195, 45, 0.72) 54%);
-      font-weight: 700; color: var(--ink); padding: 0 1px;
+/* 1. 特色內容：極細的蜜桃底色 */
+    :global(.hl-feature) {
+      font-weight: 700;
+      color: var(--ink);
+      background: linear-gradient(transparent 70%, var(--candy-peach) 70%);
+      padding: 0 2px;
     }
 
+    /* 2. 關鍵人物：極細的水藍底色 */
+    :global(.hl-person) {
+      font-weight: 700;
+      color: var(--ink);
+      background: linear-gradient(transparent 70%, var(--candy-aqua) 70%);
+      padding: 0 2px;
+    }
+
+    /* 3. 固定欄目：紫色方塊點綴 */
+    :global(.hl-column) {
+      font-weight: 700;
+      color: var(--candy-purple);
+    }
+    /* 在欄目前面加一個可愛的像素小點 */
+    :global(.hl-column)::before {
+      content: '✦ ';
+      font-size: 10px;
+      color: var(--candy-pink);
+    }
     .issue-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 12px; }
     .issue-title { font-family: var(--font-serif-tc); font-weight: 700; font-size: 15px; color: var(--ink); flex: 1; line-height: 1.45; letter-spacing: 0.5px; }
 
