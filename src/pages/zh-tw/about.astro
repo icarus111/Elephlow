@@ -184,24 +184,18 @@ import '../../styles/global.css';
       </section>
 
       <aside class="about-right sticky-sidebar">
-        <nav class="vertical-tabs">
-          <a href="/zh-tw/" class="vtab vtab-home">
-            <span class="vtab-icon">🏠</span>
-            <span class="vtab-label">主頁</span>
-          </a>
-          <a href="/zh-tw/about" class="vtab vtab-active">
-            <span class="vtab-icon">👤</span>
-            <span class="vtab-label">簡介</span>
-          </a>
-          <a href="/zh-tw/archive" class="vtab vtab-archive">
-            <span class="vtab-icon">📚</span>
-            <span class="vtab-label">目錄</span>
-          </a>
-          <a href="/zh-tw/guestbook" class="vtab vtab-guestbook">
-            <span class="vtab-icon">✉</span>
-            <span class="vtab-label">留言板</span>
-          </a>
-        </nav>
+        <div class="menu-card">
+            <h3 class="menu-title">▼ MENU ▼</h3>
+            <ul class="menu-list">
+             <ul class="menu-list">
+  <li><a href="/zh-tw/" class="menu-mint">🏠 主頁</a></li>
+  <li><a href="/zh-tw/about" class="menu-pink">✍️ 創作者說</a></li>
+  <li><a href="/zh-tw/archive" class="menu-aqua">📚 往期目錄</a></li>
+  <li><a href="/zh-tw/guestbook" class="menu-purple">💬 留言板</a></li>
+  <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ 訂閱 ★</a></li>
+</ul>
+            </ul>
+          </div>
 
         <div class="minihome-deco">
           <div class="deco-row">✦ ✿ ☘ ♡ ✦</div>
@@ -556,12 +550,60 @@ import '../../styles/global.css';
     }
 
     /* === 右侧 Tabs (加上白色外描边) === */
-    .vertical-tabs {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-bottom: 14px;
+    /* === 彩色长方形导航菜单 === */
+    .menu-card {
+      background: var(--soft-white);
+      border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.4);
+      margin-bottom: 12px;
     }
+
+    .menu-title {
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      text-align: center;
+      padding: 8px 4px;
+      margin: 0 0 6px;
+      color: var(--ink-light);
+      background: var(--candy-cream);
+      border-radius: 6px;
+    }
+
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-list li { margin-bottom: 4px; }
+
+    .menu-list a {
+      display: block;
+      padding: 10px 12px;
+      text-align: center;
+      font-family: var(--font-rounded);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 8px;
+      border: 1.5px dashed var(--candy-purple);
+      transition: transform 0.15s;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+
+    .menu-list a:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4);
+      text-decoration: none;
+    }
+
+    .menu-mint { background: var(--candy-mint); }
+    .menu-aqua { background: var(--candy-aqua); }
+    .menu-pink { background: var(--candy-pink); }
+    .menu-purple { background: var(--candy-purple); }
+    .menu-mint { background: var(--candy-mint); }
+    .menu-aqua { background: var(--candy-aqua); }
+    .menu-pink { background: var(--candy-pink); }
+    .menu-purple { background: var(--candy-purple); }
+    .menu-cream { background: var(--candy-cream); } /* 增加这一行，给订阅按钮用鹅黄色 */
     .vtab {
       display: flex;
       align-items: center;
