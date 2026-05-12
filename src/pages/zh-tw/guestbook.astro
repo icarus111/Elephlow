@@ -58,6 +58,7 @@ import HouseRules from '../../components/sidebar/HouseRules.astro';
 
           <div class="board-content">
 
+            <!-- === 這裡是你原本的留言 === -->
             <div class="msg-card border-mint">
               <div class="msg-header">
                 <span class="msg-title">📝 關於「女孩們」</span>
@@ -101,6 +102,43 @@ import HouseRules from '../../components/sidebar/HouseRules.astro';
               </div>
             </div>
 
+            <!-- === 以下是為你新增篩選過的新留言 === -->
+            <div class="msg-card border-mint">
+              <div class="msg-header">
+                <span class="msg-title">💭 溫暖的載體</span>
+              </div>
+              <div class="msg-body">
+                其實小報保持現狀就很好啦！是溫暖的，有內容，有思考的載體。在這個時代能有這樣的閱讀和鏈接的機會很不容易，<mark>希望未來有機會能見到小報的紙質刊物！</mark>
+              </div>
+            </div>
+
+            <div class="msg-card border-purple">
+              <div class="msg-header">
+                <span class="msg-title">💌 彼此陪伴</span>
+              </div>
+              <div class="msg-body bg-purple-light">
+                小象，很感謝妳一直以來的獨特創作，雖然沒有經常互動，但每期都有及時仔細保存下來認真閱讀。看到妳分享 Hocc 和 Ellen 也很感動，有這麼多人一起愛著她們，讓我感覺<strong>大家一直在彼此陪伴</strong>，不論是何種形式。期待和相信你的品牌會越做越好，加油！
+              </div>
+            </div>
+
+            <div class="msg-card border-aqua">
+              <div class="msg-header">
+                <span class="msg-title">✨ 很大的鼓勵</span>
+              </div>
+              <div class="msg-body">
+                每次看到你在社媒上更新或者發布小報，都給我自己很大鼓勵。對我來說，你是一位正在<em>努力生活、努力做自己想做的內容</em>的前輩。請繼續加油創作，之後的小報我會支持噠～
+              </div>
+            </div>
+
+            <div class="msg-card border-cream">
+              <div class="msg-header">
+                <span class="msg-title">📌 祝妳一直做下去</span>
+              </div>
+              <div class="msg-body bg-cream-light">
+                一直都在訂閱完象的內容，還記得當時妳有說，以一年為期，不確定這份小報還會不會做下去（大意是這樣），<mark>那就祝妳一直做下去！</mark>
+              </div>
+            </div>
+
           </div>
 
           <div class="board-footer">
@@ -113,13 +151,11 @@ import HouseRules from '../../components/sidebar/HouseRules.astro';
         <div class="menu-card">
             <h3 class="menu-title">▼ MENU ▼</h3>
             <ul class="menu-list">
-             <ul class="menu-list">
-  <li><a href="/zh-tw/" class="menu-mint">🏠 主頁</a></li>
-  <li><a href="/zh-tw/about" class="menu-pink">✍️ 創作者說</a></li>
-  <li><a href="/zh-tw/archive" class="menu-aqua">📚 往期目錄</a></li>
-  <li><a href="/zh-tw/guestbook" class="menu-purple">💬 留言板</a></li>
-  <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ 訂閱 ★</a></li>
-</ul>
+              <li><a href="/zh-tw/" class="menu-mint">🏠 主頁</a></li>
+              <li><a href="/zh-tw/about" class="menu-pink">✍️ 創作者說</a></li>
+              <li><a href="/zh-tw/archive" class="menu-aqua">📚 往期目錄</a></li>
+              <li><a href="/zh-tw/guestbook" class="menu-purple">💬 留言板</a></li>
+              <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ 訂閱 ★</a></li>
             </ul>
           </div>
 
@@ -141,9 +177,9 @@ import HouseRules from '../../components/sidebar/HouseRules.astro';
             </div>
           </div>
           <div class="kp-controls">
-            <span class="kp-btn">⏮</span>
-            <span class="kp-btn kp-play">▶</span>
-            <span class="kp-btn">⏭</span>
+            <span class="kp-btn kp-prev"></span>
+            <span class="kp-btn kp-play"></span>
+            <span class="kp-btn kp-next"></span>
           </div>
         </div>
 
@@ -314,7 +350,7 @@ import HouseRules from '../../components/sidebar/HouseRules.astro';
     .border-mint { border-color: var(--candy-mint); box-shadow: 3px 3px 0 rgba(200, 233, 176, 0.3); }
     .border-purple { border-color: var(--candy-purple); box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.3); }
     .border-aqua { border-color: var(--candy-aqua); box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.3); }
-    .border-cream { border-color: var(--candy-peach); box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.3); } /* 用 peach 邊框配 cream 更好看 */
+    .border-cream { border-color: var(--candy-peach); box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.3); }
 
     .msg-header { 
       display: flex; justify-content: space-between; align-items: center; 
@@ -330,7 +366,7 @@ import HouseRules from '../../components/sidebar/HouseRules.astro';
     .bg-purple-light { background-color: rgba(199, 179, 232, 0.1); }
     .bg-cream-light { background-color: rgba(255, 233, 182, 0.15); }
 
-    /* 文本糖果化格式 (取代原本 Y2K 的 mark/strong/em) */
+    /* 文本糖果化格式 */
     .msg-body mark { background-color: transparent; background-image: linear-gradient(transparent 60%, var(--candy-mint) 60%); color: var(--ink); padding: 0 2px; font-weight: 700; }
     .msg-body strong { color: var(--ink); background-image: linear-gradient(transparent 60%, var(--candy-pink) 60%); }
     .msg-body em { color: var(--candy-purple); font-style: normal; font-weight: 700; border-bottom: 2px dashed var(--candy-purple); }
@@ -338,7 +374,6 @@ import HouseRules from '../../components/sidebar/HouseRules.astro';
     .board-footer { text-align: center; margin-top: 30px; padding-top: 16px; border-top: 1px dashed var(--candy-mint); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); letter-spacing: 2px; }
 
     /* === 右側 Tabs === */
-/* === 彩色长方形导航菜单 === */
     .menu-card {
       background: var(--soft-white);
       border: 1.5px dashed var(--candy-mint);
@@ -383,10 +418,6 @@ import HouseRules from '../../components/sidebar/HouseRules.astro';
       text-decoration: none;
     }
 
-    .menu-mint { background: var(--candy-mint); }
-    .menu-aqua { background: var(--candy-aqua); }
-    .menu-pink { background: var(--candy-pink); }
-    .menu-purple { background: var(--candy-purple);}
     .menu-mint { background: var(--candy-mint); }
     .menu-aqua { background: var(--candy-aqua); }
     .menu-pink { background: var(--candy-pink); }
