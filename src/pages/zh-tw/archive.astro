@@ -114,7 +114,7 @@ const catSections: CatSection[] = [
           <nav class="cat-nav">
             {catSections.map(cat => (
               <a href={`#cat-${cat.id}`}>
-                <span class="cat-dot" style={`background:var(--candy-${cat.colpushor})`}></span>
+                <span class="cat-dot" style={`background:var(--candy-${cat.color})`}></span>
                 {cat.icon} {cat.name}
               </a>
             ))}
@@ -358,7 +358,7 @@ const catSections: CatSection[] = [
     .cat-nav { display: flex; flex-direction: column; gap: 6px; }
     .cat-nav a {
       display: flex; align-items: center; gap: 8px; text-decoration: none;
-      font-family: var(--font-rounded); font-size: 13px; font-weight: 700; color: var(--ink);
+      font-family: var(--font-rounded); font-size: 13px; font-weight: 700; color: var(--ink-light);
       padding: 6px 8px; border-radius: 8px; transition: background 0.2s;
     }
     .cat-nav a:hover { background: rgba(255,255,255,0.65); }
