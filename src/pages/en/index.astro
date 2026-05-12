@@ -1,155 +1,461 @@
 ---
-// src/pages/en/index.astro
+import '../../styles/global.css';
+import CalendarWidget from '../../components/CalendarWidget.astro';
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Push The Door | Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        /* 樣式與中文版完全相同，為節省版面緊湊處理 */
-        :root{--win-gray:#c0c0c0;--win-dark:#808080;--win-light:#ffffff;--win-blue:#000080;--y2k-purple:#4B2D8C;--y2k-pink:#FF66B3;--y2k-mint:#B2F5EA;--text:#000000;}
-        *{margin:0;padding:0;box-sizing:border-box;cursor:default;}
-        html,body{height:auto;min-height:100%;}
-        body{background:linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px),linear-gradient(to right,#98fb98,#fffacd,#ffebcd,#ffb6c1,#e0b0ff);background-size:20px 20px,20px 20px,100% 100%;background-attachment:fixed;font-family:'DotGothic16','PMingLiU','MingLiU','细明体','SimSun',sans-serif;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;}
-        .marquee-bar{background:#000;color:#0f0;padding:12px 0;min-height:60px;display:flex;align-items:center;overflow:hidden;border-bottom:3px solid var(--win-dark);z-index:2000;}
-        .marquee-content{display:flex;white-space:nowrap;font-size:1.2rem;animation:scroll 25s linear infinite;letter-spacing:2px;}
-        @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-        .desktop-wrapper{display:flex;flex:1;padding:25px;gap:40px;padding-bottom:80px;min-height:1000px;position:relative;}
-        .desktop-icons{display:flex;flex-direction:column;gap:25px;width:100px;padding-top:10px;z-index:10;}
-        .desktop-icon{display:flex;flex-direction:column;align-items:center;text-decoration:none;padding:10px 5px;cursor:pointer;}
-        .icon-emoji{font-size:40px;margin-bottom:5px;filter:drop-shadow(2px 2px 0px rgba(0,0,0,1));}
-        .icon-text{color:#fff;background-color:var(--win-blue);font-size:13px;text-align:center;padding:2px 6px;border:1px dotted transparent;}
-        .desktop-icon:hover .icon-text{border:1px dotted #fff;background-color:var(--y2k-purple);}
-        .desktop-copyright{position:fixed;bottom:60px;right:20px;font-size:12px;color:#555;text-shadow:1px 1px 0px rgba(255,255,255,0.8);z-index:10;}
-        #playground{flex:1;position:relative;}
-        .window{background:var(--win-gray);border:2px solid;border-color:var(--win-light) #000 #000 var(--win-light);box-shadow:inset 1px 1px 0 #dfdfdf,inset -1px -1px 0 var(--win-dark),2px 2px 0 rgba(0,0,0,0.5);display:flex;flex-direction:column;position:absolute;height:auto;min-height:400px;padding:3px;}
-        .title-bar{background:linear-gradient(90deg,var(--win-blue),#1084d0);padding:3px 6px;display:flex;justify-content:space-between;align-items:center;color:white;font-size:13px;cursor:move;letter-spacing:1px;}
-        .win-controls{display:flex;gap:2px;margin-left:10px;}
-        .win-btn{width:18px;height:18px;background-color:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);color:#000;font-family:'Pixel',sans-serif;font-size:10px;font-weight:bold;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:1px 1px 0 #000;}
-        .win-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding-top:2px;padding-left:2px;box-shadow:none;}
-        .win-content{flex:1;background:white;margin-top:4px;padding:40px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);}
-        .brand-hero{display:flex;flex-direction:column;justify-content:center;align-items:center;}
-        .hero-title{font-family:'Noto Serif',serif;font-size:4.2rem;font-weight:900;color:var(--y2k-purple);line-height:1.2;text-align:center;letter-spacing:0.05em;text-shadow:4px 4px 0px var(--y2k-mint);margin-bottom:10px;}
-        .hero-slogan{font-family:'DotGothic16',sans-serif;font-weight:900;color:var(--y2k-pink);font-size:1.2rem;letter-spacing:0.2rem;margin-bottom:25px;text-align:center;}
-        .ip-house{margin:20px 0;width:120px;height:120px;border:4px solid var(--text);background:var(--y2k-pink);display:flex;align-items:center;justify-content:center;font-size:4rem;box-shadow:8px 8px 0px #000;}
-        .stat-tag{border:2px solid #000;padding:6px 15px;font-size:14px;background:var(--win-gray);box-shadow:2px 2px 0 #000;}
-        .intro-text{max-width:580px;margin-top:35px;color:#111;line-height:2;text-align:justify;font-size:1rem;border-top:2px dotted var(--win-dark);padding-top:25px;font-family:'Noto Serif',serif;}
-        .intro-text p{margin-bottom:15px;}
-        .intro-text strong{color:var(--y2k-purple);font-weight:900;}
-        .taskbar{position:fixed;bottom:0;left:0;right:0;height:42px;background:var(--win-gray);border-top:2px solid var(--win-light);display:flex;align-items:center;padding:0 6px;z-index:3000;box-shadow:inset 0 1px 0 #dfdfdf;}
-        .start-btn{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;color:#000;font-size:15px;font-weight:bold;flex-shrink:0;}
-        .start-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:5px 11px 3px 13px;}
-        .taskbar-windows{display:flex;gap:5px;margin-left:10px;flex:1;overflow-x:auto;}
-        .taskbar-win-tab{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;font-size:13px;color:#000;display:flex;align-items:center;gap:6px;cursor:pointer;max-width:200px;}
-        .taskbar-win-tab.active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);background:#d0d0d0;font-weight:bold;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,#c0c0c0 2px,#c0c0c0 4px);}
-        .subscribe-pill{background:var(--y2k-pink);color:white;padding:4px 15px;text-decoration:none;border:2px solid #000;box-shadow:2px 2px 0 #000;flex-shrink:0;font-size:13px;}
-        .system-tray{margin-left:10px;display:flex;gap:8px;align-items:center;flex-shrink:0;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:2px 10px;height:32px;}
-        .social-link{color:#000;text-decoration:none;font-size:12px;}
-        .social-link:hover{color:var(--win-blue);text-decoration:underline;}
-        .lang-switch{display:flex;gap:6px;align-items:center;border-left:1px solid var(--win-dark);border-right:1px solid var(--win-light);padding:0 10px;font-size:13px;}
-        .lang-link{color:var(--win-dark);text-decoration:none;}
-        .lang-link.active{color:#000;font-weight:bold;text-decoration:underline;}
-        .clock{font-size:13px;color:#000;}
-
-        @media (max-width: 900px) {
-            .desktop-wrapper { flex-direction: column; padding: 15px; padding-bottom: 70px; min-height: auto; }
-            .desktop-icons { flex-direction: row; flex-wrap: wrap; width: 100%; justify-content: center; gap: 15px; padding-bottom: 20px; }
-            .desktop-icon { width: 80px; padding: 5px; }
-            .window { position: relative !important; width: 100% !important; left: 0 !important; top: 0 !important; min-height: auto; }
-            .win-content { padding: 25px 15px; }
-            .hero-title { font-size: 2.8rem; }
-            .hero-slogan { font-size: 1rem; letter-spacing: 0.1rem; }
-            .ip-house { width: 90px; height: 90px; font-size: 2.5rem; }
-            .taskbar { padding: 0 6px; overflow-x: auto; white-space: nowrap; gap: 8px; justify-content: flex-start; height: 48px; }
-            .taskbar::-webkit-scrollbar { display: none; }
-            .taskbar-windows { display: none; }
-            .subscribe-pill { margin-left: 0; }
-            .system-tray { margin-left: 0; }
-            .desktop-copyright { position: static; text-align: center; margin: 20px 0; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Push The Door | elephlow</title>
+  <meta name="description" content="A Chinese-language paid newsletter, the independent communication base of Elephlow." />
 </head>
 <body>
-    <div class="marquee-bar">
-        <div class="marquee-content">
-            >> SYSTEM.MSG: [ <span style="color:var(--y2k-pink);">Season 4 Early Bird is ON</span> ] _ // ENDS_ON: <span style="color:var(--y2k-mint);">2026.05.17</span> // [ <span style="color:var(--y2k-pink);">New Curated Main Issues + Zine Newsletters</span> ] // Capturing imaginations at the edge ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+  <main class="home-window">
+
+    <header class="window-titlebar">
+      <div class="titlebar-left">
+        <span class="title-dots">● ● ●</span>
+        <span class="titlebar-text">elephlow.cc / Push The Door</span>
+      </div>
+      <div class="titlebar-right">
+        <a href="/zh-cn/" class="lang-link">简</a>
+        <a href="/" class="lang-link">繁</a>
+        <a href="/en/" class="lang-link lang-active">EN</a>
+      </div>
+    </header>
+
+    <div class="window-content">
+
+      <section class="welcome-banner">
+        <span class="corner corner-tl">✿</span>
+        <span class="corner corner-tr">✦</span>
+        <span class="corner corner-bl">☘</span>
+        <span class="corner corner-br">♡</span>
+        <div class="welcome-inner">
+          <div class="pixel-icon"><img src="/logo.png" alt="elephlow" style="height: 80px;" /></div>
+          <div class="welcome-text">
+            <p class="welcome-line1">(｡♡‿♡｡) ✿ Welcome to ✿</p>
+            <h1 class="site-title">elephlow's homepage</h1>
+            <div class="welcome-divider">⋆ ˚｡⋆ ୨ ˚୧ ⋆ ˚｡⋆</div>
+            <p class="welcome-line2">since 2022.07 · ☘ Push The Door ☘</p>
+          </div>
         </div>
+      </section>
+
+      <div class="main-grid">
+
+        <aside class="left-column">
+          <div class="deco-icons">
+            <span>📕</span><span>☘</span><span>✦</span>
+            <span>📩</span><span>🍵</span><span>♬</span>
+          </div>
+          <CalendarWidget />
+          <div class="status-info">
+            <p>ʚ♡ɞ last update: 2026.05.11</p>
+            <p>(｡◕‿◕｡) currently: season 4 in prep</p>
+            <p>✉ hello@elephlow.cc</p>
+          </div>
+        </aside>
+
+        <section class="center-column">
+          <div class="intro-card">
+            <h2 class="intro-title">≋ Push The Door ≋</h2>
+            <p class="intro-tagline">Capturing imaginations at the edge ✦</p>
+            <div class="intro-body">
+              <p>Founded in July 2022, this is a Chinese-language paid newsletter and the independent communication base of <strong>Elephlow</strong>.</p>
+              <div class="text-divider">✿ ⋆ ✿ ⋆ ✿</div>
+              <p>With words as our vessel, we navigate the intersections of <strong>Hong Kong & Taiwan pop culture, independent publishing, film festival studies, and queer perspectives</strong>. Free from algorithms, we curate high-quality cultural content to offer genuine, warm reading companionship.</p>
+              <div class="text-divider">✦ ⋆ ✦ ⋆ ✦</div>
+              <p>The "Room" is the starting point of privacy, while "Pushing the Door" is an action towards the public. We strive to bring back together what prejudice has kept apart. When the next knock sounds, you are invited to push open the door with us — <strong>and capture the neglected glimmers at the edge of the times.</strong></p>
+            </div>
+            <div class="cta-row">
+              <a href="https://tally.so/r/4415XB" class="cta-button cta-primary">★ Subscribe Season 4 ★</a>
+              <a href="/en/archive" class="cta-button cta-secondary">Browse Archive →</a>
+            </div>
+          </div>
+        </section>
+
+        <aside class="right-column">
+          <div class="menu-card">
+            <h3 class="menu-title">▼ MENU ▼</h3>
+            <ul class="menu-list">
+              <li><a href="/en/about" class="menu-mint">about elephlow</a></li>
+              <li><a href="/en/archive" class="menu-aqua">archive</a></li>
+              <li><a href="/en/guestbook" class="menu-pink">guestbook</a></li>
+              <li><a href="https://tally.so/r/4415XB" class="menu-purple">★ subscribe ★</a></li>
+            </ul>
+          </div>
+
+          <div class="guestbook-card">
+            <a href="/en/guestbook">
+              <span class="gb-icon">✉</span>
+              <span class="gb-text">sign my guestbook</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
     </div>
 
-    <div class="desktop-wrapper">
-        <div class="desktop-icons">
-            <a href="/en/" class="desktop-icon"><span class="icon-emoji">🏠</span><span class="icon-text">HOME</span></a>
-            <a href="/en/about" class="desktop-icon"><span class="icon-emoji">🐘</span><span class="icon-text">ABOUT</span></a>
-            <a href="/en/archive" class="desktop-icon"><span class="icon-emoji">📂</span><span class="icon-text">ARCHIVE</span></a>
-            <a href="/en/guestbook" class="desktop-icon"><span class="icon-emoji">💬</span><span class="icon-text">GUESTBOOK</span></a>
-        </div>
-
-        <div id="playground">
-            <div id="home-win" class="window draggable" style="width: 700px; left: 120px; top: 30px; z-index: 100;">
-                <div class="title-bar">
-                    <div style="display: flex; align-items: center; gap: 6px;"><span style="font-size: 14px;">🔑</span><span>Welcome.exe</span></div>
-                    <div class="win-controls"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
-                </div>
-                <div class="win-content">
-                    <div class="brand-hero">
-                        <h1 class="hero-title">Push The Door</h1>
-                        <p class="hero-slogan">Capturing imaginations at the edge ✴</p>
-                        <div class="ip-house">🏠</div>
-                        <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center;">
-                            <div class="stat-tag">EST. 2022.07</div>
-                            <div class="stat-tag" style="background: var(--y2k-mint);">48 ISSUES IN TOTAL</div>
-                        </div>
-                        <div class="intro-text">
-                            <p>Founded in July 2022, this is a Chinese-language paid newsletter and the independent communication base of <strong>Elephlow</strong>.</p>
-                            <p>With words as our vessel, we navigate through the intersections of <strong>Hong Kong & Taiwan pop culture, independent publishing, film festival studies, and queer perspectives</strong>. Dedicating to high-quality cultural curation.</p>
-                            <p><strong>"The Room"</strong> is the starting point of privacy, while <strong>"Pushing the Door"</strong> is an action towards the public. When the next knock sounds, you are invited to push the door open with us and capture the neglected glimmers at the edge.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="desktop-copyright">2022.07 - 2026.05 © Elephlow</div>
-    </div>
-
-    <footer class="taskbar">
-        <a href="/en/" class="start-btn">🐘 Start</a>
-        <div class="taskbar-windows"><div class="taskbar-win-tab active"><span style="font-size: 13px;">🔑</span> Welcome.exe</div></div>
-        <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">Subscribe Season 4</a>
-        <div class="system-tray">
-            <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">INSTAGRAM</a>
-            <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="social-link">RED: @Apollo11-</a>
-            <div class="lang-switch">
-                <a href="/en/" class="lang-link active">EN</a><a href="/" class="lang-link">繁</a><a href="/zh-cn/" class="lang-link">简</a>
-            </div>
-            <div class="clock" id="live-clock">00:00 AM</div>
-        </div>
+    <footer class="window-taskbar">
+      <div class="taskbar-left">
+        <span class="taskbar-start">⊞ START</span>
+        <span class="taskbar-item">▣ Push The Door</span>
+      </div>
+      <div class="taskbar-right">
+        <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
+        <span class="taskbar-clock" id="clock">--:--</span>
+      </div>
     </footer>
-    <script is:inline>
-        const windows = document.querySelectorAll('.draggable');
-        let zIndexCounter = 200;
-        windows.forEach(win => {
-            const titleBar = win.querySelector('.title-bar');
-            titleBar.onmousedown = (e) => {
-                if (window.innerWidth <= 900) return; 
-                if (e.target.classList.contains('win-btn')) return;
-                win.style.zIndex = ++zIndexCounter;
-                let shiftX = e.clientX - win.getBoundingClientRect().left;
-                let shiftY = e.clientY - win.getBoundingClientRect().top;
-                function moveAt(pageX, pageY) { win.style.left = (pageX - shiftX - 25) + 'px'; win.style.top = (pageY - shiftY - 70 - 25) + 'px'; }
-                document.onmousemove = (e) => moveAt(e.pageX, e.pageY);
-                document.onmouseup = () => { document.onmousemove = null; };
-            };
-            win.onmousedown = () => { win.style.zIndex = ++zIndexCounter; };
-        });
-        function updateClock() {
-            const now = new Date(); let h = now.getHours(); let m = String(now.getMinutes()).padStart(2, '0');
-            let ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12; h = h ? h : 12;
-            document.getElementById('live-clock').innerText = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
-        }
-        setInterval(updateClock, 1000); updateClock();
-    </script>
+
+  </main>
+
+  <script is:inline>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('clock');
+      if (el) el.innerText = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+  </script>
+
+  <style>
+    .home-window {
+      max-width: 1180px;
+      margin: 24px auto;
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-purple);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(199, 179, 232, 0.35);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+
+    .titlebar-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .titlebar-text { letter-spacing: 1px; }
+
+    .titlebar-right { display: flex; gap: 4px; }
+    .lang-link {
+      padding: 2px 8px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 3px;
+      background: transparent;
+    }
+    .lang-link:hover { background: var(--candy-cream); }
+    .lang-active { background: var(--candy-cream); font-weight: 700; }
+
+    .window-content {
+      padding: 24px;
+    }
+
+    .welcome-banner {
+      position: relative;
+      background: var(--candy-mint);
+      background-image: repeating-linear-gradient(
+        135deg,
+        var(--candy-mint), var(--candy-mint) 16px,
+        var(--candy-aqua) 16px, var(--candy-aqua) 32px,
+        var(--candy-cream) 32px, var(--candy-cream) 48px,
+        var(--candy-pink) 48px, var(--candy-pink) 64px
+      );
+      padding: 0;
+      border-radius: 12px;
+      border: 2px dashed var(--candy-purple);
+      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.5);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .corner {
+      position: absolute;
+      font-size: 18px;
+      z-index: 2;
+      color: var(--candy-purple);
+    }
+    .corner-tl { top: 6px; left: 10px; }
+    .corner-tr { top: 6px; right: 10px; color: var(--candy-pink); }
+    .corner-bl { bottom: 6px; left: 10px; color: var(--candy-mint); }
+    .corner-br { bottom: 6px; right: 10px; color: var(--candy-peach); }
+
+    .welcome-divider {
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--candy-purple);
+      letter-spacing: 4px;
+      margin: 6px 0;
+    }
+
+    .welcome-inner {
+      background: var(--soft-white);
+      margin: 6px;
+      padding: 20px 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .pixel-icon { font-size: 48px; flex-shrink: 0; }
+
+    .welcome-line1 {
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      color: var(--candy-purple);
+      margin: 0;
+    }
+
+    .site-title {
+      font-family: var(--font-bubble);
+      font-size: 32px;
+      color: var(--ink-light);
+      text-shadow: 2px 2px 0 var(--candy-peach);
+      margin: 4px 0;
+      line-height: 1.1;
+      letter-spacing: 1px;
+    }
+
+    .welcome-line2 {
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink-light);
+      margin: 0;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .deco-icons {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      padding: 10px 8px;
+      background: var(--soft-white);
+      border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .status-info {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink-light);
+      padding: 12px;
+      background: var(--candy-mint);
+      border-radius: 8px;
+      line-height: 1.8;
+      margin-top: 12px;
+    }
+    .status-info p { margin: 0; }
+
+    .intro-card {
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-mint);
+      border-radius: 12px;
+      padding: 24px 28px;
+      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
+      max-height: 540px;
+      overflow-y: auto;
+    }
+
+    .intro-title {
+      font-family: var(--font-serif-tc), var(--font-serif-sc);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink-light);
+      text-align: center;
+      margin-bottom: 6px;
+      letter-spacing: 6px;
+    }
+
+    .intro-tagline {
+      text-align: center;
+      font-family: var(--font-rounded);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--candy-purple);
+      margin-bottom: 20px;
+    }
+
+    .intro-body p {
+      font-family: var(--font-serif-tc), var(--font-serif-sc);
+      line-height: 1.9;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .intro-body strong {
+      color: var(--ink);
+      background: linear-gradient(transparent 60%, var(--candy-aqua) 60%);
+      font-weight: 700;
+    }
+
+    .text-divider {
+      text-align: center;
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--candy-purple);
+      letter-spacing: 6px;
+      margin: 16px 0;
+      opacity: 0.7;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-family: var(--font-rounded);
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1.5px dashed var(--candy-purple);
+      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4);
+      transition: transform 0.15s;
+      color: var(--ink);
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+
+    .cta-button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 rgba(199, 179, 232, 0.5);
+      text-decoration: none;
+    }
+
+    .cta-primary { background: var(--candy-mint); }
+    .cta-secondary { background: var(--candy-cream); }
+
+    .menu-card {
+      background: var(--soft-white);
+      border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .menu-title {
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      text-align: center;
+      padding: 8px 4px;
+      margin: 0 0 6px;
+      color: var(--ink-light);
+      background: var(--candy-cream);
+      border-radius: 6px;
+    }
+
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-list li { margin-bottom: 4px; }
+
+    .menu-list a {
+      display: block;
+      padding: 10px 12px;
+      text-align: center;
+      font-family: var(--font-rounded);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 8px;
+      border: 1.5px dashed var(--candy-purple);
+      transition: transform 0.15s;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+
+    .menu-list a:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4);
+      text-decoration: none;
+    }
+
+    .menu-mint { background: var(--candy-mint); }
+    .menu-aqua { background: var(--candy-aqua); }
+    .menu-pink { background: var(--candy-pink); }
+    .menu-purple { background: var(--candy-purple); }
+
+    .guestbook-card a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px;
+      background: var(--candy-cream);
+      border: 1.5px dashed var(--candy-pink);
+      border-radius: 12px;
+      box-shadow: 3px 3px 0 rgba(255, 182, 217, 0.4);
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .guestbook-card a:hover { text-decoration: none; }
+    .gb-icon { font-size: 24px; margin-bottom: 4px; }
+    .gb-text {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink-light);
+    }
+
+    .window-taskbar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .taskbar-left { display: flex; gap: 12px; align-items: center; }
+    .taskbar-right { display: flex; gap: 12px; align-items: center; }
+    .taskbar-start {
+      background: var(--candy-cream);
+      padding: 2px 8px;
+      border-radius: 3px;
+      border: 1px dashed var(--candy-purple);
+    }
+    .taskbar-item { color: var(--ink-light); }
+    .taskbar-status { color: var(--ink-light); }
+    .taskbar-clock { font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .main-grid { grid-template-columns: 1fr; }
+      .home-window { margin: 12px; }
+      .site-title { font-size: 24px; }
+    }
+  </style>
+
 </body>
 </html>
