@@ -1,186 +1,428 @@
 ---
-// src/pages/zh-cn/guestbook.astro
+import '../../styles/global.css';
 ---
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>留言板 | 推开部屋的门</title>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root{--win-gray:#c0c0c0;--win-dark:#808080;--win-light:#ffffff;--win-blue:#000080;--y2k-purple:#4B2D8C;--y2k-pink:#FF66B3;--y2k-mint:#B2F5EA;--text:#000000;}
-        *{margin:0;padding:0;box-sizing:border-box;cursor:default;}
-        html,body{height:auto;min-height:100%;}
-        body{background:linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px),linear-gradient(to right,#98fb98,#fffacd,#ffebcd,#ffb6c1,#e0b0ff);background-size:20px 20px,20px 20px,100% 100%;background-attachment:fixed;font-family:'DotGothic16','PMingLiU','MingLiU','细明体','SimSun',sans-serif;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;}
-        .marquee-bar{background:#000;color:#0f0;padding:12px 0;min-height:60px;display:flex;align-items:center;overflow:hidden;border-bottom:3px solid var(--win-dark);z-index:2000;}
-        .marquee-content{display:flex;white-space:nowrap;font-size:1.2rem;animation:scroll 25s linear infinite;letter-spacing:2px;}
-        @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-        .desktop-wrapper{display:flex;flex:1;padding:25px;gap:40px;padding-bottom:80px;min-height:1000px;position:relative;}
-        .desktop-icons{display:flex;flex-direction:column;gap:25px;width:100px;padding-top:10px;z-index:10;}
-        .desktop-icon{display:flex;flex-direction:column;align-items:center;text-decoration:none;padding:10px 5px;cursor:pointer;}
-        .icon-emoji{font-size:40px;margin-bottom:5px;filter:drop-shadow(2px 2px 0px rgba(0,0,0,1));}
-        .icon-text{color:#fff;background-color:var(--win-blue);font-size:13px;text-align:center;padding:2px 6px;border:1px dotted transparent;}
-        .desktop-icon:hover .icon-text{border:1px dotted #fff;background-color:var(--y2k-purple);}
-        #playground{flex:1;position:relative;}
-        
-        .window{background:var(--win-gray);border:2px solid;border-color:var(--win-light) #000 #000 var(--win-light);box-shadow:inset 1px 1px 0 #dfdfdf,inset -1px -1px 0 var(--win-dark),2px 2px 0 rgba(0,0,0,0.5);display:flex;flex-direction:column;position:absolute;height:auto;padding:3px;}
-        .title-bar{background:linear-gradient(90deg,var(--win-blue),#1084d0);padding:3px 6px;display:flex;justify-content:space-between;align-items:center;color:white;font-size:13px;cursor:move;letter-spacing:1px;}
-        .win-controls{display:flex;gap:2px;margin-left:10px;}
-        .win-btn{width:18px;height:18px;background-color:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);color:#000;font-family:'Pixel',sans-serif;font-size:10px;font-weight:bold;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:1px 1px 0 #000;}
-        .win-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding-top:2px;padding-left:2px;box-shadow:none;}
-        .win-content{flex:1;background:#fffcf2;margin-top:4px;padding:25px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.8;color:#111;text-align:justify;}
-        
-        .win-content mark { background-color: var(--y2k-mint); color: #000; padding: 0 4px; font-weight: 700; border-radius: 2px; }
-        .win-content strong { color: var(--y2k-purple); font-weight: 900; }
-        .win-content em { color: var(--y2k-pink); font-style: normal; font-weight: bold; }
-        .action-btn { display: inline-block; background: var(--y2k-mint); border: 2px solid #000; padding: 8px 20px; font-weight: 900; text-decoration: none; color: #000; box-shadow: 2px 2px 0 var(--y2k-purple); margin-top: 15px; transition: all 0.1s; cursor: pointer; font-family:'Noto Serif SC',serif;}
-        .action-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--y2k-purple); }
-
-        .taskbar{position:fixed;bottom:0;left:0;right:0;height:42px;background:var(--win-gray);border-top:2px solid var(--win-light);display:flex;align-items:center;padding:0 6px;z-index:3000;box-shadow:inset 0 1px 0 #dfdfdf;}
-        .start-btn{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;color:#000;font-size:15px;font-weight:bold;flex-shrink:0;}
-        .start-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:5px 11px 3px 13px;}
-        .taskbar-windows{display:flex;gap:5px;margin-left:10px;flex:1;overflow-x:auto;}
-        .taskbar-win-tab{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;font-size:13px;color:#000;display:flex;align-items:center;gap:6px;cursor:pointer;max-width:200px;}
-        .taskbar-win-tab.active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);background:#d0d0d0;font-weight:bold;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,#c0c0c0 2px,#c0c0c0 4px);}
-        .subscribe-pill{background:var(--y2k-pink);color:white;padding:4px 15px;text-decoration:none;border:2px solid #000;box-shadow:2px 2px 0 #000;flex-shrink:0;font-size:13px;}
-        .system-tray{margin-left:10px;display:flex;gap:8px;align-items:center;flex-shrink:0;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:2px 10px;height:32px;}
-        .social-link{color:#000;text-decoration:none;font-size:12px;}
-        .social-link:hover{color:var(--win-blue);text-decoration:underline;}
-        .lang-switch{display:flex;gap:6px;align-items:center;border-left:1px solid var(--win-dark);border-right:1px solid var(--win-light);padding:0 10px;font-size:13px;}
-        .lang-link{color:var(--win-dark);text-decoration:none;}
-        .lang-link.active{color:#000;font-weight:bold;text-decoration:underline;}
-        .clock{font-size:13px;color:#000;}
-
-        @media (max-width: 900px) {
-            .desktop-wrapper { flex-direction: column; padding: 15px; padding-bottom: 70px; min-height: auto; }
-            .desktop-icons { flex-direction: row; flex-wrap: wrap; width: 100%; justify-content: center; gap: 15px; padding-bottom: 20px; }
-            .desktop-icon { width: 80px; padding: 5px; }
-            .window { position: relative !important; width: 100% !important; left: 0 !important; top: 0 !important; margin-bottom: 25px; }
-            .taskbar { padding: 0 6px; overflow-x: auto; white-space: nowrap; gap: 8px; justify-content: flex-start; height: 48px; }
-            .taskbar::-webkit-scrollbar { display: none; }
-            .taskbar-windows { display: none; }
-            .subscribe-pill { margin-left: 0; }
-            .system-tray { margin-left: 0; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>留言板 | 推开部屋的门</title>
+  <meta name="description" content="推开部屋的门 - 读者留言板与交流空间" />
 </head>
 <body>
+
+  <main class="home-window">
+
+    <header class="window-titlebar">
+      <div class="titlebar-left">
+        <span class="title-dots">● ● ●</span>
+        <span class="titlebar-text">elephlow.cc / 留言板</span>
+      </div>
+      <div class="titlebar-right">
+        <a href="/zh-cn/guestbook" class="lang-link lang-active">简</a>
+        <a href="/zh-tw/guestbook" class="lang-link">繁</a>
+        <a href="/en/guestbook" class="lang-link">EN</a>
+      </div>
+    </header>
+
     <div class="marquee-bar">
-        <div class="marquee-content">
-            >> SYSTEM.MSG: [ <span style="color:var(--y2k-pink);">第四季早鸟活动</span> ] 进行中_ // ENDS_ON: <span style="color:var(--y2k-mint);">2026.05.17</span> // [ <span style="color:var(--y2k-pink);">全新主题策展正刊 ＋ 杂志通信副刊</span> ] // 在边缘捕捉与想象 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
+      <div class="marquee-content">
+        >> SYSTEM.MSG: [ <span>第四季早鸟活动</span> ] 进行中_ // ENDS_ON: <span>2026.05.17</span> // [ <span>全新主题策展正刊 ＋ 杂志通信副刊</span> ] // 在边缘捕捉与想象 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        >> SYSTEM.MSG: [ <span>第四季早鸟活动</span> ] 进行中_ // ENDS_ON: <span>2026.05.17</span> // [ <span>全新主题策展正刊 ＋ 杂志通信副刊</span> ] // 在边缘捕捉与想象 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
     </div>
 
-    <div class="desktop-wrapper">
-        <div class="desktop-icons">
-            <a href="/zh-cn/" class="desktop-icon"><span class="icon-emoji">🏠</span><span class="icon-text">主页</span></a>
-            <a href="/zh-cn/about" class="desktop-icon"><span class="icon-emoji"><img src="/logo.png" alt="elephlow" style="height: 32px;" /></span><span class="icon-text">关于小象</span></a>
-            <a href="/zh-cn/archive" class="desktop-icon"><span class="icon-emoji">📂</span><span class="icon-text">往期目录</span></a>
-            <a href="/zh-cn/guestbook" class="desktop-icon"><span class="icon-emoji">💬</span><span class="icon-text">留言板</span></a>
+    <div class="window-content guestbook-layout">
+
+      <aside class="guestbook-left sticky-sidebar">
+
+        <div class="elephant-portrait">
+          <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+            <text x="8" y="12" fill="#FFB6D9" font-size="10">✦</text>
+            <text x="78" y="16" fill="#C7B3E8" font-size="8">✦</text>
+            <text x="6" y="65" fill="#B5E8E0" font-size="9">·</text>
+            <text x="82" y="60" fill="#FFE9B6" font-size="10">·</text>
+            <rect x="30" y="26" width="8" height="10" fill="#C7B3E8"/>
+            <rect x="58" y="26" width="8" height="10" fill="#C7B3E8"/>
+            <rect x="34" y="24" width="28" height="18" fill="#C7B3E8"/>
+            <rect x="48" y="40" width="6" height="14" fill="#C7B3E8"/>
+            <rect x="48" y="52" width="4" height="4" fill="#C7B3E8"/>
+            <rect x="40" y="30" width="3" height="3" fill="#2A1F18"/>
+            <rect x="52" y="30" width="3" height="3" fill="#2A1F18"/>
+            <rect x="38" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
+            <rect x="55" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
+            <rect x="32" y="42" width="32" height="20" fill="#C7B3E8"/>
+            <rect x="34" y="62" width="6" height="8" fill="#C7B3E8"/>
+            <rect x="56" y="62" width="6" height="8" fill="#C7B3E8"/>
+            <rect x="44" y="40" width="2" height="2" fill="#FFB6D9"/>
+            <rect x="50" y="40" width="2" height="2" fill="#FFB6D9"/>
+            <rect x="46" y="42" width="4" height="1" fill="#FFB6D9"/>
+          </svg>
+          <p class="elephant-caption">小象 / Elephlow</p>
         </div>
 
-        <div id="playground">
-            <div class="window draggable" style="width: 450px; left: 20px; top: 20px; z-index: 101;">
-                <div class="title-bar">
-                    <div style="display: flex; align-items: center; gap: 6px;"><span>📝</span><span>Reader_01.txt</span></div>
-                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
-                </div>
-                <div class="win-content">
-                    <strong style="font-size: 1.1rem;"># 关于「女孩们」</strong><br><br>
-                    很喜欢<mark>「女孩们」这个栏目</mark>，对我来说像在阅读<em>“私小说”</em>(可能不是很好的类比)，想把它们都看完💖<br><br>
-                    我刚刚回到目录，看完了第一期的电报，很巧合，我的本科专业也是广告学。最后的<strong>“一人公司”</strong>还有你开始电报项目的初衷给了我很大的鼓舞。因为半年前去了“安稳”的甲方，有点忘记做自己的项目手感了。谢谢阿茶的电报💖
-                </div>
-            </div>
-
-            <div class="window draggable" style="width: 400px; left: 520px; top: 80px; z-index: 102;">
-                <div class="title-bar">
-                    <div style="display: flex; align-items: center; gap: 6px;"><span>📧</span><span>Mail_from_Reader.msg</span></div>
-                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
-                </div>
-                <div class="win-content" style="background-color: #f4f0ff;">
-                    hello！小象👋我正在阅读你发的小报，真的非常有意思！希望能够读到更多有趣的内容。<br><br>
-                    我非常同意你说的，虽然现在越来越多的加入到<mark>个人 zine 的制作</mark>，但是大多还是只是在 zine 的形式上做文章，<strong>真正的好内容还是很缺乏</strong> (我也买了很多新出的杂志，也是这种感觉)。本人也是杂志爱好者！我也超想自己做 zine 的~我觉得你的内容和形式给我好多感触🤩
-                </div>
-            </div>
-
-            <div class="window draggable" style="width: 480px; left: 50px; top: 320px; z-index: 103;">
-                <div class="title-bar">
-                    <div style="display: flex; align-items: center; gap: 6px;"><span>💡</span><span>Feedback_03.doc</span></div>
-                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
-                </div>
-                <div class="win-content">
-                    我觉得你分享的内容很棒的一个原因是，<em>你分享很多工具</em>，因此也默认你的读者可以和你一样自主地去使用这些工具，这和我的需求很契合，当然你整理自己的思考我也很喜欢，就像有时候看完作品太兴奋了就会去看大家的更多评论和分析，好像对答案一样hhh<br><br>
-                    一个作者一定是有自己对应的读者的，<mark>作者辐射影响的范围就在自身附近</mark>，而更下层的读者如果有意愿和行动的话也会自己找到工具来一级一级向上来。
-                </div>
-            </div>
-
-            <div class="window draggable" style="width: 380px; left: 560px; top: 400px; z-index: 104;">
-                <div class="title-bar">
-                    <div style="display: flex; align-items: center; gap: 6px;"><span>📌</span><span>Sticky_Note.txt</span></div>
-                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
-                </div>
-                <div class="win-content" style="background: #fff9c4;">
-                    在微博关注了很久，然后又在小红书上刷到了。还想说，真好，居然遇见了<strong>两个这么认真的创作者</strong>，结果后面发现<mark>原来就是一个人！</mark>🐘✨
-                </div>
-            </div>
-
-            <div class="window draggable" style="width: 320px; left: 300px; top: 180px; z-index: 110;">
-                <div class="title-bar" style="background: linear-gradient(90deg, #FF66B3, #ff99cc);">
-                    <div style="display: flex; align-items: center; gap: 6px;"><span>📮</span><span>Write_Message.exe</span></div>
-                    <div class="win-controls"><div class="win-btn" onclick="this.closest('.window').style.display='none'">×</div></div>
-                </div>
-                <div class="win-content" style="text-align: center; padding: 40px 20px;">
-                    <h3 style="color: var(--y2k-purple); margin-bottom: 15px; font-family: 'DotGothic16', sans-serif;">想留下你的足迹吗？</h3>
-                    <p style="font-size: 0.9rem; color: #555;">在这里写下你想对小象说的话，<br>你的留言将有机会被张贴到这片桌面上喔！</p>
-                    <a href="https://tally.so/r/RGvzrl" target="_blank" class="action-btn">✍️ 点此写信</a>
-                </div>
-            </div>
+        <div class="persona-card">
+          <h3 class="card-title">✦ persona ✦</h3>
+          <dl class="persona-list">
+            <dt>handle</dt><dd>小象 / Elephlow</dd>
+            <dt>sign</dt><dd>射手座 · INFJ</dd>
+            <dt>bio</dt>
+            <dd>
+              Omnivorous editor at the margins 🌿<br/>
+              From the islands, arriving everywhere 🏝️<br/>
+              Bringing closer what prejudice keeps apart 🌈
+            </dd>
+          </dl>
         </div>
+
+        <div class="write-msg-card">
+          <h3 class="card-title">📮 Say Hello</h3>
+          <div class="write-msg-inner">
+            <p>想留下你的足迹吗？在这里写下你想对小象说的话，你的留言将有机会被张贴到这片桌面上喔！</p>
+            <a href="https://tally.so/r/RGvzrl" target="_blank" class="write-btn">✍️ 点此写信</a>
+          </div>
+        </div>
+
+      </aside>
+
+      <section class="guestbook-center">
+        <div class="board-card">
+          <h2 class="board-title">⌒ 留言板 ⌒</h2>
+          <p class="board-subtitle">Guestbook & Letters ｡^‿^｡</p>
+
+          <div class="board-content">
+
+            <div class="msg-card border-mint">
+              <div class="msg-header">
+                <span class="msg-title">📝 关于「女孩们」</span>
+                <span class="msg-date">Reader_01</span>
+              </div>
+              <div class="msg-body">
+                很喜欢 <mark>「女孩们」这个栏目</mark>，对我来说像在阅读<em>"私小说"</em>（可能不是很好的类比），想把它们都看完💖<br><br>
+                我刚刚回到目录，看完了第一期的电报，很巧合，我的本科专业也是广告学。最后的 <strong>"一人公司"</strong> 还有你开始电报项目的初衷给了我很大的鼓舞。因为半年前去了"安稳"的甲方，有点忘记做自己的项目手感了。谢谢阿茶的电报💖
+              </div>
+            </div>
+
+            <div class="msg-card border-purple">
+              <div class="msg-header">
+                <span class="msg-title">📧 真正的好内容</span>
+                <span class="msg-date">Mail_02</span>
+              </div>
+              <div class="msg-body bg-purple-light">
+                hello！小象👋我正在阅读你发的小报，真的非常有意思！希望能够读到更多有趣的内容。<br><br>
+                我非常同意你说的，虽然现在越来越多的加入到 <mark>个人 zine 的制作</mark>，但是大多还是只是在 zine 的形式上做文章，<strong>真正的好内容还是很缺乏</strong>（我也买了很多新出的杂志，也是这种感觉）。本人也是杂志爱好者！我也超想自己做 zine 的～我觉得你的内容和形式给我好多感触🤩
+              </div>
+            </div>
+
+            <div class="msg-card border-aqua">
+              <div class="msg-header">
+                <span class="msg-title">💡 辐射的范围</span>
+                <span class="msg-date">Feedback_03</span>
+              </div>
+              <div class="msg-body">
+                我觉得你分享的内容很棒的一个原因是，<em>你分享很多工具</em>，因此也默认你的读者可以和你一样自主地去使用这些工具，这和我的需求很契合，当然你整理自己的思考我也很喜欢，就像有时候看完作品太兴奋了就会去看大家的更多评论和分析，好像对答案一样hhh<br><br>
+                一个作者一定是有自己对应的读者的，<mark>作者辐射影响的范围就在自身附近</mark>，而更下层的读者如果有意愿和行动的话也会自己找到工具来一级一级向上来。
+              </div>
+            </div>
+
+            <div class="msg-card border-cream">
+              <div class="msg-header">
+                <span class="msg-title">📌 遇见</span>
+                <span class="msg-date">Sticky_Note</span>
+              </div>
+              <div class="msg-body bg-cream-light">
+                在微博关注了很久，然后又在小红书上刷到了。还想说，真好，居然遇见了<strong>两个这么认真的创作者</strong>，结果后面发现<mark>原来就是一个人！</mark>🐘✨
+              </div>
+            </div>
+
+          </div>
+
+          <div class="board-footer">
+            <p>(｡♡‿♡｡) end of messages ✿</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="guestbook-right sticky-sidebar">
+        <nav class="vertical-tabs">
+          <a href="/zh-cn/" class="vtab vtab-home">
+            <span class="vtab-icon">🏠</span>
+            <span class="vtab-label">主页</span>
+          </a>
+          <a href="/zh-cn/about" class="vtab vtab-about">
+            <span class="vtab-icon">👤</span>
+            <span class="vtab-label">简介</span>
+          </a>
+          <a href="/zh-cn/archive" class="vtab vtab-archive">
+            <span class="vtab-icon">📚</span>
+            <span class="vtab-label">目录</span>
+          </a>
+          <a href="/zh-cn/guestbook" class="vtab vtab-active">
+            <span class="vtab-icon">✉</span>
+            <span class="vtab-label">留言板</span>
+          </a>
+        </nav>
+
+        <div class="minihome-deco">
+          <div class="deco-row">✦ ✿ ☘ ♡ ✦</div>
+          <div class="deco-text">
+            <p>this is a quiet</p>
+            <p>little room ｡^‿^｡</p>
+          </div>
+        </div>
+
+        <div class="kawaii-player">
+          <div class="kp-header">
+            <span class="kp-dot"></span>♫ NOW PLAYING<span class="kp-dot"></span>
+          </div>
+          <div class="kp-screen">
+            <div class="kp-marquee">
+              <span>馮穎琪 - 彳亍 ✿ 馮穎琪 - 彳亍 ✿</span>
+            </div>
+          </div>
+          <div class="kp-controls">
+            <span class="kp-btn">⏮</span>
+            <span class="kp-btn kp-play">▶</span>
+            <span class="kp-btn">⏭</span>
+          </div>
+        </div>
+
+        <div class="kawaii-counter">
+          <p class="kc-title">✿ VISITORS ✿</p>
+          <div class="kc-digits">
+            <span>0</span><span>0</span><span>1</span><span>4</span><span>2</span><span>6</span>
+          </div>
+        </div>
+
+      </aside>
+
     </div>
 
-    <footer class="taskbar">
-        <a href="/zh-cn/" class="start-btn"><img src="/logo.png" alt="elephlow" style="height: 32px;" /> Start</a>
-        <div class="taskbar-windows">
-            <div class="taskbar-win-tab active"><span>📝</span> Reader_01</div>
-            <div class="taskbar-win-tab active"><span>📧</span> Mail_02</div>
-            <div class="taskbar-win-tab active"><span>💡</span> Feedback</div>
-            <div class="taskbar-win-tab active"><span>📮</span> Write_Msg</div>
-        </div>
-        <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">立即订阅第四季早鸟</a>
-        <div class="system-tray">
-            <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">INSTAGRAM</a>
-            <a href="https://www.xiaohongshu.com/user/profile/5b7e4ac17cdd3b0001bc4c58" target="_blank" class="social-link">RED: @Apollo11-</a>
-            <div class="lang-switch">
-                <a href="/en/guestbook" class="lang-link">EN</a><a href="/zh-tw/guestbook" class="lang-link">繁</a><a href="/zh-cn/guestbook" class="lang-link active">简</a>
-            </div>
-            <div class="clock" id="live-clock">00:00 AM</div>
-        </div>
+    <footer class="window-taskbar">
+      <div class="taskbar-left">
+        <span class="taskbar-start">⊞ START</span>
+      </div>
+      <div class="taskbar-right">
+        <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
+        <span class="taskbar-clock" id="clock">--:--</span>
+      </div>
     </footer>
 
-    <script is:inline>
-        const windows = document.querySelectorAll('.draggable');
-        let zIndexCounter = 200;
-        windows.forEach(win => {
-            const titleBar = win.querySelector('.title-bar');
-            titleBar.onmousedown = (e) => {
-                if (window.innerWidth <= 900) return; 
-                if (e.target.classList.contains('win-btn')) return;
-                win.style.zIndex = ++zIndexCounter;
-                let shiftX = e.clientX - win.getBoundingClientRect().left;
-                let shiftY = e.clientY - win.getBoundingClientRect().top;
-                function moveAt(pageX, pageY) { win.style.left = (pageX - shiftX - 25) + 'px'; win.style.top = (pageY - shiftY - 70 - 25) + 'px'; }
-                document.onmousemove = (e) => moveAt(e.pageX, e.pageY);
-                document.onmouseup = () => { document.onmousemove = null; };
-            };
-            win.onmousedown = () => { win.style.zIndex = ++zIndexCounter; };
-        });
-        function updateClock() {
-            const now = new Date(); let h = now.getHours(); let m = String(now.getMinutes()).padStart(2, '0');
-            let ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12; h = h ? h : 12;
-            document.getElementById('live-clock').innerText = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
-        }
-        setInterval(updateClock, 1000); updateClock();
-    </script>
+  </main>
+
+  <script is:inline>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('clock');
+      if (el) el.innerText = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+  </script>
+
+  <style>
+    .home-window {
+      max-width: 1180px;
+      margin: 24px auto;
+      background: var(--soft-white);
+      border: 3px dashed var(--candy-mint);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(181, 232, 224, 0.6);
+      display: flex;
+      flex-direction: column;
+    }
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--candy-mint);
+      border-radius: 13px 13px 0 0;
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .titlebar-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .titlebar-text { letter-spacing: 1px; }
+    .titlebar-right { display: flex; gap: 4px; }
+    .lang-link { padding: 2px 8px; color: var(--ink); text-decoration: none; border-radius: 3px; }
+    .lang-link:hover { background: rgba(255, 255, 255, 0.4); }
+    .lang-active { background: rgba(255, 255, 255, 0.6); font-weight: 700; }
+
+    .marquee-bar {
+      background: repeating-linear-gradient(-45deg, var(--candy-cream), var(--candy-cream) 15px, #fff 15px, #fff 30px);
+      padding: 8px 0; min-height: 40px; display: flex; align-items: center; overflow: hidden;
+      border-bottom: 3px dashed var(--candy-purple); z-index: 2000; position: relative;
+      box-shadow: 0 4px 0 rgba(199, 179, 232, 0.2);
+      animation: candy-stripe 4s linear infinite;
+    }
+    @keyframes candy-stripe { 0% { background-position: 0 0; } 100% { background-position: 42px 42px; } }
+
+    .marquee-content {
+      display: flex; white-space: nowrap; font-family: var(--font-pixel); font-size: 13px; font-weight: bold;
+      color: var(--ink-light); animation: scroll 30s linear infinite; letter-spacing: 2px;
+    }
+    .marquee-content span { background: var(--soft-white); padding: 0 6px; border-radius: 4px; border: 1px dashed var(--candy-pink); margin: 0 4px; }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    .window-content { padding: 24px; }
+
+    .guestbook-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr 200px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sticky-sidebar { position: sticky; top: 24px; height: fit-content; }
+
+    .card-title {
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      color: var(--ink-light);
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed currentColor;
+    }
+
+    .elephant-portrait {
+      background: var(--soft-white); border: 2px dashed var(--candy-pink); border-radius: 12px;
+      padding: 20px 16px; text-align: center; box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.35); margin-bottom: 14px;
+    }
+    .elephant-portrait svg { width: 120px; height: auto; }
+    .elephant-caption { font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); margin-top: 8px; letter-spacing: 2px; }
+
+    .persona-card {
+      background: var(--candy-mint); border: 1.5px dashed var(--candy-purple); border-radius: 12px;
+      padding: 16px; box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.6); margin-bottom: 14px;
+    }
+    .persona-list { font-family: var(--font-serif-tc); font-size: 12px; color: var(--ink); margin: 0; }
+    .persona-list dt { font-family: var(--font-pixel); font-size: 9px; color: var(--candy-purple); letter-spacing: 1px; margin-top: 8px; }
+    .persona-list dt:first-child { margin-top: 0; }
+    .persona-list dd { font-size: 12.5px; margin-left: 0; margin-top: 2px; line-height: 1.5; }
+
+    .write-msg-card {
+      background: var(--candy-pink); border: 1.5px dashed var(--candy-purple); border-radius: 12px;
+      padding: 16px; box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.6);
+    }
+    .write-msg-card .card-title { color: var(--soft-white); border-bottom-color: rgba(255,255,255,0.4); text-shadow: 1px 1px 0 rgba(0,0,0,0.1); }
+    .write-msg-inner { text-align: center; }
+    .write-msg-inner p { font-family: var(--font-serif-tc); font-size: 12.5px; color: var(--soft-white); line-height: 1.6; margin-bottom: 16px; text-shadow: 1px 1px 0 rgba(0,0,0,0.05); }
+    .write-btn {
+      display: inline-block; background: var(--candy-cream); color: var(--ink); font-family: var(--font-rounded); font-weight: 700;
+      font-size: 13px; padding: 8px 16px; border-radius: 999px; text-decoration: none; border: 1.5px dashed var(--candy-peach);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.1); transition: transform 0.2s;
+    }
+    .write-btn:hover { transform: scale(1.05); text-decoration: none; box-shadow: 3px 3px 0 rgba(0,0,0,0.15); }
+
+    .board-card {
+      background: var(--soft-white); border: 2px dashed var(--candy-mint); border-radius: 12px;
+      padding: 28px 32px; box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
+    }
+    .board-title {
+      font-family: var(--font-serif-tc); font-size: 26px; font-weight: 700; color: var(--ink-light);
+      text-align: center; margin-bottom: 4px; letter-spacing: 6px;
+    }
+    .board-subtitle { text-align: center; font-family: var(--font-rounded); font-size: 13px; color: var(--candy-purple); margin-bottom: 30px; }
+
+    .board-content { display: flex; flex-direction: column; gap: 20px; }
+
+    .msg-card {
+      background: #fff; border: 2px dashed #eee; border-radius: 12px; padding: 0;
+      transition: transform 0.2s, box-shadow 0.2s; overflow: hidden;
+    }
+    .msg-card:hover { transform: translateY(-2px); }
+
+    .border-mint { border-color: var(--candy-mint); box-shadow: 3px 3px 0 rgba(200, 233, 176, 0.3); }
+    .border-purple { border-color: var(--candy-purple); box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.3); }
+    .border-aqua { border-color: var(--candy-aqua); box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.3); }
+    .border-cream { border-color: var(--candy-peach); box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.3); }
+
+    .msg-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 16px; border-bottom: 1.5px dashed rgba(0,0,0,0.05); background: rgba(0,0,0,0.02);
+    }
+    .msg-title { font-family: var(--font-mochi); font-size: 14px; color: var(--ink); }
+    .msg-date { font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); background: rgba(255,255,255,0.8); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.05); }
+
+    .msg-body {
+      font-family: var(--font-serif-tc); font-size: 14.5px; line-height: 1.8; color: var(--ink);
+      padding: 20px 24px; text-align: justify;
+    }
+    .bg-purple-light { background-color: rgba(199, 179, 232, 0.1); }
+    .bg-cream-light { background-color: rgba(255, 233, 182, 0.15); }
+
+    .msg-body mark { background-color: transparent; background-image: linear-gradient(transparent 60%, var(--candy-mint) 60%); color: var(--ink); padding: 0 2px; font-weight: 700; }
+    .msg-body strong { color: var(--ink); background-image: linear-gradient(transparent 60%, var(--candy-pink) 60%); }
+    .msg-body em { color: var(--candy-purple); font-style: normal; font-weight: 700; border-bottom: 2px dashed var(--candy-purple); }
+
+    .board-footer { text-align: center; margin-top: 30px; padding-top: 16px; border-top: 1px dashed var(--candy-mint); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); letter-spacing: 2px; }
+
+    .vertical-tabs { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+    .vtab {
+      display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 0 16px 16px 0;
+      border: 1.5px dashed rgba(0,0,0,0.1); border-left: 5px solid; text-decoration: none; color: var(--ink);
+      font-family: var(--font-rounded); font-weight: 700; font-size: 13px; transition: transform 0.15s;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+    .vtab:hover { transform: translateX(4px); text-decoration: none; }
+    .vtab-icon { font-size: 16px; }
+
+    .vtab-home      { background: var(--candy-mint);   border-left-color: #7BB85E; }
+    .vtab-about     { background: var(--candy-purple); border-left-color: #9B7BC9; }
+    .vtab-archive   { background: var(--candy-aqua);   border-left-color: #7DC2B8; }
+    .vtab-active    { background: var(--candy-pink);   border-left-color: #E89BC0; border-left-width: 7px; font-weight: 800; }
+
+    .minihome-deco {
+      background: var(--candy-cream); border: 1.5px dashed var(--candy-peach); border-radius: 12px;
+      padding: 16px 12px; text-align: center; box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3); margin-bottom: 16px;
+    }
+    .deco-row { font-size: 14px; color: var(--candy-purple); letter-spacing: 4px; margin-bottom: 10px; }
+    .deco-text p { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin: 2px 0; }
+
+    .kawaii-player {
+      background: var(--candy-mint); border: 2px dashed var(--candy-purple); border-radius: 12px;
+      padding: 12px; box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.8); margin-bottom: 16px;
+    }
+    .kp-header { display: flex; justify-content: center; align-items: center; gap: 6px; font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin-bottom: 8px; letter-spacing: 1px; }
+    .kp-dot { width: 4px; height: 4px; background: var(--candy-pink); border-radius: 50%; }
+    .kp-screen { background: var(--soft-white); border: 1.5px solid var(--candy-purple); border-radius: 6px; padding: 6px; overflow: hidden; margin-bottom: 10px; }
+    .kp-marquee { font-family: var(--font-serif-tc); font-size: 12px; color: var(--candy-purple); font-weight: bold; white-space: nowrap; animation: marquee-scroll 6s linear infinite; }
+    @keyframes marquee-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    .kp-controls { display: flex; justify-content: center; gap: 12px; }
+    .kp-btn { display: inline-flex; justify-content: center; align-items: center; width: 24px; height: 24px; background: var(--soft-white); border: 1.5px dashed var(--candy-purple); border-radius: 50%; font-size: 10px; color: var(--candy-purple); cursor: pointer; }
+    .kp-btn:hover { background: var(--candy-cream); }
+    .kp-play { background: var(--candy-pink); color: white; border-color: transparent; }
+
+    .kawaii-counter {
+      background: var(--candy-cream); border: 2px dashed var(--candy-peach); border-radius: 12px;
+      padding: 12px; text-align: center; box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.4);
+    }
+    .kc-title { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin: 0 0 8px 0; letter-spacing: 2px; }
+    .kc-digits { display: flex; justify-content: center; gap: 3px; }
+    .kc-digits span { background: var(--soft-white); color: var(--candy-pink); font-family: var(--font-pixel); font-size: 16px; padding: 4px 6px; border: 1.5px solid var(--candy-pink); border-radius: 4px; font-weight: bold; }
+
+    .window-taskbar {
+      background: var(--candy-mint); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;
+      border-top: 2px dashed var(--candy-mint); border-radius: 0 0 13px 13px; font-family: var(--font-pixel); font-size: 11px; color: var(--ink);
+    }
+    .taskbar-left { display: flex; gap: 12px; align-items: center; }
+    .taskbar-right { display: flex; gap: 12px; align-items: center; }
+    .taskbar-start { background: rgba(255, 255, 255, 0.5); padding: 2px 8px; border-radius: 3px; border: 1px dashed var(--candy-purple); }
+    .taskbar-status, .taskbar-clock { color: var(--ink); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .guestbook-layout { grid-template-columns: 1fr; }
+      .home-window { margin: 12px; }
+      .sticky-sidebar { position: relative; top: 0; }
+    }
+  </style>
+
 </body>
 </html>

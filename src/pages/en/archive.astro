@@ -1,348 +1,596 @@
 ---
-// src/pages/en/archive.astro
+import '../../styles/global.css';
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archive | Elephlow's Room</title>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root{
-            --win-gray:#c0c0c0;
-            --win-dark:#808080;
-            --win-light:#ffffff;
-            --win-blue:#000080;
-            --y2k-purple:#4B2D8C;
-            --y2k-pink:#FF66B3;
-            --y2k-mint:#B2F5EA;
-            --text:#000000;
-        }
-        *{margin:0;padding:0;box-sizing:border-box;cursor:default;}
-        html,body{height:auto;min-height:100%;}
-        body{
-            background:linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),
-                       linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px),
-                       linear-gradient(to right,#98fb98,#fffacd,#ffebcd,#ffb6c1,#e0b0ff);
-            background-size:20px 20px,20px 20px,100% 100%;
-            background-attachment:fixed;
-            font-family: 'DotGothic16', 'Tahoma', 'MS Sans Serif', sans-serif;
-            overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;
-        }
-        
-        .marquee-bar{background:#000;color:#0f0;padding:12px 0;min-height:60px;display:flex;align-items:center;overflow:hidden;border-bottom:3px solid var(--win-dark);z-index:2000; position:relative;}
-        .marquee-content{display:flex;white-space:nowrap;font-size:1.1rem;animation:scroll 25s linear infinite;letter-spacing:1px;font-weight: bold;}
-        @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-
-        .desktop-wrapper{display:flex;flex:1;padding:25px;gap:40px;padding-bottom:80px;min-height:1000px;position:relative;}
-        .desktop-copyright { position: fixed; bottom: 60px; right: 20px; font-size: 12px; color: #555; text-shadow: 1px 1px 0px rgba(255,255,255,0.8); z-index: 10; }
-
-        .desktop-icons{display:flex;flex-direction:column;gap:25px;width:100px;padding-top:10px;z-index:10;}
-        .desktop-icon{display:flex;flex-direction:column;align-items:center;text-decoration:none;padding:10px 5px;cursor:pointer;}
-        .desktop-icons .icon-emoji{font-size:45px;margin-bottom:5px;filter:drop-shadow(2px 2px 0px rgba(0,0,0,1));}
-        .icon-text{color:#fff;background-color:var(--win-blue);font-size:11px;text-align:center;padding:2px 6px;border:1px dotted transparent; width: 85px;}
-        .desktop-icon:hover .icon-text { border: 1px dotted #fff; background-color: var(--y2k-purple); }
-        
-        .archive-folders { display: flex; flex-wrap: wrap; gap: 20px 30px; padding: 20px; align-content: flex-start; max-width: 450px;}
-        .folder-btn { display: flex; flex-direction: column; align-items: center; width: 90px; cursor: pointer; }
-        .folder-btn .icon-emoji { font-size: 32px; margin-bottom: 5px; filter: drop-shadow(1px 1px 0px rgba(0,0,0,1)); transition: transform 0.1s;}
-        .folder-text { color: #000; font-family: 'DotGothic16', sans-serif; font-size: 10px; text-align: center; padding: 2px 6px; background: rgba(255,255,255,0.5); border: 1px dashed var(--win-dark); margin-top: 5px; }
-        .folder-btn:hover .icon-emoji { transform: translateY(-2px); }
-        .folder-btn:hover .folder-text { background-color: var(--y2k-mint); border: 1px solid #000; box-shadow: 2px 2px 0 var(--y2k-pink); font-weight: bold; }
-
-        #playground{flex:1;position:relative; z-index: 50;}
-        
-        .window{background:var(--win-gray);border:2px solid;border-color:var(--win-light) #000 #000 var(--win-light);box-shadow:inset 1px 1px 0 #dfdfdf,inset -1px -1px 0 var(--win-dark),2px 2px 0 rgba(0,0,0,0.5);display:none;flex-direction:column;position:fixed;height:auto;padding:3px;z-index:100;}
-        .window.active { display: flex; }
-        .title-bar{background:linear-gradient(90deg,var(--win-blue),#1084d0);padding:3px 6px;display:flex;justify-content:space-between;align-items:center;color:white;font-size:12px;cursor:move;letter-spacing:1px; user-select: none; font-weight: bold;}
-        .win-btn{width:18px;height:18px;background-color:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);color:#000;font-family:'Pixel',sans-serif;font-size:10px;font-weight:bold;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:1px 1px 0 #000;}
-        
-        .win-content{flex:1;margin-top:4px;padding:15px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);overflow-y: auto; max-height: 480px;}
-        .archive-card { background: #fff; border: 2px solid #000; padding: 15px; margin-bottom: 15px; box-shadow: 3px 3px 0px var(--win-gray); display: flex; flex-direction: column;}
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;}
-        .card-title { font-family: 'Noto Serif', serif; font-weight: 900; color: var(--win-blue); font-size: 1.1rem; border-bottom: 3px solid var(--y2k-mint); padding-bottom: 2px; line-height: 1.3;}
-        .card-tag { font-family: 'DotGothic16', sans-serif; font-size: 10px; background: #FFE4F2; color: var(--y2k-purple); padding: 2px 8px; border: 1px solid var(--y2k-purple); border-radius: 20px; font-weight: bold; text-transform: uppercase;}
-        .card-desc { font-family: 'Noto Serif', serif; color: #333; font-size: 0.9rem; margin-bottom: 15px; line-height: 1.6; flex: 1;}
-        .card-desc strong { color: var(--y2k-purple); font-weight: 900;}
-        .card-desc ul { margin-left: 20px; margin-top: 5px; color: #555; font-size: 0.85rem; }
-        
-        .card-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: auto; border-top: 1px dashed #ccc; padding-top: 10px; }
-        .btn-unlock { background: var(--y2k-pink); color: #fff; border: 2px solid #000; box-shadow: 2px 2px 0 #000; padding: 4px 10px; font-size: 11px; text-decoration: none; font-weight: bold; }
-        .btn-preview { background: var(--y2k-mint); color: #000; border: 2px solid #000; box-shadow: 2px 2px 0 #000; padding: 4px 10px; font-size: 11px; text-decoration: none; font-weight: bold; }
-
-        /* Theme Styling Overrides */
-        #mag-win .win-content { background: repeating-linear-gradient(transparent, transparent 24px, #ccc 24px, #ccc 25px), #fefefe; }
-        #mag-win .btn-unlock { background: #4169E1; }
-        #bookstore-win .win-content { background-color: #FFF5E1; background-image: radial-gradient(#FFA07A 15%, transparent 15%); background-size: 15px 15px; }
-        #bookstore-win .btn-unlock { background: #FF8C00; } 
-        #fair-win .win-content { background: repeating-linear-gradient(45deg, #FFE4E1, #FFE4E1 10px, #FFF0F5 10px, #FFF0F5 20px); }
-        #fair-win .btn-unlock { background: #FF1493; }
-        #resource-win .win-content { background-color: #111; background-image: linear-gradient(#0f0 1px, transparent 1px), linear-gradient(90deg, #0f0 1px, transparent 1px); background-size: 20px 20px; }
-        #resource-win .card-title { color: #0f0; border-bottom: 2px dashed #0f0; }
-        #resource-win .card-desc { color: #aaa; }
-        #resource-win .btn-unlock { background: #0f0; color: #000; }
-        #music-win .win-content { background: linear-gradient(135deg, #E6E6FA, #FFF0F5, #E0FFFF); }
-        #music-win .btn-unlock { background: #8A2BE2; }
-        #film-win .win-content { background: #333; padding: 15px 25px; position: relative; }
-        #film-win .win-content::before, #film-win .win-content::after { content:''; position:absolute; top:0; bottom:0; width:10px; background: repeating-linear-gradient(transparent, transparent 10px, #fff 10px, #fff 20px); }
-        #film-win .win-content::before { left:4px; } #film-win .win-content::after { right:4px; }
-        #film-win .btn-unlock { background: #B22222; }
-        #doc-win .win-content { background: #DEB887; }
-        #doc-win .btn-unlock { background: #8B4513; }
-        #podcast-win .win-content { background-color: #E0FFFF; background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #E0FFFF 10px, #AFEEEE 10px, #AFEEEE 20px); }
-        #podcast-win .btn-unlock { background: #20B2AA; }
-
-        .taskbar{position:fixed;bottom:0;left:0;right:0;height:42px;background:var(--win-gray);border-top:2px solid var(--win-light);display:flex;align-items:center;padding:0 6px;z-index:3000;}
-        .start-btn{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;color:#000;font-size:14px;font-weight:bold;flex-shrink:0;}
-        .taskbar-windows{display:flex;gap:5px;margin-left:10px;flex:1;overflow-x:auto;}
-        .taskbar-win-tab{background:var(--win-gray);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);padding:4px 10px;font-size:11px;color:#000;display:none;align-items:center;gap:6px;cursor:pointer;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-        .taskbar-win-tab.visible { display: flex; }
-        .taskbar-win-tab.active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);background:#d0d0d0;font-weight:bold;}
-        .subscribe-pill{background:var(--y2k-pink);color:white;padding:4px 15px;text-decoration:none;border:2px solid #000;box-shadow:2px 2px 0 #000;flex-shrink:0;font-size:12px;font-weight:bold;}
-        .system-tray{margin-left:10px;display:flex;gap:8px;align-items:center;flex-shrink:0;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:2px 10px;height:32px;}
-        .social-link{color:#000;text-decoration:none;font-size:11px;}
-        .lang-switch{display:flex;gap:6px;align-items:center;border-left:1px solid var(--win-dark);border-right:1px solid var(--win-light);padding:0 10px;font-size:12px;}
-        .lang-link{color:var(--win-dark);text-decoration:none;}
-        .lang-link.active{color:#000;font-weight:bold;text-decoration:underline;}
-        .clock{font-size:12px;color:#000;}
-
-        @media (max-width: 900px) {
-            .desktop-wrapper { flex-direction: column; padding: 15px; }
-            .desktop-icons { flex-direction: row; flex-wrap: wrap; width: 100%; justify-content: center; gap: 10px; }
-            .archive-folders { justify-content: center; max-width: 100%; }
-            .window { position: fixed !important; width: 92vw !important; left: 4vw !important; top: 10vh !important; }
-            .taskbar-windows { display: none; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive | Push The Door</title>
+  <meta name="description" content="Push The Door — past newsletter issues and selected articles" />
 </head>
 <body>
-    <div class="marquee-bar">
-        <div class="marquee-content">
-            >> SYSTEM.MSG: [ <span style="color:var(--y2k-pink);">SEASON 4 EARLY BIRD</span> ] IN PROGRESS_ // ENDS_ON: <span style="color:var(--y2k-mint);">2026.05.17</span> // [ <span style="color:var(--y2k-pink);">NEW CURATED ISSUE + SUPPLEMENT</span> ] // CAPTURE AND IMAGINE AT THE MARGINS ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+  <main class="home-window">
+
+    <header class="window-titlebar">
+      <div class="titlebar-left">
+        <span class="title-dots">● ● ●</span>
+        <span class="titlebar-text">elephlow.cc / Archive</span>
+      </div>
+      <div class="titlebar-right">
+        <a href="/zh-cn/archive" class="lang-link">简</a>
+        <a href="/zh-tw/archive" class="lang-link">繁</a>
+        <a href="/en/archive" class="lang-link lang-active">EN</a>
+      </div>
+    </header>
+
+    <div class="window-content archive-layout">
+
+      <aside class="archive-left sticky-sidebar">
+
+        <div class="elephant-portrait">
+          <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+            <text x="8" y="12" fill="#FFB6D9" font-size="10">✦</text>
+            <text x="78" y="16" fill="#C7B3E8" font-size="8">✦</text>
+            <text x="6" y="65" fill="#B5E8E0" font-size="9">·</text>
+            <text x="82" y="60" fill="#FFE9B6" font-size="10">·</text>
+            <rect x="30" y="26" width="8" height="10" fill="#C7B3E8"/>
+            <rect x="58" y="26" width="8" height="10" fill="#C7B3E8"/>
+            <rect x="34" y="24" width="28" height="18" fill="#C7B3E8"/>
+            <rect x="48" y="40" width="6" height="14" fill="#C7B3E8"/>
+            <rect x="48" y="52" width="4" height="4" fill="#C7B3E8"/>
+            <rect x="40" y="30" width="3" height="3" fill="#2A1F18"/>
+            <rect x="52" y="30" width="3" height="3" fill="#2A1F18"/>
+            <rect x="38" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
+            <rect x="55" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
+            <rect x="32" y="42" width="32" height="20" fill="#C7B3E8"/>
+            <rect x="34" y="62" width="6" height="8" fill="#C7B3E8"/>
+            <rect x="56" y="62" width="6" height="8" fill="#C7B3E8"/>
+            <rect x="44" y="40" width="2" height="2" fill="#FFB6D9"/>
+            <rect x="50" y="40" width="2" height="2" fill="#FFB6D9"/>
+            <rect x="46" y="42" width="4" height="1" fill="#FFB6D9"/>
+          </svg>
+          <p class="elephant-caption">小象 / Elephlow</p>
         </div>
+
+        <div class="persona-card">
+          <h3 class="card-title">✦ persona ✦</h3>
+          <dl class="persona-list">
+            <dt>handle</dt><dd>小象 / Elephlow</dd>
+            <dt>sign</dt><dd>Sagittarius · INFJ</dd>
+            <dt>bio</dt>
+            <dd>
+              Omnivorous editor at the margins 🌿<br/>
+              From the islands, arriving everywhere 🏝️<br/>
+              Bringing closer what prejudice keeps apart 🌈
+            </dd>
+          </dl>
+        </div>
+
+        <div class="index-card">
+          <h3 class="card-title">✿ category ✿</h3>
+          <nav class="cat-nav">
+            <a href="#cat-zine"><span class="cat-dot bg-mint"></span>📖 Print & Pub</a>
+            <a href="#cat-bookstore"><span class="cat-dot bg-peach"></span>🏡 Bookstore Dispatch</a>
+            <a href="#cat-fair"><span class="cat-dot bg-pink"></span>🎪 Book Fair Roaming</a>
+            <a href="#cat-resource"><span class="cat-dot bg-aqua"></span>🎒 Digital Survival</a>
+            <a href="#cat-music"><span class="cat-dot bg-purple"></span>🎧 Sonic Slices</a>
+            <a href="#cat-film"><span class="cat-dot bg-cream"></span>🎞️ Film & Screen</a>
+            <a href="#cat-doc"><span class="cat-dot bg-mint"></span>📽️ Documentary</a>
+            <a href="#cat-podcast"><span class="cat-dot bg-aqua"></span>📻 Podcast</a>
+          </nav>
+        </div>
+
+      </aside>
+
+      <section class="archive-center">
+        <div class="board-card">
+          <h2 class="board-title">⌒ Archive ⌒</h2>
+          <p class="board-subtitle">Past Issues & Newsletters ｡^‿^｡</p>
+
+          <div class="board-content">
+
+            <div id="cat-zine" class="cat-section">
+              <h3 class="cat-heading mint-heading">📖 Print & Publications</h3>
+
+              <div class="issue-card border-mint">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#01 Our Enclave</span>
+                  <span class="issue-tag bg-mint">LITERATURE</span>
+                </div>
+                <p class="issue-desc">Starting from literary journals, exploring <strong>United Literature</strong> and <strong>New Movido</strong>, with a guide to accessing Hong Kong/Taiwan journals and postgrad theses.</p>
+                <div class="issue-actions">
+                  <a href="https://elephlow1217.notion.site/Issue-01-1-35115431c08d8120ba20f72b2be8571d" target="_blank" class="issue-btn btn-preview">✨ Free Preview</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-mint">
+                <div class="issue-header">
+                  <span class="issue-title">Reading Gazette 002: It's Happening</span>
+                  <span class="issue-tag bg-mint">ZINE & PUB</span>
+                </div>
+                <p class="issue-desc">Illustrated queer history, the Garo manga revolution, and a roundup of publications including <strong>VOP Photography Voice</strong>.</p>
+                <div class="issue-actions">
+                  <a href="https://elephlow1217.notion.site/002-35415431c08d80f8888dd173b80840a3" target="_blank" class="issue-btn btn-preview">✨ Free Preview</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-mint">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#19 The Sound of Silence</span>
+                  <span class="issue-tag bg-mint">PUBLISHING</span>
+                </div>
+                <p class="issue-desc">Escape and erasure: exploring the history of <strong>Crown Magazine</strong> and the publishing empire behind it.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="cat-bookstore" class="cat-section">
+              <h3 class="cat-heading peach-heading">🏡 Bookstore Dispatch</h3>
+
+              <div class="issue-card border-peach">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#13 Forever Confused, Forever Curious.</span>
+                  <span class="issue-tag bg-peach">TAIPEI</span>
+                </div>
+                <p class="issue-desc">Bookstore Tour 001: stepping into the design-rich and indie-publishing-vibrant <strong>Garden City Bookstore</strong>.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-peach">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#28 A Place to Land</span>
+                  <span class="issue-tag bg-peach">HONG KONG</span>
+                </div>
+                <p class="issue-desc">A tour of Hong Kong independent bookstores, featuring <strong>Zine Coop</strong> and a comprehensive list of indie bookstores across Taiwan, Hong Kong, and beyond.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-peach">
+                <div class="issue-header">
+                  <span class="issue-title">Japan Indie Bookstore Diary (series)</span>
+                  <span class="issue-tag bg-peach">JAPAN</span>
+                </div>
+                <p class="issue-desc">Wandering Japanese indie bookstores:<br/>• Day 1: A Pure-hearted Resistance (Issue#28)<br/>• Day 2: A Happy Home in Osaka (Issue#30)<br/>• Day 4: Kyoto's Gift (Issue#31)</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Series</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="cat-fair" class="cat-section">
+              <h3 class="cat-heading pink-heading">🎪 Book Fair Roaming</h3>
+
+              <div class="issue-card border-pink">
+                <div class="issue-header">
+                  <span class="issue-title">Reading Gazette 012: The Use of Uselessness</span>
+                  <span class="issue-tag bg-pink">ART BOOK FAIR</span>
+                </div>
+                <p class="issue-desc">Special feature: <strong>Taipei Art Book Fair (草率季)</strong> — on-site tour and in-depth observations.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-pink">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#11 By My Own Measure</span>
+                  <span class="issue-tag bg-pink">BOOK FAIR</span>
+                </div>
+                <p class="issue-desc">On-site observations and publication recommendations from <strong>Hong Kong Book Fair</strong>.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="cat-resource" class="cat-section">
+              <h3 class="cat-heading aqua-heading">🎒 Digital Survival</h3>
+
+              <div class="issue-card border-aqua">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#31 & 32: Toolkit Special</span>
+                  <span class="issue-tag bg-aqua">HACK & AI</span>
+                </div>
+                <p class="issue-desc">A practical guide for humanities students: <strong>how to read world magazines and e-books for free</strong>, plus AI use cases for Gemini and Perplexity PRO.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-aqua">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#23 Scattered and Dispersed</span>
+                  <span class="issue-tag bg-aqua">LIBRARY</span>
+                </div>
+                <p class="issue-desc">Resource roundup: sharing <strong>methods for finding manga resources</strong>, plus a curated selection of Hong Kong indie bookstores.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="cat-music" class="cat-section">
+              <h3 class="cat-heading purple-heading">🎧 Sonic Slices</h3>
+
+              <div class="issue-card border-purple">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#36 Turning Back</span>
+                  <span class="issue-tag bg-purple">MUSICIAN</span>
+                </div>
+                <p class="issue-desc">Between the islands, designing Hong Kong. Female Artist 010: steadfast and forward — <strong>Vicky Fung (馮穎琪)</strong>.</p>
+                <div class="issue-actions">
+                  <a href="https://elephlow1217.notion.site/Issue-36-39e15431c08d831f8c6281af440ecc69" target="_blank" class="issue-btn btn-preview">✨ Free Preview</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-purple">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#04 Return to Yesterday's World</span>
+                  <span class="issue-tag bg-purple">MUSIC HISTORY</span>
+                </div>
+                <p class="issue-desc">Magazine Column 004: <strong>Music Colony</strong> (1994–2004), The Playlist of My Life.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-purple">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#34 Creating the Future</span>
+                  <span class="issue-tag bg-purple">INDIE POP</span>
+                </div>
+                <p class="issue-desc">Female Artist 009: flowing freely, delightfully "outrageous" — <strong>Kiri T (謝曉盈)</strong>.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="cat-film" class="cat-section">
+              <h3 class="cat-heading cream-heading">🎞️ Film, Screen & Podcast (Highlights)</h3>
+
+              <div class="issue-card border-cream">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#29 Between Love and Hate</span>
+                  <span class="issue-tag bg-cream">QUEER CINEMA</span>
+                </div>
+                <p class="issue-desc">Happy Pride Month! A roundup of <strong>4 queer directors and 31 queer film & TV works</strong>.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-cream" id="cat-doc">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#08 A Body in Transit</span>
+                  <span class="issue-tag bg-mint">DOCUMENTARY</span>
+                </div>
+                <p class="issue-desc">Film Festival 002: an in-depth look at <strong>TIDF (Taiwan International Documentary Festival)</strong>.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+
+              <div class="issue-card border-cream" id="cat-podcast">
+                <div class="issue-header">
+                  <span class="issue-title">Issue#35 Every Time Things Change</span>
+                  <span class="issue-tag bg-aqua">AWARDS 2025</span>
+                </div>
+                <p class="issue-desc">Annual Year-End Special: <strong>2025 Personal Film & TV Awards</strong> and <strong>Chinese-language Podcast Awards</strong> rankings revealed.</p>
+                <div class="issue-actions">
+                  <a href="https://tally.so/r/4415XB" target="_blank" class="issue-btn btn-lock">🔒 Unlock Issue</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="board-footer">
+            <p>(｡♡‿♡｡) end of archive ✿</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="archive-right sticky-sidebar">
+        <nav class="vertical-tabs">
+          <a href="/en/" class="vtab vtab-home">
+            <span class="vtab-icon">🏠</span>
+            <span class="vtab-label">Home</span>
+          </a>
+          <a href="/en/about" class="vtab vtab-about">
+            <span class="vtab-icon">👤</span>
+            <span class="vtab-label">About</span>
+          </a>
+          <a href="/en/archive" class="vtab vtab-active">
+            <span class="vtab-icon">📚</span>
+            <span class="vtab-label">Archive</span>
+          </a>
+          <a href="/en/guestbook" class="vtab vtab-guestbook">
+            <span class="vtab-icon">✉</span>
+            <span class="vtab-label">Guestbook</span>
+          </a>
+        </nav>
+
+        <div class="minihome-deco">
+          <div class="deco-row">✦ ✿ ☘ ♡ ✦</div>
+          <div class="deco-text">
+            <p>this is a quiet</p>
+            <p>little room ｡^‿^｡</p>
+          </div>
+        </div>
+
+        <div class="kawaii-player">
+          <div class="kp-header">
+            <span class="kp-dot"></span>♫ NOW PLAYING<span class="kp-dot"></span>
+          </div>
+          <div class="kp-screen">
+            <div class="kp-marquee">
+              <span>Vicky Fung - Trudge ✿ Vicky Fung - Trudge ✿</span>
+            </div>
+          </div>
+          <div class="kp-controls">
+            <span class="kp-btn">⏮</span>
+            <span class="kp-btn kp-play">▶</span>
+            <span class="kp-btn">⏭</span>
+          </div>
+        </div>
+
+        <div class="kawaii-counter">
+          <p class="kc-title">✿ VISITORS ✿</p>
+          <div class="kc-digits">
+            <span>0</span><span>0</span><span>1</span><span>4</span><span>2</span><span>6</span>
+          </div>
+        </div>
+
+      </aside>
+
     </div>
 
-    <div class="desktop-wrapper">
-        <div class="desktop-icons">
-            <a href="/" class="desktop-icon"><span class="icon-emoji">🏠</span><span class="icon-text">Home</span></a>
-            <a href="/en/about" class="desktop-icon"><span class="icon-emoji"><img src="/logo.png" alt="elephlow" style="height: 32px;" /></span><span class="icon-text">About</span></a>
-            <a href="/en/archive" class="desktop-icon"><span class="icon-emoji">📂</span><span class="icon-text">Archive</span></a>
-            <a href="/en/guestbook" class="desktop-icon"><span class="icon-emoji">💬</span><span class="icon-text">Guestbook</span></a>
-        </div>
-
-        <div class="archive-folders">
-            <div class="folder-btn" onclick="bringToFront('mag-win')"><span class="icon-emoji">📖</span><span class="folder-text">Zines & Comm.</span></div>
-            <div class="folder-btn" onclick="bringToFront('bookstore-win')"><span class="icon-emoji">🏡</span><span class="folder-text">Bookstore Live</span></div>
-            <div class="folder-btn" onclick="bringToFront('fair-win')"><span class="icon-emoji">🎪</span><span class="folder-text">Exhibition Tour</span></div>
-            <div class="folder-btn" onclick="bringToFront('resource-win')"><span class="icon-emoji">🎒</span><span class="folder-text">Digital Survival</span></div>
-            <div class="folder-btn" onclick="bringToFront('music-win')"><span class="icon-emoji">🎧</span><span class="folder-text">Auditory Slice</span></div>
-            <div class="folder-btn" onclick="bringToFront('film-win')"><span class="icon-emoji">🎞️</span><span class="folder-text">Cinema Proj.</span></div>
-            <div class="folder-btn" onclick="bringToFront('doc-win')"><span class="icon-emoji">📽️</span><span class="folder-text">Reality Freeze</span></div>
-            <div class="folder-btn" onclick="bringToFront('podcast-win')"><span class="icon-emoji">📻</span><span class="folder-text">Sound Freq.</span></div>
-        </div>
-
-        <div id="playground">
-            
-            <!-- Window 1: Zines & Print -->
-            <div id="mag-win" class="window draggable" style="width: 480px; left: 10vw; top: 10vh;">
-                <div class="title-bar"><span>📖 Zines_Comm.doc</span><div class="win-btn" onclick="closeWin('mag-win')">×</div></div>
-                <div class="win-content">
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#01 Our Enclave</span><span class="card-tag">LITERATURE</span></div>
-                        <div class="card-desc">Exploring <strong>UNITAS</strong> and <strong>Fountain</strong>, with guides on how to access HK/TW academic journals and theses.</div>
-                        <div class="card-actions"><a href="https://elephlow1217.notion.site/Issue-01-1-35115431c08d8120ba20f72b2be8571d" target="_blank" class="btn-preview">✨ Preview</a></div>
-                    </div>
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#18 La Dolce Vita</span><span class="card-tag">EARLY PUB</span></div>
-                        <div class="card-desc">Exploring the legendary <strong>ECHO Magazine (漢聲)</strong> and early Taiwanese pop culture and publishing ecology.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Window 2: Bookstores -->
-            <div id="bookstore-win" class="window draggable" style="width: 480px; left: 15vw; top: 15vh;">
-                <div class="title-bar"><span>🏡 Bookstores_Live.exe</span><div class="win-btn" onclick="closeWin('bookstore-win')">×</div></div>
-                <div class="win-content">
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#13 Stay Confused & Curious</span><span class="card-tag">TAIPEI</span></div>
-                        <div class="card-desc">Tour 001: <strong>Garden City Publishers</strong>, a space full of design and independent publishing vitality.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">HK Indie Bookstore Tour</span><span class="card-tag">HONG KONG</span></div>
-                        <div class="card-desc">Featuring <strong>Zine Coop</strong> and a comprehensive list of overseas independent bookstores.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Window 3: Exhibitions -->
-            <div id="fair-win" class="window draggable" style="width: 480px; left: 20vw; top: 20vh;">
-                <div class="title-bar"><span>🎪 Exhibitions_Tour.txt</span><div class="win-btn" onclick="closeWin('fair-win')">×</div></div>
-                <div class="win-content">
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Newsletter 012: Grass Camp</span><span class="card-tag">ART BOOK FAIR</span></div>
-                        <div class="card-desc">Guided tour and deep observation of the <strong>Taipei Art Book Fair (草率季)</strong>.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#11 HK Book Fair</span><span class="card-tag">BOOK FAIR</span></div>
-                        <div class="card-desc">Observations and publication recommendations from the <strong>Hong Kong Book Fair</strong>.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Window 4: Digital Survival -->
-            <div id="resource-win" class="window draggable" style="width: 480px; left: 25vw; top: 25vh;">
-                <div class="title-bar"><span>🎒 Digital_Survival.zip</span><div class="win-btn" onclick="closeWin('resource-win')">×</div></div>
-                <div class="win-content">
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#31: Toolbox Special</span><span class="card-tag">HACK & AI</span></div>
-                        <div class="card-desc">A guide for humanity students: <strong>How to read world magazines for free</strong> and AI use cases.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Window 5: Auditory Slices -->
-            <div id="music-win" class="window draggable" style="width: 480px; left: 30vw; top: 15vh;">
-                <div class="title-bar"><span>🎧 Auditory_Slices.wav</span><div class="win-btn" onclick="closeWin('music-win')">×</div></div>
-                <div class="win-content">
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#36 Turn Back</span><span class="card-tag">MUSICIAN</span></div>
-                        <div class="card-desc">Female Artists 010: Persistent and moving forward—<strong>Vicky Fung (馮穎琪)</strong>.</div>
-                        <div class="card-actions"><a href="https://elephlow1217.notion.site/Issue-36-39e15431c08d831f8c6281af440ecc69" target="_blank" class="btn-preview">✨ Preview</a></div>
-                    </div>
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#31 Love</span><span class="card-tag">VOCALIST</span></div>
-                        <div class="card-desc">Emotional surges behind the rational mask—<strong>Hung Pei-yu (洪佩瑜)</strong>.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Window 6: Cinema Projection -->
-            <div id="film-win" class="window draggable" style="width: 480px; left: 35vw; top: 20vh;">
-                <div class="title-bar"><span>🎞️ Cinema_Projection.mp4</span><div class="win-btn" onclick="closeWin('film-win')">×</div></div>
-                <div class="win-content">
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#29 Queer Cinema</span><span class="card-tag">QUEER</span></div>
-                        <div class="card-desc">Happy Pride Month! A list of <strong>4 Queer directors and 31 essential Queer films/series</strong>.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#17 New Year Letter</span><span class="card-tag">AWARDS</span></div>
-                        <div class="card-desc">2023 Film Summary (Full), and putting the puzzles of <strong>Edward Yang (楊德昌)</strong> back together.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Window 7: Reality Freeze -->
-            <div id="doc-win" class="window draggable" style="width: 480px; left: 40vw; top: 25vh;">
-                <div class="title-bar"><span>📽️ Reality_Freeze.avi</span><div class="win-btn" onclick="closeWin('doc-win')">×</div></div>
-                <div class="win-content">
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#08 Wandering Body</span><span class="card-tag">DOC</span></div>
-                        <div class="card-desc">Deep analysis of the <strong>Taiwan International Documentary Festival (TIDF)</strong>.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#12 Breaking & Regrowing</span><span class="card-tag">ARTS DOC</span></div>
-                        <div class="card-desc"><strong>Chiayi International Art Doc Film Festival</strong> and Edward Yang retrospectives.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Window 8: Podcasts -->
-            <div id="podcast-win" class="window draggable" style="width: 480px; left: 45vw; top: 30vh;">
-                <div class="title-bar"><span>📻 Sound_Freq.mp3</span><div class="win-btn" onclick="closeWin('podcast-win')">×</div></div>
-                <div class="win-content">
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#35 Chinese Podcast Awards</span><span class="card-tag">AWARDS 2025</span></div>
-                        <div class="card-desc">Radio Special: <strong>2025 My Favorite Chinese Podcasts</strong> of the Year.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                    <div class="archive-card">
-                        <div class="card-header"><span class="card-title">Issue#26 Best of 2024</span><span class="card-tag">AWARDS 2024</span></div>
-                        <div class="card-desc">Yearly Review: Voices that accompanied our ears throughout 2024.</div>
-                        <div class="card-actions"><a href="https://tally.so/r/4415XB" target="_blank" class="btn-unlock">🔒 Unlock</a></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        
-        <div class="desktop-copyright">2022.07 - 2026.05 © Elephlow</div>
-    </div>
-
-    <footer class="taskbar">
-        <a href="/" class="start-btn"><img src="/logo.png" alt="elephlow" style="height: 32px;" /> Start</a>
-        <div class="taskbar-windows">
-            <div class="taskbar-win-tab" id="tab-mag-win" onclick="bringToFront('mag-win')"><span>📖</span> Zines & Comm.</div>
-            <div class="taskbar-win-tab" id="tab-bookstore-win" onclick="bringToFront('bookstore-win')"><span>🏡</span> Bookstore</div>
-            <div class="taskbar-win-tab" id="tab-fair-win" onclick="bringToFront('fair-win')"><span>🎪</span> Exhibitions</div>
-            <div class="taskbar-win-tab" id="tab-resource-win" onclick="bringToFront('resource-win')"><span>🎒</span> Digital Survival</div>
-            <div class="taskbar-win-tab" id="tab-music-win" onclick="bringToFront('music-win')"><span>🎧</span> Auditory</div>
-            <div class="taskbar-win-tab" id="tab-film-win" onclick="bringToFront('film-win')"><span>🎞️</span> Cinema</div>
-            <div class="taskbar-win-tab" id="tab-doc-win" onclick="bringToFront('doc-win')"><span>📽️</span> Reality</div>
-            <div class="taskbar-win-tab" id="tab-podcast-win" onclick="bringToFront('podcast-win')"><span>📻</span> Podcasts</div>
-        </div>
-        <a href="https://tally.so/r/4415XB" target="_blank" class="subscribe-pill">Subscribe Season 4</a>
-        <div class="system-tray">
-            <a href="https://www.instagram.com/icarusrootedbutflow/" target="_blank" class="social-link">IG</a>
-            <div class="lang-switch">
-                <a href="/en/archive" class="lang-link active">EN</a><a href="/zh-tw/archive" class="lang-link">繁</a><a href="/zh-cn/archive" class="lang-link">简</a>
-            </div>
-            <div class="clock" id="live-clock">00:00 AM</div>
-        </div>
+    <footer class="window-taskbar">
+      <div class="taskbar-left">
+        <span class="taskbar-start">⊞ START</span>
+      </div>
+      <div class="taskbar-right">
+        <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
+        <span class="taskbar-clock" id="clock">--:--</span>
+      </div>
     </footer>
 
-    <script is:inline>
-        let zIndexCounter = 200;
-        function bringToFront(id) {
-            const win = document.getElementById(id);
-            const tab = document.getElementById('tab-' + id);
-            if(win) {
-                win.classList.add('active');
-                win.style.zIndex = ++zIndexCounter;
-            }
-            if(tab) tab.classList.add('visible', 'active');
+  </main>
+
+  <script is:inline>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('clock');
+      if (el) el.innerText = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    document.querySelectorAll('.cat-nav a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        function closeWin(id) {
-            const win = document.getElementById(id);
-            const tab = document.getElementById('tab-' + id);
-            if(win) win.classList.remove('active');
-            if(tab) tab.classList.remove('visible', 'active');
-        }
-        const windows = document.querySelectorAll('.draggable');
-        windows.forEach(win => {
-            const titleBar = win.querySelector('.title-bar');
-            titleBar.onmousedown = (e) => {
-                if (e.target.closest('.win-btn')) return;
-                if (window.innerWidth <= 900) return; 
-                win.style.zIndex = ++zIndexCounter;
-                let rect = win.getBoundingClientRect();
-                let shiftX = e.clientX - rect.left;
-                let shiftY = e.clientY - rect.top;
-                function moveAt(clientX, clientY) { 
-                    win.style.left = (clientX - shiftX) + 'px'; win.style.top = (clientY - shiftY) + 'px'; 
-                }
-                document.onmousemove = (e) => moveAt(e.clientX, e.clientY);
-                document.onmouseup = () => { document.onmousemove = null; };
-            };
-            win.onmousedown = () => { win.style.zIndex = ++zIndexCounter; };
-        });
-        function updateClock() {
-            const now = new Date(); let h = now.getHours(); let m = String(now.getMinutes()).padStart(2, '0');
-            let ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12; h = h ? h : 12;
-            document.getElementById('live-clock').innerText = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
-        }
-        setInterval(updateClock, 1000); updateClock();
-    </script>
+      });
+    });
+  </script>
+
+  <style>
+    .home-window {
+      max-width: 1180px;
+      margin: 24px auto;
+      background: var(--soft-white);
+      border: 3px dashed var(--candy-mint);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(181, 232, 224, 0.6);
+      display: flex;
+      flex-direction: column;
+    }
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--candy-mint);
+      border-radius: 13px 13px 0 0;
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .titlebar-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .titlebar-text { letter-spacing: 1px; }
+    .titlebar-right { display: flex; gap: 4px; }
+    .lang-link { padding: 2px 8px; color: var(--ink); text-decoration: none; border-radius: 3px; }
+    .lang-link:hover { background: rgba(255, 255, 255, 0.4); }
+    .lang-active { background: rgba(255, 255, 255, 0.6); font-weight: 700; }
+
+    .window-content { padding: 24px; }
+
+    .archive-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr 200px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sticky-sidebar { position: sticky; top: 24px; height: fit-content; }
+
+    .card-title {
+      font-family: var(--font-pixel);
+      font-size: 12px;
+      color: var(--ink-light);
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed currentColor;
+    }
+
+    .elephant-portrait {
+      background: var(--soft-white); border: 2px dashed var(--candy-pink); border-radius: 12px;
+      padding: 20px 16px; text-align: center; box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.35); margin-bottom: 14px;
+    }
+    .elephant-portrait svg { width: 120px; height: auto; }
+    .elephant-caption { font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); margin-top: 8px; letter-spacing: 2px; }
+
+    .persona-card {
+      background: var(--candy-mint); border: 1.5px dashed var(--candy-purple); border-radius: 12px;
+      padding: 16px; box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.6); margin-bottom: 14px;
+    }
+    .persona-list { font-size: 12px; color: var(--ink); margin: 0; }
+    .persona-list dt { font-family: var(--font-pixel); font-size: 9px; color: var(--candy-purple); letter-spacing: 1px; margin-top: 8px; }
+    .persona-list dt:first-child { margin-top: 0; }
+    .persona-list dd { font-size: 12.5px; margin-left: 0; margin-top: 2px; line-height: 1.5; }
+
+    .index-card {
+      background: var(--candy-cream); border: 1.5px dashed var(--candy-peach); border-radius: 12px;
+      padding: 16px; box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.5);
+    }
+    .cat-nav { display: flex; flex-direction: column; gap: 8px; }
+    .cat-nav a {
+      display: flex; align-items: center; gap: 8px; text-decoration: none;
+      font-family: var(--font-rounded); font-size: 13px; font-weight: 700; color: var(--ink);
+      padding: 6px 8px; border-radius: 8px; transition: background 0.2s;
+    }
+    .cat-nav a:hover { background: rgba(255,255,255,0.6); }
+    .cat-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,0.1); }
+
+    .bg-mint { background-color: var(--candy-mint); }
+    .bg-peach { background-color: var(--candy-peach); }
+    .bg-pink { background-color: var(--candy-pink); }
+    .bg-aqua { background-color: var(--candy-aqua); }
+    .bg-purple { background-color: var(--candy-purple); }
+    .bg-cream { background-color: var(--candy-cream); }
+
+    .board-card {
+      background: var(--soft-white); border: 2px dashed var(--candy-mint); border-radius: 12px;
+      padding: 28px 32px; box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
+    }
+    .board-title {
+      font-size: 26px; font-weight: 700; color: var(--ink-light);
+      text-align: center; margin-bottom: 4px; letter-spacing: 6px;
+    }
+    .board-subtitle { text-align: center; font-family: var(--font-rounded); font-size: 13px; color: var(--candy-purple); margin-bottom: 30px; }
+
+    .cat-section { margin-bottom: 32px; scroll-margin-top: 40px; }
+    .cat-heading {
+      font-family: var(--font-mochi); font-size: 16px; margin-bottom: 16px; padding-bottom: 6px;
+      border-bottom: 2px dashed #eee; color: var(--ink);
+    }
+    .mint-heading { border-bottom-color: var(--candy-mint); }
+    .peach-heading { border-bottom-color: var(--candy-peach); }
+    .pink-heading { border-bottom-color: var(--candy-pink); }
+    .aqua-heading { border-bottom-color: var(--candy-aqua); }
+    .purple-heading { border-bottom-color: var(--candy-purple); }
+    .cream-heading { border-bottom-color: var(--candy-cream); }
+
+    .issue-card {
+      background: #fff; border: 2px dashed #eee; border-radius: 10px; padding: 16px 20px;
+      margin-bottom: 16px; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .issue-card:hover { transform: translateY(-2px); }
+
+    .border-mint { border-color: var(--candy-mint); box-shadow: 3px 3px 0 rgba(200, 233, 176, 0.3); }
+    .border-peach { border-color: var(--candy-peach); box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3); }
+    .border-pink { border-color: var(--candy-pink); box-shadow: 3px 3px 0 rgba(255, 182, 217, 0.3); }
+    .border-aqua { border-color: var(--candy-aqua); box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.3); }
+    .border-purple { border-color: var(--candy-purple); box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.3); }
+    .border-cream { border-color: var(--candy-cream); box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.3); }
+
+    .issue-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+    .issue-title { font-weight: 700; font-size: 16px; color: var(--ink); }
+    .issue-tag { font-family: var(--font-pixel); font-size: 10px; color: var(--ink); padding: 2px 8px; border-radius: 20px; border: 1px dashed rgba(0,0,0,0.1); }
+
+    .issue-desc { font-size: 14px; line-height: 1.7; color: #555; margin-bottom: 14px; }
+    .issue-desc strong { color: var(--ink); background: linear-gradient(transparent 60%, var(--candy-cream) 60%); }
+
+    .issue-actions { display: flex; justify-content: flex-end; }
+    .issue-btn {
+      display: inline-block; padding: 4px 12px; font-family: var(--font-rounded); font-size: 12px; font-weight: 700;
+      border-radius: 999px; text-decoration: none; color: var(--ink); transition: transform 0.15s;
+    }
+    .issue-btn:hover { transform: scale(1.05); text-decoration: none; }
+    .btn-preview { background: var(--candy-aqua); border: 1.5px dashed var(--candy-purple); box-shadow: 2px 2px 0 rgba(181, 232, 224, 0.6); }
+    .btn-lock { background: var(--soft-white); border: 1.5px dashed #ccc; color: #888; }
+    .btn-lock:hover { background: #f0f0f0; }
+
+    .board-footer { text-align: center; margin-top: 30px; padding-top: 16px; border-top: 1px dashed var(--candy-mint); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); letter-spacing: 2px; }
+
+    .vertical-tabs { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+    .vtab {
+      display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 0 16px 16px 0;
+      border: 1.5px dashed rgba(0,0,0,0.1); border-left: 5px solid; text-decoration: none; color: var(--ink);
+      font-family: var(--font-rounded); font-weight: 700; font-size: 13px; transition: transform 0.15s;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+    .vtab:hover { transform: translateX(4px); text-decoration: none; }
+    .vtab-icon { font-size: 16px; }
+
+    .vtab-home      { background: var(--candy-mint);   border-left-color: #7BB85E; }
+    .vtab-about     { background: var(--candy-purple); border-left-color: #9B7BC9; }
+    .vtab-active    { background: var(--candy-aqua);   border-left-color: #7DC2B8; border-left-width: 7px; font-weight: 800; }
+    .vtab-guestbook { background: var(--candy-pink);   border-left-color: #E89BC0; }
+
+    .minihome-deco {
+      background: var(--candy-cream); border: 1.5px dashed var(--candy-peach); border-radius: 12px;
+      padding: 16px 12px; text-align: center; box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3); margin-bottom: 16px;
+    }
+    .deco-row { font-size: 14px; color: var(--candy-purple); letter-spacing: 4px; margin-bottom: 10px; }
+    .deco-text p { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin: 2px 0; }
+
+    .kawaii-player {
+      background: var(--candy-mint); border: 2px dashed var(--candy-purple); border-radius: 12px;
+      padding: 12px; box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.8); margin-bottom: 16px;
+    }
+    .kp-header { display: flex; justify-content: center; align-items: center; gap: 6px; font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin-bottom: 8px; letter-spacing: 1px; }
+    .kp-dot { width: 4px; height: 4px; background: var(--candy-pink); border-radius: 50%; }
+    .kp-screen { background: var(--soft-white); border: 1.5px solid var(--candy-purple); border-radius: 6px; padding: 6px; overflow: hidden; margin-bottom: 10px; }
+    .kp-marquee { font-size: 12px; color: var(--candy-purple); font-weight: bold; white-space: nowrap; animation: marquee-scroll 6s linear infinite; }
+    @keyframes marquee-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    .kp-controls { display: flex; justify-content: center; gap: 12px; }
+    .kp-btn { display: inline-flex; justify-content: center; align-items: center; width: 24px; height: 24px; background: var(--soft-white); border: 1.5px dashed var(--candy-purple); border-radius: 50%; font-size: 10px; color: var(--candy-purple); cursor: pointer; }
+    .kp-btn:hover { background: var(--candy-cream); }
+    .kp-play { background: var(--candy-pink); color: white; border-color: transparent; }
+
+    .kawaii-counter {
+      background: var(--candy-cream); border: 2px dashed var(--candy-peach); border-radius: 12px;
+      padding: 12px; text-align: center; box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.4);
+    }
+    .kc-title { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); margin: 0 0 8px 0; letter-spacing: 2px; }
+    .kc-digits { display: flex; justify-content: center; gap: 3px; }
+    .kc-digits span { background: var(--soft-white); color: var(--candy-pink); font-family: var(--font-pixel); font-size: 16px; padding: 4px 6px; border: 1.5px solid var(--candy-pink); border-radius: 4px; font-weight: bold; }
+
+    .window-taskbar {
+      background: var(--candy-mint); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;
+      border-top: 2px dashed var(--candy-mint); border-radius: 0 0 13px 13px; font-family: var(--font-pixel); font-size: 11px; color: var(--ink);
+    }
+    .taskbar-left { display: flex; gap: 12px; align-items: center; }
+    .taskbar-right { display: flex; gap: 12px; align-items: center; }
+    .taskbar-start { background: rgba(255, 255, 255, 0.5); padding: 2px 8px; border-radius: 3px; border: 1px dashed var(--candy-purple); }
+    .taskbar-status, .taskbar-clock { color: var(--ink); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .archive-layout { grid-template-columns: 1fr; }
+      .home-window { margin: 12px; }
+      .sticky-sidebar { position: relative; top: 0; }
+    }
+  </style>
+
 </body>
 </html>
