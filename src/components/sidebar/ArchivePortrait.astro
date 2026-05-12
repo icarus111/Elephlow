@@ -2,51 +2,43 @@
 // No locale-specific content — elephlow.archive & est. 2022 kept as-is across all locales
 ---
 <div class="archive-portrait">
-  <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-    <rect x="6"  y="8"  width="68" height="6"  fill="#8A6F3F"/>
-    <rect x="10" y="14" width="60" height="54" fill="#8A6F3F"/>
-    <rect x="14" y="18" width="52" height="14" fill="#F0DFB5"/>
-    <rect x="34" y="24" width="12" height="3"  fill="#C9A24A"/>
-    <rect x="14" y="34" width="52" height="14" fill="#F0DFB5"/>
-    <rect x="34" y="40" width="12" height="3"  fill="#C9A24A"/>
-    <rect x="14" y="50" width="52" height="14" fill="#F0DFB5"/>
-    <rect x="34" y="56" width="12" height="3"  fill="#C9A24A"/>
-    <rect x="12" y="68" width="6"  height="4"  fill="#8A6F3F"/>
-    <rect x="62" y="68" width="6"  height="4"  fill="#8A6F3F"/>
-    <rect x="2"  y="22" width="2"  height="2"  fill="#C9A24A"/>
-    <rect x="76" y="38" width="2"  height="2"  fill="#C9A24A"/>
-    <rect x="4"  y="60" width="2"  height="2"  fill="#C9A24A"/>
-  </svg>
+  <img src="/archive.svg" alt="Archive Cabinet" class="archive-icon" />
+  
   <p class="archive-id">elephlow.archive</p>
   <p class="archive-est"><em>est. 2022</em></p>
 </div>
 
 <style>
   .archive-portrait {
-    background: var(--archive-cream);
-    border: 1.5px dashed var(--archive-gold);
+    /* 這裡換成柔和白底、粉紅色虛線邊框和粉紅陰影 */
+    background: var(--soft-white);
+    border: 2px dashed var(--candy-pink);
     border-radius: 14px;
     padding: 20px 16px;
     text-align: center;
-    box-shadow: 4px 4px 0 rgba(201, 168, 118, 0.25);
+    box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.35);
     margin-bottom: 14px;
   }
-  .archive-portrait svg {
-    width: 96px;
+  
+  .archive-icon {
+    width: 130px;
     height: auto;
     display: block;
     margin: 0 auto;
   }
+
   .archive-id {
     font-family: var(--font-pixel);
-    font-size: 12px;
-    color: #6B5215;
+    font-size: 11px;
+    color: var(--ink-light); /* 換成柔和的文字顏色，不再是舊的深咖啡色 */
     margin-top: 10px;
-    letter-spacing: 0.15em;
+    letter-spacing: 2px;
   }
+  
   .archive-est {
+    font-family: var(--font-pixel);
     font-size: 10px;
-    color: #8A7B4F;
+    color: var(--candy-purple); /* 讓 est. 2022 變成可愛的糖果紫 */
     margin-top: 4px;
   }
 </style>

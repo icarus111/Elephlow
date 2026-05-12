@@ -10,64 +10,66 @@ const captions: Record<string, string> = {
 const caption = captions[locale] ?? captions['zh-tw'];
 ---
 <div class="room-portrait">
-  <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-    <rect x="28" y="2"  width="2" height="2" fill="#C9B8C0"/>
-    <rect x="26" y="6"  width="2" height="2" fill="#C9B8C0"/>
-    <rect x="30" y="10" width="2" height="2" fill="#C9B8C0"/>
-    <rect x="44" y="2"  width="2" height="2" fill="#C9B8C0"/>
-    <rect x="46" y="6"  width="2" height="2" fill="#C9B8C0"/>
-    <rect x="42" y="10" width="2" height="2" fill="#C9B8C0"/>
-    <rect x="36" y="14" width="6"  height="3"  fill="#B0708A"/>
-    <rect x="28" y="17" width="22" height="4"  fill="#B0708A"/>
-    <rect x="22" y="21" width="36" height="3"  fill="#B0708A"/>
-    <rect x="20" y="24" width="40" height="28" fill="#F4D1DC"/>
-    <rect x="22" y="40" width="36" height="10" fill="#C9924A"/>
-    <rect x="22" y="40" width="36" height="2"  fill="#A0743D"/>
-    <rect x="26" y="40" width="3"  height="1"  fill="#E8B070"/>
-    <rect x="46" y="40" width="3"  height="1"  fill="#E8B070"/>
-    <rect x="20" y="24" width="40" height="2"  fill="#B0708A"/>
-    <rect x="20" y="50" width="40" height="2"  fill="#B0708A"/>
-    <rect x="20" y="24" width="2"  height="28" fill="#B0708A"/>
-    <rect x="58" y="24" width="2"  height="28" fill="#B0708A"/>
-    <rect x="10" y="30" width="10" height="3"  fill="#B0708A"/>
-    <rect x="8"  y="33" width="4"  height="3"  fill="#B0708A"/>
-    <rect x="60" y="30" width="3"  height="2"  fill="#B0708A"/>
-    <rect x="63" y="32" width="3"  height="6"  fill="#B0708A"/>
-    <rect x="60" y="38" width="3"  height="2"  fill="#B0708A"/>
-    <rect x="22" y="52" width="36" height="3"  fill="#B0708A"/>
-  </svg>
+  <!-- 這裡換成你的新圖標 guestbook.svg -->
+  <img src="/guestbook.svg" alt="A quiet little room" class="room-icon" />
+  
   <p class="room-name">a quiet little room</p>
   <p class="room-status"><em>{caption}</em></p>
 </div>
 
 <style>
-  .room-portrait {
-    background: var(--room-sage);
-    border: 1.5px dashed var(--room-olive);
+ .room-portrait {
+    /* 背景改為柔和白，更能襯托出茶壺的奶茶色 */
+    background: var(--soft-white); 
+    
+    /* 邊框換成溫暖的蜜桃橘（或是你想保留紫色也可以用 var(--candy-purple)） */
+    border: 2px dashed var(--candy-peach); 
     border-radius: 14px;
-    padding: 20px 16px;
+    padding: 24px 16px;
     text-align: center;
-    box-shadow: 4px 4px 0 rgba(168, 192, 120, 0.25);
+    
+    /* 陰影也配合邊框改成蜜桃色系 */
+    box-shadow: 4px 4px 0 rgba(255, 200, 160, 0.4); 
     margin-bottom: 14px;
   }
-  .room-portrait svg {
-    width: 96px;
+  
+  .room-icon {
+    /* 控制新茶壺的大小，可根據你的圖標微調數字 */
+    width: 110px;
     height: auto;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 12px auto;
+    transition: transform 0.2s ease-in-out;
   }
+
+  /* 滑鼠懸停時，茶壺會微微往上浮動的可愛效果 */
+  .room-portrait:hover .room-icon {
+    transform: translateY(-4px);
+  }
+
   .room-name {
     font-family: var(--font-pixel);
     font-size: 11px;
-    color: var(--room-olive);
-    margin-top: 10px;
+    color: var(--ink-light);
+    margin-top: 0;
+    margin-bottom: 6px;
     letter-spacing: 0.08em;
   }
+  
   .room-status {
     font-family: var(--font-serif-tc);
-    font-size: 11px;
-    color: var(--ink-light);
-    margin-top: 6px;
+    font-size: 12px;
+    color: var(--candy-purple); /* 讓狀態文字變成可愛的紫色 */
+    margin: 0;
     font-style: italic;
+    letter-spacing: 1px;
   }
+  .room-icon {
+  width: 110px; /* 這裡控制茶壺的最終大小 */
+  height: auto;
+  display: block;
+  margin: 0 auto 12px auto;
+  transition: transform 0.2s ease-in-out;
+}
+
 </style>
