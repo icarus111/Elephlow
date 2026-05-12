@@ -300,24 +300,16 @@ import '../../styles/global.css';
       </section>
 
       <aside class="archive-right sticky-sidebar">
-        <nav class="vertical-tabs">
-          <a href="/en/" class="vtab vtab-home">
-            <span class="vtab-icon">🏠</span>
-            <span class="vtab-label">Home</span>
-          </a>
-          <a href="/en/about" class="vtab vtab-about">
-            <span class="vtab-icon">👤</span>
-            <span class="vtab-label">About</span>
-          </a>
-          <a href="/en/archive" class="vtab vtab-active">
-            <span class="vtab-icon">📚</span>
-            <span class="vtab-label">Archive</span>
-          </a>
-          <a href="/en/guestbook" class="vtab vtab-guestbook">
-            <span class="vtab-icon">✉</span>
-            <span class="vtab-label">Guestbook</span>
-          </a>
-        </nav>
+        <div class="menu-card">
+          <h3 class="menu-title">▼ MENU ▼</h3>
+          <ul class="menu-list">
+            <li><a href="/en/" class="menu-mint">🏠 Home</a></li>
+            <li><a href="/en/about" class="menu-aqua">✍️ Editor's Note</a></li>
+            <li><span class="menu-pink menu-current">📚 archive</span></li>
+            <li><a href="/en/guestbook" class="menu-purple">💬 guestbook</a></li>
+            <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ subscribe ★</a></li>
+          </ul>
+        </div>
 
         <div class="minihome-deco">
           <div class="deco-row">✦ ✿ ☘ ♡ ✦</div>
@@ -532,20 +524,34 @@ import '../../styles/global.css';
 
     .board-footer { text-align: center; margin-top: 30px; padding-top: 16px; border-top: 1px dashed var(--candy-mint); font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); letter-spacing: 2px; }
 
-    .vertical-tabs { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
-    .vtab {
-      display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 0 16px 16px 0;
-      border: 1.5px dashed rgba(0,0,0,0.1); border-left: 5px solid; text-decoration: none; color: var(--ink);
-      font-family: var(--font-rounded); font-weight: 700; font-size: 13px; transition: transform 0.15s;
-      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    .menu-card {
+      background: var(--soft-white); border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px; padding: 8px;
+      box-shadow: 3px 3px 0 rgba(181,232,224,0.4); margin-bottom: 12px;
     }
-    .vtab:hover { transform: translateX(4px); text-decoration: none; }
-    .vtab-icon { font-size: 16px; }
-
-    .vtab-home      { background: var(--candy-mint);   border-left-color: #7BB85E; }
-    .vtab-about     { background: var(--candy-purple); border-left-color: #9B7BC9; }
-    .vtab-active    { background: var(--candy-aqua);   border-left-color: #7DC2B8; border-left-width: 7px; font-weight: 800; }
-    .vtab-guestbook { background: var(--candy-pink);   border-left-color: #E89BC0; }
+    .menu-title {
+      font-family: var(--font-pixel); font-size: 12px; text-align: center;
+      padding: 8px 4px; margin: 0 0 6px;
+      color: var(--ink-light); background: var(--candy-cream); border-radius: 6px;
+    }
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-list li { margin-bottom: 4px; }
+    .menu-list a, .menu-current {
+      display: block; padding: 10px 12px; text-align: center;
+      font-family: var(--font-rounded); font-weight: 700; font-size: 13px;
+      color: var(--ink); text-decoration: none; border-radius: 8px;
+      border: 1.5px dashed var(--candy-purple);
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white),
+                   -1px  1px 0 var(--soft-white), 1px  1px 0 var(--soft-white);
+    }
+    .menu-list a { transition: transform 0.15s, box-shadow 0.15s; }
+    .menu-list a:hover { transform: translate(-2px,-2px); box-shadow: 2px 2px 0 rgba(199,179,232,0.4); text-decoration: none; }
+    .menu-mint   { background: var(--candy-mint); }
+    .menu-aqua   { background: var(--candy-aqua); }
+    .menu-pink   { background: var(--candy-pink); }
+    .menu-purple { background: var(--candy-purple); }
+    .menu-cream  { background: var(--candy-cream); }
+    .menu-current { border-style: solid; border-width: 2px; cursor: default; }
 
     .minihome-deco {
       background: var(--candy-cream); border: 1.5px dashed var(--candy-peach); border-radius: 12px;
