@@ -1,0 +1,64 @@
+---
+interface Props { locale?: string }
+const { locale = 'zh-tw' } = Astro.props;
+
+const labels: Record<string, { issues: string; since: string; seasons: string }> = {
+  'zh-tw': { issues: '累積期數', since: '啟動', seasons: '季數' },
+  'zh-cn': { issues: '累积期数', since: '启动', seasons: '季数' },
+  'en':    { issues: 'Issues',   since: 'Since', seasons: 'Seasons' },
+};
+const t = labels[locale] ?? labels['zh-tw'];
+---
+<div class="archive-stats">
+  <h3 class="stats-title">✦ archive stats ✦</h3>
+  <dl class="stats-list">
+    <div class="stats-row"><dt>{t.issues}</dt><dd>48</dd></div>
+    <div class="stats-row"><dt>{t.since}</dt><dd>2022.07</dd></div>
+    <div class="stats-row"><dt>{t.seasons}</dt><dd>3 + 1</dd></div>
+  </dl>
+</div>
+
+<style>
+  .archive-stats {
+    background: var(--room-sage);
+    border: 1.5px dashed var(--room-olive);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 3px 3px 0 rgba(168, 192, 120, 0.3);
+    margin-bottom: 14px;
+  }
+  .stats-title {
+    font-family: var(--font-pixel);
+    font-size: 12px;
+    color: var(--ink-light);
+    text-align: center;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--room-olive);
+  }
+  .stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .stats-row dt {
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+  }
+  .stats-row dd {
+    font-family: var(--font-rounded);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-left: 0;
+  }
+</style>

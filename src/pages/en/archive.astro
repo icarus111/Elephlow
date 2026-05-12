@@ -1,5 +1,7 @@
 ---
 import '../../styles/global.css';
+import ArchivePortrait from '../../components/sidebar/ArchivePortrait.astro';
+import ArchiveStats from '../../components/sidebar/ArchiveStats.astro';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -29,44 +31,8 @@ import '../../styles/global.css';
 
       <aside class="archive-left sticky-sidebar">
 
-        <div class="elephant-portrait">
-          <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-            <text x="8" y="12" fill="#FFB6D9" font-size="10">✦</text>
-            <text x="78" y="16" fill="#C7B3E8" font-size="8">✦</text>
-            <text x="6" y="65" fill="#B5E8E0" font-size="9">·</text>
-            <text x="82" y="60" fill="#FFE9B6" font-size="10">·</text>
-            <rect x="30" y="26" width="8" height="10" fill="#C7B3E8"/>
-            <rect x="58" y="26" width="8" height="10" fill="#C7B3E8"/>
-            <rect x="34" y="24" width="28" height="18" fill="#C7B3E8"/>
-            <rect x="48" y="40" width="6" height="14" fill="#C7B3E8"/>
-            <rect x="48" y="52" width="4" height="4" fill="#C7B3E8"/>
-            <rect x="40" y="30" width="3" height="3" fill="#2A1F18"/>
-            <rect x="52" y="30" width="3" height="3" fill="#2A1F18"/>
-            <rect x="38" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
-            <rect x="55" y="34" width="3" height="2" fill="#FFB6D9" opacity="0.6"/>
-            <rect x="32" y="42" width="32" height="20" fill="#C7B3E8"/>
-            <rect x="34" y="62" width="6" height="8" fill="#C7B3E8"/>
-            <rect x="56" y="62" width="6" height="8" fill="#C7B3E8"/>
-            <rect x="44" y="40" width="2" height="2" fill="#FFB6D9"/>
-            <rect x="50" y="40" width="2" height="2" fill="#FFB6D9"/>
-            <rect x="46" y="42" width="4" height="1" fill="#FFB6D9"/>
-          </svg>
-          <p class="elephant-caption">小象 / Elephlow</p>
-        </div>
-
-        <div class="persona-card">
-          <h3 class="card-title">✦ persona ✦</h3>
-          <dl class="persona-list">
-            <dt>handle</dt><dd>小象 / Elephlow</dd>
-            <dt>sign</dt><dd>Sagittarius · INFJ</dd>
-            <dt>bio</dt>
-            <dd>
-              Omnivorous editor at the margins 🌿<br/>
-              From the islands, arriving everywhere 🏝️<br/>
-              Bringing closer what prejudice keeps apart 🌈
-            </dd>
-          </dl>
-        </div>
+        <ArchivePortrait />
+        <ArchiveStats locale="en" />
 
         <div class="index-card">
           <h3 class="card-title">✿ category ✿</h3>

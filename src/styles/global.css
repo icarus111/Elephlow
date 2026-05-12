@@ -25,6 +25,14 @@
   --gradient-rainbow: linear-gradient(90deg, #FFE9B6, #FFC8C8, #FFB6D9, #C7B3E8, #B5E8E0, #C8E9B0);
   --gradient-sunset: linear-gradient(135deg, #FFB6D9 0%, #C7B3E8 50%, #B5E8E0 100%);
 
+  /* === archive & room sidebar === */
+  --archive-cream: #F5EAD0;
+  --archive-gold:  #C9A876;
+  --room-sage:     #E8F0DD;
+  --room-olive:    #A8C078;
+  --room-lilac:    #EFE8F4;
+  --room-mauve:    #B89DD0;
+
   /* === minihome / catalog tab 色 === */
   --tab-green: #98D982;
   --tab-orange: #FFA940;
