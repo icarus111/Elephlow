@@ -134,8 +134,13 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
   </script>
 
   <style>
+    body {
+      overflow-x: hidden; /* 第一道防线：禁止全局出现横向滚动条 */
+    }
+
     .home-window {
       max-width: 1180px;
+      width: calc(100% - 24px); /* 强制宽度不要超过屏幕宽度减去边距 */
       margin: 24px auto;
       background: var(--soft-white);
       border: 2px dashed var(--candy-purple);
@@ -252,9 +257,15 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
 
     .main-grid {
       display: grid;
-      grid-template-columns: 220px 1fr 200px;
+      grid-template-columns: 220px minmax(0, 1fr) 200px;
       gap: 20px;
       align-items: start;
+    }
+
+    /* ！！核心修复：强制所有的列可以被压缩，不能溢出撑开父元素！！ */
+    .left-column, .center-column, .right-column {
+      min-width: 0; 
+      max-width: 100%;
     }
 
     .deco-icons {
@@ -279,6 +290,7 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       border-radius: 8px;
       line-height: 1.8;
       margin-top: 12px;
+      word-break: break-all; /* 防止邮箱地址过长撑破 */
     }
     .status-info p { margin: 0; }
 
@@ -437,55 +449,6 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       color: var(--ink-light);
     }
 
-    .social-card {
-      background: var(--candy-peach);
-      border: 1.5px dashed var(--candy-purple);
-      border-radius: 12px;
-      padding: 12px 10px;
-      box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.25);
-      margin-top: 12px;
-    }
-    .sc-title {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--ink-light);
-      letter-spacing: 3px;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    .sc-link {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      padding: 7px 8px;
-      border-radius: 7px;
-      background: rgba(255, 255, 255, 0.55);
-      border: 1px dashed var(--candy-pink);
-      text-decoration: none;
-      color: var(--ink);
-      margin-bottom: 5px;
-      transition: background 0.15s, transform 0.15s;
-    }
-    .sc-link:last-child { margin-bottom: 0; }
-    .sc-link:not(.sc-static):hover {
-      background: var(--soft-white);
-      text-decoration: none;
-      transform: translate(-1px, -1px);
-    }
-    .sc-static { cursor: default; }
-    .sc-platform {
-      font-family: var(--font-pixel);
-      font-size: 8px;
-      color: var(--candy-purple);
-      letter-spacing: 1px;
-    }
-    .sc-name {
-      font-family: var(--font-pixel);
-      font-size: 9px;
-      color: var(--ink);
-      word-break: break-all;
-    }
-
     .window-taskbar {
       background: var(--candy-mint);
       padding: 8px 16px;
@@ -557,14 +520,18 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
     /* 手機與平板適配 (900px 以下) - 必須放在最底部 */
     /* ========================================= */
     @media (max-width: 900px) {
-      /* 1. 主視覺網格改為單欄，縮小最外層邊距 */
-      .main-grid { grid-template-columns: 1fr; }
-      .home-window { margin: 12px; }
+      .home-window {
+        margin: 12px auto;
+      }
       
-      /* 2. 縮小視窗內容的留白，把空間還給文字 */
+      /* 核心修复 2：使用 minmax(0, 1fr) 严防死守跑马灯文字把网格撑宽 */
+      .main-grid { 
+        grid-template-columns: minmax(0, 1fr); 
+        gap: 16px; 
+      }
+      
       .window-content { padding: 16px 12px; }
 
-      /* 3. 頂部標題列與底部任務欄：改為上下排列，防止文字撞在一起 */
       .window-titlebar, .window-taskbar {
         flex-direction: column;
         gap: 8px;
@@ -575,7 +542,6 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
         flex-wrap: wrap; 
       }
 
-      /* 4. 歡迎橫幅：把 Logo 和文字改為上下堆疊，文字置中 */
       .welcome-inner {
         flex-direction: column;
         text-align: center;
@@ -584,24 +550,21 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       }
       .site-title { font-size: 22px; }
 
-      /* 5. 介紹卡片：解除高度限制，縮小內邊距，防止撐破卡片 */
       .intro-card { 
         padding: 20px 16px; 
-        max-height: none; /* 解決手機版文字太多出現滾動條的問題 */
+        max-height: none; 
       }
       .intro-title { 
         font-size: 20px; 
         letter-spacing: 2px; 
       }
 
-      /* 6. 行動呼籲 (CTA) 按鈕：上下滿版排列 */
       .cta-row { 
         flex-direction: column; 
         align-items: stretch; 
       }
       .cta-button { text-align: center; }
 
-      /* 7. 跑馬燈容器：稍微縮小字體確保安全距離 */
       .marquee-text { font-size: 12px; }
     }
   </style>
