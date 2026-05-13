@@ -80,7 +80,7 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
         <aside class="right-column">
           <div class="menu-card">
             <h3 class="menu-title">▼ MENU ▼</h3>
-            <ul class="menu-list">
+            
              <ul class="menu-list">
   <li><a href="/zh-tw/" class="menu-mint">🏠 主頁</a></li>
   <li><a href="/zh-tw/about" class="menu-pink">✍️ 創作者說</a></li>
@@ -512,10 +512,51 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
     .taskbar-status { color: var(--ink-light); }
     .taskbar-clock { font-weight: 700; }
 
+   /* 手機與平板適配 (900px 以下) */
     @media (max-width: 900px) {
+      /* 1. 主視覺網格改為單欄，縮小最外層邊距 */
       .main-grid { grid-template-columns: 1fr; }
       .home-window { margin: 12px; }
-      .site-title { font-size: 24px; }
+      
+      /* 2. 縮小視窗內容的留白，把空間還給文字 */
+      .window-content { padding: 16px 12px; }
+
+      /* 3. 頂部標題列與底部任務欄：改為上下排列，防止文字撞在一起 */
+      .window-titlebar, .window-taskbar {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+      .titlebar-left, .taskbar-left, .taskbar-right {
+        justify-content: center;
+        flex-wrap: wrap; /* 允許過長內容換行 */
+      }
+
+      /* 4. 歡迎橫幅：把 Logo 和文字改為上下堆疊，文字置中 */
+      .welcome-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+        padding: 16px;
+      }
+      .site-title { font-size: 22px; } /* 標題稍微縮小 */
+
+      /* 5. 介紹卡片：縮小內邊距與標題字距，防止撐破卡片 */
+      .intro-card { padding: 20px 16px; }
+      .intro-title { 
+        font-size: 20px; 
+        letter-spacing: 2px; /* 原本 6px 在手機上會太寬 */
+      }
+
+      /* 6. 行動呼籲 (CTA) 按鈕：在手機上改為上下滿版排列，更好點擊 */
+      .cta-row { 
+        flex-direction: column; 
+        align-items: stretch; 
+      }
+      .cta-button { text-align: center; }
+
+      /* 7. 跑馬燈容器：稍微縮小字體確保安全距離 */
+      .marquee-text { font-size: 12px; }
     }
     /* 平成复古风跑马灯容器 - 完美适配你的 Design System */
 .retro-marquee-box {
