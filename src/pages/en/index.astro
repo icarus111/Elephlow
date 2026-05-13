@@ -83,9 +83,9 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
             <ul class="menu-list">
               <li><a href="/en/" class="menu-mint">🏠 Home</a></li>
               <li><a href="/en/about" class="menu-pink">✍️ Editor's Note</a></li>
-              <li><a href="/en/archive" class="menu-aqua">📚 archive</a></li>
-              <li><a href="/en/guestbook" class="menu-purple">💬 guestbook</a></li>
-              <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ subscribe ★</a></li>
+              <li><a href="/en/archive" class="menu-aqua">📚 Archive</a></li>
+              <li><a href="/en/guestbook" class="menu-purple">💬 Guestbook</a></li>
+              <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ Subscribe ★</a></li>
             </ul>
           </div>
 
@@ -95,7 +95,13 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
               <span class="gb-text">sign my guestbook</span>
             </a>
           </div>
-        </aside>
+
+       <div class="retro-marquee-box">
+  <div class="marquee-text">
+    >> SYSTEM.MSG: [Season 4 Early Bird] NOW_LIVE_ // ENDS_ON:2026.05.17// [New Themed Main Issue + Zine Supplement] // Capturing and imagining at the margins ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    >> SYSTEM.MSG: [Season 4 Early Bird] NOW_LIVE_ // ENDS_ON:2026.05.17// [New Themed Main Issue + Zine Supplement] // Capturing and imagining at the margins ✴
+  </div>
+</div>
 
       </div>
     </div>
@@ -133,7 +139,7 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       border: 2px dashed var(--candy-purple);
       border-radius: 16px;
       box-shadow: 6px 6px 0 rgba(199, 179, 232, 0.35);
-      overflow: hidden;
+      overflow: clip;
       display: flex;
       flex-direction: column;
     }
@@ -275,14 +281,14 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
     .status-info p { margin: 0; }
 
     .intro-card {
-      background: var(--soft-white);
-      border: 2px dashed var(--candy-mint);
-      border-radius: 12px;
-      padding: 24px 28px;
-      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
-      max-height: 540px;
-      overflow-y: auto;
-    }
+  background: var(--soft-white);
+  border: 2px dashed var(--candy-mint);
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
+  /* 让高度由内容自然撑开，不再限制 */
+  height: auto; 
+}
 
     .intro-title {
       font-family: var(--font-serif-tc), var(--font-serif-sc);
@@ -429,6 +435,55 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       color: var(--ink-light);
     }
 
+    .social-card {
+      background: var(--candy-peach);
+      border: 1.5px dashed var(--candy-purple);
+      border-radius: 12px;
+      padding: 12px 10px;
+      box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.25);
+      margin-top: 12px;
+    }
+    .sc-title {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink-light);
+      letter-spacing: 3px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .sc-link {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 7px 8px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px dashed var(--candy-pink);
+      text-decoration: none;
+      color: var(--ink);
+      margin-bottom: 5px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .sc-link:last-child { margin-bottom: 0; }
+    .sc-link:not(.sc-static):hover {
+      background: var(--soft-white);
+      text-decoration: none;
+      transform: translate(-1px, -1px);
+    }
+    .sc-static { cursor: default; }
+    .sc-platform {
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      color: var(--candy-purple);
+      letter-spacing: 1px;
+    }
+    .sc-name {
+      font-family: var(--font-pixel);
+      font-size: 9px;
+      color: var(--ink);
+      word-break: break-all;
+    }
+
     .window-taskbar {
       background: var(--candy-mint);
       padding: 8px 16px;
@@ -457,6 +512,66 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       .home-window { margin: 12px; }
       .site-title { font-size: 24px; }
     }
+    /* 纯净日落渐变版跑马灯容器（移除横纹干扰） */
+.retro-marquee-box {
+  /* 去掉扫描线，只保留你设计系统里梦幻的日落渐变 */
+  background: var(--gradient-sunset);
+  
+  border: 2px dashed var(--candy-purple); 
+  border-radius: var(--radius-soft);
+  padding: 0 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  margin-top: 16px; 
+  width: 100%; 
+  box-sizing: border-box;
+  box-shadow: 3px 3px 0px rgba(199, 179, 232, 0.4); 
+  
+  height: 44px; 
+  display: flex;
+  align-items: center;
+}
+/* 跑马灯文字样式 - 终端日志风格 */
+.marquee-text {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--ink); 
+  font-family: var(--font-pixel), monospace; 
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  
+  /* 加上一圈细细的纯白描边，像复古像素贴纸一样，确保在彩色渐变底上绝对清晰可读 */
+  text-shadow: 
+    -1px -1px 0 var(--soft-white),  
+     1px -1px 0 var(--soft-white),
+    -1px  1px 0 var(--soft-white),
+     1px  1px 0 var(--soft-white);
+  
+  /* 散步模式：45秒平滑滚动，告别眼晕 */
+  animation: scroll-left 45s linear infinite; 
+}
+
+/* 鼠标悬浮时暂停滚动 */
+.retro-marquee-box:hover .marquee-text {
+  animation-play-state: paused;
+  color: var(--candy-purple);
+  cursor: default;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); } 
+}
+/* 让左右两侧的边栏在滚动时悬浮吸顶 */
+.left-column, 
+.right-column {
+  position: sticky;
+  top: 24px; /* 页面往下滚时，距离浏览器顶部保持 24px 的呼吸空间 */
+  
+  /* 为了让动画和过渡更平滑，可以加个小小的过渡属性 */
+  transition: transform 0.3s ease;
+}
   </style>
 
 </body>

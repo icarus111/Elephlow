@@ -97,6 +97,15 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
               <span class="gb-text">sign my guestbook</span>
             </a>
           </div>
+
+          <!-- 替换掉原本的 retro-marquee-box -->
+<div class="retro-marquee-box">
+  <div class="marquee-text">
+    >> SYSTEM.MSG: [第四季早鳥活動] 進行中_ // ENDS_ON:2026.05.17// [全新主題策展正刊 ＋ 雜誌通信副刊] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    >> SYSTEM.MSG: [第四季早鳥活動] 進行中_ // ENDS_ON:2026.05.17// [全新主題策展正刊 ＋ 雜誌通信副刊] // 在邊緣捕捉與想像 ✴
+  </div>
+</div>
+          </div>
         </aside>
 
       </div>
@@ -408,12 +417,8 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
     .menu-mint { background: var(--candy-mint); }
     .menu-aqua { background: var(--candy-aqua); }
     .menu-pink { background: var(--candy-pink); }
-    .menu-purple { background: var(--candy-purple);
-    .menu-mint { background: var(--candy-mint); }
-    .menu-aqua { background: var(--candy-aqua); }
-    .menu-pink { background: var(--candy-pink); }
     .menu-purple { background: var(--candy-purple); }
-    .menu-cream { background: var(--candy-cream); } /* 增加这一行，给订阅按钮用鹅黄色 */ }
+    .menu-cream { background: var(--candy-cream); }
 
     .guestbook-card a {
       display: flex;
@@ -433,6 +438,55 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       font-family: var(--font-pixel);
       font-size: 10px;
       color: var(--ink-light);
+    }
+
+    .social-card {
+      background: var(--candy-peach);
+      border: 1.5px dashed var(--candy-purple);
+      border-radius: 12px;
+      padding: 12px 10px;
+      box-shadow: 3px 3px 0 rgba(199, 179, 232, 0.25);
+      margin-top: 12px;
+    }
+    .sc-title {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: var(--ink-light);
+      letter-spacing: 3px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .sc-link {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 7px 8px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px dashed var(--candy-pink);
+      text-decoration: none;
+      color: var(--ink);
+      margin-bottom: 5px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .sc-link:last-child { margin-bottom: 0; }
+    .sc-link:not(.sc-static):hover {
+      background: var(--soft-white);
+      text-decoration: none;
+      transform: translate(-1px, -1px);
+    }
+    .sc-static { cursor: default; }
+    .sc-platform {
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      color: var(--candy-purple);
+      letter-spacing: 1px;
+    }
+    .sc-name {
+      font-family: var(--font-pixel);
+      font-size: 9px;
+      color: var(--ink);
+      word-break: break-all;
     }
 
     .window-taskbar {
@@ -463,6 +517,105 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       .home-window { margin: 12px; }
       .site-title { font-size: 24px; }
     }
+    /* 平成复古风跑马灯容器 - 完美适配你的 Design System */
+.retro-marquee-box {
+  background-color: var(--soft-white); /* 使用你的柔和白底色 */
+  border: 2px dashed var(--candy-pink); /* 糖果粉虚线边框 */
+  border-radius: var(--radius-soft); /* 调用你的标准圆角 12px */
+  padding: 0 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  /* 关键修复 1：增加与上方留言板模块的距离 */
+  margin-top: 16px; 
+  /* 关键修复 2：确保宽度和上方组件一样撑满 */
+  width: 100%; 
+  box-sizing: border-box;
+  
+  /* 添加与上方按钮一致的复古纯色阴影 */
+  box-shadow: 2px 2px 0px var(--candy-pink); 
+  
+  height: 44px; /* 稍微加高一点点，让文字呼吸感更好 */
+  display: flex;
+  align-items: center;
+}
+
+/* 跑马灯文字样式 */
+.marquee-text {
+  display: inline-block;
+  font-weight: 500;
+  color: var(--ink-light); /* 使用你的浅墨色，更加温和耐看 */
+  
+  /* 灵魂注入：使用你定义的点阵像素字体！ */
+  font-family: var(--font-pixel), monospace; 
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  
+  animation: scroll-left 14s linear infinite; /* 稍微调慢了一点点，更优雅 */
+}
+
+/* 鼠标悬浮时暂停滚动 */
+.retro-marquee-box:hover .marquee-text {
+  animation-play-state: paused;
+  color: var(--candy-purple); /* 悬浮时变色为糖果紫，增加一点小互动感 */
+  cursor: default;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-150%); }
+}
+/* 纯净日落渐变版跑马灯容器（移除横纹干扰） */
+.retro-marquee-box {
+  /* 去掉扫描线，只保留你设计系统里梦幻的日落渐变 */
+  background: var(--gradient-sunset);
+  
+  border: 2px dashed var(--candy-purple); 
+  border-radius: var(--radius-soft);
+  padding: 0 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  margin-top: 16px; 
+  width: 100%; 
+  box-sizing: border-box;
+  box-shadow: 3px 3px 0px rgba(199, 179, 232, 0.4); 
+  
+  height: 44px; 
+  display: flex;
+  align-items: center;
+}
+/* 跑马灯文字样式 - 终端日志风格 */
+.marquee-text {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--ink); 
+  font-family: var(--font-pixel), monospace; 
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  
+  /* 加上一圈细细的纯白描边，像复古像素贴纸一样，确保在彩色渐变底上绝对清晰可读 */
+  text-shadow: 
+    -1px -1px 0 var(--soft-white),  
+     1px -1px 0 var(--soft-white),
+    -1px  1px 0 var(--soft-white),
+     1px  1px 0 var(--soft-white);
+  
+  /* 散步模式：45秒平滑滚动，告别眼晕 */
+  animation: scroll-left 45s linear infinite; 
+}
+
+/* 鼠标悬浮时暂停滚动 */
+.retro-marquee-box:hover .marquee-text {
+  animation-play-state: paused;
+  color: var(--candy-purple);
+  cursor: default;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); } 
+}
   </style>
 
 </body>
