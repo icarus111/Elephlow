@@ -507,7 +507,49 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
     .taskbar-status { color: var(--ink-light); }
     .taskbar-clock { font-weight: 700; }
 
-  
+    /* ========================================= */
+    /* 手機與平板適配 (900px 以下) - 關於小象專屬 */
+    /* ========================================= */
+    @media (max-width: 900px) {
+      /* 1. 關鍵修復：把關於頁專屬的三欄網格改為單欄，自然上下堆疊 */
+      .about-layout { 
+        grid-template-columns: 1fr; 
+        gap: 16px;
+      }
+      
+      /* 2. 縮小最外層視窗邊距與內容留白 */
+      .home-window { margin: 12px; }
+      .window-content { padding: 16px 12px; }
+
+      /* 3. 頂部標題列與底部任務欄：改為上下排列，防止文字撞在一起 */
+      .window-titlebar, .window-taskbar {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+      .titlebar-left, .taskbar-left, .taskbar-right {
+        justify-content: center;
+        flex-wrap: wrap; 
+      }
+
+      /* 4. 取消側邊欄的「吸頂跟隨 (sticky)」，讓手機端可以順暢往下滑動 */
+      .sticky-sidebar {
+        position: static;
+      }
+
+      /* 5. 稍微縮小「五問五答」面板的內距與標題字距，防止撐破螢幕 */
+      .qa-card { padding: 20px 16px; }
+      .qa-title { 
+        font-size: 22px; 
+        letter-spacing: 2px; 
+      }
+      
+      /* 取消問答項目的負邊距，讓它在手機上乖乖待在卡片裡 */
+      .qa-item {
+        margin: 0;
+        padding: 14px 12px;
+      }
+    }
     /* 纯净日落渐变版跑马灯容器（移除横纹干扰） */
 .retro-marquee-box {
   /* 去掉扫描线，只保留你设计系统里梦幻的日落渐变 */
@@ -568,48 +610,6 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
   /* 为了让动画和过渡更平滑，可以加个小小的过渡属性 */
   transition: transform 0.3s ease;
 }
- /* 手機與平板適配 (900px 以下) - 關於小象專屬 */
-    /* ========================================= */
-    @media (max-width: 900px) {
-      /* 1. 關鍵修復：把關於頁專屬的三欄網格改為單欄，自然上下堆疊 */
-      .about-layout { 
-        grid-template-columns: 1fr; 
-        gap: 16px;
-      }
-      
-      /* 2. 縮小最外層視窗邊距與內容留白 */
-      .home-window { margin: 12px; }
-      .window-content { padding: 16px 12px; }
-
-      /* 3. 頂部標題列與底部任務欄：改為上下排列，防止文字撞在一起 */
-      .window-titlebar, .window-taskbar {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-      }
-      .titlebar-left, .taskbar-left, .taskbar-right {
-        justify-content: center;
-        flex-wrap: wrap; 
-      }
-
-      /* 4. 取消側邊欄的「吸頂跟隨 (sticky)」，讓手機端可以順暢往下滑動 */
-      .sticky-sidebar {
-        position: static;
-      }
-
-      /* 5. 稍微縮小「五問五答」面板的內距與標題字距，防止撐破螢幕 */
-      .qa-card { padding: 20px 16px; }
-      .qa-title { 
-        font-size: 22px; 
-        letter-spacing: 2px; 
-      }
-      
-      /* 取消問答項目的負邊距，讓它在手機上乖乖待在卡片裡 */
-      .qa-item {
-        margin: 0;
-        padding: 14px 12px;
-      }
-    }
   </style>
 
 </body>
