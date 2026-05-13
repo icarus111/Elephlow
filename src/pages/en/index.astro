@@ -507,8 +507,57 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
     .taskbar-status { color: var(--ink-light); }
     .taskbar-clock { font-weight: 700; }
 
-   }
+   /* 手機與平板適配 (900px 以下) - 必須放在最底部 */
+    /* ========================================= */
+    @media (max-width: 900px) {
+      .home-window {
+        margin: 12px auto;
+      }
+      
+      /* 核心修复 2：使用 minmax(0, 1fr) 严防死守跑马灯文字把网格撑宽 */
+      .main-grid { 
+        grid-template-columns: minmax(0, 1fr); 
+        gap: 16px; 
+      }
+      
+      .window-content { padding: 16px 12px; }
+
+      .window-titlebar, .window-taskbar {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+      .titlebar-left, .taskbar-left, .taskbar-right {
+        justify-content: center;
+        flex-wrap: wrap; 
+      }
+
+      .welcome-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+        padding: 16px;
+      }
+      .site-title { font-size: 22px; }
+
+      .intro-card { 
+        padding: 20px 16px; 
+        max-height: none; 
+      }
+      .intro-title { 
+        font-size: 20px; 
+        letter-spacing: 2px; 
+      }
+
+      .cta-row { 
+        flex-direction: column; 
+        align-items: stretch; 
+      }
+      .cta-button { text-align: center; }
+
+      .marquee-text { font-size: 12px; }
     }
+    
     /* 纯净日落渐变版跑马灯容器（移除横纹干扰） */
 .retro-marquee-box {
   /* 去掉扫描线，只保留你设计系统里梦幻的日落渐变 */
