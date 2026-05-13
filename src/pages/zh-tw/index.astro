@@ -515,23 +515,21 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       0% { transform: translateX(0%); }
       100% { transform: translateX(-50%); } 
     }
-
-    /* ========================================= */
-   /* ========================================= */
-    /* 手機與平板適配 (900px 以下) - 關於小象專屬 */
+/* 手機與平板適配 (900px 以下) - 必須放在最底部 */
     /* ========================================= */
     @media (max-width: 900px) {
-      /* 1. 關鍵修復：把關於頁專屬的三欄網格改為單欄，自然上下堆疊 */
-      .about-layout { 
-        grid-template-columns: 1fr; 
-        gap: 16px;
+      .home-window {
+        margin: 12px auto;
       }
       
-      /* 2. 縮小最外層視窗邊距與內容留白 */
-      .home-window { margin: 12px; }
+      /* 核心修复 2：使用 minmax(0, 1fr) 严防死守跑马灯文字把网格撑宽 */
+      .main-grid { 
+        grid-template-columns: minmax(0, 1fr); 
+        gap: 16px; 
+      }
+      
       .window-content { padding: 16px 12px; }
 
-      /* 3. 頂部標題列與底部任務欄：改為上下排列，防止文字撞在一起 */
       .window-titlebar, .window-taskbar {
         flex-direction: column;
         gap: 8px;
@@ -542,24 +540,32 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
         flex-wrap: wrap; 
       }
 
-      /* 4. 取消側邊欄的「吸頂跟隨 (sticky)」，讓手機端可以順暢往下滑動 */
-      .sticky-sidebar {
-        position: static;
+      .welcome-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+        padding: 16px;
       }
+      .site-title { font-size: 22px; }
 
-      /* 5. 稍微縮小「五問五答」面板的內距與標題字距，防止撐破螢幕 */
-      .qa-card { padding: 20px 16px; }
-      .qa-title { 
-        font-size: 22px; 
+      .intro-card { 
+        padding: 20px 16px; 
+        max-height: none; 
+      }
+      .intro-title { 
+        font-size: 20px; 
         letter-spacing: 2px; 
       }
-      
-      /* 取消問答項目的負邊距，讓它在手機上乖乖待在卡片裡 */
-      .qa-item {
-        margin: 0;
-        padding: 14px 12px;
+
+      .cta-row { 
+        flex-direction: column; 
+        align-items: stretch; 
       }
+      .cta-button { text-align: center; }
+
+      .marquee-text { font-size: 12px; }
     }
+    
   </style>
 
 </body>
