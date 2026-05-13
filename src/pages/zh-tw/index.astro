@@ -80,14 +80,12 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
         <aside class="right-column">
           <div class="menu-card">
             <h3 class="menu-title">▼ MENU ▼</h3>
-            
-             <ul class="menu-list">
-  <li><a href="/zh-tw/" class="menu-mint">🏠 主頁</a></li>
-  <li><a href="/zh-tw/about" class="menu-pink">✍️ 創作者說</a></li>
-  <li><a href="/zh-tw/archive" class="menu-aqua">📚 往期目錄</a></li>
-  <li><a href="/zh-tw/guestbook" class="menu-purple">💬 留言板</a></li>
-  <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ 訂閱 ★</a></li>
-</ul>
+            <ul class="menu-list">
+              <li><a href="/zh-tw/" class="menu-mint">🏠 主頁</a></li>
+              <li><a href="/zh-tw/about" class="menu-pink">✍️ 創作者說</a></li>
+              <li><a href="/zh-tw/archive" class="menu-aqua">📚 往期目錄</a></li>
+              <li><a href="/zh-tw/guestbook" class="menu-purple">💬 留言板</a></li>
+              <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ 訂閱 ★</a></li>
             </ul>
           </div>
 
@@ -98,13 +96,12 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
             </a>
           </div>
 
-          <!-- 替换掉原本的 retro-marquee-box -->
-<div class="retro-marquee-box">
-  <div class="marquee-text">
-    >> SYSTEM.MSG: [第四季早鳥活動] 進行中_ // ENDS_ON:2026.05.17// [全新主題策展正刊 ＋ 雜誌通信副刊] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-    >> SYSTEM.MSG: [第四季早鳥活動] 進行中_ // ENDS_ON:2026.05.17// [全新主題策展正刊 ＋ 雜誌通信副刊] // 在邊緣捕捉與想像 ✴
-  </div>
-</div>
+          <!-- 纯净日落渐变版跑马灯容器 -->
+          <div class="retro-marquee-box">
+            <div class="marquee-text">
+              >> SYSTEM.MSG: [第四季早鳥活動] 進行中_ // ENDS_ON:2026.05.17// [全新主題策展正刊 ＋ 雜誌通信副刊] // 在邊緣捕捉與想像 ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+              >> SYSTEM.MSG: [第四季早鳥活動] 進行中_ // ENDS_ON:2026.05.17// [全新主題策展正刊 ＋ 雜誌通信副刊] // 在邊緣捕捉與想像 ✴
+            </div>
           </div>
         </aside>
 
@@ -512,7 +509,53 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
     .taskbar-status { color: var(--ink-light); }
     .taskbar-clock { font-weight: 700; }
 
-   /* 手機與平板適配 (900px 以下) */
+    /* 纯净日落渐变版跑马灯容器 */
+    .retro-marquee-box {
+      background: var(--gradient-sunset);
+      border: 2px dashed var(--candy-purple); 
+      border-radius: var(--radius-soft, 12px);
+      padding: 0 12px;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-top: 16px; 
+      width: 100%; 
+      box-sizing: border-box;
+      box-shadow: 3px 3px 0px rgba(199, 179, 232, 0.4); 
+      height: 44px; 
+      display: flex;
+      align-items: center;
+    }
+
+    /* 跑马灯文字样式 - 终端日志风格 */
+    .marquee-text {
+      display: inline-block;
+      font-weight: 700;
+      color: var(--ink); 
+      font-family: var(--font-pixel), monospace; 
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-shadow: 
+        -1px -1px 0 var(--soft-white),  
+         1px -1px 0 var(--soft-white),
+        -1px  1px 0 var(--soft-white),
+         1px  1px 0 var(--soft-white);
+      animation: scroll-left 45s linear infinite; 
+    }
+
+    .retro-marquee-box:hover .marquee-text {
+      animation-play-state: paused;
+      color: var(--candy-purple);
+      cursor: default;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); } 
+    }
+
+    /* ========================================= */
+    /* 手機與平板適配 (900px 以下) - 必須放在最底部 */
+    /* ========================================= */
     @media (max-width: 900px) {
       /* 1. 主視覺網格改為單欄，縮小最外層邊距 */
       .main-grid { grid-template-columns: 1fr; }
@@ -529,7 +572,7 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       }
       .titlebar-left, .taskbar-left, .taskbar-right {
         justify-content: center;
-        flex-wrap: wrap; /* 允許過長內容換行 */
+        flex-wrap: wrap; 
       }
 
       /* 4. 歡迎橫幅：把 Logo 和文字改為上下堆疊，文字置中 */
@@ -539,16 +582,19 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
         gap: 12px;
         padding: 16px;
       }
-      .site-title { font-size: 22px; } /* 標題稍微縮小 */
+      .site-title { font-size: 22px; }
 
-      /* 5. 介紹卡片：縮小內邊距與標題字距，防止撐破卡片 */
-      .intro-card { padding: 20px 16px; }
+      /* 5. 介紹卡片：解除高度限制，縮小內邊距，防止撐破卡片 */
+      .intro-card { 
+        padding: 20px 16px; 
+        max-height: none; /* 解決手機版文字太多出現滾動條的問題 */
+      }
       .intro-title { 
         font-size: 20px; 
-        letter-spacing: 2px; /* 原本 6px 在手機上會太寬 */
+        letter-spacing: 2px; 
       }
 
-      /* 6. 行動呼籲 (CTA) 按鈕：在手機上改為上下滿版排列，更好點擊 */
+      /* 6. 行動呼籲 (CTA) 按鈕：上下滿版排列 */
       .cta-row { 
         flex-direction: column; 
         align-items: stretch; 
@@ -558,105 +604,6 @@ import CalendarWidget from '../../components/CalendarWidget.astro';
       /* 7. 跑馬燈容器：稍微縮小字體確保安全距離 */
       .marquee-text { font-size: 12px; }
     }
-    /* 平成复古风跑马灯容器 - 完美适配你的 Design System */
-.retro-marquee-box {
-  background-color: var(--soft-white); /* 使用你的柔和白底色 */
-  border: 2px dashed var(--candy-pink); /* 糖果粉虚线边框 */
-  border-radius: var(--radius-soft); /* 调用你的标准圆角 12px */
-  padding: 0 12px;
-  overflow: hidden;
-  white-space: nowrap;
-  
-  /* 关键修复 1：增加与上方留言板模块的距离 */
-  margin-top: 16px; 
-  /* 关键修复 2：确保宽度和上方组件一样撑满 */
-  width: 100%; 
-  box-sizing: border-box;
-  
-  /* 添加与上方按钮一致的复古纯色阴影 */
-  box-shadow: 2px 2px 0px var(--candy-pink); 
-  
-  height: 44px; /* 稍微加高一点点，让文字呼吸感更好 */
-  display: flex;
-  align-items: center;
-}
-
-/* 跑马灯文字样式 */
-.marquee-text {
-  display: inline-block;
-  font-weight: 500;
-  color: var(--ink-light); /* 使用你的浅墨色，更加温和耐看 */
-  
-  /* 灵魂注入：使用你定义的点阵像素字体！ */
-  font-family: var(--font-pixel), monospace; 
-  font-size: 14px;
-  letter-spacing: 1.5px;
-  
-  animation: scroll-left 14s linear infinite; /* 稍微调慢了一点点，更优雅 */
-}
-
-/* 鼠标悬浮时暂停滚动 */
-.retro-marquee-box:hover .marquee-text {
-  animation-play-state: paused;
-  color: var(--candy-purple); /* 悬浮时变色为糖果紫，增加一点小互动感 */
-  cursor: default;
-}
-
-@keyframes scroll-left {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-150%); }
-}
-/* 纯净日落渐变版跑马灯容器（移除横纹干扰） */
-.retro-marquee-box {
-  /* 去掉扫描线，只保留你设计系统里梦幻的日落渐变 */
-  background: var(--gradient-sunset);
-  
-  border: 2px dashed var(--candy-purple); 
-  border-radius: var(--radius-soft);
-  padding: 0 12px;
-  overflow: hidden;
-  white-space: nowrap;
-  
-  margin-top: 16px; 
-  width: 100%; 
-  box-sizing: border-box;
-  box-shadow: 3px 3px 0px rgba(199, 179, 232, 0.4); 
-  
-  height: 44px; 
-  display: flex;
-  align-items: center;
-}
-/* 跑马灯文字样式 - 终端日志风格 */
-.marquee-text {
-  display: inline-block;
-  font-weight: 700;
-  color: var(--ink); 
-  font-family: var(--font-pixel), monospace; 
-  font-size: 13px;
-  letter-spacing: 1.5px;
-  
-  /* 加上一圈细细的纯白描边，像复古像素贴纸一样，确保在彩色渐变底上绝对清晰可读 */
-  text-shadow: 
-    -1px -1px 0 var(--soft-white),  
-     1px -1px 0 var(--soft-white),
-    -1px  1px 0 var(--soft-white),
-     1px  1px 0 var(--soft-white);
-  
-  /* 散步模式：45秒平滑滚动，告别眼晕 */
-  animation: scroll-left 45s linear infinite; 
-}
-
-/* 鼠标悬浮时暂停滚动 */
-.retro-marquee-box:hover .marquee-text {
-  animation-play-state: paused;
-  color: var(--candy-purple);
-  cursor: default;
-}
-
-@keyframes scroll-left {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); } 
-}
   </style>
 
 </body>
