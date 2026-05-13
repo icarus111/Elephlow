@@ -745,13 +745,18 @@ import '../../styles/global.css';
     }
     .taskbar-status, .taskbar-clock { color: var(--ink); font-weight: 700; }
 
-    /* 手機與平板適配 (900px 以下) */
+   /* ========================================= */
+    /* 手機與平板適配 (900px 以下) - 關於小象專屬 */
+    /* ========================================= */
     @media (max-width: 900px) {
-      /* 1. 主視覺網格改為單欄，縮小最外層邊距 */
-      .main-grid { grid-template-columns: 1fr; }
-      .home-window { margin: 12px; }
+      /* 1. 關鍵修復：把關於頁專屬的三欄網格改為單欄，自然上下堆疊 */
+      .about-layout { 
+        grid-template-columns: 1fr; 
+        gap: 16px;
+      }
       
-      /* 2. 縮小視窗內容的留白，把空間還給文字 */
+      /* 2. 縮小最外層視窗邊距與內容留白 */
+      .home-window { margin: 12px; }
       .window-content { padding: 16px 12px; }
 
       /* 3. 頂部標題列與底部任務欄：改為上下排列，防止文字撞在一起 */
@@ -762,34 +767,26 @@ import '../../styles/global.css';
       }
       .titlebar-left, .taskbar-left, .taskbar-right {
         justify-content: center;
-        flex-wrap: wrap; /* 允許過長內容換行 */
+        flex-wrap: wrap; 
       }
 
-      /* 4. 歡迎橫幅：把 Logo 和文字改為上下堆疊，文字置中 */
-      .welcome-inner {
-        flex-direction: column;
-        text-align: center;
-        gap: 12px;
-        padding: 16px;
-      }
-      .site-title { font-size: 22px; } /* 標題稍微縮小 */
-
-      /* 5. 介紹卡片：縮小內邊距與標題字距，防止撐破卡片 */
-      .intro-card { padding: 20px 16px; }
-      .intro-title { 
-        font-size: 20px; 
-        letter-spacing: 2px; /* 原本 6px 在手機上會太寬 */
+      /* 4. 取消側邊欄的「吸頂跟隨 (sticky)」，讓手機端可以順暢往下滑動 */
+      .sticky-sidebar {
+        position: static;
       }
 
-      /* 6. 行動呼籲 (CTA) 按鈕：在手機上改為上下滿版排列，更好點擊 */
-      .cta-row { 
-        flex-direction: column; 
-        align-items: stretch; 
+      /* 5. 稍微縮小「五問五答」面板的內距與標題字距，防止撐破螢幕 */
+      .qa-card { padding: 20px 16px; }
+      .qa-title { 
+        font-size: 22px; 
+        letter-spacing: 2px; 
       }
-      .cta-button { text-align: center; }
-
-      /* 7. 跑馬燈容器：稍微縮小字體確保安全距離 */
-      .marquee-text { font-size: 12px; }
+      
+      /* 取消問答項目的負邊距，讓它在手機上乖乖待在卡片裡 */
+      .qa-item {
+        margin: 0;
+        padding: 14px 12px;
+      }
     }
   </style>
 
