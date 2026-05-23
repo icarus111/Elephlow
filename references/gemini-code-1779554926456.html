@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .masonry-layout {
+    column-count: 3; /* 设置为 3 列 */
+    column-gap: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    background: #f8f9fa;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    /* 关键属性：防止卡片被截断分到两列 */
+    break-inside: avoid; 
+  }
+
+  /* 模拟不同长度的文本撑开的高度 */
+  .h-short { height: 80px; }
+  .h-mid   { height: 130px; }
+  .h-tall  { height: 180px; }
+</style>
+</head>
+<body>
+  <div class="masonry-layout">
+    <div class="card h-mid">刊物 (中)</div>
+    <div class="card h-short">明信片 (短)</div>
+    <div class="card h-tall">独立杂志 (长)<br>由于描述文字很多<br>所以它比较长</div>
+    <div class="card h-short">小贴纸 (短)</div>
+    <div class="card h-mid">折页 (中)</div>
+    <div class="card h-short">名片 (短)</div>
+    <div class="card h-tall">厚摄影集 (长)</div>
+  </div>
+</body>
+</html>

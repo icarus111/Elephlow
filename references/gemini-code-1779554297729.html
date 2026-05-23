@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>灵感地图 | 推开部屋的门</title>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================
+       全局与背景 (千禧年手帐/日记本风格)
+    ========================================= */
+    :root {
+      --bg-gingham: repeating-linear-gradient(
+        45deg,
+        #fef0f5 25%,
+        transparent 25%,
+        transparent 75%,
+        #fef0f5 75%,
+        #fef0f5
+      ),
+      repeating-linear-gradient(
+        45deg,
+        #fef0f5 25%,
+        #fff 25%,
+        #fff 75%,
+        #fef0f5 75%,
+        #fef0f5
+      );
+      --font-pixel: 'DotGothic16', 'VT323', monospace;
+      --font-cute: 'Comic Sans MS', 'TsukuAOldMin Pr6N', 'ZCOOL KuaiLe', 'PingFang SC', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #fff;
+      background-image: var(--bg-gingham);
+      background-position: 0 0, 10px 10px;
+      background-size: 20px 20px;
+      font-family: var(--font-cute);
+      color: #5a4b51;
+      /* 可爱的星星鼠标指针 */
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%23ffb6d9" stroke="%23fff" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'), auto;
+    }
+
+    /* =========================================
+       主容器 (像一个可爱的日记本或相框)
+    ========================================= */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.9);
+      border: 3px dashed #ffb6d9;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.5), 5px 5px 15px rgba(255, 182, 217, 0.3);
+    }
+
+    /* =========================================
+       页头区域
+    ========================================= */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .header h1 {
+      font-family: var(--font-pixel);
+      color: #ff8cb3;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 0px #fff, 4px 4px 0px #ffe0ed;
+      margin: 0 0 10px 0;
+      letter-spacing: 2px;
+    }
+    .header p {
+      font-size: 13px;
+      color: #9aa;
+      border-top: 1px dashed #ffb6d9;
+      border-bottom: 1px dashed #ffb6d9;
+      padding: 10px 0;
+      display: inline-block;
+      background: #fffafa;
+    }
+
+    /* =========================================
+       分类区块
+    ========================================= */
+    .category-title {
+      font-family: var(--font-pixel);
+      font-size: 1.2rem;
+      color: #fff;
+      background: #b5e8e0;
+      display: inline-block;
+      padding: 4px 15px;
+      border-radius: 15px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      border: 2px dotted #fff;
+      box-shadow: 2px 2px 0 #8ad1c6;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+    }
+
+    /* =========================================
+       ✨ 核心：贴纸式 Link Banners ✨
+       模拟早期网页的 Blinkies / 标签条
+    ========================================= */
+    .link-sticker {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 12px 15px;
+      height: 60px;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      overflow: hidden;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+    }
+
+    .link-sticker:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    }
+
+    /* 内部虚线框（模拟缝纫线效果） */
+    .link-sticker::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px; right: 3px; bottom: 3px;
+      border: 1px dashed rgba(255,255,255,0.8);
+      pointer-events: none;
+      border-radius: 2px;
+    }
+
+    .ls-title {
+      font-family: var(--font-pixel);
+      font-size: 16px;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .ls-note {
+      font-size: 11px;
+      opacity: 0.85;
+      margin-top: 4px;
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ls-badge {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      font-family: var(--font-pixel);
+      font-size: 9px;
+      background: rgba(255,255,255,0.6);
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.8);
+      z-index: 2;
+    }
+
+    /* 贴纸风格 1：Angel Sky (蓝天白云) */
+    .style-angel {
+      background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 100%);
+      border: 2px solid #fff;
+      color: #3b5998;
+    }
+    .style-angel .ls-title::before { content: '☁️ 👼 '; }
+    .style-angel .ls-title { text-shadow: 1px 1px 0 #fff; }
+
+    /* 贴纸风格 2：Doll Pink (甜美粉红丝带) */
+    .style-doll {
+      background: repeating-linear-gradient(45deg, #ffe0ed, #ffe0ed 5px, #fff0f5 5px, #fff0f5 10px);
+      border: 2px solid #ffb6d9;
+      color: #d85a8a;
+    }
+    .style-doll .ls-title::before { content: '🎀 '; }
+    .style-doll .ls-title { text-shadow: 1px 1px 0 #fff; }
+
+    /* 贴纸风格 3：Moonlight (夜空星月) */
+    .style-moon {
+      background: #b2b2df;
+      border: 2px solid #7a7ab8;
+      color: #fff;
+    }
+    .style-moon .ls-title::before { content: '🌙 '; }
+    .style-moon .ls-title { text-shadow: 1px 1px 0 #7a7ab8; }
+    .style-moon::after { border-color: rgba(255,255,255,0.4); }
+
+    /* 贴纸风格 4：Lace Classic (复古茶色蕾丝) */
+    .style-lace {
+      background: #fdf5e6;
+      border: 2px solid #d2b48c;
+      color: #8b5a2b;
+    }
+    .style-lace .ls-title::before { content: '🧸 '; }
+    
+    /* 贴纸风格 5：Mint Check (薄荷格纹) */
+    .style-mint {
+      background: linear-gradient(90deg, #e0f7fa 50%, transparent 50%), linear-gradient(#e0f7fa 50%, #b2ebf2 50%);
+      background-size: 10px 10px;
+      border: 2px solid #fff;
+      color: #00796b;
+    }
+    .style-mint .ls-title::before { content: '✦ '; }
+    .style-mint .ls-title { text-shadow: 1px 1px 0 #fff; }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>☁️ Inspiration Map 🎀</h1>
+      <p>像一张还在生长的地图，每一条链接都是一个可以出发的路口。<br>♡ 影像 · 独立出版 · 地方记忆 · 酷儿研究 ♡</p>
+    </div>
+
+    <div id="map-content">
+      </div>
+  </div>
+
+  <script>
+    // 你的原版 JSON 数据
+    const friendsData = {
+      "categories": [
+        {
+          "id": "words-and-books", "name_zh": "字与书",
+          "links": [
+            { "title": "Openbook 閱讀誌", "url": "https://www.openbook.org.tw/", "region_zh": "台灣", "note": "目前華文圈最重要的書評媒體之一" },
+            { "title": "虛詞 p-articles", "url": "https://p-articles.com/", "region_zh": "香港", "note": "字花同系的香港文學評論平台" },
+            { "title": "字花 / 別字", "url": "https://zihua.org.hk/", "region_zh": "香港", "note": "香港文學雜誌《字花》與電子刊《別字》" },
+            { "title": "臺灣現當代作家研究資料彙編", "url": "https://cws.nmtl.gov.tw/", "region_zh": "台灣", "note": "完整作家研究檔案系統" }
+          ]
+        },
+        {
+          "id": "moving-image", "name_zh": "光影",
+          "links": [
+            { "title": "TFAI 國家電影及視聽文化中心", "url": "https://www.tfai.org.tw/zh/", "region_zh": "台灣", "note": "國家影視聽典藏與修復機構" },
+            { "title": "台灣國際紀錄片影展 TIDF", "url": "https://www.tidf.org.tw/zh-hant", "region_zh": "台灣", "note": "亞洲最重要的紀錄片影展之一" },
+            { "title": "Giloo 紀實影音", "url": "https://giloo.ist/", "region_zh": "台灣", "note": "紀錄片與議題電影串流平台" }
+          ]
+        },
+        {
+          "id": "zines-and-archives", "name_zh": "小誌与档案",
+          "links": [
+            { "title": "Barnard Zine Library", "url": "https://zines.barnard.edu/", "region_zh": "美國", "note": "女性主義 zine 圖書館的代表" },
+            { "title": "ZINE COOP", "url": "https://zinecoop.org/en", "region_zh": "香港", "note": "香港 zine 合作社" },
+            { "title": "Taipei Art Book Fair 草率季", "url": "https://taipeiartbookfair.com/", "region_zh": "台灣", "note": "亞洲最大的藝術書展之一" }
+          ]
+        },
+        {
+          "id": "womens-place", "name_zh": "女性的位置",
+          "links": [
+            { "title": "女書店", "url": "https://www.fembooks.com.tw/", "region_zh": "台灣", "note": "華語圈第一家女性主義書店" },
+            { "title": "婦女新知基金會", "url": "https://www.awakening.org.tw/", "region_zh": "台灣", "note": "資深性別倡議組織" },
+            { "title": "Women Overseas 她鄉", "url": "https://womenoverseas.com/", "region_zh": "華語離散", "note": "海外華語女性社群" }
+          ]
+        }
+      ]
+    };
+
+    // 5种对应的样式池
+    const stickerStyles = ['style-angel', 'style-doll', 'style-moon', 'style-lace', 'style-mint'];
+    let styleIndex = 0;
+
+    const contentDiv = document.getElementById('map-content');
+
+    friendsData.categories.forEach(cat => {
+      // 创建分类标题
+      const catTitle = document.createElement('div');
+      catTitle.className = 'category-title';
+      catTitle.innerText = `꒰ ${cat.name_zh} ꒱`;
+      contentDiv.appendChild(catTitle);
+
+      // 创建链接网格
+      const grid = document.createElement('div');
+      grid.className = 'links-grid';
+
+      cat.links.forEach(link => {
+        // 循环分配贴纸样式
+        const currentStyle = stickerStyles[styleIndex % stickerStyles.length];
+        styleIndex++;
+
+        // 构建单个贴纸的 HTML
+        const a = document.createElement('a');
+        a.href = link.url;
+        a.target = '_blank';
+        a.className = `link-sticker ${currentStyle}`;
+        
+        a.innerHTML = `
+          <div class="ls-title">${link.title}</div>
+          <div class="ls-note">${link.note}</div>
+          <div class="ls-badge">${link.region_zh}</div>
+        `;
+        
+        grid.appendChild(a);
+      });
+
+      contentDiv.appendChild(grid);
+    });
+  </script>
+</body>
+</html>

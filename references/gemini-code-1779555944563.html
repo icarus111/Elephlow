@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>靈感地圖 | elephlow</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=DotGothic16&family=Inter:wght@400;500;600&family=Bungee&family=M+PLUS+Rounded+1c:wght@400;700&family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+
+  <style>
+    /* ====================================
+       elephlow.cc — Heisei Retro Design System 
+    ==================================== */
+    :root {
+      --cream-paper: #FFF9E8; --soft-white: #FFFCF5;
+      --ink: #2A1F18; --ink-light: #6B5847;
+      --candy-cream: #FFE9B6; --candy-peach: #FFC8C8;
+      --candy-pink: #FFB6D9; --candy-purple: #C7B3E8;
+      --candy-aqua: #B5E8E0; --candy-mint: #C8E9B0;
+      
+      --gradient-sunset: linear-gradient(135deg, #FFB6D9 0%, #C7B3E8 50%, #B5E8E0 100%);
+      
+      --font-serif-sc: 'Noto Serif SC', serif;
+      --font-serif-tc: 'Noto Serif TC', serif;
+      --font-pixel: 'DotGothic16', monospace;
+      --font-bubble: 'Bungee', cursive;
+      --font-rounded: 'M PLUS Rounded 1c', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      overflow-x: hidden;
+      background-color: var(--cream-paper);
+      background-image:
+        repeating-linear-gradient(90deg, transparent 0, transparent 24px, rgba(200, 233, 176, 0.22) 24px, rgba(200, 233, 176, 0.22) 52px, transparent 52px, transparent 80px, rgba(255, 182, 217, 0.18) 80px, rgba(255, 182, 217, 0.18) 96px, transparent 96px, transparent 120px, rgba(181, 232, 224, 0.22) 120px, rgba(181, 232, 224, 0.22) 168px, transparent 168px, transparent 196px),
+        repeating-linear-gradient(0deg, transparent 0, transparent 32px, rgba(199, 179, 232, 0.18) 32px, rgba(199, 179, 232, 0.18) 56px, transparent 56px, transparent 100px, rgba(255, 233, 182, 0.22) 100px, rgba(255, 233, 182, 0.22) 124px, transparent 124px, transparent 156px);
+      color: var(--ink);
+      font-family: var(--font-serif-sc), var(--font-rounded);
+      line-height: 1.7;
+    }
+
+    a { color: var(--candy-purple); text-decoration: none; }
+
+    /* ====================================
+       共用外殼 (Window Shell)
+    ==================================== */
+    .home-window {
+      max-width: 1180px;
+      width: calc(100% - 24px);
+      margin: 24px auto;
+      background: var(--soft-white);
+      border: 2px dashed var(--candy-purple);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(199, 179, 232, 0.35);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .titlebar-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .titlebar-right { display: flex; gap: 4px; }
+    .lang-link { padding: 2px 8px; color: var(--ink); border-radius: 3px; background: transparent; }
+    .lang-link:hover, .lang-active { background: var(--candy-cream); font-weight: 700; }
+
+    .window-taskbar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px dashed var(--candy-purple);
+      font-family: var(--font-pixel);
+      font-size: 11px;
+      color: var(--ink);
+    }
+    .taskbar-left, .taskbar-right { display: flex; gap: 12px; align-items: center; }
+    .taskbar-start { background: var(--candy-cream); padding: 2px 8px; border-radius: 3px; border: 1px dashed var(--candy-purple); }
+
+    /* ====================================
+       核心佈局：左側選單 + 右側地圖
+    ==================================== */
+    .window-content { padding: 24px; }
+    .main-grid {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .left-column, .center-column { min-width: 0; max-width: 100%; }
+
+    /* --- 左側組件 (復用主頁風格) --- */
+    .menu-card {
+      background: var(--soft-white);
+      border: 1.5px dashed var(--candy-mint);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.4);
+      margin-bottom: 16px;
+    }
+    .menu-title {
+      font-family: var(--font-pixel); font-size: 12px; text-align: center;
+      padding: 8px 4px; margin: 0 0 6px; color: var(--ink-light);
+      background: var(--candy-cream); border-radius: 6px;
+    }
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-list li { margin-bottom: 4px; }
+    .menu-list a {
+      display: block; padding: 10px 12px; text-align: center;
+      font-family: var(--font-rounded); font-weight: 700; font-size: 13px; color: var(--ink);
+      border-radius: 8px; border: 1.5px dashed var(--candy-purple); transition: transform 0.15s;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+    }
+    .menu-list a:hover { transform: translate(-2px, -2px); box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4); }
+    .menu-mint { background: var(--candy-mint); }
+    .menu-aqua { background: var(--candy-aqua); }
+    .menu-pink { background: var(--candy-pink); }
+    .menu-purple { background: var(--candy-purple); }
+    .menu-cream { background: var(--candy-cream); }
+
+    .retro-marquee-box {
+      background: var(--gradient-sunset); border: 2px dashed var(--candy-purple); 
+      border-radius: 12px; padding: 0 12px; overflow: hidden; white-space: nowrap; 
+      width: 100%; box-shadow: 3px 3px 0px rgba(199, 179, 232, 0.4); height: 44px; 
+      display: flex; align-items: center;
+    }
+    .marquee-text {
+      display: inline-block; font-weight: 700; color: var(--ink); 
+      font-family: var(--font-pixel), monospace; font-size: 13px; letter-spacing: 1.5px;
+      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
+      animation: scroll-left 45s linear infinite; 
+    }
+    @keyframes scroll-left { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+
+    /* --- 右側：靈感地圖 Hero (復用 welcome-banner) --- */
+    .welcome-banner {
+      position: relative; background: var(--candy-mint);
+      background-image: repeating-linear-gradient(135deg, var(--candy-mint), var(--candy-mint) 16px, var(--candy-aqua) 16px, var(--candy-aqua) 32px, var(--candy-cream) 32px, var(--candy-cream) 48px, var(--candy-pink) 48px, var(--candy-pink) 64px);
+      padding: 0; border-radius: 12px; border: 2px dashed var(--candy-purple);
+      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.5); margin-bottom: 24px; overflow: hidden;
+    }
+    .corner { position: absolute; font-size: 18px; z-index: 2; color: var(--candy-purple); }
+    .corner-tl { top: 6px; left: 10px; } .corner-tr { top: 6px; right: 10px; color: var(--candy-pink); }
+    .corner-bl { bottom: 6px; left: 10px; color: var(--candy-mint); } .corner-br { bottom: 6px; right: 10px; color: var(--candy-peach); }
+    .welcome-inner {
+      background: var(--soft-white); margin: 6px; padding: 20px 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;
+    }
+    .site-title { font-family: var(--font-bubble); font-size: 32px; color: var(--ink-light); text-shadow: 2px 2px 0 var(--candy-peach); margin: 4px 0; line-height: 1.1; letter-spacing: 1px; }
+    .welcome-divider { font-family: var(--font-pixel); font-size: 11px; color: var(--candy-purple); letter-spacing: 4px; margin: 6px 0; }
+    .welcome-line2 { font-family: var(--font-pixel); font-size: 11px; color: var(--ink-light); margin: 0; }
+
+    /* =========================================================
+       ✨ Bento Box & 無黑線貼紙 (Heisei Retro Clean) ✨
+    ========================================================= */
+    .cat-section { margin-bottom: 32px; }
+    .sec-header {
+      width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; 
+      border: 2px dashed; border-radius: 10px; text-align: left; background: var(--soft-white); margin-bottom: 16px;
+    }
+    .sh-num { width: 28px; height: 28px; background: var(--ink); color: #fff; font-family: var(--font-pixel); display: grid; place-items: center; border-radius: 5px; font-size: 11px;}
+    .sh-name { font-family: var(--font-rounded); font-weight: 700; font-size: 15px; letter-spacing: 1px;}
+
+    .banner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-auto-rows: 90px; 
+      gap: 16px;
+      grid-auto-flow: dense; 
+    }
+
+    .featured-wide { grid-column: span 2; }
+    .featured-large { grid-column: span 2; grid-row: span 2; }
+
+    .link-sticker {
+      position: relative; display: flex; flex-direction: column; justify-content: center;
+      padding: 12px 16px; height: 100%; border-radius: 8px; text-decoration: none !important;
+      transition: transform 0.2s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.2s;
+      overflow: hidden;
+      /* 移除黑線，改為純淨白邊 + 糖果色柔和陰影 */
+      border: 2px solid #fff; 
+      box-shadow: 4px 4px 0 rgba(199, 179, 232, 0.35);
+    }
+    .link-sticker:hover { 
+      transform: translate(-2px, -3px) rotate(-1deg); 
+      box-shadow: 6px 6px 0 rgba(199, 179, 232, 0.5); 
+      z-index: 10;
+    }
+
+    .link-sticker::after {
+      content: ''; position: absolute; inset: 4px;
+      border: 1.5px dashed rgba(255,255,255,0.85); border-radius: 4px; pointer-events: none; z-index: 10;
+    }
+
+    .ls-head { display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 2; gap: 8px;}
+    
+    /* 標題套用主頁按鈕的 text-shadow 白邊技巧，無 emoji */
+    .ls-title { 
+      font-family: var(--font-pixel); font-size: 15px; font-weight: bold; 
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+      text-shadow: -1.5px -1.5px 0 rgba(255,255,255,0.8), 1.5px -1.5px 0 rgba(255,255,255,0.8), -1.5px 1.5px 0 rgba(255,255,255,0.8), 1.5px 1.5px 0 rgba(255,255,255,0.8);
+      padding: 2px 0;
+    }
+    .ls-region { 
+      font-family: var(--font-pixel); font-size: 10px; padding: 2px 6px; 
+      background: rgba(255,255,255,0.8); color: var(--ink); border: 1px dashed var(--candy-purple); border-radius: 4px; flex-shrink: 0;
+    }
+    .ls-note { 
+      font-family: var(--font-serif-tc); font-size: 12px; margin-top: 6px; 
+      position: relative; z-index: 2;
+      background: rgba(255,255,255,0.7); padding: 2px 6px; border-radius: 4px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      border: 1px dotted rgba(255,255,255,0.9);
+    }
+
+    .featured-large { justify-content: flex-start; padding: 20px; }
+    .featured-large .ls-title { font-size: 18px; white-space: normal; display: inline-block; margin-bottom: 8px;}
+    .featured-large .ls-note { font-size: 13px; -webkit-line-clamp: 4; line-height: 1.6;}
+
+    /* 主題背景 (保留底紋，修改陰影顏色與文字顏色使之協調) */
+    .theme-angel { background-color: var(--candy-aqua); background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.5) 2px, rgba(255,255,255,0.5) 4px); color: #2b5c54; box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.6); }
+    .theme-doll { background-color: var(--candy-pink); background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.4) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0.4)), repeating-linear-gradient(45deg, rgba(255,255,255,0.4) 25%, #FFF0F6 25%, #FFF0F6 75%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0.4)); background-position: 0 0, 10px 10px; background-size: 20px 20px; color: #8c2a54; box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.6); }
+    .theme-moon { background-color: var(--candy-purple); background-image: radial-gradient(rgba(255,255,255,0.6) 20%, transparent 20%), radial-gradient(rgba(255,255,255,0.6) 20%, transparent 20%); background-size: 16px 16px; background-position: 0 0, 8px 8px; color: #3f2f5c; box-shadow: 4px 4px 0 rgba(199, 179, 232, 0.6); }
+    .theme-lace { background-color: var(--candy-cream); background-image: linear-gradient(rgba(210, 180, 140, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(210, 180, 140, 0.3) 1px, transparent 1px); background-size: 12px 12px; color: #6b441c; box-shadow: 4px 4px 0 rgba(255, 233, 182, 0.8); }
+    .theme-mint { background-color: var(--candy-mint); background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255,255,255,0.6) 10px, rgba(255,255,255,0.6) 20px); color: #3b5c2b; box-shadow: 4px 4px 0 rgba(200, 233, 176, 0.6); }
+
+    @media (max-width: 900px) {
+      .home-window { margin: 12px auto; width: calc(100% - 16px); }
+      .main-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      .window-content { padding: 16px 12px; }
+      .window-titlebar, .window-taskbar { flex-direction: column; gap: 8px; text-align: center; }
+      .titlebar-left, .taskbar-left, .taskbar-right { justify-content: center; flex-wrap: wrap; }
+      .featured-wide, .featured-large { grid-column: span 1; grid-row: span 1; }
+      .banner-grid { grid-auto-rows: minmax(90px, auto); }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="home-window">
+
+    <header class="window-titlebar">
+      <div class="titlebar-left">
+        <span class="title-dots">● ● ●</span>
+        <span class="titlebar-text">elephlow.cc / 推開部屋的門</span>
+      </div>
+      <div class="titlebar-right">
+        <a href="/zh-cn/" class="lang-link">简</a>
+        <a href="/" class="lang-link lang-active">繁</a>
+        <a href="/en/" class="lang-link">EN</a>
+      </div>
+    </header>
+
+    <div class="window-content">
+      <div class="main-grid">
+
+        <aside class="left-column">
+          <div class="menu-card">
+            <h3 class="menu-title">▼ MENU ▼</h3>
+            <ul class="menu-list">
+              <li><a href="/zh-tw/" class="menu-mint">🏠 主頁</a></li>
+              <li><a href="/zh-tw/about" class="menu-pink">✍️ 創作者說</a></li>
+              <li><a href="/zh-tw/archive" class="menu-aqua">📚 往期目錄</a></li>
+              <li><a href="/zh-tw/links" class="menu-cream" style="background:var(--candy-peach);">🗺️ 靈感地圖</a></li>
+              <li><a href="/zh-tw/guestbook" class="menu-purple">💬 留言板</a></li>
+            </ul>
+          </div>
+
+          <div class="retro-marquee-box">
+            <div class="marquee-text">
+              >> SYSTEM.MSG: [靈感地圖] 收錄獨立出版、影像、酷兒研究等入口_ // ENDS_ON:2026.05.31// ✴ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              >> SYSTEM.MSG: [靈感地圖] 收錄獨立出版、影像、酷兒研究等入口_ // ENDS_ON:2026.05.31// ✴
+            </div>
+          </div>
+        </aside>
+
+        <section class="center-column">
+          
+          <div class="welcome-banner">
+            <span class="corner corner-tl">✿</span><span class="corner corner-tr">✦</span>
+            <span class="corner corner-bl">☘</span><span class="corner corner-br">♡</span>
+            <div class="welcome-inner">
+              <h1 class="site-title">Inspiration Map</h1>
+              <div class="welcome-divider">⋆ ˚｡⋆ ୨ ˚୧ ⋆ ˚｡⋆</div>
+              <p class="welcome-line2">像一張還在生長的地圖，每一條連結都是一個可以出發的路口。</p>
+            </div>
+          </div>
+
+          <div class="cat-section">
+            <div class="sec-header" style="border-color:var(--candy-pink); box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.4);">
+              <span class="sh-num">01</span><span class="sh-name" style="color:var(--ink);">字與書 Words & Books</span>
+            </div>
+            
+            <div class="banner-grid">
+              <a class="link-sticker featured-large theme-lace" href="#">
+                <div class="ls-head"><span class="ls-title">Openbook 閱讀誌</span><span class="ls-region">台灣</span></div>
+                <span class="ls-note">目前華文圈最重要的書評媒體之一。年度好書評選是我每年補充書單的重要參考來源。</span>
+              </a>
+
+              <a class="link-sticker theme-doll" href="#">
+                <div class="ls-head"><span class="ls-title">OKAPI 閱讀生活誌</span><span class="ls-region">台灣</span></div>
+                <span class="ls-note">博客來經營，編輯人物訪談優質</span>
+              </a>
+              
+              <a class="link-sticker theme-angel" href="#">
+                <div class="ls-head"><span class="ls-title">聯合文學 unitas</span><span class="ls-region">台灣</span></div>
+                <span class="ls-note">老牌文學雜誌官網</span>
+              </a>
+
+              <a class="link-sticker featured-wide theme-mint" href="#">
+                <div class="ls-head"><span class="ls-title">臺灣現當代作家研究資料彙編</span><span class="ls-region">台灣</span></div>
+                <span class="ls-note">完整作家研究檔案系統，做文史梳理时必备的庞大数据库。</span>
+              </a>
+
+              <a class="link-sticker theme-moon" href="#">
+                <div class="ls-head"><span class="ls-title">虛詞 p-articles</span><span class="ls-region">香港</span></div>
+                <span class="ls-note">字花同系的香港文學評論平台</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="cat-section">
+            <div class="sec-header" style="border-color:var(--candy-purple); box-shadow: 4px 4px 0 rgba(199, 179, 232, 0.4);">
+              <span class="sh-num">02</span><span class="sh-name" style="color:var(--ink);">小誌与档案 Zines & Archives</span>
+            </div>
+            
+            <div class="banner-grid">
+              <a class="link-sticker featured-wide theme-moon" href="#">
+                <div class="ls-head"><span class="ls-title">Barnard Zine Library</span><span class="ls-region">美國 · 紐約</span></div>
+                <span class="ls-note">女性主義 zine 圖書館的代表，提供了海量的历史小志扫描件。</span>
+              </a>
+
+              <a class="link-sticker theme-lace" href="#">
+                <div class="ls-head"><span class="ls-title">Queer Zine Archive</span><span class="ls-region">美國</span></div>
+                <span class="ls-note">酷兒 zine 線上典藏</span>
+              </a>
+              
+              <a class="link-sticker featured-large theme-mint" href="#">
+                <div class="ls-head"><span class="ls-title">Taipei Art Book Fair 草率季</span><span class="ls-region">台灣</span></div>
+                <span class="ls-note">亞洲最大的藝術書展之一。每年都会汇聚海内外极具独立精神的创作者。</span>
+              </a>
+
+              <a class="link-sticker theme-angel" href="#">
+                <div class="ls-head"><span class="ls-title">ZINE COOP</span><span class="ls-region">香港</span></div>
+                <span class="ls-note">香港 zine 合作社</span>
+              </a>
+              
+              <a class="link-sticker theme-doll" href="#">
+                <div class="ls-head"><span class="ls-title">Library of Congress Zine</span><span class="ls-region">美國</span></div>
+                <span class="ls-note">國會圖書館的 zine 收藏</span>
+              </a>
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </div>
+
+    <footer class="window-taskbar">
+      <div class="taskbar-left">
+        <span class="taskbar-start">⊞ START</span>
+        <span class="taskbar-item">▣ 靈感地圖</span>
+      </div>
+      <div class="taskbar-right">
+        <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
+        <span class="taskbar-clock" id="clock">--:--</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script is:inline>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('clock');
+      if (el) el.innerText = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+  </script>
+</body>
+</html>

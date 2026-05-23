@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .bento-layout {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4等分网格 */
+    grid-auto-rows: 80px; /* 基础高度 */
+    gap: 16px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    background: #f8f9fa;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+  }
+
+  /* 核心：高光卡片的跨列/跨行设置 */
+  .featured-wide {
+    grid-column: span 2; /* 横跨2列 */
+    background: #e9ecef;
+    border-style: solid;
+  }
+  
+  .featured-large {
+    grid-column: span 2; /* 横跨2列 */
+    grid-row: span 2;    /* 纵跨2行 */
+    background: #dee2e6;
+    border-style: solid;
+  }
+</style>
+</head>
+<body>
+  <div class="bento-layout">
+    <div class="card featured-large">🔥 重点推荐大图块 (占 2x2)</div>
+    <div class="card">普通链接</div>
+    <div class="card">普通链接</div>
+    <div class="card featured-wide">⭐ 特别频道 (占 2x1)</div>
+    <div class="card">普通链接</div>
+    <div class="card">普通链接</div>
+    <div class="card">普通链接</div>
+    <div class="card">普通链接</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>灵感地图 | 推开部屋的门</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=DotGothic16&family=Inter:wght@400;500;600&family=Bungee&family=M+PLUS+Rounded+1c:wght@400;700&family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+
+  <style>
+    /* ====================================
+       elephlow.cc — Heisei Retro Design System (原样保留)
+    ==================================== */
+    :root {
+      --cream-paper: #FFF9E8;
+      --soft-white: #FFFCF5;
+      --ink: #2A1F18;
+      --ink-light: #6B5847;
+
+      --candy-cream: #FFE9B6;
+      --candy-peach: #FFC8C8;
+      --candy-pink: #FFB6D9;
+      --candy-purple: #C7B3E8;
+      --candy-aqua: #B5E8E0;
+      --candy-mint: #C8E9B0;
+
+      --font-serif-sc: 'Noto Serif SC', serif;
+      --font-serif-tc: 'Noto Serif TC', serif;
+      --font-pixel: 'DotGothic16', monospace;
+      --font-sans-en: 'Inter', sans-serif;
+      --font-rounded: 'M PLUS Rounded 1c', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream-paper);
+      background-image:
+        repeating-linear-gradient(90deg, transparent 0, transparent 24px, rgba(200, 233, 176, 0.22) 24px, rgba(200, 233, 176, 0.22) 52px, transparent 52px, transparent 80px, rgba(255, 182, 217, 0.18) 80px, rgba(255, 182, 217, 0.18) 96px, transparent 96px, transparent 120px, rgba(181, 232, 224, 0.22) 120px, rgba(181, 232, 224, 0.22) 168px, transparent 168px, transparent 196px),
+        repeating-linear-gradient(0deg, transparent 0, transparent 32px, rgba(199, 179, 232, 0.18) 32px, rgba(199, 179, 232, 0.18) 56px, transparent 56px, transparent 100px, rgba(255, 233, 182, 0.22) 100px, rgba(255, 233, 182, 0.22) 124px, transparent 124px, transparent 156px);
+      color: var(--ink);
+      font-family: var(--font-serif-sc), var(--font-rounded);
+      line-height: 1.7;
+      padding: 24px;
+    }
+
+    a { color: var(--candy-purple); text-decoration: none; }
+
+    /* ====================================
+       原版外壳结构 (Window Shell)
+    ==================================== */
+    .home-window {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--soft-white);
+      border: 3px dashed var(--candy-mint);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(181,232,224,.55);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* titlebar */
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-radius: 13px 13px 0 0;
+      font-family: var(--font-pixel); font-size: 13px; color: var(--ink);
+    }
+    .tl-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .lang-link { padding: 2px 8px; color: var(--ink); border-radius: 3px; }
+    .lang-active { background: rgba(255,255,255,.6); font-weight: 700; text-decoration: none;}
+
+    /* browser strip */
+    .browser-strip {
+      display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
+      padding: 10px 16px; background: var(--candy-cream);
+      border-bottom: 2px dashed var(--candy-peach);
+      font-family: var(--font-pixel); font-size: 13px;
+    }
+    .addr-box {
+      display: flex; align-items: center; gap: 7px; padding: 6px 10px;
+      background: var(--soft-white); border: 1.5px dashed var(--candy-purple); border-radius: 8px;
+    }
+    .addr-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(0,0,0,.1); }
+    .mini-tabs span {
+      padding: 5px 8px; background: rgba(255,255,255,.62);
+      border: 1px dashed var(--candy-pink); border-radius: 6px 6px 0 0; margin-left: 4px;
+    }
+
+    /* page nav */
+    .page-nav {
+      display: flex; justify-content: center; gap: 10px;
+      padding: 12px 20px; background: var(--soft-white);
+      border-bottom: 2px dashed rgba(199,179,232,.35);
+      font-family: var(--font-rounded); font-size: 13px;
+    }
+    .pn { padding: 4px 12px; border-radius: 20px; font-weight: 700; color: var(--ink); transition: transform .12s; }
+    .pn:hover { transform: translate(-1px,-1px); box-shadow: 2px 2px 0 rgba(0,0,0,.1); text-decoration: none; }
+    .pn-active { background: var(--candy-peach); }
+    .pn-mint { background: var(--candy-mint); }
+    .pn-pink { background: var(--candy-pink); }
+    .pn-aqua { background: var(--candy-aqua); }
+    .pn-purple { background: var(--candy-purple); }
+
+    /* win body & hero */
+    .win-body { padding: 28px; }
+    .hero {
+      border: 2px solid var(--candy-purple); border-radius: 12px;
+      background: var(--soft-white); box-shadow: 5px 5px 0 rgba(199,179,232,.4);
+      padding: 36px 40px 28px; text-align: center; margin-bottom: 28px; position: relative;
+    }
+    .hero-kicker { font-family: var(--font-pixel); color: var(--candy-purple); font-size: 12px; margin-bottom: 8px;}
+    .hero-title { font-family: var(--font-rounded); font-size: 36px; text-shadow: 2px 2px 0 var(--candy-mint); margin-bottom: 8px;}
+    .hero-tagline { font-family: var(--font-serif-tc); color: var(--ink-light); margin-bottom: 8px;}
+    .hero-intro { font-size: 13px; color: rgba(107,88,71,.7); font-style: italic; max-width: 600px; margin: 0 auto 16px;}
+    .corner { position: absolute; font-family: monospace; font-size: 18px; color: var(--candy-purple); }
+    .corner-tl { top: 6px; left: 8px; } .corner-tr { top: 6px; right: 8px; }
+    .corner-bl { bottom: 6px; left: 8px; } .corner-br { bottom: 6px; right: 8px; }
+
+    /* section header */
+    .sections-list { display: flex; flex-direction: column; gap: 16px; }
+    .cat-section { border-radius: 10px; }
+    .sec-header {
+      width: 100%; display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border: 2px dashed; border-radius: 10px;
+      cursor: pointer; text-align: left; background: var(--soft-white);
+      transition: all .2s; margin-bottom: 16px;
+    }
+    .sh-num { width: 30px; height: 30px; background: var(--ink); color: #fff; font-family: var(--font-pixel); display: grid; place-items: center; border-radius: 5px; font-size: 12px;}
+    .sh-icon { font-size: 20px; }
+    .sh-name { font-family: var(--font-rounded); font-weight: 700; font-size: 16px; }
+    .sh-alt { font-family: var(--font-serif-tc); font-size: 12px; color: var(--ink-light); margin-left: 8px;}
+
+    /* =========================================================
+       ✨ 核心魔法：Bento Box (便当盒) 网格布局 ✨
+    ========================================================= */
+    .banner-grid {
+      display: grid;
+      /* 基础列宽约 220px，自动填充 */
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      /* 基础行高固定为 76px */
+      grid-auto-rows: 76px;
+      gap: 16px;
+      /* dense 魔法：让后面的小卡片自动填补大卡片留下的空隙 */
+      grid-auto-flow: dense; 
+    }
+
+    /* 默认贴纸（占 1x1） */
+    .link-sticker {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px 16px;
+      height: 100%; /* 高度继承自网格 */
+      border-radius: 6px;
+      text-decoration: none !important;
+      transition: transform 0.15s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.15s;
+      overflow: hidden;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.06);
+    }
+
+    /* --- 策展高光类名 --- */
+    
+    /* 宽版贴纸（占 2列 1行），适合标题比较长的站点 */
+    .featured-wide {
+      grid-column: span 2;
+    }
+
+    /* 大方块贴纸（占 2列 2行），适合核心推荐站点 */
+    .featured-large {
+      grid-column: span 2;
+      grid-row: span 2;
+      justify-content: space-evenly; /* 让内部元素在大方块里均匀散开 */
+      padding: 20px;
+    }
+    
+    /* 调整大方块里的文字尺寸让它更霸气 */
+    .featured-large .ls-title {
+      font-size: 22px;
+      white-space: normal; /* 允许换行 */
+    }
+    .featured-large .ls-note {
+      font-size: 13px;
+      white-space: normal; /* 允许换行 */
+      line-height: 1.6;
+    }
+
+    /* 移动端适配：取消所有跨列，变回单列瀑布 */
+    @media (max-width: 650px) {
+      .featured-wide, .featured-large {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+      .featured-large .ls-title { font-size: 16px; white-space: nowrap; }
+      .featured-large .ls-note { font-size: 11px; white-space: nowrap; }
+      .banner-grid { grid-auto-rows: auto; min-height: 76px; }
+    }
+
+    /* 贴纸悬浮动画与内圈虚线 */
+    .link-sticker:hover { transform: translate(-2px, -3px) rotate(-1deg); box-shadow: 5px 5px 0 rgba(0,0,0,0.12); }
+    .link-sticker::after {
+      content: ''; position: absolute; inset: 4px;
+      border: 1px dashed rgba(255,255,255,0.85); border-radius: 3px; pointer-events: none; z-index: 10;
+    }
+
+    /* 贴纸内部排版 */
+    .ls-head { display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 2; gap: 8px;}
+    .ls-title { font-family: var(--font-pixel); font-size: 15px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 1px;}
+    .ls-region { font-family: var(--font-pixel); font-size: 10px; padding: 2px 6px; background: rgba(255,255,255,0.7); border-radius: 4px; border: 1px solid rgba(255,255,255,0.9); flex-shrink: 0;}
+    .ls-note { font-family: var(--font-serif-tc); font-size: 11px; margin-top: 4px; opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: relative; z-index: 2;}
+
+    /* 五种主题配色 */
+    .theme-angel { background: var(--candy-aqua); border: 2px solid #FFF; color: #3B6B63; }
+    .theme-angel .ls-title::before { content: '☁️ '; }
+    .theme-doll { background: repeating-linear-gradient(45deg, var(--candy-pink), var(--candy-pink) 6px, #FFF0F6 6px, #FFF0F6 12px); border: 2px solid var(--candy-pink); color: #A34873; }
+    .theme-doll .ls-title::before { content: '🎀 '; }
+    .theme-doll .ls-title, .theme-doll .ls-note { text-shadow: 1px 1px 0 #FFF; background: rgba(255,255,255,0.6); padding: 0 4px; border-radius: 4px; display: inline-block;}
+    .theme-moon { background: var(--candy-purple); border: 2px solid #FFF; color: #4A3B69; }
+    .theme-moon .ls-title::before { content: '🌙 '; }
+    .theme-lace { background: var(--candy-cream); border: 2px dotted #D2B48C; color: #8B5A2B; }
+    .theme-lace .ls-title::before { content: '🧸 '; }
+    .theme-lace::after { border-color: rgba(139, 90, 43, 0.2); }
+    .theme-mint { background: var(--candy-mint); border: 2px solid #FFF; color: #4C6B3B; }
+    .theme-mint .ls-title::before { content: '✦ '; }
+
+    /* footer taskbar */
+    .taskbar {
+      background: var(--candy-mint); padding: 8px 16px; display: flex; justify-content: space-between;
+      border-radius: 0 0 13px 13px; font-family: var(--font-pixel); font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<main class="home-window">
+  <header class="window-titlebar">
+    <div class="tl-left"><span class="title-dots">● ● ●</span><span class="tl-text">elephlow.cc / 灵感地图</span></div>
+    <div class="tl-right"><a href="#" class="lang-link lang-active">简</a></div>
+  </header>
+  <div class="browser-strip">
+    <div class="addr-box">
+      <span class="addr-dot" style="background:var(--candy-pink)"></span>
+      <span class="addr-dot" style="background:var(--candy-cream)"></span>
+      <span class="addr-dot" style="background:var(--candy-mint)"></span>
+      <span class="addr-text">https://elephlow.cc/zh-cn/links</span>
+    </div>
+  </div>
+  <nav class="page-nav">
+    <span class="pn pn-active">灵感地图</span>
+  </nav>
+
+  <div class="win-body">
+    <div class="cat-section">
+      <button class="sec-header" style="border-color:var(--candy-pink); box-shadow: 4px 4px 0 var(--candy-pink);">
+        <span class="sh-num">01</span><span class="sh-icon">📖</span><span class="sh-name">字与书</span>
+      </button>
+      
+      <div class="banner-grid">
+        
+        <a class="link-sticker featured-large theme-lace" href="#">
+          <div class="ls-head">
+            <span class="ls-title">Openbook 閱讀誌</span>
+            <span class="ls-region">台灣</span>
+          </div>
+          <span class="ls-note">目前華文圈最重要的書評媒體之一，内容详实且深度极高。每天必看的文艺指南。</span>
+        </a>
+
+        <a class="link-sticker theme-angel" href="#">
+          <div class="ls-head"><span class="ls-title">虛詞 p-articles</span><span class="ls-region">香港</span></div>
+          <span class="ls-note">香港文學評論平台</span>
+        </a>
+        
+        <a class="link-sticker theme-moon" href="#">
+          <div class="ls-head"><span class="ls-title">聯合文學 unitas</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">老牌文學雜誌官網</span>
+        </a>
+
+        <a class="link-sticker featured-wide theme-mint" href="#">
+          <div class="ls-head"><span class="ls-title">臺灣現當代作家研究資料彙編</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">完整作家研究檔案系統，数据库极为庞大</span>
+        </a>
+
+        <a class="link-sticker theme-doll" href="#">
+          <div class="ls-head"><span class="ls-title">每天為你讀一首詩</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">華語現代詩日更</span>
+        </a>
+        
+        <a class="link-sticker theme-angel" href="#">
+          <div class="ls-head"><span class="ls-title">字花 / 別字</span><span class="ls-region">香港</span></div>
+          <span class="ls-note">香港文學雜誌</span>
+        </a>
+
+      </div>
+    </div>
+    <br><br>
+
+    <div class="cat-section">
+      <button class="sec-header" style="border-color:var(--candy-aqua); box-shadow: 4px 4px 0 var(--candy-aqua);">
+        <span class="sh-num">02</span><span class="sh-icon">🎞️</span><span class="sh-name">光影</span>
+      </button>
+      
+      <div class="banner-grid">
+        
+        <a class="link-sticker theme-doll" href="#">
+          <div class="ls-head"><span class="ls-title">TFAI</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">國家影視聽典藏機構</span>
+        </a>
+
+        <a class="link-sticker featured-large theme-moon" href="#">
+          <div class="ls-head">
+            <span class="ls-title">Giloo 紀實影音</span>
+            <span class="ls-region">台灣</span>
+          </div>
+          <span class="ls-note">紀錄片與議題電影串流平台，选片眼光非常独到，独立影像爱好者的精神老家。</span>
+        </a>
+
+        <a class="link-sticker theme-mint" href="#">
+          <div class="ls-head"><span class="ls-title">香港影評庫</span><span class="ls-region">香港</span></div>
+          <span class="ls-note">影評資料庫</span>
+        </a>
+
+        <a class="link-sticker featured-wide theme-angel" href="#">
+          <div class="ls-head"><span class="ls-title">台灣國際紀錄片影展 TIDF</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">亞洲最重要的紀錄片影展之一</span>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="taskbar">
+    <div>⊞ START ▣ 灵感地图</div>
+  </footer>
+</main>
+
+</body>
+</html>

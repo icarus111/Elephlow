@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>灵感地图 | 平成复古便当盒布局</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=DotGothic16&family=Inter:wght@400;500;600&family=Bungee&family=M+PLUS+Rounded+1c:wght@400;700&family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+
+  <style>
+    /* ====================================
+       elephlow.cc — Heisei Retro Design System 
+    ==================================== */
+    :root {
+      --cream-paper: #FFF9E8; --soft-white: #FFFCF5;
+      --ink: #2A1F18; --ink-light: #6B5847;
+      --candy-cream: #FFE9B6; --candy-peach: #FFC8C8;
+      --candy-pink: #FFB6D9; --candy-purple: #C7B3E8;
+      --candy-aqua: #B5E8E0; --candy-mint: #C8E9B0;
+      
+      --font-serif-sc: 'Noto Serif SC', serif;
+      --font-serif-tc: 'Noto Serif TC', serif;
+      --font-pixel: 'DotGothic16', monospace;
+      --font-rounded: 'M PLUS Rounded 1c', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream-paper);
+      background-image:
+        repeating-linear-gradient(90deg, transparent 0, transparent 24px, rgba(200, 233, 176, 0.22) 24px, rgba(200, 233, 176, 0.22) 52px, transparent 52px, transparent 80px, rgba(255, 182, 217, 0.18) 80px, rgba(255, 182, 217, 0.18) 96px, transparent 96px, transparent 120px, rgba(181, 232, 224, 0.22) 120px, rgba(181, 232, 224, 0.22) 168px, transparent 168px, transparent 196px),
+        repeating-linear-gradient(0deg, transparent 0, transparent 32px, rgba(199, 179, 232, 0.18) 32px, rgba(199, 179, 232, 0.18) 56px, transparent 56px, transparent 100px, rgba(255, 233, 182, 0.22) 100px, rgba(255, 233, 182, 0.22) 124px, transparent 124px, transparent 156px);
+      color: var(--ink);
+      font-family: var(--font-serif-sc), var(--font-rounded);
+      line-height: 1.7;
+      padding: 24px;
+    }
+
+    a { color: var(--candy-purple); text-decoration: none; }
+
+    /* ====================================
+       原版外壳结构 (Window Shell) - 保持不变
+    ==================================== */
+    .home-window { max-width: 1080px; margin: 0 auto; background: var(--soft-white); border: 3px dashed var(--candy-mint); border-radius: 16px; box-shadow: 6px 6px 0 rgba(181,232,224,.55); display: flex; flex-direction: column; }
+    .window-titlebar { background: var(--candy-mint); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; border-radius: 13px 13px 0 0; font-family: var(--font-pixel); font-size: 13px; color: var(--ink); }
+    .tl-left { display: flex; align-items: center; gap: 12px; } .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .browser-strip { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 10px 16px; background: var(--candy-cream); border-bottom: 2px dashed var(--candy-peach); font-family: var(--font-pixel); font-size: 13px; }
+    .addr-box { display: flex; align-items: center; gap: 7px; padding: 6px 10px; background: var(--soft-white); border: 1.5px dashed var(--candy-purple); border-radius: 8px; }
+    .addr-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(0,0,0,.1); }
+    .page-nav { display: flex; justify-content: center; gap: 10px; padding: 12px 20px; background: var(--soft-white); border-bottom: 2px dashed rgba(199,179,232,.35); font-family: var(--font-rounded); font-size: 13px; }
+    .pn { padding: 4px 12px; border-radius: 20px; font-weight: 700; color: var(--ink); transition: transform .12s; }
+    .pn-active { background: var(--candy-peach); }
+    .win-body { padding: 28px; }
+    
+    .cat-section { margin-bottom: 40px; }
+    .sec-header { width: 100%; display: flex; align-items: center; gap: 12px; padding: 14px 18px; border: 2px dashed; border-radius: 10px; text-align: left; background: var(--soft-white); margin-bottom: 16px; }
+    .sh-num { width: 30px; height: 30px; background: var(--ink); color: #fff; font-family: var(--font-pixel); display: grid; place-items: center; border-radius: 5px; font-size: 12px;}
+    .sh-icon { font-size: 20px; } .sh-name { font-family: var(--font-rounded); font-weight: 700; font-size: 16px; }
+
+    /* =========================================================
+       ✨ Bento Box 网格布局 ✨
+    ========================================================= */
+    .banner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-auto-rows: 90px; /* 稍微加高一点基础高度，让背景纹理透出来 */
+      gap: 16px;
+      grid-auto-flow: dense; 
+    }
+
+    /* 高光策展修饰符 */
+    .featured-wide { grid-column: span 2; }
+    .featured-large { grid-column: span 2; grid-row: span 2; }
+
+    @media (max-width: 650px) {
+      .featured-wide, .featured-large { grid-column: span 1; grid-row: span 1; }
+      .banner-grid { grid-auto-rows: minmax(90px, auto); }
+    }
+
+    /* =========================================================
+       🎀 平成复古贴纸核心 (Heisei Retro Sticker) 🎀
+    ========================================================= */
+    .link-sticker {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 12px 16px;
+      height: 100%;
+      border-radius: 8px;
+      text-decoration: none !important;
+      transition: transform 0.2s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.2s;
+      overflow: hidden;
+      /* 更有实体感的复古投影，不再是柔和的阴影，而是带有明确颜色的硬阴影 */
+      box-shadow: 3px 3px 0 rgba(42, 31, 24, 0.15);
+      border: 2px solid var(--ink); /* 增加锐利的深色描边 */
+    }
+
+    .link-sticker:hover { 
+      transform: translate(-3px, -3px) rotate(-1deg); 
+      box-shadow: 6px 6px 0 rgba(42, 31, 24, 0.25); 
+      z-index: 10;
+    }
+
+    /* 内部虚线框 (模拟贴纸裁剪线) */
+    .link-sticker::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px dashed rgba(255,255,255,0.9);
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* 卡片内部排版：给文字加上半透明白色底托，让文字在复杂背景上依然清晰 */
+    .ls-head { 
+      display: flex; align-items: flex-start; justify-content: space-between; 
+      position: relative; z-index: 2; gap: 8px;
+    }
+    .ls-title { 
+      font-family: var(--font-pixel); font-size: 16px; font-weight: bold; 
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+      background: rgba(255,255,255,0.7); padding: 2px 6px; border-radius: 4px;
+    }
+    .ls-region { 
+      font-family: var(--font-pixel); font-size: 11px; padding: 2px 6px; 
+      background: var(--ink); color: #fff; border-radius: 4px; flex-shrink: 0;
+    }
+    .ls-note { 
+      font-family: var(--font-serif-tc); font-size: 12px; margin-top: 6px; 
+      opacity: 0.9; position: relative; z-index: 2;
+      background: rgba(255,255,255,0.7); padding: 2px 6px; border-radius: 4px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    /* 放大版卡片的文字适配 */
+    .featured-large { justify-content: flex-start; padding: 20px; }
+    .featured-large .ls-title { font-size: 20px; white-space: normal; display: inline-block; margin-bottom: 8px;}
+    .featured-large .ls-note { font-size: 13px; -webkit-line-clamp: 5; line-height: 1.6;}
+
+    /* =========================================================
+       🎨 五种平成复古底纹主题 (Pattern Magic) 🎨
+    ========================================================= */
+
+    /* 1. Angel (像素云端 / 横向扫描线) */
+    .theme-angel { 
+      background-color: var(--candy-aqua); 
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.5) 2px, rgba(255,255,255,0.5) 4px);
+      color: #2b5c54; 
+    }
+    .theme-angel .ls-title::before { content: '☁️ '; }
+
+    /* 2. Doll (洛丽塔 / 野餐格纹) */
+    .theme-doll { 
+      background-color: var(--candy-pink);
+      background-image: 
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.4) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0.4)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.4) 25%, #FFF0F6 25%, #FFF0F6 75%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0.4));
+      background-position: 0 0, 10px 10px;
+      background-size: 20px 20px;
+      color: #8c2a54; 
+    }
+    .theme-doll .ls-title::before { content: '🎀 '; }
+
+    /* 3. Moon (魔法少女 / 复古波点) */
+    .theme-moon { 
+      background-color: var(--candy-purple);
+      background-image: radial-gradient(rgba(255,255,255,0.6) 20%, transparent 20%), radial-gradient(rgba(255,255,255,0.6) 20%, transparent 20%);
+      background-size: 16px 16px;
+      background-position: 0 0, 8px 8px;
+      color: #3f2f5c; 
+    }
+    .theme-moon .ls-title::before { content: '🌙 '; }
+
+    /* 4. Lace (手账内页 / 稿纸网格) */
+    .theme-lace { 
+      background-color: var(--candy-cream);
+      background-image: 
+        linear-gradient(rgba(210, 180, 140, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(210, 180, 140, 0.3) 1px, transparent 1px);
+      background-size: 12px 12px;
+      color: #6b441c; 
+    }
+    .theme-lace .ls-title::before { content: '🧸 '; }
+    .theme-lace::after { border-color: rgba(139, 90, 43, 0.3); }
+
+    /* 5. Mint (千禧果冻 / 粗斜纹) */
+    .theme-mint { 
+      background-color: var(--candy-mint);
+      background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255,255,255,0.6) 10px, rgba(255,255,255,0.6) 20px);
+      color: #3b5c2b; 
+    }
+    .theme-mint .ls-title::before { content: '✦ '; }
+
+    .taskbar { background: var(--candy-mint); padding: 8px 16px; display: flex; justify-content: space-between; border-radius: 0 0 13px 13px; font-family: var(--font-pixel); font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<main class="home-window">
+  <header class="window-titlebar">
+    <div class="tl-left"><span class="title-dots">● ● ●</span><span class="tl-text">elephlow.cc / 灵感地图</span></div>
+  </header>
+  <div class="browser-strip">
+    <div class="addr-box"><span class="addr-dot" style="background:var(--candy-pink)"></span><span class="addr-text">https://elephlow.cc/zh-cn/links</span></div>
+  </div>
+  <nav class="page-nav"><span class="pn pn-active">灵感地图</span></nav>
+
+  <div class="win-body">
+    
+    <div class="cat-section">
+      <button class="sec-header" style="border-color:var(--candy-pink); box-shadow: 4px 4px 0 var(--candy-pink);">
+        <span class="sh-num">01</span><span class="sh-icon">📖</span><span class="sh-name">字与书</span>
+      </button>
+      
+      <div class="banner-grid">
+        <a class="link-sticker featured-large theme-lace" href="#">
+          <div class="ls-head"><span class="ls-title">Openbook 閱讀誌</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">目前華文圈最重要的書評媒體之一。不仅有深度的书籍评论，还会策划各种跨界的阅读专题。他们的年度好书评选是我每年补充书单的重要参考来源。</span>
+        </a>
+
+        <a class="link-sticker theme-doll" href="#">
+          <div class="ls-head"><span class="ls-title">OKAPI 閱讀生活誌</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">博客來經營，編輯人物訪談優質</span>
+        </a>
+        
+        <a class="link-sticker theme-angel" href="#">
+          <div class="ls-head"><span class="ls-title">聯合文學 unitas</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">老牌文學雜誌官網</span>
+        </a>
+
+        <a class="link-sticker featured-wide theme-mint" href="#">
+          <div class="ls-head"><span class="ls-title">臺灣現當代作家研究資料彙編</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">完整作家研究檔案系統，做文史梳理时必备的庞大数据库。</span>
+        </a>
+
+        <a class="link-sticker theme-moon" href="#">
+          <div class="ls-head"><span class="ls-title">虛詞 p-articles</span><span class="ls-region">香港</span></div>
+          <span class="ls-note">字花同系的香港文學評論平台</span>
+        </a>
+        
+        <a class="link-sticker theme-lace" href="#">
+          <div class="ls-head"><span class="ls-title">字花 / 別字</span><span class="ls-region">香港</span></div>
+          <span class="ls-note">香港文學雜誌與電子刊</span>
+        </a>
+
+        <a class="link-sticker theme-doll" href="#">
+          <div class="ls-head"><span class="ls-title">每天為你讀一首詩</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">華語現代詩日更選讀社群</span>
+        </a>
+
+        <a class="link-sticker theme-angel" href="#">
+          <div class="ls-head"><span class="ls-title">國立臺灣文學館</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">台灣文學典藏與展覽</span>
+        </a>
+      </div>
+    </div>
+
+
+    <div class="cat-section">
+      <button class="sec-header" style="border-color:var(--candy-purple); box-shadow: 4px 4px 0 var(--candy-purple);">
+        <span class="sh-num">02</span><span class="sh-icon">📚</span><span class="sh-name">小誌与档案 Zines & Archives</span>
+      </button>
+      
+      <div class="banner-grid">
+        <a class="link-sticker featured-wide theme-moon" href="#">
+          <div class="ls-head"><span class="ls-title">Barnard Zine Library</span><span class="ls-region">美國 · 紐約</span></div>
+          <span class="ls-note">女性主義 zine 圖書館的代表，提供了海量的历史小志扫描件。</span>
+        </a>
+
+        <a class="link-sticker theme-lace" href="#">
+          <div class="ls-head"><span class="ls-title">Queer Zine Archive</span><span class="ls-region">美國</span></div>
+          <span class="ls-note">酷兒 zine 線上典藏</span>
+        </a>
+        
+        <a class="link-sticker featured-large theme-mint" href="#">
+          <div class="ls-head"><span class="ls-title">Taipei Art Book Fair 草率季</span><span class="ls-region">台灣</span></div>
+          <span class="ls-note">亞洲最大的藝術書展之一。每年都会汇聚海内外极具独立精神的创作者、插画师和独立出版机构，不仅是翻阅 Zine 的好地方，更是汲取排版和视觉灵感的宝库。</span>
+        </a>
+
+        <a class="link-sticker theme-angel" href="#">
+          <div class="ls-head"><span class="ls-title">ZINE COOP</span><span class="ls-region">香港</span></div>
+          <span class="ls-note">香港 zine 合作社</span>
+        </a>
+        
+        <a class="link-sticker theme-doll" href="#">
+          <div class="ls-head"><span class="ls-title">Library of Congress Zine</span><span class="ls-region">美國</span></div>
+          <span class="ls-note">國會圖書館的 zine 收藏</span>
+        </a>
+
+        <a class="link-sticker theme-lace" href="#">
+          <div class="ls-head"><span class="ls-title">Queer Indonesia Archive</span><span class="ls-region">印尼</span></div>
+          <span class="ls-note">印尼酷兒檔案</span>
+        </a>
+
+        <a class="link-sticker featured-wide theme-angel" href="#">
+          <div class="ls-head"><span class="ls-title">亞洲藝術文獻庫 Asia Art Archive</span><span class="ls-region">香港</span></div>
+          <span class="ls-note">當代亞洲藝術研究的核心檔案，对视觉文化创作者极为有用。</span>
+        </a>
+
+        <a class="link-sticker theme-moon" href="#">
+          <div class="ls-head"><span class="ls-title">Printed Matter</span><span class="ls-region">美國 · 紐約</span></div>
+          <span class="ls-note">藝術家書與獨立出版核心</span>
+        </a>
+
+        <a class="link-sticker theme-doll" href="#">
+          <div class="ls-head"><span class="ls-title">香港記憶</span><span class="ls-region">香港</span></div>
+          <span class="ls-note">歷史影像與口述史資料庫</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="taskbar"><div>⊞ START ▣ 灵感地图 (Heisei Retro)</div></footer>
+</main>
+
+</body>
+</html>

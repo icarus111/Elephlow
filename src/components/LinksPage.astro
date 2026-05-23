@@ -1,121 +1,133 @@
 ---
 import '../styles/global.css';
-import { friendLinkCategories, friendLinkCount, getText, type Locale } from '../data/friend-links';
+import friendsData from '../data/friends.json';
 
-interface Props {
-  locale: Locale;
-}
-
+type Locale = 'zh-cn' | 'zh-tw' | 'en';
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
 
 const copy = {
   'zh-cn': {
-    htmlLang: 'zh-CN',
-    title: '网页收藏夹 | 推开部屋的门',
-    description: '推开部屋的门 - 小象的个人网页收藏夹与文化资源入口。',
-    titlebar: '网页收藏夹',
-    pageTitle: '网页收藏夹',
-    shelfName: 'Elephlow Web Shelf',
-    subtitle: '不是松散的网址列表，而是一只慢慢扩建的文化资料抽屉。',
-    introTitle: '给慢慢搜索的人',
-    intro:
-      '这里收着影像、独立出版、学术期刊、地方记忆、酷儿研究、音乐声响与开放课程等入口。它们有些像资料库，有些像编辑部，有些像还亮着灯的小房间。',
-    categoriesLabel: '资料夹',
-    linksLabel: '书签',
-    updatedLabel: '整理',
-    updated: '2026.05',
-    indexTitle: 'folder index',
-    visit: '打开',
-    home: '主页',
-    about: '创作者说',
-    archive: '往期目录',
-    links: '网页收藏夹',
-    guestbook: '留言板',
-    subscribe: '订阅',
-    footer: '(｡♡‿♡｡) end of shelf ✿',
-    task: '▣ 网页收藏夹',
-    nowPlaying: '文化资料入口 / open tabs / saved paths',
+    htmlLang: 'zh-CN', title: '灵感地图 | 推开部屋的门',
+    titlebar: '灵感地图', pageTitle: '灵感地图',
+    subtitle: '像一张还在生长的地图，每一条链接都是一个可以出发的路口。',
+    intro: '这里收着影像、独立出版、学术期刊、地方记忆、酷儿研究、音乐声响与开放课程等入口。有些像资料库，有些像编辑部，有些像还亮着灯的小房间。',
+    zones: '分区', pins: '标记点', updated: '2026.05',
+    home: '🏠 主页', about: '✍️ 创作者说', archive: '📚 往期目录',
+    links: '🗺️ 灵感地图', guestbook: '💬 留言板', subscribe: '★ 订阅 ★',
+    footer: '(｡♡‿♡｡) end of map ✿', task: '▣ 灵感地图',
+    sites: '个站点', addrBase: 'elephlow.cc/zh-cn/links',
   },
   'zh-tw': {
-    htmlLang: 'zh-TW',
-    title: '網頁收藏夾 | 推開部屋的門',
-    description: '推開部屋的門 - 小象的個人網頁收藏夾與文化資源入口。',
-    titlebar: '網頁收藏夾',
-    pageTitle: '網頁收藏夾',
-    shelfName: 'Elephlow Web Shelf',
-    subtitle: '不是鬆散的網址列表，而是一個慢慢擴建的文化資料抽屜。',
-    introTitle: '給慢慢搜尋的人',
-    intro:
-      '這裡收著影像、獨立出版、學術期刊、地方記憶、酷兒研究、音樂聲響與開放課程等入口。它們有些像資料庫，有些像編輯部，有些像還亮著燈的小房間。',
-    categoriesLabel: '資料夾',
-    linksLabel: '書籤',
-    updatedLabel: '整理',
-    updated: '2026.05',
-    indexTitle: 'folder index',
-    visit: '打開',
-    home: '主頁',
-    about: '創作者說',
-    archive: '往期目錄',
-    links: '網頁收藏夾',
-    guestbook: '留言板',
-    subscribe: '訂閱',
-    footer: '(｡♡‿♡｡) end of shelf ✿',
-    task: '▣ 網頁收藏夾',
-    nowPlaying: '文化資料入口 / open tabs / saved paths',
+    htmlLang: 'zh-TW', title: '靈感地圖 | 推開部屋的門',
+    titlebar: '靈感地圖', pageTitle: '靈感地圖',
+    subtitle: '像一張還在生長的地圖，每一條連結都是一個可以出發的路口。',
+    intro: '這裡收著影像、獨立出版、學術期刊、地方記憶、酷兒研究、音樂聲響與開放課程等入口。有些像資料庫，有些像編輯部，有些像還亮著燈的小房間。',
+    zones: '分區', pins: '標記點', updated: '2026.05',
+    home: '🏠 主頁', about: '✍️ 創作者說', archive: '📚 往期目錄',
+    links: '🗺️ 靈感地圖', guestbook: '💬 留言板', subscribe: '★ 訂閱 ★',
+    footer: '(｡♡‿♡｡) end of map ✿', task: '▣ 靈感地圖',
+    sites: '個站點', addrBase: 'elephlow.cc/zh-tw/links',
   },
   en: {
-    htmlLang: 'en',
-    title: 'Web Shelf | Push The Door',
-    description: "Push The Door - Elephlow's personal web shelf and cultural resource directory.",
-    titlebar: 'Web Shelf',
-    pageTitle: 'Web Shelf',
-    shelfName: 'Elephlow Web Shelf',
-    subtitle: 'Not a link-exchange page, but a growing drawer of cultural references.',
-    introTitle: 'For people who search slowly',
-    intro:
-      'A handpicked shelf of film archives, independent publishing, journals, local memory, queer studies, music resources, and open courses. Some are databases, some are editorial rooms, and some still feel like small windows with the light on.',
-    categoriesLabel: 'Folders',
-    linksLabel: 'Bookmarks',
-    updatedLabel: 'Updated',
-    updated: '2026.05',
-    indexTitle: 'folder index',
-    visit: 'Open',
-    home: 'Home',
-    about: "Editor's Note",
-    archive: 'Archive',
-    links: 'Web Shelf',
-    guestbook: 'Guestbook',
-    subscribe: 'Subscribe',
-    footer: '(｡♡‿♡｡) end of shelf ✿',
-    task: '▣ Web Shelf',
-    nowPlaying: 'cultural resource shelf / open tabs / saved paths',
+    htmlLang: 'en', title: 'Inspiration Map | Push The Door',
+    titlebar: 'Inspiration Map', pageTitle: 'Inspiration Map',
+    subtitle: 'A map still growing. Every link is a crossroads you can leave from.',
+    intro: 'Film archives, independent publishing, journals, local memory, queer studies, music resources, open courses — some feel like databases, some like editorial rooms, some like small windows with the light on.',
+    zones: 'zones', pins: 'pins', updated: '2026.05',
+    home: '🏠 Home', about: "✍️ Editor's Note", archive: '📚 Archive',
+    links: '🗺️ Map', guestbook: '💬 Guestbook', subscribe: '★ Subscribe ★',
+    footer: '(｡♡‿♡｡) end of map ✿', task: '▣ Inspiration Map',
+    sites: 'sites', addrBase: 'elephlow.cc/en/links',
   },
 }[locale];
 
 const paths = {
-  home: locale === 'en' ? '/en/' : `/${locale}/`,
-  about: locale === 'en' ? '/en/about' : `/${locale}/about`,
-  archive: locale === 'en' ? '/en/archive' : `/${locale}/archive`,
-  links: locale === 'en' ? '/en/links' : `/${locale}/links`,
+  home:      locale === 'en' ? '/en/'          : `/${locale}/`,
+  about:     locale === 'en' ? '/en/about'     : `/${locale}/about`,
+  archive:   locale === 'en' ? '/en/archive'   : `/${locale}/archive`,
+  links:     locale === 'en' ? '/en/links'     : `/${locale}/links`,
   guestbook: locale === 'en' ? '/en/guestbook' : `/${locale}/guestbook`,
 };
 
 const langLinks = [
   { href: '/zh-cn/links', label: '简', active: locale === 'zh-cn' },
   { href: '/zh-tw/links', label: '繁', active: locale === 'zh-tw' },
-  { href: '/en/links', label: 'EN', active: locale === 'en' },
+  { href: '/en/links',    label: 'EN', active: locale === 'en'    },
 ];
 
-const categories = friendLinkCategories.map((category) => ({
-  ...category,
-  label: getText(category.title, locale),
-  links: category.links.map((link) => ({
-    ...link,
-    label: getText(link.title, locale),
-    descriptionText: getText(link.description, locale),
-    host: new URL(link.url).hostname.replace(/^www\./, ''),
-  })),
-}));
+const navItems = [
+  { href: paths.home,      label: copy.home,      cls: 'menu-mint'   },
+  { href: paths.about,     label: copy.about,     cls: 'menu-pink'   },
+  { href: paths.archive,   label: copy.archive,   cls: 'menu-aqua'   },
+  { href: paths.links,     label: copy.links,     cls: 'menu-cream'  },
+  { href: paths.guestbook, label: copy.guestbook, cls: 'menu-purple' },
+  { href: 'https://tally.so/r/4415XB', label: copy.subscribe, cls: 'menu-pink', external: true },
+];
+
+const nameTW: Record<string, string> = {
+  'words-and-books':    '字與書',
+  'moving-image':       '光影',
+  'sound':              '聲響',
+  'on-the-ground':      '在地報導',
+  'periodicals':        '刊物',
+  'zines-and-archives': '小誌與檔案',
+  'visual-field':       '視覺誌',
+  'self-study':         '自習室',
+  'bookshops':          '書店地圖',
+  'womens-place':       '女性的位置',
+  'queer-landscapes':   '酷兒地景',
+};
+
+// 策展高光：填入完整 URL → 'wide' | 'large'（不填則首張自動 wide）
+const featuredUrls: Record<string, 'wide' | 'large'> = {
+};
+
+const catMeta: Record<string, { icon: string; accent: string; bg: string }> = {
+  'words-and-books':    { icon: '📖', accent: '#E8649A', bg: '#FEF0F5' },
+  'moving-image':       { icon: '🎞️', accent: '#7B5CC8', bg: '#F6F2FD' },
+  'sound':              { icon: '🎧', accent: '#38A898', bg: '#EEF9F7' },
+  'on-the-ground':      { icon: '📰', accent: '#2890B8', bg: '#EEF6FC' },
+  'periodicals':        { icon: '📋', accent: '#C89818', bg: '#FDF9EC' },
+  'zines-and-archives': { icon: '📚', accent: '#7B5CC8', bg: '#F6F2FD' },
+  'visual-field':       { icon: '🎨', accent: '#D04878', bg: '#FDF0F5' },
+  'self-study':         { icon: '🧭', accent: '#2890B8', bg: '#EEF6FC' },
+  'bookshops':          { icon: '🏪', accent: '#3A9848', bg: '#EEF9F0' },
+  'womens-place':       { icon: '✊', accent: '#D83080', bg: '#FEF0F7' },
+  'queer-landscapes':   { icon: '🌈', accent: '#8040C8', bg: '#F5EFFE' },
+};
+
+// 五種貼紙底紋，按卡片順序輪換
+const stickerThemes = ['lace', 'doll', 'moon', 'mint', 'angel'] as const;
+
+const totalLinks = friendsData.categories.reduce((s, c) => s + c.links.length, 0);
+
+const categories = friendsData.categories.map((cat, i) => {
+  const meta = catMeta[cat.id] ?? { icon: '✦', accent: '#C7B3E8', bg: '#F6F2FD' };
+  const displayName =
+    locale === 'en'    ? cat.name_en :
+    locale === 'zh-tw' ? (nameTW[cat.id] ?? cat.name_zh) :
+    cat.name_zh;
+  return {
+    id: cat.id,
+    name: displayName,
+    nameAlt: locale === 'en' ? (nameTW[cat.id] ?? cat.name_zh) : cat.name_en,
+    description: cat.description,
+    chapterNum: String(i + 1).padStart(2, '0'),
+    icon: meta.icon,
+    accent: meta.accent,
+    bg: meta.bg,
+    links: cat.links.map((link, j) => ({
+      title: link.title,
+      url: link.url,
+      region: locale === 'en' ? link.region_en : link.region_zh,
+      note: (link as { note?: string }).note ?? '',
+      // 首張卡自動 featured-wide，featuredUrls 可覆蓋
+      featured: featuredUrls[link.url] ?? (j === 0 ? 'wide' : null),
+      theme: stickerThemes[j % stickerThemes.length],
+    })),
+  };
+});
 ---
 <!DOCTYPE html>
 <html lang={copy.htmlLang}>
@@ -123,899 +135,581 @@ const categories = friendLinkCategories.map((category) => ({
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{copy.title}</title>
-  <meta name="description" content={copy.description} />
 </head>
 <body>
 
-  <main class="home-window">
+<main class="home-window">
 
-    <header class="window-titlebar">
-      <div class="titlebar-left">
-        <span class="title-dots">● ● ●</span>
-        <span class="titlebar-text">elephlow.cc / {copy.titlebar}</span>
-      </div>
-      <div class="titlebar-right">
-        {langLinks.map((link) => (
-          <a href={link.href} class:list={['lang-link', { 'lang-active': link.active }]}>{link.label}</a>
-        ))}
-      </div>
-    </header>
-
-    <div class="browser-strip">
-      <div class="address-box">
-        <span class="address-dot bg-pink"></span>
-        <span class="address-dot bg-cream"></span>
-        <span class="address-dot bg-mint"></span>
-        <span class="address-text">https://elephlow.cc/{locale}/web-shelf</span>
-      </div>
-      <div class="mini-tabs" aria-hidden="true">
-        <span>film.db</span>
-        <span>zine.zip</span>
-        <span>sound.wav</span>
-      </div>
+  <!-- ① Titlebar -->
+  <header class="window-titlebar">
+    <div class="titlebar-left">
+      <span class="title-dots">● ● ●</span>
+      <span class="titlebar-text">elephlow.cc / {copy.titlebar}</span>
     </div>
+    <div class="titlebar-right">
+      {langLinks.map(l => (
+        <a href={l.href} class:list={['lang-link', { 'lang-active': l.active }]}>{l.label}</a>
+      ))}
+    </div>
+  </header>
 
-    <div class="window-content links-layout">
+  <!-- ② Browser strip -->
+  <div class="browser-strip">
+    <div class="addr-box">
+      <span class="addr-dot" style="background:var(--candy-pink)"></span>
+      <span class="addr-dot" style="background:var(--candy-cream)"></span>
+      <span class="addr-dot" style="background:var(--candy-mint)"></span>
+      <span class="addr-text">{copy.addrBase}</span>
+    </div>
+    <div class="bs-stats">
+      <span>{categories.length} {copy.zones}</span>
+      <span>·</span>
+      <span>{totalLinks} {copy.pins}</span>
+    </div>
+  </div>
 
-      <aside class="links-left sticky-sidebar">
-        <div class="link-portrait">
-          <img src="/logo.png" alt="elephlow" class="link-icon" />
-          <p class="link-id">elephlow.web-shelf</p>
-          <p class="link-est"><em>open tabs / saved paths</em></p>
+  <!-- ③ Body -->
+  <div class="win-body">
+    <div class="map-layout">
+
+      <!-- 左：分類內容區 -->
+      <div class="map-main">
+
+        <!-- Hero -->
+        <div class="hero">
+          <span class="corner corner-tl">✿</span>
+          <span class="corner corner-tr">✦</span>
+          <span class="corner corner-bl">☘</span>
+          <span class="corner corner-br">♡</span>
+          <p class="hero-kicker">◈ inspiration map ◈</p>
+          <h1 class="hero-title">{copy.pageTitle}</h1>
+          <p class="hero-tagline">{copy.subtitle}</p>
+          <p class="hero-intro">{copy.intro}</p>
         </div>
 
-        <div class="link-stats">
-          <h3 class="stats-title">✦ shelf stats ✦</h3>
-          <dl class="stats-list">
-            <div class="stats-row"><dt>{copy.categoriesLabel}</dt><dd>{friendLinkCategories.length}</dd></div>
-            <div class="stats-row"><dt>{copy.linksLabel}</dt><dd>{friendLinkCount}</dd></div>
-            <div class="stats-row"><dt>{copy.updatedLabel}</dt><dd>{copy.updated}</dd></div>
-          </dl>
-        </div>
-
-        <div class="index-card">
-          <h3 class="card-title">{copy.indexTitle}</h3>
-          <nav class="folder-nav">
-            {categories.map((category) => (
-              <a href={`#${category.id}`} class:list={['folder-tab', `folder-${category.accent}`]}>
-                <span>{category.icon}</span>
-                <span>{category.label}</span>
-              </a>
-            ))}
-          </nav>
-        </div>
-      </aside>
-
-      <section class="links-center">
-        <div class="shelf-panel">
-          <section class="shelf-hero">
-            <div>
-              <p class="shelf-kicker">bookmarks / references / rabbit holes</p>
-              <h1>{copy.pageTitle}</h1>
-              <p class="shelf-subtitle">{copy.subtitle}</p>
+        <!-- 分類 sections -->
+        {categories.map(cat => (
+          <section
+            class="cat-section"
+            id={cat.id}
+            style={`--sec-acc: ${cat.accent}; --sec-bg: ${cat.bg}`}
+          >
+            <div class="sec-header">
+              <span class="sh-num">{cat.chapterNum}</span>
+              <span class="sh-icon">{cat.icon}</span>
+              <span class="sh-name">{cat.name}</span>
+              <span class="sh-sep">·</span>
+              <span class="sh-alt">{cat.nameAlt}</span>
+              <span class="sh-count">{cat.links.length} {copy.sites}</span>
             </div>
-            <div class="shelf-badge">
-              <span>{String(friendLinkCount).padStart(2, '0')}</span>
-              <small>{copy.linksLabel}</small>
+
+            <div class="sec-body">
+              {cat.description && (
+                <p class="sec-desc">{cat.description}</p>
+              )}
+              <div class="banner-grid">
+                {cat.links.map(link => (
+                  <a
+                    class={`link-sticker theme-${link.theme}${link.featured ? ` featured-${link.featured}` : ''}`}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div class="ls-head">
+                      <span class="ls-title">{link.title}</span>
+                      <span class="ls-region">{link.region}</span>
+                    </div>
+                    {link.note && (
+                      <span class="ls-note">{link.note}</span>
+                    )}
+                  </a>
+                ))}
+              </div>
             </div>
           </section>
+        ))}
 
-          <section class="shelf-note">
-            <div class="note-pin">✿</div>
-            <div>
-              <h2>{copy.introTitle}</h2>
-              <p>{copy.intro}</p>
-            </div>
-          </section>
+      </div><!-- /map-main -->
 
-          <div class="folder-stack">
-            {categories.map((category, categoryIndex) => (
-              <section id={category.id} class:list={['folder-section', `section-${category.accent}`]}>
-                <header class="folder-heading">
-                  <div>
-                    <span class="folder-icon">{category.icon}</span>
-                    <h2>{category.label}</h2>
-                    <p>{category.subtitle}</p>
-                  </div>
-                  <span class="folder-count">{category.links.length}</span>
-                </header>
+      <!-- 右：導航窗格（與其他頁面風格一致） -->
+      <aside class="map-sidebar">
 
-                <div class="bookmark-list">
-                  {category.links.map((link, linkIndex) => (
-                    <article class="bookmark-row">
-                      <span class="bookmark-no">{String(categoryIndex + 1).padStart(2, '0')}-{String(linkIndex + 1).padStart(2, '0')}</span>
-                      <div class="bookmark-main">
-                        <h3>{link.label}</h3>
-                        <p>{link.descriptionText}</p>
-                      </div>
-                      <div class="bookmark-meta">
-                        <span>{link.host}</span>
-                        <a href={link.url} target="_blank" rel="noopener noreferrer">{copy.visit} ↗</a>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-
-          <div class="board-footer">
-            <p>{copy.footer}</p>
-          </div>
-        </div>
-      </section>
-
-      <aside class="links-right sticky-sidebar">
         <div class="menu-card">
           <h3 class="menu-title">▼ MENU ▼</h3>
           <ul class="menu-list">
-            <li><a href={paths.home} class="menu-mint">🏠 {copy.home}</a></li>
-            <li><a href={paths.about} class="menu-pink">✍️ {copy.about}</a></li>
-            <li><a href={paths.archive} class="menu-aqua">📚 {copy.archive}</a></li>
-            <li><span class="menu-peach menu-current">🔖 {copy.links}</span></li>
-            <li><a href={paths.guestbook} class="menu-purple">💬 {copy.guestbook}</a></li>
-            <li><a href="https://tally.so/r/4415XB" class="menu-cream">★ {copy.subscribe} ★</a></li>
+            {navItems.map(item => (
+              <li>
+                <a
+                  href={item.href}
+                  class={item.cls}
+                  {...(item.external ? { target: '_blank', rel: 'noopener' } : {})}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <div class="minihome-deco">
-          <div class="deco-row">✦ ✿ ☘ ♡ ✦</div>
-          <div class="deco-text">
-            <p>save for later</p>
-            <p>read with care ｡^‿^｡</p>
+        <div class="map-stats-box">
+          <p class="stats-title">◈ map stats ◈</p>
+          <div class="stats-row">
+            <span class="stats-label">{copy.zones}</span>
+            <span class="stats-val">{categories.length}</span>
           </div>
+          <div class="stats-row">
+            <span class="stats-label">{copy.pins}</span>
+            <span class="stats-val">{totalLinks}</span>
+          </div>
+          <p class="stats-updated">upd. {copy.updated}</p>
         </div>
 
-        <div class="kawaii-player">
-          <div class="kp-header">
-            <span class="kp-dot"></span>♫ NOW BROWSING<span class="kp-dot"></span>
-          </div>
-          <div class="kp-screen">
-            <div class="kp-marquee">
-              <span>{copy.nowPlaying}</span>
-            </div>
-          </div>
-          <div class="kp-controls">
-            <span class="kp-btn">◁</span>
-            <span class="kp-btn kp-play">▶</span>
-            <span class="kp-btn">▷</span>
-          </div>
+        <div class="guestbook-card">
+          <a href={paths.guestbook}>
+            <span class="gb-icon">✉</span>
+            <span class="gb-text">sign my guestbook</span>
+          </a>
         </div>
 
-        <div class="kawaii-counter">
-          <p class="kc-title">✦ SAVED LINKS ✦</p>
-          <div class="kc-digits">
-            {String(friendLinkCount).padStart(4, '0').split('').map((digit) => <span>{digit}</span>)}
-          </div>
-        </div>
-      </aside>
+      </aside><!-- /map-sidebar -->
 
+    </div><!-- /map-layout -->
+  </div><!-- /win-body -->
+
+  <!-- ④ Taskbar -->
+  <footer class="window-taskbar">
+    <div class="taskbar-left">
+      <span class="taskbar-start">⊞ START</span>
+      <span class="taskbar-item">{copy.task}</span>
     </div>
+    <div class="taskbar-right">
+      <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
+      <span class="taskbar-clock" id="clock">--:--</span>
+    </div>
+  </footer>
 
-    <footer class="window-taskbar">
-      <div class="taskbar-left">
-        <span class="taskbar-start">⊞ START</span>
-        <span class="taskbar-item">{copy.task}</span>
-      </div>
-      <div class="taskbar-right">
-        <span class="taskbar-status">(｡♡‿♡｡) currently online</span>
-        <span class="taskbar-clock" id="clock">--:--</span>
-      </div>
-    </footer>
+</main>
 
-  </main>
+<script is:inline>
+(function () {
+  const cl = document.getElementById('clock');
+  function tick() {
+    const n = new Date();
+    if (cl) cl.textContent =
+      `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+  }
+  tick(); setInterval(tick, 30000);
+})();
+</script>
 
-  <script is:inline>
-    function updateClock() {
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const el = document.getElementById('clock');
-      if (el) el.innerText = `${h}:${m}`;
-    }
-    updateClock();
-    setInterval(updateClock, 30000);
+<style>
+  /* ══ Window shell ══ */
+  .home-window {
+    max-width: 1180px;
+    width: calc(100% - 24px);
+    margin: 24px auto;
+    background: var(--soft-white);
+    border: 2px dashed var(--candy-purple);
+    border-radius: 16px;
+    box-shadow: 6px 6px 0 rgba(199,179,232,.35);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-    document.querySelectorAll('.folder-nav a').forEach((anchor) => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-  </script>
+  /* ── Titlebar ── */
+  .window-titlebar {
+    background: var(--candy-mint);
+    padding: 8px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px dashed var(--candy-purple);
+    font-family: var(--font-pixel); font-size: 11px; color: var(--ink);
+  }
+  .titlebar-left { display: flex; align-items: center; gap: 12px; }
+  .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+  .titlebar-right { display: flex; gap: 4px; }
+  .lang-link { padding: 2px 8px; color: var(--ink); text-decoration: none; border-radius: 3px; }
+  .lang-link:hover { background: var(--candy-cream); }
+  .lang-active { background: var(--candy-cream); font-weight: 700; }
 
-  <style>
-    .home-window {
-      max-width: 1220px;
-      margin: 24px auto;
-      background: var(--soft-white);
-      border: 3px dashed var(--candy-mint);
-      border-radius: 16px;
-      box-shadow: 6px 6px 0 rgba(181, 232, 224, 0.6);
-      display: flex;
-      flex-direction: column;
-    }
-    .window-titlebar {
-      background: var(--candy-mint);
-      padding: 8px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px dashed var(--candy-mint);
-      border-radius: 13px 13px 0 0;
-      font-family: var(--font-pixel);
-      font-size: 11px;
-      color: var(--ink);
-    }
-    .titlebar-left { display: flex; align-items: center; gap: 12px; }
-    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
-    .titlebar-text { letter-spacing: 1px; }
-    .titlebar-right { display: flex; gap: 4px; }
-    .lang-link { padding: 2px 8px; color: var(--ink); text-decoration: none; border-radius: 3px; }
-    .lang-link:hover { background: rgba(255, 255, 255, 0.4); }
-    .lang-active { background: rgba(255, 255, 255, 0.6); font-weight: 700; }
+  /* ── Browser strip ── */
+  .browser-strip {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 16px; background: var(--candy-cream);
+    border-bottom: 2px dashed var(--candy-peach);
+    font-family: var(--font-pixel); font-size: 11px; gap: 12px;
+  }
+  .addr-box {
+    display: flex; align-items: center; gap: 7px; padding: 5px 10px;
+    background: var(--soft-white); border: 1.5px dashed var(--candy-purple); border-radius: 6px;
+    flex: 1; min-width: 0;
+  }
+  .addr-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(0,0,0,.1); flex-shrink: 0; }
+  .addr-text { color: var(--ink-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bs-stats {
+    display: flex; gap: 6px; align-items: center; flex-shrink: 0;
+    color: var(--ink-light); font-size: 10px;
+  }
 
-    .browser-strip {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 12px;
-      align-items: center;
-      padding: 10px 16px;
-      background: var(--candy-cream);
-      border-bottom: 2px dashed var(--candy-peach);
-      font-family: var(--font-pixel);
-      font-size: 11px;
-    }
-    .address-box {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      min-width: 0;
-      padding: 7px 10px;
-      background: var(--soft-white);
-      border: 1.5px dashed var(--candy-purple);
-      border-radius: 8px;
-      box-shadow: inset 2px 2px 0 rgba(199, 179, 232, 0.16);
-    }
-    .address-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      flex: 0 0 auto;
-    }
-    .address-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: var(--ink-light);
-    }
-    .mini-tabs {
-      display: flex;
-      gap: 6px;
-    }
-    .mini-tabs span {
-      padding: 5px 8px;
-      background: rgba(255, 255, 255, 0.62);
-      border: 1px dashed var(--candy-pink);
-      border-radius: 6px 6px 0 0;
-      color: var(--ink-light);
-    }
+  /* ── Win body ── */
+  .win-body { padding: 20px 24px; }
 
-    .window-content { padding: 24px; }
-    .links-layout {
-      display: grid;
-      grid-template-columns: 238px minmax(0, 1fr) 202px;
-      gap: 24px;
-      align-items: start;
-    }
-    .sticky-sidebar { position: sticky; top: 24px; height: fit-content; }
+  /* ══ Two-column layout ══ */
+  .map-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
 
-    .link-portrait {
-      background: var(--soft-white);
-      border: 2px dashed var(--candy-pink);
-      border-radius: 14px;
-      padding: 20px 16px;
-      text-align: center;
-      box-shadow: 4px 4px 0 rgba(255, 182, 217, 0.35);
-      margin-bottom: 14px;
-    }
-    .link-icon {
-      width: 118px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-    .link-id {
-      font-family: var(--font-pixel);
-      font-size: 11px;
-      color: var(--ink-light);
-      margin-top: 10px;
-      letter-spacing: 2px;
-    }
-    .link-est {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--candy-purple);
-      margin-top: 4px;
-    }
+  .map-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-    .card-title,
-    .stats-title {
-      font-family: var(--font-pixel);
-      font-size: 12px;
-      color: var(--ink-light);
-      text-align: center;
-      letter-spacing: 3px;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed currentColor;
-    }
-    .link-stats {
-      background: var(--room-sage);
-      border: 1.5px dashed var(--room-olive);
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: 3px 3px 0 rgba(168, 192, 120, 0.3);
-      margin-bottom: 14px;
-    }
-    .stats-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin: 0;
-    }
-    .stats-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-    .stats-row dt {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--ink-light);
-    }
-    .stats-row dd {
-      font-family: var(--font-rounded);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--ink);
-      margin-left: 0;
-    }
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    border: 2px dashed var(--candy-purple); border-radius: 12px;
+    background: var(--soft-white); box-shadow: 4px 4px 0 rgba(199,179,232,.4);
+    padding: 28px 36px 20px; text-align: center;
+  }
+  .corner { position: absolute; font-size: 16px; }
+  .corner-tl { top:6px; left:8px; color:var(--candy-purple); }
+  .corner-tr { top:6px; right:8px; color:var(--candy-pink); }
+  .corner-bl { bottom:6px; left:8px; color:var(--candy-mint); }
+  .corner-br { bottom:6px; right:8px; color:var(--candy-peach); }
+  .hero-kicker {
+    font-family: var(--font-pixel); color: var(--candy-purple);
+    font-size: 10px; letter-spacing: 3px; margin-bottom: 8px;
+  }
+  .hero-title {
+    font-family: var(--font-rounded); font-size: 30px; font-weight: 700;
+    text-shadow: 2px 2px 0 var(--candy-mint); margin-bottom: 8px; color: var(--ink);
+  }
+  .hero-tagline {
+    font-family: var(--font-serif-tc); color: var(--ink-light);
+    font-size: 13px; margin-bottom: 8px; line-height: 1.7;
+  }
+  .hero-intro {
+    font-family: var(--font-serif-tc); font-size: 12px;
+    color: rgba(107,88,71,.7); font-style: italic; max-width: 560px; margin: 0 auto;
+    line-height: 1.8;
+  }
 
-    .index-card {
-      background: var(--candy-cream);
-      border: 1.5px dashed var(--candy-peach);
-      border-radius: 12px;
-      padding: 14px 12px;
-      box-shadow: 3px 3px 0 rgba(255, 233, 182, 0.5);
-    }
-    .folder-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-    .folder-tab {
-      display: grid;
-      grid-template-columns: 22px minmax(0, 1fr);
-      align-items: center;
-      gap: 7px;
-      padding: 8px 10px;
-      color: var(--ink);
-      font-family: var(--font-rounded);
-      font-size: 12.5px;
-      font-weight: 700;
-      line-height: 1.35;
-      text-decoration: none;
-      border: 1.5px dashed var(--candy-purple);
-      border-left-width: 7px;
-      border-radius: 0 8px 8px 0;
-      background: rgba(255, 255, 255, 0.62);
-      transition: transform 0.15s, background 0.15s;
-    }
-    .folder-tab:hover {
-      transform: translateX(3px);
-      background: var(--soft-white);
-      text-decoration: none;
-    }
-    .folder-mint { border-left-color: var(--candy-mint); }
-    .folder-peach { border-left-color: var(--candy-peach); }
-    .folder-pink { border-left-color: var(--candy-pink); }
-    .folder-aqua { border-left-color: var(--candy-aqua); }
-    .folder-purple { border-left-color: var(--candy-purple); }
-    .folder-cream { border-left-color: var(--candy-cream); }
+  /* ══ Category section ══ */
+  .cat-section {
+    border: 2px dashed var(--sec-acc, var(--candy-purple));
+    border-radius: 10px;
+    scroll-margin-top: 20px;
+  }
 
-    .shelf-panel {
-      background:
-        linear-gradient(var(--soft-white), var(--soft-white)) padding-box,
-        repeating-linear-gradient(135deg, var(--candy-mint) 0 10px, var(--candy-aqua) 10px 20px, var(--candy-cream) 20px 30px, var(--candy-pink) 30px 40px) border-box;
-      border: 3px solid transparent;
-      border-radius: 14px;
-      padding: 8px;
-      box-shadow: 4px 4px 0 rgba(181, 232, 224, 0.4);
-    }
-    .shelf-hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 116px;
-      gap: 18px;
-      align-items: center;
-      padding: 24px 26px;
-      background: var(--soft-white);
-      border: 1.5px dashed var(--candy-purple);
-      border-radius: 10px;
-      margin-bottom: 12px;
-    }
-    .shelf-kicker {
-      font-family: var(--font-pixel);
-      font-size: 11px;
-      color: var(--candy-purple);
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
-    }
-    .shelf-hero h1 {
-      font-family: var(--font-rounded);
-      font-size: 32px;
-      line-height: 1.15;
-      color: var(--ink);
-      letter-spacing: 0;
-      margin-bottom: 8px;
-      text-shadow: 2px 2px 0 var(--candy-cream);
-    }
-    .shelf-subtitle {
-      font-family: var(--font-serif-tc);
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--ink-light);
-    }
-    .shelf-badge {
-      width: 104px;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: var(--candy-mint);
-      border: 2px dashed var(--candy-purple);
-      box-shadow: 4px 4px 0 rgba(199, 179, 232, 0.34);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--ink);
-    }
-    .shelf-badge span {
-      font-family: var(--font-bubble);
-      font-size: 30px;
-      line-height: 1;
-    }
-    .shelf-badge small {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      margin-top: 5px;
-    }
+  .sec-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px;
+    background: var(--sec-bg, var(--soft-white));
+    border-bottom: 2px dashed var(--sec-acc, var(--candy-purple));
+    border-radius: 8px 8px 0 0;
+    font-family: var(--font-pixel);
+  }
 
-    .shelf-note {
-      display: grid;
-      grid-template-columns: 34px minmax(0, 1fr);
-      gap: 12px;
-      padding: 16px 18px;
-      margin-bottom: 18px;
-      background: rgba(181, 232, 224, 0.24);
-      border: 1.5px dashed var(--candy-aqua);
-      border-radius: 10px;
-    }
-    .note-pin {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--candy-pink);
-      border: 1.5px dashed var(--candy-purple);
-      color: var(--ink);
-      font-family: var(--font-pixel);
-    }
-    .shelf-note h2 {
-      font-family: var(--font-rounded);
-      font-size: 17px;
-      color: var(--ink);
-      margin-bottom: 5px;
-    }
-    .shelf-note p {
-      font-family: var(--font-serif-tc);
-      font-size: 14px;
-      line-height: 1.85;
-      color: var(--ink);
-    }
+  .sh-num {
+    background: var(--sec-acc, var(--candy-purple));
+    color: #fff;
+    font-family: var(--font-pixel); font-size: 10px;
+    padding: 3px 7px; border-radius: 4px; flex-shrink: 0;
+    letter-spacing: 1px;
+  }
+  .sh-icon { font-size: 18px; flex-shrink: 0; }
+  .sh-name {
+    font-family: var(--font-rounded); font-weight: 700; font-size: 15px;
+    color: var(--ink); white-space: nowrap;
+  }
+  .sh-sep { color: var(--ink-light); font-size: 12px; flex-shrink: 0; }
+  .sh-alt {
+    font-family: var(--font-pixel); font-size: 10px;
+    color: var(--ink-light); white-space: nowrap;
+  }
+  .sh-count {
+    margin-left: auto; flex-shrink: 0;
+    font-family: var(--font-pixel); font-size: 9px;
+    color: var(--ink-light);
+    background: rgba(255,255,255,0.65);
+    padding: 2px 8px; border-radius: 4px;
+    border: 1px dashed var(--sec-acc, var(--candy-purple));
+  }
 
-    .folder-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .folder-section {
-      scroll-margin-top: 36px;
-      background: #fff;
-      border: 2px dashed var(--candy-mint);
-      border-radius: 0 12px 12px 12px;
-      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.25);
-      overflow: hidden;
-    }
-    .folder-heading {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: center;
-      padding: 14px 18px;
-      border-bottom: 1.5px dashed rgba(42, 31, 24, 0.16);
-    }
-    .folder-heading div {
-      min-width: 0;
-      display: grid;
-      grid-template-columns: 30px minmax(0, 1fr);
-      column-gap: 8px;
-      align-items: center;
-    }
-    .folder-icon {
-      grid-row: span 2;
-      font-size: 22px;
-    }
-    .folder-heading h2 {
-      font-family: var(--font-rounded);
-      font-size: 18px;
-      line-height: 1.35;
-      color: var(--ink);
-      letter-spacing: 0;
-    }
-    .folder-heading p {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--ink-light);
-      letter-spacing: 1px;
-    }
-    .folder-count {
-      min-width: 32px;
-      height: 32px;
-      display: inline-grid;
-      place-items: center;
-      font-family: var(--font-pixel);
-      font-size: 12px;
-      color: var(--ink);
-      background: var(--soft-white);
-      border: 1.5px dashed currentColor;
-      border-radius: 50%;
-    }
-    .section-mint { border-color: var(--candy-mint); }
-    .section-peach { border-color: var(--candy-peach); }
-    .section-pink { border-color: var(--candy-pink); }
-    .section-aqua { border-color: var(--candy-aqua); }
-    .section-purple { border-color: var(--candy-purple); }
-    .section-cream { border-color: var(--candy-cream); }
-    .section-mint .folder-heading { background: rgba(200, 233, 176, 0.34); }
-    .section-peach .folder-heading { background: rgba(255, 200, 200, 0.34); }
-    .section-pink .folder-heading { background: rgba(255, 182, 217, 0.26); }
-    .section-aqua .folder-heading { background: rgba(181, 232, 224, 0.32); }
-    .section-purple .folder-heading { background: rgba(199, 179, 232, 0.26); }
-    .section-cream .folder-heading { background: rgba(255, 233, 182, 0.42); }
+  .sec-desc {
+    font-family: var(--font-serif-tc); font-size: 11px;
+    color: rgba(107,88,71,.65); font-style: italic;
+    padding: 8px 16px 0; line-height: 1.7;
+  }
 
-    .bookmark-list {
-      display: flex;
-      flex-direction: column;
-    }
-    .bookmark-row {
-      display: grid;
-      grid-template-columns: 54px minmax(0, 1fr) 150px;
-      gap: 14px;
-      padding: 14px 16px;
-      border-bottom: 1px dashed rgba(42, 31, 24, 0.13);
-      background: linear-gradient(90deg, rgba(255, 252, 245, 0.92), #fff);
-      transition: background 0.15s, transform 0.15s;
-    }
-    .bookmark-row:last-child { border-bottom: 0; }
-    .bookmark-row:hover {
-      background: var(--soft-white);
-      transform: translateX(2px);
-    }
-    .bookmark-no {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--candy-purple);
-      padding-top: 4px;
-    }
-    .bookmark-main h3 {
-      font-family: var(--font-serif-tc);
-      font-size: 15.5px;
-      line-height: 1.45;
-      color: var(--ink);
-      margin-bottom: 5px;
-    }
-    .bookmark-main p {
-      font-family: var(--font-serif-tc);
-      font-size: 13px;
-      line-height: 1.65;
-      color: #54483f;
-    }
-    .bookmark-meta {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-      justify-content: center;
-    }
-    .bookmark-meta span {
-      max-width: 100%;
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--ink-light);
-      word-break: break-all;
-      text-align: right;
-    }
-    .bookmark-meta a {
-      display: inline-block;
-      padding: 5px 11px;
-      font-family: var(--font-rounded);
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--ink);
-      text-decoration: none;
-      background: var(--candy-cream);
-      border: 1.5px dashed var(--candy-purple);
-      border-radius: 999px;
-      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.3);
-    }
-    .bookmark-meta a:hover {
-      background: var(--candy-mint);
-      text-decoration: none;
-    }
+  /* ══ Card grid ══ */
+  .banner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 80px;
+    grid-auto-flow: dense;
+    gap: 14px;
+    padding: 14px 16px 18px;
+  }
 
-    .board-footer {
-      text-align: center;
-      margin-top: 24px;
-      padding: 16px 0 8px;
-      border-top: 1px dashed var(--candy-mint);
-      font-family: var(--font-pixel);
-      font-size: 11px;
-      color: var(--ink-light);
-      letter-spacing: 2px;
-    }
+  /* ══ Sticker cards ══ */
+  .link-sticker {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 14px;
+    height: 100%;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    text-decoration: none !important;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 rgba(199,179,232,.35);
+    transition: transform 0.2s cubic-bezier(0.34,1.2,0.64,1), box-shadow 0.2s;
+  }
+  .link-sticker:hover {
+    transform: translate(-2px,-3px) rotate(-1deg);
+    box-shadow: 6px 6px 0 rgba(199,179,232,.5);
+    text-decoration: none !important;
+    z-index: 10;
+  }
+  /* 裁剪線 */
+  .link-sticker::after {
+    content: '';
+    position: absolute; inset: 4px;
+    border: 1.5px dashed rgba(255,255,255,.85);
+    border-radius: 4px; pointer-events: none; z-index: 10;
+  }
 
-    .menu-card {
-      background: var(--soft-white);
-      border: 1.5px dashed var(--candy-mint);
-      border-radius: 12px;
-      padding: 8px;
-      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.4);
-      margin-bottom: 12px;
-    }
-    .menu-title {
-      font-family: var(--font-pixel);
-      font-size: 12px;
-      text-align: center;
-      padding: 8px 4px;
-      margin: 0 0 6px;
-      color: var(--ink-light);
-      background: var(--candy-cream);
-      border-radius: 6px;
-    }
-    .menu-list { list-style: none; padding: 0; margin: 0; }
-    .menu-list li { margin-bottom: 4px; }
-    .menu-list a,
-    .menu-current {
-      display: block;
-      padding: 10px 12px;
-      text-align: center;
-      font-family: var(--font-rounded);
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--ink);
-      text-decoration: none;
-      border-radius: 8px;
-      border: 1.5px dashed var(--candy-purple);
-      text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white), -1px 1px 0 var(--soft-white), 1px 1px 0 var(--soft-white);
-    }
-    .menu-list a { transition: transform 0.15s, box-shadow 0.15s; }
-    .menu-list a:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 2px 2px 0 rgba(199, 179, 232, 0.4);
-      text-decoration: none;
-    }
-    .menu-mint { background: var(--candy-mint); }
-    .menu-aqua { background: var(--candy-aqua); }
-    .menu-pink { background: var(--candy-pink); }
-    .menu-purple { background: var(--candy-purple); }
-    .menu-cream { background: var(--candy-cream); }
-    .menu-peach { background: var(--candy-peach); }
-    .menu-current { border-style: solid; border-width: 2px; cursor: default; }
+  /* ── 策展高光 ── */
+  .featured-wide  { grid-column: span 2; }
+  .featured-large {
+    grid-column: span 2; grid-row: span 2;
+    justify-content: flex-start; padding: 18px 20px;
+  }
+  .featured-large .ls-title { font-size: 16px; white-space: normal; display: inline-block; margin-bottom: 6px; }
+  .featured-large .ls-note  { -webkit-line-clamp: 4; font-size: 12px; line-height: 1.6; }
 
-    .minihome-deco {
-      background: var(--candy-cream);
-      border: 1.5px dashed var(--candy-peach);
-      border-radius: 12px;
-      padding: 16px 12px;
-      text-align: center;
-      box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.3);
-      margin-bottom: 16px;
-    }
-    .deco-row {
-      font-size: 14px;
-      color: var(--candy-purple);
-      letter-spacing: 4px;
-      margin-bottom: 10px;
-    }
-    .deco-text p {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--ink-light);
-      margin: 2px 0;
-    }
+  /* ── 內部排版 ── */
+  .ls-head {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 8px;
+    position: relative; z-index: 2;
+  }
+  .ls-title {
+    font-family: var(--font-pixel); font-size: 12px; font-weight: bold;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    text-shadow:
+      -1px -1px 0 rgba(255,255,255,.8),
+       1px -1px 0 rgba(255,255,255,.8),
+      -1px  1px 0 rgba(255,255,255,.8),
+       1px  1px 0 rgba(255,255,255,.8);
+  }
+  .ls-region {
+    font-family: var(--font-pixel); font-size: 9px;
+    padding: 2px 6px;
+    background: rgba(255,255,255,.8);
+    color: var(--ink);
+    border: 1px dashed var(--candy-purple); border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .ls-note {
+    font-family: var(--font-serif-tc); font-size: 11px;
+    margin-top: 5px; position: relative; z-index: 2;
+    background: rgba(255,255,255,.7); padding: 2px 6px;
+    border-radius: 4px; border: 1px dotted rgba(255,255,255,.9);
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
 
-    .kawaii-player {
-      background: var(--candy-mint);
-      border: 2px dashed var(--candy-purple);
-      border-radius: 12px;
-      padding: 12px;
-      box-shadow: 3px 3px 0 rgba(181, 232, 224, 0.8);
-      margin-bottom: 16px;
-    }
-    .kp-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--ink-light);
-      margin-bottom: 8px;
-      letter-spacing: 1px;
-    }
-    .kp-dot {
-      width: 4px;
-      height: 4px;
-      background: var(--candy-pink);
-      border-radius: 50%;
-    }
-    .kp-screen {
-      background: var(--soft-white);
-      border: 1.5px solid var(--candy-purple);
-      border-radius: 6px;
-      padding: 6px;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .kp-marquee {
-      font-family: var(--font-serif-tc);
-      font-size: 12px;
-      color: var(--candy-purple);
-      font-weight: bold;
-      white-space: nowrap;
-      animation: marquee-scroll 8s linear infinite;
-    }
-    @keyframes marquee-scroll {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-    .kp-controls {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-    }
-    .kp-btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      width: 24px;
-      height: 24px;
-      background: var(--soft-white);
-      border: 1.5px dashed var(--candy-purple);
-      border-radius: 50%;
-      font-size: 10px;
-      color: var(--candy-purple);
-    }
-    .kp-play { background: var(--candy-pink); color: white; border-color: transparent; }
+  /* ══ 五種主題底紋 ══ */
 
-    .kawaii-counter {
-      background: var(--candy-cream);
-      border: 2px dashed var(--candy-peach);
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-      box-shadow: 3px 3px 0 rgba(255, 200, 200, 0.4);
-    }
-    .kc-title {
-      font-family: var(--font-pixel);
-      font-size: 10px;
-      color: var(--ink-light);
-      margin: 0 0 8px 0;
-      letter-spacing: 2px;
-    }
-    .kc-digits {
-      display: flex;
-      justify-content: center;
-      gap: 3px;
-    }
-    .kc-digits span {
-      background: var(--soft-white);
-      color: var(--candy-pink);
-      font-family: var(--font-pixel);
-      font-size: 16px;
-      padding: 4px 6px;
-      border: 1.5px solid var(--candy-pink);
-      border-radius: 4px;
-      font-weight: bold;
-    }
+  /* 水平條紋 */
+  .theme-angel {
+    background-color: var(--candy-aqua);
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 3px,
+      rgba(255,255,255,.55) 3px, rgba(255,255,255,.55) 5px
+    );
+    color: #2b5c54;
+    box-shadow: 4px 4px 0 rgba(181,232,224,.6);
+  }
 
-    .bg-mint { background-color: var(--candy-mint); }
-    .bg-pink { background-color: var(--candy-pink); }
-    .bg-cream { background-color: var(--candy-cream); }
+  /* 格子（Checker） */
+  .theme-doll {
+    background-color: var(--candy-pink);
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.45) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.45) 75%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,.45) 25%, #FFF0F6 25%, #FFF0F6 75%, rgba(255,255,255,.45) 75%);
+    background-position: 0 0, 10px 10px;
+    background-size: 20px 20px;
+    color: #8c2a54;
+    box-shadow: 4px 4px 0 rgba(255,182,217,.6);
+  }
+  .theme-doll .ls-title,
+  .theme-doll .ls-note {
+    background: rgba(255,255,255,.65); padding: 1px 5px; border-radius: 3px; display: inline-block;
+  }
 
-    .window-taskbar {
-      background: var(--candy-mint);
-      padding: 8px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 2px dashed var(--candy-mint);
-      border-radius: 0 0 13px 13px;
-      font-family: var(--font-pixel);
-      font-size: 11px;
-      color: var(--ink);
-    }
-    .taskbar-left { display: flex; gap: 12px; align-items: center; }
-    .taskbar-right { display: flex; gap: 12px; align-items: center; }
-    .taskbar-start {
-      background: rgba(255, 255, 255, 0.5);
-      padding: 2px 8px;
-      border-radius: 3px;
-      border: 1px dashed var(--candy-purple);
-    }
-    .taskbar-status,
-    .taskbar-clock { color: var(--ink); font-weight: 700; }
+  /* 波點 */
+  .theme-moon {
+    background-color: var(--candy-purple);
+    background-image:
+      radial-gradient(rgba(255,255,255,.65) 22%, transparent 22%),
+      radial-gradient(rgba(255,255,255,.65) 22%, transparent 22%);
+    background-size: 14px 14px;
+    background-position: 0 0, 7px 7px;
+    color: #3f2f5c;
+    box-shadow: 4px 4px 0 rgba(199,179,232,.6);
+  }
 
-    @media (max-width: 900px) {
-      .home-window { margin: 12px; }
-      .browser-strip,
-      .links-layout {
-        grid-template-columns: 1fr;
-      }
-      .mini-tabs { display: none; }
-      .window-content { padding: 16px 12px; }
-      .links-layout { gap: 16px; }
-      .window-titlebar,
-      .window-taskbar {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-      }
-      .titlebar-left,
-      .taskbar-left,
-      .taskbar-right {
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .sticky-sidebar { position: static; }
-      .shelf-hero {
-        grid-template-columns: 1fr;
-        padding: 20px 16px;
-      }
-      .shelf-hero h1 { font-size: 25px; }
-      .shelf-badge {
-        width: 88px;
-        justify-self: center;
-      }
-      .shelf-note {
-        grid-template-columns: 1fr;
-      }
-      .bookmark-row {
-        grid-template-columns: 1fr;
-        gap: 7px;
-      }
-      .bookmark-meta {
-        align-items: stretch;
-      }
-      .bookmark-meta span { text-align: left; }
-      .bookmark-meta a { text-align: center; }
+  /* 格紋（方格紙） */
+  .theme-lace {
+    background-color: var(--candy-cream);
+    background-image:
+      linear-gradient(rgba(210,180,140,.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(210,180,140,.35) 1px, transparent 1px);
+    background-size: 11px 11px;
+    color: #6b441c;
+    box-shadow: 4px 4px 0 rgba(255,233,182,.8);
+    border-color: #D2B48C;
+  }
+  .theme-lace::after { border-color: rgba(139,90,43,.2); }
+
+  /* 斜紋 */
+  .theme-mint {
+    background-color: var(--candy-mint);
+    background-image: repeating-linear-gradient(
+      -45deg, transparent, transparent 6px,
+      rgba(255,255,255,.6) 6px, rgba(255,255,255,.6) 12px
+    );
+    color: #3b5c2b;
+    box-shadow: 4px 4px 0 rgba(200,233,176,.6);
+  }
+
+  /* ══ 右側導航窗格 ══ */
+  .map-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Menu card — 與首頁右欄一致 */
+  .menu-card {
+    background: var(--soft-white);
+    border: 1.5px dashed var(--candy-mint);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 3px 3px 0 rgba(181,232,224,.4);
+  }
+  .menu-title {
+    font-family: var(--font-pixel); font-size: 11px;
+    text-align: center; padding: 7px 4px; margin: 0 0 6px;
+    color: var(--ink-light);
+    background: var(--candy-cream); border-radius: 6px;
+  }
+  .menu-list { list-style: none; padding: 0; margin: 0; }
+  .menu-list li { margin-bottom: 4px; }
+  .menu-list a {
+    display: block; padding: 9px 12px;
+    text-align: center;
+    font-family: var(--font-rounded); font-weight: 700; font-size: 12px;
+    color: var(--ink); text-decoration: none;
+    border-radius: 8px; border: 1.5px dashed var(--candy-purple);
+    transition: transform .15s;
+    text-shadow: -1px -1px 0 var(--soft-white), 1px -1px 0 var(--soft-white),
+                 -1px  1px 0 var(--soft-white), 1px  1px 0 var(--soft-white);
+  }
+  .menu-list a:hover {
+    transform: translate(-2px,-2px);
+    box-shadow: 2px 2px 0 rgba(199,179,232,.4);
+    text-decoration: none;
+  }
+  .menu-mint   { background: var(--candy-mint); }
+  .menu-aqua   { background: var(--candy-aqua); }
+  .menu-pink   { background: var(--candy-pink); }
+  .menu-purple { background: var(--candy-purple); }
+  .menu-cream  { background: var(--candy-cream); }
+
+  /* Map stats box */
+  .map-stats-box {
+    background: var(--soft-white);
+    border: 1.5px dashed var(--candy-purple);
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 3px 3px 0 rgba(199,179,232,.35);
+  }
+  .stats-title {
+    font-family: var(--font-pixel); font-size: 9px;
+    color: var(--candy-purple); letter-spacing: 2px;
+    text-align: center; margin-bottom: 10px;
+  }
+  .stats-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(199,179,232,.4);
+  }
+  .stats-label { font-family: var(--font-pixel); font-size: 9px; color: var(--ink-light); }
+  .stats-val   { font-family: var(--font-pixel); font-size: 18px; color: var(--candy-purple); line-height: 1; }
+  .stats-updated {
+    font-family: var(--font-pixel); font-size: 9px;
+    color: var(--ink-light); text-align: right; margin-top: 8px;
+  }
+
+  /* Guestbook card */
+  .guestbook-card a {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px;
+    background: var(--candy-cream);
+    border: 1.5px dashed var(--candy-pink);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 rgba(255,182,217,.4);
+    text-decoration: none; color: var(--ink);
+  }
+  .guestbook-card a:hover { text-decoration: none; transform: translate(-1px,-1px); }
+  .gb-icon { font-size: 22px; margin-bottom: 4px; }
+  .gb-text  { font-family: var(--font-pixel); font-size: 9px; color: var(--ink-light); letter-spacing: 1px; }
+
+  /* ══ Taskbar ══ */
+  .window-taskbar {
+    background: var(--candy-mint); padding: 8px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-pixel); font-size: 11px; color: var(--ink);
+  }
+  .taskbar-left  { display: flex; gap: 12px; align-items: center; }
+  .taskbar-right { display: flex; gap: 12px; align-items: center; }
+  .taskbar-start {
+    background: rgba(255,255,255,.5); padding: 2px 8px;
+    border-radius: 3px; border: 1px dashed var(--candy-purple);
+  }
+  .taskbar-item, .taskbar-status { color: var(--ink-light); }
+  .taskbar-clock { font-weight: 700; }
+
+  /* ══ Responsive ══ */
+  @media (max-width: 760px) {
+    .win-body { padding: 14px 16px; }
+    .hero { padding: 22px 18px 16px; }
+    .hero-title { font-size: 24px; }
+    .map-sidebar { display: none; }
+    .banner-grid {
+      grid-template-columns: 1fr;
+      grid-auto-rows: 70px;
+      gap: 10px;
     }
-  </style>
+    .featured-wide, .featured-large { grid-column: span 1; grid-row: span 1; }
+    .sh-alt, .sh-sep { display: none; }
+  }
+</style>
 
 </body>
 </html>

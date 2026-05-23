@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>灵感地图 | 推开部屋的门</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=DotGothic16&family=Inter:wght@400;500;600&family=Bungee&family=M+PLUS+Rounded+1c:wght@400;700&family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+
+  <style>
+    /* ====================================
+       elephlow.cc — Heisei Retro Design System (原汁原味保留)
+    ==================================== */
+    :root {
+      --cream-paper: #FFF9E8;
+      --soft-white: #FFFCF5;
+      --ink: #2A1F18;
+      --ink-light: #6B5847;
+
+      --candy-cream: #FFE9B6;
+      --candy-peach: #FFC8C8;
+      --candy-pink: #FFB6D9;
+      --candy-purple: #C7B3E8;
+      --candy-aqua: #B5E8E0;
+      --candy-mint: #C8E9B0;
+
+      --font-serif-sc: 'Noto Serif SC', serif;
+      --font-serif-tc: 'Noto Serif TC', serif;
+      --font-pixel: 'DotGothic16', monospace;
+      --font-sans-en: 'Inter', sans-serif;
+      --font-rounded: 'M PLUS Rounded 1c', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream-paper);
+      background-image:
+        repeating-linear-gradient(90deg, transparent 0, transparent 24px, rgba(200, 233, 176, 0.22) 24px, rgba(200, 233, 176, 0.22) 52px, transparent 52px, transparent 80px, rgba(255, 182, 217, 0.18) 80px, rgba(255, 182, 217, 0.18) 96px, transparent 96px, transparent 120px, rgba(181, 232, 224, 0.22) 120px, rgba(181, 232, 224, 0.22) 168px, transparent 168px, transparent 196px),
+        repeating-linear-gradient(0deg, transparent 0, transparent 32px, rgba(199, 179, 232, 0.18) 32px, rgba(199, 179, 232, 0.18) 56px, transparent 56px, transparent 100px, rgba(255, 233, 182, 0.22) 100px, rgba(255, 233, 182, 0.22) 124px, transparent 124px, transparent 156px);
+      color: var(--ink);
+      font-family: var(--font-serif-sc), var(--font-rounded);
+      line-height: 1.7;
+      padding: 24px;
+    }
+
+    a { color: var(--candy-purple); text-decoration: none; }
+    a:hover { color: var(--candy-pink); text-decoration: underline; }
+
+    /* ====================================
+       原版外壳结构 (Window Shell)
+    ==================================== */
+    .home-window {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--soft-white);
+      border: 3px dashed var(--candy-mint);
+      border-radius: 16px;
+      box-shadow: 6px 6px 0 rgba(181,232,224,.55);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* titlebar */
+    .window-titlebar {
+      background: var(--candy-mint);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 13px 13px 0 0;
+      font-family: var(--font-pixel);
+      font-size: 13px;
+      color: var(--ink);
+    }
+    .tl-left { display: flex; align-items: center; gap: 12px; }
+    .title-dots { color: var(--candy-purple); letter-spacing: 2px; }
+    .lang-link { padding: 2px 8px; color: var(--ink); border-radius: 3px; }
+    .lang-active { background: rgba(255,255,255,.6); font-weight: 700; text-decoration: none;}
+
+    /* browser strip */
+    .browser-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 16px;
+      background: var(--candy-cream);
+      border-bottom: 2px dashed var(--candy-peach);
+      font-family: var(--font-pixel);
+      font-size: 13px;
+    }
+    .addr-box {
+      display: flex; align-items: center; gap: 7px;
+      padding: 6px 10px;
+      background: var(--soft-white);
+      border: 1.5px dashed var(--candy-purple);
+      border-radius: 8px;
+    }
+    .addr-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(0,0,0,.1); }
+    .mini-tabs span {
+      padding: 5px 8px;
+      background: rgba(255,255,255,.62);
+      border: 1px dashed var(--candy-pink);
+      border-radius: 6px 6px 0 0;
+      margin-left: 4px;
+    }
+
+    /* page nav */
+    .page-nav {
+      display: flex; justify-content: center; gap: 10px;
+      padding: 12px 20px;
+      background: var(--soft-white);
+      border-bottom: 2px dashed rgba(199,179,232,.35);
+      font-family: var(--font-rounded);
+      font-size: 13px;
+    }
+    .pn { padding: 4px 12px; border-radius: 20px; font-weight: 700; color: var(--ink); transition: transform .12s; }
+    .pn:hover { transform: translate(-1px,-1px); box-shadow: 2px 2px 0 rgba(0,0,0,.1); text-decoration: none; }
+    .pn-active { background: var(--candy-peach); }
+    .pn-mint { background: var(--candy-mint); }
+    .pn-pink { background: var(--candy-pink); }
+    .pn-aqua { background: var(--candy-aqua); }
+    .pn-purple { background: var(--candy-purple); }
+
+    /* win body & hero */
+    .win-body { padding: 28px; }
+    .hero {
+      border: 2px solid var(--candy-purple);
+      border-radius: 12px;
+      background: var(--soft-white);
+      box-shadow: 5px 5px 0 rgba(199,179,232,.4);
+      padding: 36px 40px 28px;
+      text-align: center;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .hero-kicker { font-family: var(--font-pixel); color: var(--candy-purple); font-size: 12px; margin-bottom: 8px;}
+    .hero-title { font-family: var(--font-rounded); font-size: 36px; text-shadow: 2px 2px 0 var(--candy-mint); margin-bottom: 8px;}
+    .hero-tagline { font-family: var(--font-serif-tc); color: var(--ink-light); margin-bottom: 8px;}
+    .hero-intro { font-size: 13px; color: rgba(107,88,71,.7); font-style: italic; max-width: 600px; margin: 0 auto 16px;}
+    .hero-stats { font-family: var(--font-pixel); font-size: 12px; color: var(--ink-light); }
+    .corner { position: absolute; font-family: monospace; font-size: 18px; color: var(--candy-purple); }
+    .corner-tl { top: 6px; left: 8px; } .corner-tr { top: 6px; right: 8px; }
+    .corner-bl { bottom: 6px; left: 8px; } .corner-br { bottom: 6px; right: 8px; }
+
+    /* section accordion */
+    .sections-list { display: flex; flex-direction: column; gap: 12px; }
+    .cat-section { border-radius: 10px; }
+    .sec-header {
+      width: 100%; display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border: 2px dashed; border-radius: 10px;
+      cursor: pointer; text-align: left; background: var(--soft-white);
+      transition: all .2s;
+    }
+    .sec-header:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 rgba(0,0,0,0.1); }
+    .sh-num { width: 30px; height: 30px; background: var(--ink); color: #fff; font-family: var(--font-pixel); display: grid; place-items: center; border-radius: 5px; font-size: 12px;}
+    .sh-icon { font-size: 20px; }
+    .sh-name { font-family: var(--font-rounded); font-weight: 700; font-size: 16px; }
+    .sh-alt { font-family: var(--font-serif-tc); font-size: 12px; color: var(--ink-light); margin-left: 8px;}
+    .sh-count { font-family: var(--font-pixel); margin-left: auto; font-size: 12px;}
+    .sec-content { padding: 16px; border: 2px dashed; border-top: none; border-radius: 0 0 10px 10px; display: none; }
+    .cat-section.open .sec-content { display: block; }
+    .cat-section.open .sec-header { border-radius: 10px 10px 0 0; border-bottom-style: solid; }
+    .banner-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+    /* ====================================
+       ✨ 新版：贴纸/签名条风格核心 CSS ✨
+       （替换你原有的 .link-banner）
+    ==================================== */
+    .link-sticker {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px 16px;
+      height: 68px; /* 固定高度，更像实体贴纸 */
+      border-radius: 6px;
+      text-decoration: none !important;
+      transition: transform 0.15s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.15s;
+      overflow: hidden;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.06);
+    }
+
+    .link-sticker:hover {
+      transform: translate(-2px, -3px) rotate(-1deg);
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.12);
+    }
+
+    /* 贴纸标志性元素：内圈虚线框 (模拟缝纫线) */
+    .link-sticker::after {
+      content: '';
+      position: absolute;
+      inset: 4px; /* 距离边缘 4px */
+      border: 1px dashed rgba(255,255,255,0.85);
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .ls-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ls-title {
+      font-family: var(--font-pixel);
+      font-size: 15px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: 1px;
+    }
+
+    .ls-region {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      padding: 2px 6px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.9);
+      flex-shrink: 0;
+    }
+
+    .ls-note {
+      font-family: var(--font-serif-tc);
+      font-size: 11px;
+      margin-top: 4px;
+      opacity: 0.85;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* --- 五种贴纸主题 (使用你的 Candy 色系) --- */
+    
+    /* 1. Angel (云朵/天使) */
+    .theme-angel {
+      background: var(--candy-aqua);
+      border: 2px solid #FFF;
+      color: #3B6B63;
+    }
+    .theme-angel .ls-title::before { content: '☁️ '; }
+    .theme-angel .ls-title { text-shadow: 1px 1px 0 #FFF; }
+
+    /* 2. Doll (粉红条纹/蝴蝶结) */
+    .theme-doll {
+      background: repeating-linear-gradient(45deg, var(--candy-pink), var(--candy-pink) 6px, #FFF0F6 6px, #FFF0F6 12px);
+      border: 2px solid var(--candy-pink);
+      color: #A34873;
+    }
+    .theme-doll .ls-title::before { content: '🎀 '; }
+    .theme-doll .ls-title { text-shadow: 1px 1px 0 #FFF; background: rgba(255,255,255,0.6); padding: 0 4px; border-radius: 4px;}
+    .theme-doll .ls-note { background: rgba(255,255,255,0.6); padding: 0 4px; border-radius: 2px; display: inline-block;}
+
+    /* 3. Moonlight (星月/深色背景) */
+    .theme-moon {
+      background: var(--candy-purple);
+      border: 2px solid #FFF;
+      color: #4A3B69;
+    }
+    .theme-moon .ls-title::before { content: '🌙 '; }
+    .theme-moon .ls-title { text-shadow: 1px 1px 0 #FFF; }
+
+    /* 4. Lace (茶色/复古) */
+    .theme-lace {
+      background: var(--candy-cream);
+      border: 2px dotted #D2B48C;
+      color: #8B5A2B;
+    }
+    .theme-lace .ls-title::before { content: '🧸 '; }
+    .theme-lace::after { border-color: rgba(139, 90, 43, 0.2); } /* 缝纫线变暗色 */
+
+    /* 5. Mint (薄荷/星星) */
+    .theme-mint {
+      background: var(--candy-mint);
+      border: 2px solid #FFF;
+      color: #4C6B3B;
+    }
+    .theme-mint .ls-title::before { content: '✦ '; }
+    .theme-mint .ls-title { text-shadow: 1px 1px 0 #FFF; }
+
+
+    /* footer taskbar */
+    .taskbar {
+      background: var(--candy-mint); padding: 8px 16px; display: flex; justify-content: space-between;
+      border-radius: 0 0 13px 13px; font-family: var(--font-pixel); font-size: 13px;
+    }
+    .map-footer { text-align: center; margin: 30px 0 10px; font-family: var(--font-pixel); font-size: 12px; color: var(--ink-light);}
+  </style>
+</head>
+<body>
+
+<main class="home-window">
+  <header class="window-titlebar">
+    <div class="tl-left">
+      <span class="title-dots">● ● ●</span>
+      <span class="tl-text">elephlow.cc / 灵感地图</span>
+    </div>
+    <div class="tl-right">
+      <a href="#" class="lang-link lang-active">简</a>
+      <a href="#" class="lang-link">繁</a>
+      <a href="#" class="lang-link">EN</a>
+    </div>
+  </header>
+
+  <div class="browser-strip">
+    <div class="addr-box">
+      <span class="addr-dot" style="background:var(--candy-pink)"></span>
+      <span class="addr-dot" style="background:var(--candy-cream)"></span>
+      <span class="addr-dot" style="background:var(--candy-mint)"></span>
+      <span class="addr-text">https://elephlow.cc/zh-cn/links</span>
+    </div>
+    <div class="mini-tabs">
+      <span>film.db</span><span>zine.zip</span><span>sound.wav</span>
+    </div>
+  </div>
+
+  <nav class="page-nav">
+    <a href="#" class="pn pn-mint">主页</a> ·
+    <a href="#" class="pn pn-pink">创作者说</a> ·
+    <a href="#" class="pn pn-aqua">往期目录</a> ·
+    <span class="pn pn-active">灵感地图</span> ·
+    <a href="#" class="pn pn-purple">留言板</a>
+  </nav>
+
+  <div class="win-body">
+    <div class="hero">
+      <span class="corner corner-tl">┌</span><span class="corner corner-tr">┐</span>
+      <span class="corner corner-bl">└</span><span class="corner corner-br">┘</span>
+      <p class="hero-kicker">◈ &nbsp; inspiration map · cultural resource shelf &nbsp; ◈</p>
+      <h1 class="hero-title">灵感地图</h1>
+      <p class="hero-tagline">像一张还在生长的地图，每一条链接都是一个可以出发的路口。</p>
+      <p class="hero-intro">这里收着影像、独立出版、学术期刊、地方记忆、酷儿研究、音乐声响与开放课程等入口。它们有些像资料库，有些像编辑部，有些像还亮着灯的小房间。</p>
+      <div class="hero-stats">10 分区 · 82 标记点 · 2026.05</div>
+    </div>
+
+    <div class="sections-list" id="sections-container"></div>
+    
+    <p class="map-footer">(｡♡‿♡｡) end of map ✿</p>
+  </div>
+
+  <footer class="taskbar">
+    <div>⊞ START ▣ 灵感地图</div>
+    <div>(｡♡‿♡｡) currently online <span id="clock">12:00</span></div>
+  </footer>
+</main>
+
+<script>
+  // 你提供的 JSON 数据
+  const friendsData = {
+  "categories": [
+    {
+      "id": "words-and-books", "name_zh": "字与书", "name_en": "Words & Books", "icon": "📖", "color": "var(--candy-pink)",
+      "links": [
+        { "title": "Openbook 閱讀誌", "url": "https://www.openbook.org.tw/", "region_zh": "台灣", "note": "目前華文圈最重要的書評媒體之一" },
+        { "title": "虛詞 p-articles", "url": "https://p-articles.com/", "region_zh": "香港", "note": "字花同系的香港文學評論平台" },
+        { "title": "聯合文學 unitas", "url": "https://www.unitas.me/", "region_zh": "台灣", "note": "老牌文學雜誌官網" },
+        { "title": "臺灣現當代作家研究", "url": "https://cws.nmtl.gov.tw/", "region_zh": "台灣", "note": "完整作家研究檔案系統" }
+      ]
+    },
+    {
+      "id": "moving-image", "name_zh": "光影", "name_en": "Moving Image", "icon": "🎞️", "color": "var(--candy-aqua)",
+      "links": [
+        { "title": "TFAI 國家影視中心", "url": "https://www.tfai.org.tw/zh/", "region_zh": "台灣", "note": "國家影視聽典藏與修復機構" },
+        { "title": "台灣國際紀錄片影展", "url": "https://www.tidf.org.tw/", "region_zh": "台灣", "note": "亞洲最重要的紀錄片影展之一" },
+        { "title": "Giloo 紀實影音", "url": "https://giloo.ist/", "region_zh": "台灣", "note": "紀錄片與議題電影串流平台" },
+        { "title": "The Criterion Collection", "url": "https://www.criterion.com/", "region_zh": "美國", "note": "經典電影策展與發行" }
+      ]
+    },
+    {
+      "id": "zines-and-archives", "name_zh": "小誌与档案", "name_en": "Zines & Archives", "icon": "📚", "color": "var(--candy-purple)",
+      "links": [
+        { "title": "Barnard Zine Library", "url": "https://zines.barnard.edu/", "region_zh": "美國", "note": "女性主義 zine 圖書館的代表" },
+        { "title": "ZINE COOP", "url": "https://zinecoop.org/en", "region_zh": "香港", "note": "香港 zine 合作社" },
+        { "title": "Taipei Art Book Fair", "url": "https://taipeiartbookfair.com/", "region_zh": "台灣", "note": "亞洲最大的藝術書展之一" },
+        { "title": "亞洲藝術文獻庫", "url": "https://aaa.org.hk/tc/", "region_zh": "香港", "note": "當代亞洲藝術研究的核心檔案" }
+      ]
+    }
+  ]
+};
+
+  const container = document.getElementById('sections-container');
+  const themes = ['theme-angel', 'theme-doll', 'theme-moon', 'theme-lace', 'theme-mint'];
+  let themeIndex = 0;
+
+  friendsData.categories.forEach((cat, index) => {
+    const section = document.createElement('div');
+    section.className = 'cat-section ' + (index === 0 ? 'open' : '');
+    
+    // 生成分类标题
+    const headerHtml = `
+      <button class="sec-header" style="border-color:${cat.color}; box-shadow: 4px 4px 0 ${cat.color}40;" onclick="this.parentElement.classList.toggle('open')">
+        <span class="sh-num">0${index + 1}</span>
+        <span class="sh-icon">${cat.icon}</span>
+        <span class="sh-name">${cat.name_zh}</span>
+        <span class="sh-alt">${cat.name_en}</span>
+        <span class="sh-count">${cat.links.length} 个站点 ▾</span>
+      </button>
+    `;
+
+    // 生成链接贴纸网格
+    let linksHtml = '<div class="sec-content" style="border-color:${cat.color};"><div class="banner-grid">';
+    cat.links.forEach(link => {
+      const theme = themes[themeIndex % themes.length];
+      themeIndex++;
+      linksHtml += `
+        <a class="link-sticker ${theme}" href="${link.url}" target="_blank">
+          <div class="ls-head">
+            <span class="ls-title">${link.title}</span>
+            <span class="ls-region">${link.region_zh}</span>
+          </div>
+          <span class="ls-note">${link.note}</span>
+        </a>
+      `;
+    });
+    linksHtml += '</div></div>';
+
+    section.innerHTML = headerHtml + linksHtml;
+    container.appendChild(section);
+  });
+
+  // 时钟逻辑
+  setInterval(() => {
+    const d = new Date();
+    document.getElementById('clock').innerText = 
+      String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }, 1000);
+</script>
+
+</body>
+</html>
