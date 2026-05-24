@@ -98,10 +98,10 @@ const defaultLayouts: Record<string, Record<number, 'wide' | 'large'>> = {
   'queer-landscapes':   { 1: 'wide', 5: 'wide'  },
 };
 
-// 10 種底紋，輪換
+// 10 種底紋，輪換（同色系間距≥4，避免相鄰卡片撞色）
 const stickerThemes = [
-  'th-dot-p',  'th-dg-mt', 'th-ck-pk', 'th-hl-aq', 'th-dot-pk',
-  'th-dg-pu',  'th-gd-cr', 'th-dot-aq','th-hl-cr',  'th-dg-pk',
+  'th-ck-pk',  'th-dot-p',  'th-dg-mt', 'th-hl-aq', 'th-gd-cr',
+  'th-dot-pk', 'th-dg-pu',  'th-hl-pc', 'th-dot-aq', 'th-hl-cr',
 ] as const;
 
 const themeOffsets: Record<string, number> = {
@@ -118,19 +118,19 @@ const themeOffsets: Record<string, number> = {
   'queer-landscapes':   0,
 };
 
-// 彩虹漸層邊框色（11色，不重複）
+// 彩虹漸層邊框色（11色，按新分區順序分配，保持彩虹序列）
 const catMeta: Record<string, { icon: string; accent: string; bg: string; shadow: string }> = {
-  'words-and-books':    { icon: '📖', accent: '#FF8FAB', bg: '#FFF5F8', shadow: '#FF8FAB40' },
-  'moving-image':       { icon: '🎞️', accent: '#FF9E64', bg: '#FFF6F0', shadow: '#FF9E6440' },
-  'sound':              { icon: '🎧', accent: '#F0C030', bg: '#FFFBEE', shadow: '#F0C03040' },
-  'on-the-ground':      { icon: '📰', accent: '#78CC70', bg: '#F2FAEE', shadow: '#78CC7040' },
-  'periodicals':        { icon: '📋', accent: '#40C8A8', bg: '#EEFAF7', shadow: '#40C8A840' },
-  'zines-and-archives': { icon: '📚', accent: '#48B8D8', bg: '#EEF8FD', shadow: '#48B8D840' },
-  'visual-field':       { icon: '🎨', accent: '#7090F0', bg: '#F0F3FD', shadow: '#7090F040' },
-  'self-study':         { icon: '🧭', accent: '#9878E0', bg: '#F3EFFD', shadow: '#9878E040' },
-  'bookshops':          { icon: '🏪', accent: '#C070D8', bg: '#F8EFFE', shadow: '#C070D840' },
-  'womens-place':       { icon: '✊', accent: '#E858A0', bg: '#FEF0F7', shadow: '#E858A040' },
-  'queer-landscapes':   { icon: '🌈', accent: '#FF7090', bg: '#FFF0F4', shadow: '#FF709040' },
+  'womens-place':       { icon: '✊',  accent: '#FF8FAB', bg: '#FFF5F8', shadow: '#FF8FAB40' }, // 01 粉紅
+  'queer-landscapes':   { icon: '🌈', accent: '#FF9E64', bg: '#FFF6F0', shadow: '#FF9E6440' }, // 02 橙
+  'words-and-books':    { icon: '📖', accent: '#F0C030', bg: '#FFFBEE', shadow: '#F0C03040' }, // 03 黃
+  'periodicals':        { icon: '📋', accent: '#78CC70', bg: '#F2FAEE', shadow: '#78CC7040' }, // 04 綠
+  'zines-and-archives': { icon: '📚', accent: '#40C8A8', bg: '#EEFAF7', shadow: '#40C8A840' }, // 05 青
+  'bookshops':          { icon: '🏪', accent: '#48B8D8', bg: '#EEF8FD', shadow: '#48B8D840' }, // 06 水藍
+  'sound':              { icon: '🎧', accent: '#7090F0', bg: '#F0F3FD', shadow: '#7090F040' }, // 07 藍紫
+  'moving-image':       { icon: '🎞️', accent: '#9878E0', bg: '#F3EFFD', shadow: '#9878E040' }, // 08 紫
+  'visual-field':       { icon: '🎨', accent: '#C070D8', bg: '#F8EFFE', shadow: '#C070D840' }, // 09 紫堇
+  'on-the-ground':      { icon: '📰', accent: '#E858A0', bg: '#FEF0F7', shadow: '#E858A040' }, // 10 桃紅
+  'self-study':         { icon: '🧭', accent: '#FF7090', bg: '#FFF0F4', shadow: '#FF709040' }, // 11 紅粉
 };
 
 // 每個板塊的顏文字
@@ -216,13 +216,6 @@ const categories = friendsData.categories.map((cat, i) => {
       <span>{categories.length} {copy.zones}</span>
       <span>·</span>
       <span>{totalLinks} {copy.pins}</span>
-    </div>
-  </div>
-
-  <!-- ③ 跑馬燈 -->
-  <div class="marquee-strip" aria-hidden="true">
-    <div class="marquee-inner">
-      {copy.marquee}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{copy.marquee}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
   </div>
 
@@ -359,6 +352,37 @@ const categories = friendsData.categories.map((cat, i) => {
           </a>
         </div>
 
+        <!-- 隨機探索抽籤機 -->
+        <div class="explore-card" id="explore-card" style="--ec-acc:#C7B3E8">
+          <p class="ec-label">✦ 隨機探索 ✦</p>
+          <div class="ec-slot" id="ec-slot">
+            <span class="ec-slot-icon" id="ec-icon">？</span>
+            <span class="ec-slot-name" id="ec-name">點下按鈕抽一區</span>
+          </div>
+          <div class="ec-btns">
+            <button class="ec-draw-btn" id="ec-draw">🎲 抽籤</button>
+            <a class="ec-go-btn" id="ec-go" href="#" style="display:none">→ 前往</a>
+          </div>
+        </div>
+
+        <!-- 顏文字板（點擊複製）-->
+        <div class="kao-board">
+          <p class="kb-title">♡ 點擊複製 ♡</p>
+          <div class="kb-grid">
+            <button class="kb-item" data-kao="(｡♡‿♡｡)">(｡♡‿♡｡)</button>
+            <button class="kb-item" data-kao="♪(´▽`)">♪(´▽`)</button>
+            <button class="kb-item" data-kao="(◕‿◕✿)">(◕‿◕✿)</button>
+            <button class="kb-item" data-kao="(ﾉ≧∀≦)ﾉ">(ﾉ≧∀≦)ﾉ</button>
+            <button class="kb-item" data-kao="ヾ(✿❛◡❛)ノ">ヾ(✿❛◡❛)ノ</button>
+            <button class="kb-item" data-kao="ψ(｀∇´)ψ">ψ(｀∇´)ψ</button>
+          </div>
+          <div class="kb-toast" id="kb-toast">已複製！</div>
+        </div>
+
+        <div class="sb-marquee" aria-hidden="true">
+          <div class="sb-mq-inner">{copy.marquee}&nbsp;&nbsp;&nbsp;&nbsp;{copy.marquee}&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
+
       </aside>
 
     </div>
@@ -377,6 +401,10 @@ const categories = friendsData.categories.map((cat, i) => {
   </footer>
 
 </main>
+
+<script is:inline define:vars={{ __catData: categories.map(c => ({ id: c.id, icon: c.icon, name: c.name, accent: c.accent })) }}>
+window.__catData = __catData;
+</script>
 
 <script is:inline>
 (function () {
@@ -410,12 +438,96 @@ const categories = friendsData.categories.map((cat, i) => {
       sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
+
+  // Scrollspy：高亮側欄當前可見分區
+  const sidebar = document.querySelector('.map-sidebar');
+  const allSecLinks = document.querySelectorAll('[data-sec-link]');
+  const sections = document.querySelectorAll('[data-section]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        allSecLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('data-sec-link') === id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+  sections.forEach(sec => observer.observe(sec));
+
+  // ── 隨機探索抽籤機 ──
+  const catData = window.__catData || [];
+  const drawBtn  = document.getElementById('ec-draw');
+  const goBtn    = document.getElementById('ec-go');
+  const iconEl   = document.getElementById('ec-icon');
+  const nameEl   = document.getElementById('ec-name');
+  const ecCard   = document.getElementById('explore-card');
+  let currentCatId = null;
+
+  drawBtn && drawBtn.addEventListener('click', () => {
+    drawBtn.disabled = true;
+    goBtn.style.display = 'none';
+    ecCard.classList.add('spinning');
+    let tick = 0;
+    const total = 12;
+    const iv = setInterval(() => {
+      const r = Math.floor(Math.random() * catData.length);
+      iconEl.textContent = catData[r].icon;
+      nameEl.textContent = catData[r].name;
+      tick++;
+      if (tick >= total) {
+        clearInterval(iv);
+        const fi = Math.floor(Math.random() * catData.length);
+        const cat = catData[fi];
+        iconEl.textContent = cat.icon;
+        nameEl.textContent = cat.name;
+        currentCatId = cat.id;
+        ecCard.style.setProperty('--ec-acc', cat.accent);
+        ecCard.classList.remove('spinning');
+        ecCard.classList.add('landed');
+        setTimeout(() => ecCard.classList.remove('landed'), 600);
+        goBtn.style.display = 'flex';
+        goBtn.href = '#' + cat.id;
+        drawBtn.disabled = false;
+      }
+    }, 70);
+  });
+
+  goBtn && goBtn.addEventListener('click', e => {
+    e.preventDefault();
+    if (!currentCatId) return;
+    const sec = document.getElementById(currentCatId);
+    if (!sec) return;
+    if (!sec.classList.contains('open')) {
+      sec.classList.add('open');
+      const toggle = sec.querySelector('[data-toggle]');
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    }
+    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // ── 顏文字點擊複製 ──
+  const toast = document.getElementById('kb-toast');
+  document.querySelectorAll('.kb-item[data-kao]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(btn.dataset.kao).then(() => {
+        btn.classList.add('kb-copied');
+        toast && (toast.classList.add('show'));
+        setTimeout(() => {
+          btn.classList.remove('kb-copied');
+          toast && toast.classList.remove('show');
+        }, 1200);
+      }).catch(() => {});
+    });
+  });
 })();
 </script>
 
 <style>
   /* ══ Animations ══ */
-  @keyframes marquee-run {
+  @keyframes sb-marquee-run {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
@@ -441,7 +553,7 @@ const categories = friendsData.categories.map((cat, i) => {
     background: var(--soft-white);
     border: 2px dashed var(--candy-purple); border-radius: 16px;
     box-shadow: 6px 6px 0 rgba(199,179,232,.35);
-    display: flex; flex-direction: column; overflow: hidden;
+    display: flex; flex-direction: column; overflow: clip;
   }
 
   /* ── Titlebar ── */
@@ -474,22 +586,24 @@ const categories = friendsData.categories.map((cat, i) => {
   .addr-text { color: var(--ink-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .bs-stats { display: flex; gap: 6px; align-items: center; flex-shrink: 0; color: var(--ink-light); font-size: 10px; }
 
-  /* ── 跑馬燈 ── */
-  .marquee-strip {
+  /* ── Sidebar 跑馬燈 ── */
+  .sb-marquee {
     overflow: hidden;
-    background: linear-gradient(90deg,
-      #FF8FAB, #FF9E64, #F0C030, #78CC70, #40C8A8, #48B8D8,
-      #7090F0, #9878E0, #C070D8, #E858A0, #FF7090, #FF8FAB
+    border: 1.5px dashed var(--candy-purple);
+    border-radius: 10px;
+    background: linear-gradient(135deg,
+      rgba(255,143,171,.12), rgba(255,158,100,.1),
+      rgba(240,192,48,.1),  rgba(120,204,112,.12),
+      rgba(64,200,168,.1),  rgba(199,179,232,.15)
     );
-    background-size: 200% 100%;
-    border-bottom: 2px solid rgba(255,255,255,.25);
+    flex-shrink: 0;
+    padding: 1px 0;
   }
-  .marquee-inner {
+  .sb-mq-inner {
     display: inline-block; white-space: nowrap;
-    font-family: var(--font-pixel); font-size: 10px; letter-spacing: 1px;
-    color: #fff; padding: 6px 0;
-    text-shadow: 1px 1px 0 rgba(0,0,0,.15);
-    animation: marquee-run 40s linear infinite;
+    font-family: var(--font-pixel); font-size: 9px; letter-spacing: 0.5px;
+    color: var(--ink-light); padding: 6px 0;
+    animation: sb-marquee-run 35s linear infinite;
   }
 
   /* ── Win body ── */
@@ -533,18 +647,35 @@ const categories = friendsData.categories.map((cat, i) => {
 
   .sec-header {
     width: 100%; display: flex; align-items: center; gap: 10px;
-    padding: 10px 16px;
+    padding: 10px 16px 10px 22px;
     background-color: var(--sec-bg, var(--soft-white));
-    background-image: repeating-linear-gradient(
-      -55deg, transparent 0, transparent 10px,
-      rgba(0,0,0,.03) 10px, rgba(0,0,0,.03) 12px
-    );
-    border: 2px dashed var(--sec-acc, var(--candy-purple));
-    border-left: 6px solid var(--sec-acc, var(--candy-purple));
+    background-image: radial-gradient(circle, rgba(0,0,0,.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+    border: 2px solid var(--sec-acc, var(--candy-purple));
+    border-left: none;
     border-radius: 10px;
     box-shadow: 4px 4px 0 var(--sec-shadow, rgba(199,179,232,.35));
     cursor: pointer; font: inherit; text-align: left;
     transition: transform .14s, box-shadow .14s;
+    position: relative; overflow: hidden;
+  }
+  /* 左側寬色帶 */
+  .sec-header::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 10px; height: 100%;
+    background: var(--sec-acc, var(--candy-purple));
+    border-radius: 8px 0 0 8px;
+  }
+  /* 頂部細彩虹條 */
+  .sec-header::after {
+    content: '';
+    position: absolute; top: 0; left: 10px; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--sec-acc) 0%, #FF8FAB 25%, #F0C030 50%, #40C8A8 75%, var(--sec-acc) 100%
+    );
+    opacity: 0.6;
   }
   .sec-header:hover {
     transform: translate(-2px,-2px);
@@ -556,15 +687,17 @@ const categories = friendsData.categories.map((cat, i) => {
     border-radius: 10px 10px 0 0;
     border-bottom: 2px solid var(--sec-acc, var(--candy-purple));
   }
+  .cat-section.open .sec-header::before { border-radius: 8px 0 0 0; }
 
   .sh-num  {
     background: var(--sec-acc, var(--candy-purple)); color: #fff;
-    font-family: var(--font-pixel); font-size: 10px; letter-spacing: 1px;
-    padding: 3px 8px; border-radius: 4px; flex-shrink: 0;
-    border: 1.5px solid rgba(255,255,255,.4);
+    font-family: var(--font-pixel); font-size: 11px; letter-spacing: 1px;
+    padding: 4px 10px; border-radius: 12px; flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,.5);
+    box-shadow: 0 2px 0 rgba(0,0,0,.12);
   }
-  .sh-icon  { font-size: 18px; flex-shrink: 0; display: inline-block; }
-  .sh-name  { font-family: var(--font-rounded); font-weight: 700; font-size: 14px; color: var(--ink); white-space: nowrap; }
+  .sh-icon  { font-size: 20px; flex-shrink: 0; display: inline-block; }
+  .sh-name  { font-family: var(--font-rounded); font-weight: 700; font-size: 15px; color: var(--ink); white-space: nowrap; }
   .sh-sep   { color: var(--ink-light); font-size: 11px; flex-shrink: 0; }
   .sh-alt   { font-family: var(--font-pixel); font-size: 10px; color: var(--ink-light); white-space: nowrap; }
   .sh-kao   {
@@ -590,8 +723,8 @@ const categories = friendsData.categories.map((cat, i) => {
   .cat-section.open .sec-content { grid-template-rows: 1fr; }
   .sec-inner {
     overflow: hidden;
-    border: 2px dashed var(--sec-acc, var(--candy-purple));
-    border-top: none; border-left-width: 6px; border-left-style: solid;
+    border: 2px solid var(--sec-acc, var(--candy-purple));
+    border-top: none; border-left-width: 10px; border-left-style: solid;
     border-radius: 0 0 10px 10px;
     box-shadow: 4px 4px 0 var(--sec-shadow, rgba(199,179,232,.3));
   }
@@ -695,13 +828,113 @@ const categories = friendsData.categories.map((cat, i) => {
     background: rgba(255,255,255,.65); padding: 1px 5px; border-radius: 3px; display: inline-block;
   }
 
-  /* ══ 右欄：sticky + 自身捲動 ══ */
+  /* ── 橙黃主題 (新增，替換第 3 個粉色，與粉紅明確區分) ── */
+  .th-hl-pc {
+    background-color: #FFCC80;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,.55) 3px, rgba(255,255,255,.55) 5px);
+    color: #7a3c10; box-shadow: 4px 4px 0 rgba(255,180,80,.5);
+  }
+
+  /* ══ 探索抽籤機 ══ */
+  @keyframes slot-spin {
+    0%,100% { transform: translateY(0); opacity: 1; }
+    50%      { transform: translateY(-4px); opacity: 0.6; }
+  }
+  @keyframes land-bounce {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.08); }
+    70%  { transform: scale(.96); }
+    100% { transform: scale(1); }
+  }
+  .explore-card {
+    background: var(--soft-white);
+    border: 2px solid var(--ec-acc, var(--candy-purple));
+    border-radius: 12px; padding: 12px 10px;
+    box-shadow: 3px 3px 0 rgba(199,179,232,.35);
+    flex-shrink: 0; display: flex; flex-direction: column; gap: 8px;
+    transition: border-color .3s;
+  }
+  .explore-card.landed { animation: land-bounce .6s ease; }
+  .ec-label {
+    font-family: var(--font-pixel); font-size: 9px; letter-spacing: 2px;
+    color: var(--ec-acc, var(--candy-purple)); text-align: center;
+  }
+  .ec-slot {
+    background: rgba(199,179,232,.1);
+    border: 1.5px dashed var(--ec-acc, var(--candy-purple));
+    border-radius: 8px; padding: 10px 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    min-height: 62px; justify-content: center;
+    transition: border-color .3s, background .3s;
+  }
+  .spinning .ec-slot-icon,
+  .spinning .ec-slot-name { animation: slot-spin .14s ease-in-out infinite; }
+  .ec-slot-icon { font-size: 22px; line-height: 1; }
+  .ec-slot-name {
+    font-family: var(--font-pixel); font-size: 9px; color: var(--ink);
+    text-align: center; max-width: 140px; word-break: keep-all;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .ec-btns { display: flex; gap: 6px; }
+  .ec-draw-btn {
+    flex: 1; padding: 7px 4px;
+    background: var(--ec-acc, var(--candy-purple)); color: #fff;
+    font-family: var(--font-pixel); font-size: 10px; font-weight: bold;
+    border: none; border-radius: 8px; cursor: pointer;
+    box-shadow: 0 3px 0 rgba(0,0,0,.15);
+    transition: transform .1s, box-shadow .1s, background .3s;
+  }
+  .ec-draw-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 0 rgba(0,0,0,.15); }
+  .ec-draw-btn:active { transform: translateY(1px); box-shadow: none; }
+  .ec-draw-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .ec-go-btn {
+    display: flex; align-items: center; justify-content: center;
+    padding: 7px 10px;
+    background: var(--candy-cream); color: var(--ink);
+    font-family: var(--font-pixel); font-size: 10px;
+    border: 1.5px dashed var(--ec-acc, var(--candy-purple));
+    border-radius: 8px; text-decoration: none;
+    transition: background .12s, transform .1s;
+    white-space: nowrap;
+  }
+  .ec-go-btn:hover { background: var(--candy-mint); transform: translateX(2px); text-decoration: none; }
+
+  /* ══ Kaomoji Board ══ */
+  .kao-board {
+    background: var(--soft-white); border: 1.5px dashed var(--candy-pink);
+    border-radius: 12px; padding: 10px 8px;
+    box-shadow: 3px 3px 0 rgba(255,182,217,.35); flex-shrink: 0;
+    position: relative;
+  }
+  .kb-title {
+    font-family: var(--font-pixel); font-size: 9px; letter-spacing: 2px;
+    color: var(--candy-pink); text-align: center; margin-bottom: 8px;
+  }
+  .kb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .kb-item {
+    font-family: var(--font-pixel); font-size: 9px;
+    color: var(--ink-light); text-align: center;
+    background: var(--candy-cream); border-radius: 6px;
+    padding: 5px 2px; border: 1px dashed rgba(199,179,232,.5);
+    transition: background .12s, transform .12s, color .12s;
+    cursor: pointer; white-space: nowrap; overflow: hidden;
+  }
+  .kb-item:hover { background: var(--candy-mint); transform: scale(1.06); color: var(--ink); }
+  .kb-item.kb-copied { background: var(--candy-aqua); transform: scale(1.1); color: var(--ink); }
+  .kb-toast {
+    position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: #fff;
+    font-family: var(--font-pixel); font-size: 9px; padding: 4px 10px;
+    border-radius: 6px; white-space: nowrap; pointer-events: none;
+    opacity: 0; transition: opacity .2s;
+  }
+  .kb-toast.show { opacity: 1; }
+
+  /* ══ 右欄：sticky 跟著視窗捲動，無獨立捲軸 ══ */
   .map-sidebar {
     width: 200px; flex-shrink: 0;
     position: sticky; top: 20px; align-self: flex-start;
-    max-height: calc(100vh - 64px); overflow-y: auto;
-    scrollbar-width: thin; scrollbar-color: rgba(199,179,232,.5) transparent;
-    display: flex; flex-direction: column; gap: 12px; padding-right: 2px;
+    display: flex; flex-direction: column; gap: 12px;
   }
 
   .menu-card {
@@ -734,16 +967,29 @@ const categories = friendsData.categories.map((cat, i) => {
   .sj-title { font-family: var(--font-pixel); font-size: 9px; letter-spacing: 2px; color: var(--candy-purple); text-align: center; margin-bottom: 8px; }
   .sj-item  {
     display: flex; align-items: center; gap: 6px;
-    padding: 5px 6px; border-radius: 6px;
+    padding: 5px 6px 5px 8px; border-radius: 6px;
     text-decoration: none; color: var(--ink); font-family: var(--font-pixel); font-size: 10px;
     transition: background .12s, transform .12s; white-space: nowrap; overflow: hidden;
-    border-left: 3px solid transparent;
+    border-left: 4px solid transparent;
+    position: relative;
+  }
+  .sj-item::before {
+    content: '';
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--sj-acc, var(--candy-purple));
+    flex-shrink: 0; opacity: 0.45;
   }
   .sj-item:hover {
-    background: var(--candy-mint); transform: translateX(2px);
+    background: rgba(199,179,232,.12); transform: translateX(2px);
     border-left-color: var(--sj-acc, var(--candy-purple));
     text-decoration: none;
   }
+  .sj-item:hover::before { opacity: 1; }
+  .sj-item.active {
+    background: rgba(199,179,232,.18);
+    border-left-color: var(--sj-acc, var(--candy-purple));
+  }
+  .sj-item.active::before { opacity: 1; }
   .sj-num  { color: var(--ink-light); flex-shrink: 0; width: 18px; }
   .sj-icon { font-size: 13px; flex-shrink: 0; }
   .sj-name { overflow: hidden; text-overflow: ellipsis; }

@@ -4,68 +4,52 @@
   "subtitle": "推開部屋的門所信賴與長期閱讀的網站",
   "categories": [
     {
+      "id": "womens-place",
+      "name_zh": "女性的位置",
+      "name_en": "Women's Place",
+      "description": "性別研究、女性議題媒體與倡議組織",
+      "links": [
+        { "title": "國立中央大學性／別研究室", "url": "https://sex.ncu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "華語圈最早的性／別研究機構，學術論文收藏豐富" },
+        { "title": "台大婦女研究室", "url": "https://gender.psc.ntu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台大的性別研究中心，課程與出版資源齊備" },
+        { "title": "女學學誌：婦女與性別研究", "url": "https://jwgs.psc.ntu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台大出版的性別研究核心中文學術期刊" },
+        { "title": "婦女新知基金會", "url": "https://www.awakening.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "創立逾四十年的女性主義倡議組織" },
+        { "title": "網氏／罔市女性電子報", "url": "https://bongchhi.frontier.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣最長壽的女性議題電子報，持續更新逾廿年" },
+        { "title": "Me Too Taiwan 性騷擾資料庫", "url": "https://www.metootaiwan.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "2023 年台灣 #MeToo 案件的記錄與追蹤" },
+        { "title": "臺灣女人", "url": "https://women.nmth.gov.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台史博建立的台灣女性歷史專題資料庫" },
+        { "title": "Sino Women in Diaspora", "url": "https://sinowomenindiaspora.github.io/", "region_zh": "華語離散", "region_en": "Sinophone Diaspora", "note": "離散華語女性書寫、藝術與社群的數位檔案" },
+        { "title": "Women Overseas 她鄉", "url": "https://womenoverseas.com/", "region_zh": "華語離散", "region_en": "Sinophone Diaspora", "note": "海外華語女性社群論壇，兼具實用生活資源" }
+      ]
+    },
+    {
+      "id": "queer-landscapes",
+      "name_zh": "酷兒地景",
+      "name_en": "Queer Landscapes",
+      "description": "酷兒書寫、社群媒體與歷史典藏",
+      "links": [
+        { "title": "台灣同志諮詢熱線協會", "url": "https://hotline.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "創立逾廿五年的 LGBTQ+ 倡議組織與運動史入口" },
+        { "title": "LGBTQ.tw 台灣酷家", "url": "https://lgbtq.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣同志友善場所、資訊與資源整合站" },
+        { "title": "拉拉台 LalaTai", "url": "https://lalatai.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "女同志媒體平台，涵蓋文化、身分認同與社群" },
+        { "title": "LEZS 女人國", "url": "https://www.lezsmeeting.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣女同志文化雜誌，在地酷兒書寫的長期陣地" },
+        { "title": "G點電視 G Dot TV", "url": "https://gdottv.com/main/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港性小眾媒體，保存大量社群影像與口述史" },
+        { "title": "Queer Reads Library", "url": "https://qrlib.net/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港酷兒移動圖書館，策展酷兒書單與閱讀討論" },
+        { "title": "前互聯網時代香港同志印刷品", "url": "https://www.hklgbtqarchive.com/zh", "region_zh": "香港", "region_en": "Hong Kong", "note": "系統整理香港 LGBTQ 歷史印刷品的數位典藏" },
+        { "title": "Digital Transgender Archive", "url": "https://www.digitaltransgenderarchive.net/", "region_zh": "國際", "region_en": "International", "note": "全球最大跨性別歷史文件與媒體的數位典藏庫" }
+      ]
+    },
+    {
       "id": "words-and-books",
       "name_zh": "字与书",
       "name_en": "Words & Books",
       "description": "華語文學書寫、評論與作家檔案",
       "links": [
-        { "title": "Openbook 閱讀誌", "url": "https://www.openbook.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "目前華文圈最重要的書評媒體之一" },
-        { "title": "OKAPI 閱讀生活誌", "url": "https://okapi.books.com.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "博客來經營，編輯人物訪談優質" },
-        { "title": "聯合文學 unitas", "url": "https://www.unitas.me/", "region_zh": "台灣", "region_en": "Taiwan", "note": "老牌文學雜誌官網" },
-        { "title": "虛詞 p-articles", "url": "https://p-articles.com/", "region_zh": "香港", "region_en": "Hong Kong", "note": "字花同系的香港文學評論平台" },
-        { "title": "字花 / 別字", "url": "https://zihua.org.hk/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港文學雜誌《字花》與電子刊《別字》" },
-        { "title": "每天為你讀一首詩", "url": "https://cendalirit.blogspot.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "華語現代詩日更選讀社群" },
-        { "title": "國立臺灣文學館", "url": "https://www.nmtl.gov.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣文學典藏與展覽" },
-        { "title": "臺灣現當代作家研究資料彙編", "url": "https://cws.nmtl.gov.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "完整作家研究檔案系統" }
-      ]
-    },
-    {
-      "id": "moving-image",
-      "name_zh": "光影",
-      "name_en": "Moving Image",
-      "description": "影展、影視機構、紀錄片資料庫與影評刊物",
-      "links": [
-        { "title": "TFAI 國家電影及視聽文化中心", "url": "https://www.tfai.org.tw/zh/", "region_zh": "台灣", "region_en": "Taiwan", "note": "國家影視聽典藏與修復機構" },
-        { "title": "放映週報 Funscreen", "url": "https://funscreen.tfai.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "TFAI 旗下影評週刊" },
-        { "title": "台灣國際紀錄片影展 TIDF", "url": "https://www.tidf.org.tw/zh-hant", "region_zh": "台灣", "region_en": "Taiwan", "note": "亞洲最重要的紀錄片影展之一" },
-        { "title": "台北金馬影展", "url": "https://www.goldenhorse.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "華語電影年度盛事" },
-        { "title": "Giloo 紀實影音", "url": "https://giloo.ist/", "region_zh": "台灣", "region_en": "Taiwan", "note": "紀錄片與議題電影串流平台" },
-        { "title": "香港影評庫", "url": "https://www.filmcritics.org.hk/film-review/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港電影評論學會的影評資料庫" },
-        { "title": "台灣女性影像學會", "url": "http://www.wmw.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "女性影像推廣與保存" },
-        { "title": "The Criterion Collection", "url": "https://www.criterion.com/", "region_zh": "美國", "region_en": "USA", "note": "經典電影策展與發行" }
-      ]
-    },
-    {
-      "id": "sound",
-      "name_zh": "声响",
-      "name_en": "Sound",
-      "description": "獨立音樂評論、廠牌與聲響檔案",
-      "links": [
-        { "title": "Blow 吹音樂", "url": "https://blow.streetvoice.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "Streetvoice 的獨立音樂新聞與專訪" },
-        { "title": "Trees Music & Art 大大樹音樂圖像", "url": "https://www.treesmusic.co/", "region_zh": "台灣", "region_en": "Taiwan", "note": "深耕世界音樂與民謠的廠牌" },
-        { "title": "聲軌 – 台灣現代聲響文化資料庫", "url": "https://soundtraces.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "完整的現代聲響史檔案" },
-        { "title": "聲經絡 Sound Meridians", "url": "https://soundmeridians.net/", "region_zh": "亞洲", "region_en": "Asia", "note": "亞洲聲響地景研究計畫" },
-        { "title": "臺灣音聲一百年", "url": "https://audio.nmth.gov.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台史博百年聲音檔案" },
-        { "title": "香港樂評 HKmc²", "url": "https://hkmc2.com/", "region_zh": "香港", "region_en": "Hong Kong", "note": "獨立樂評與年度香港樂評選" },
-        { "title": "Pitchfork", "url": "https://pitchfork.com/", "region_zh": "美國", "region_en": "USA", "note": "英文世界最具代表性的獨立樂評" },
-        { "title": "The Quietus", "url": "https://thequietus.com/", "region_zh": "英國", "region_en": "UK", "note": "深度音樂與文化評論" },
-        { "title": "Bandcamp Daily", "url": "https://daily.bandcamp.com/", "region_zh": "國際", "region_en": "International", "note": "Bandcamp 編輯部專欄，地方音樂的好窗口" }
-      ]
-    },
-    {
-      "id": "on-the-ground",
-      "name_zh": "在地报导",
-      "name_en": "On the Ground",
-      "description": "深度報導、公共議題與獨立新聞媒體",
-      "links": [
-        { "title": "報導者 The Reporter", "url": "https://www.twreporter.org/", "region_zh": "台灣", "region_en": "Taiwan", "note": "非營利調查報導" },
-        { "title": "端傳媒 Initium Media", "url": "https://theinitium.com/", "region_zh": "香港", "region_en": "Hong Kong", "note": "華語深度新聞與評論" },
-        { "title": "鏡週刊 Mirror Media", "url": "https://www.mirrormedia.mg/", "region_zh": "台灣", "region_en": "Taiwan", "note": "深度週刊" },
-        { "title": "Hong Kong Free Press HKFP", "url": "https://hongkongfp.com/", "region_zh": "香港", "region_en": "Hong Kong", "note": "獨立英文新聞媒體" },
-        { "title": "光傳媒 Photon Media", "url": "https://photonmedia.net/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港深度報導新平台" },
-        { "title": "歪腦 WHYNOT", "url": "https://www.wainao.me/", "region_zh": "華語圈", "region_en": "Sinophone", "note": "中港台年輕世代議題媒體" },
-        { "title": "上下游 News&Market", "url": "https://www.newsmarket.com.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "農業、食物與環境獨立媒體" },
-        { "title": "苦勞網", "url": "https://www.coolloud.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "資深社運獨立媒體" }
+        { "title": "Openbook 閱讀誌", "url": "https://www.openbook.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "華文圈最具份量的書評媒體，深度與廣度兼備" },
+        { "title": "OKAPI 閱讀生活誌", "url": "https://okapi.books.com.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "博客來旗下書評誌，作家人物訪談質量俱佳" },
+        { "title": "聯合文學 unitas", "url": "https://www.unitas.me/", "region_zh": "台灣", "region_en": "Taiwan", "note": "老牌文學雜誌，長期深耕台灣及華語文學" },
+        { "title": "虛詞 p-articles", "url": "https://p-articles.com/", "region_zh": "香港", "region_en": "Hong Kong", "note": "字花同系，香港文學評論的重要陣地" },
+        { "title": "字花 / 別字", "url": "https://zihua.org.hk/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港文學雜誌《字花》與其電子刊《別字》" },
+        { "title": "每天為你讀一首詩", "url": "https://cendalirit.blogspot.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "日更現代詩選讀，台灣最活躍的詩歌閱讀社群" },
+        { "title": "國立臺灣文學館", "url": "https://www.nmtl.gov.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣文學典藏、展覽與教育的核心公共機構" },
+        { "title": "臺灣現當代作家研究資料彙編", "url": "https://cws.nmtl.gov.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "文學館建立的作家研究深度檔案系統" }
       ]
     },
     {
@@ -74,14 +58,14 @@
       "name_en": "Periodicals",
       "description": "華語與東亞的文化／生活誌",
       "links": [
-        { "title": "BIOS monthly", "url": "https://www.biosmonthly.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "藝文生活誌" },
-        { "title": "VERSE", "url": "https://www.verse.com.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "當代文化雜誌" },
-        { "title": "新活水 Fountain", "url": "https://www.fountain.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "文學與文化思潮雜誌" },
-        { "title": "雄雄 hiông-hiông", "url": "https://www.hionghiong.city/", "region_zh": "台灣 · 高雄", "region_en": "Taiwan · Kaohsiung", "note": "經營得很穩的城市地方誌" },
-        { "title": "秋刀魚 サンマ", "url": "https://qdymag.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台日生活誌" },
-        { "title": "Magazine B", "url": "https://magazine-b.co.kr/", "region_zh": "韓國", "region_en": "Korea", "note": "品牌單一主題雜誌的標竿" },
-        { "title": "美術手帖 BT", "url": "https://bijutsutecho.com/", "region_zh": "日本", "region_en": "Japan", "note": "日本當代藝術權威雜誌" },
-        { "title": "工芸青花 Kogei Seika", "url": "https://www.kogei-seika.jp/", "region_zh": "日本", "region_en": "Japan", "note": "工藝與民藝刊物" }
+        { "title": "BIOS monthly", "url": "https://www.biosmonthly.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣最重要的當代藝文生活誌，選題敏銳前沿" },
+        { "title": "VERSE", "url": "https://www.verse.com.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "聚焦台灣當代創作者的深度文化雜誌" },
+        { "title": "新活水 Fountain", "url": "https://www.fountain.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "文學與文化思潮評論誌，關注場景的質變" },
+        { "title": "雄雄 hiông-hiông", "url": "https://www.hionghiong.city/", "region_zh": "台灣 · 高雄", "region_en": "Taiwan · Kaohsiung", "note": "經營穩健的高雄城市誌，以南部視角寫台灣" },
+        { "title": "秋刀魚 サンマ", "url": "https://qdymag.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台日文化連結的生活美學誌，感情細膩" },
+        { "title": "Magazine B", "url": "https://magazine-b.co.kr/", "region_zh": "韓國", "region_en": "Korea", "note": "韓國單一品牌主題雜誌的標竿，排版與選題皆精" },
+        { "title": "美術手帖 BT", "url": "https://bijutsutecho.com/", "region_zh": "日本", "region_en": "Japan", "note": "日本當代藝術的指標刊物，逾七十年歷史" },
+        { "title": "工芸青花 Kogei Seika", "url": "https://www.kogei-seika.jp/", "region_zh": "日本", "region_en": "Japan", "note": "日本工藝與民藝的精緻研究刊物" }
       ]
     },
     {
@@ -90,48 +74,16 @@
       "name_en": "Zines & Archives",
       "description": "全球 zine 圖書館、檔案庫與獨立出版機構",
       "links": [
-        { "title": "Barnard Zine Library", "url": "https://zines.barnard.edu/", "region_zh": "美國 · 紐約", "region_en": "USA · NY", "note": "女性主義 zine 圖書館的代表" },
-        { "title": "Queer Zine Archive Project (QZAP)", "url": "https://archive.qzap.org/", "region_zh": "美國", "region_en": "USA", "note": "酷兒 zine 線上典藏" },
-        { "title": "Library of Congress Zine Web Archive", "url": "https://www.loc.gov/collections/zine-web-archive/", "region_zh": "美國", "region_en": "USA", "note": "美國國會圖書館的 zine 收藏" },
-        { "title": "Queer Indonesia Archive", "url": "https://qiarchive.org/en/", "region_zh": "印尼", "region_en": "Indonesia", "note": "印尼酷兒檔案" },
-        { "title": "ZINE COOP", "url": "https://zinecoop.org/en", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港 zine 合作社" },
-        { "title": "Taipei Art Book Fair 草率季", "url": "https://taipeiartbookfair.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "亞洲最大的藝術書展之一" },
-        { "title": "Printed Matter", "url": "https://www.printedmatter.org/", "region_zh": "美國 · 紐約", "region_en": "USA · NY", "note": "藝術家書與獨立出版發行的核心節點" },
-        { "title": "亞洲藝術文獻庫 Asia Art Archive", "url": "https://aaa.org.hk/tc/", "region_zh": "香港", "region_en": "Hong Kong", "note": "當代亞洲藝術研究的核心檔案" },
-        { "title": "香港記憶 Hong Kong Memory", "url": "https://www.hkmemory.hk/tc/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港歷史影像與口述史資料庫" },
-        { "title": "ZineWiki", "url": "https://zinewiki.com/", "region_zh": "國際", "region_en": "International", "note": "zine 維基百科" }
-      ]
-    },
-    {
-      "id": "visual-field",
-      "name_zh": "视觉志",
-      "name_en": "Visual Field",
-      "description": "藝術、攝影與設計的評論與檔案",
-      "links": [
-        { "title": "M+ 視覺文化博物館", "url": "https://www.mplus.org.hk/tc/", "region_zh": "香港", "region_en": "Hong Kong", "note": "西九龍當代視覺文化美術館" },
-        { "title": "shashasha 写々者", "url": "https://www.shashasha.co/jp", "region_zh": "日本", "region_en": "Japan", "note": "亞洲攝影書重要平台" },
-        { "title": "VOP 攝影之聲", "url": "https://vopmagazine.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "Voices of Photography 攝影評論誌" },
-        { "title": "CLABO 實驗波", "url": "https://mag.clab.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "C-LAB 旗下的當代藝術評論誌" },
-        { "title": "典藏 ARTouch", "url": "https://artouch.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "老牌藝術新聞與評論媒體" },
-        { "title": "The Type", "url": "https://www.thetype.com/", "region_zh": "華語圈", "region_en": "Sinophone", "note": "中文字體與設計研究" },
-        { "title": "O.OO", "url": "https://odotoo.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "Risograph 印刷工作室與設計團隊" },
-        { "title": "artscape", "url": "https://artscape.jp/", "region_zh": "日本", "region_en": "Japan", "note": "日本藝術資訊入口" },
-        { "title": "Hyperallergic", "url": "https://hyperallergic.com/", "region_zh": "美國", "region_en": "USA", "note": "當代藝術與文化評論" }
-      ]
-    },
-    {
-      "id": "self-study",
-      "name_zh": "自习室",
-      "name_en": "Self-Study",
-      "description": "免費可看的大學開放式課程與學術資源",
-      "links": [
-        { "title": "臺大開放式課程 NTU OCW", "url": "http://ocw.aca.ntu.edu.tw/ntu-ocw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台大開放課程主站" },
-        { "title": "臺大通識網 GET", "url": "http://get.aca.ntu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "通識中心課程影音" },
-        { "title": "清華大學開放式課程", "url": "https://ocw.nthu.edu.tw/ocw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "清大 OCW" },
-        { "title": "陽明交大開放式課程", "url": "https://ocw.nycu.edu.tw/course.php", "region_zh": "台灣", "region_en": "Taiwan", "note": "原交大 OCW" },
-        { "title": "北藝大開放式課程", "url": "https://ocw.media.tnua.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "藝術人文相關課程豐富" },
-        { "title": "政大開放式課程影音網", "url": "https://ctld.video.nccu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "政大 OCW" },
-        { "title": "中華開放教育平台", "url": "https://www.openedu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "跨校 MOOCs 入口" }
+        { "title": "Barnard Zine Library", "url": "https://zines.barnard.edu/", "region_zh": "美國 · 紐約", "region_en": "USA · NY", "note": "哥倫比亞大學女性主義 zine 圖書館，公開可查" },
+        { "title": "Queer Zine Archive Project (QZAP)", "url": "https://archive.qzap.org/", "region_zh": "美國", "region_en": "USA", "note": "全球最大的酷兒 zine 線上典藏計畫" },
+        { "title": "Library of Congress Zine Web Archive", "url": "https://www.loc.gov/collections/zine-web-archive/", "region_zh": "美國", "region_en": "USA", "note": "美國國會圖書館的 zine 線上目錄與收藏" },
+        { "title": "Queer Indonesia Archive", "url": "https://qiarchive.org/en/", "region_zh": "印尼", "region_en": "Indonesia", "note": "印尼酷兒社群的獨立文件典藏" },
+        { "title": "ZINE COOP", "url": "https://zinecoop.org/en", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港 zine 合作社，定期辦展、出版與工作坊" },
+        { "title": "Taipei Art Book Fair 草率季", "url": "https://taipeiartbookfair.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台北年度藝術書展，亞洲規模最大之一" },
+        { "title": "Printed Matter", "url": "https://www.printedmatter.org/", "region_zh": "美國 · 紐約", "region_en": "USA · NY", "note": "紐約藝術家書與獨立出版的核心發行節點" },
+        { "title": "亞洲藝術文獻庫 Asia Art Archive", "url": "https://aaa.org.hk/tc/", "region_zh": "香港", "region_en": "Hong Kong", "note": "當代亞洲藝術研究的核心檔案庫，香港為基地" },
+        { "title": "香港記憶 Hong Kong Memory", "url": "https://www.hkmemory.hk/tc/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港歷史影像、口述史與地方記憶資料庫" },
+        { "title": "ZineWiki", "url": "https://zinewiki.com/", "region_zh": "國際", "region_en": "International", "note": "全球 zine 的維基百科，按地區與主題分類" }
       ]
     },
     {
@@ -140,48 +92,96 @@
       "name_en": "Bookshops",
       "description": "華語與東亞值得關注的獨立書店",
       "links": [
-        { "title": "朋丁 pon ding", "url": "https://pon-ding.com/", "region_zh": "台灣 · 台北", "region_en": "Taiwan · Taipei", "note": "書店、展覽與選物複合空間" },
-        { "title": "moom bookshop", "url": "https://moom.cat/tw", "region_zh": "台灣 · 台北", "region_en": "Taiwan · Taipei", "note": "攝影書與獨立雜誌專門店" },
-        { "title": "三餘書店", "url": "https://takaobooks-shop.tw/", "region_zh": "台灣 · 高雄", "region_en": "Taiwan · Kaohsiung", "note": "南部代表性獨立書店" },
-        { "title": "女書店", "url": "https://www.fembooks.com.tw/", "region_zh": "台灣 · 台北", "region_en": "Taiwan · Taipei", "note": "華語圈第一家女性主義書店" },
-        { "title": "季風帶", "url": "https://mzbooks.shop/", "region_zh": "新加坡", "region_en": "Singapore", "note": "東南亞華文出版的重要據點" },
-        { "title": "本屋 B&B", "url": "https://bookandbeer.com/", "region_zh": "日本 · 東京", "region_en": "Japan · Tokyo", "note": "下北澤的代表性獨立書店" },
-        { "title": "模索舎", "url": "https://mosakusha.com/", "region_zh": "日本 · 東京", "region_en": "Japan · Tokyo", "note": "迷你雜誌與小流通專門店" },
-        { "title": "YOUR-MIND", "url": "https://your-mind.com/", "region_zh": "韓國 · 首爾", "region_en": "Korea · Seoul", "note": "首爾的 zine 與藝術書店" },
-        { "title": "The Book Society", "url": "https://www.thebooksociety.org/", "region_zh": "韓國 · 首爾", "region_en": "Korea · Seoul", "note": "首爾的獨立出版與書店" }
+        { "title": "朋丁 pon ding", "url": "https://pon-ding.com/", "region_zh": "台灣 · 台北", "region_en": "Taiwan · Taipei", "note": "台北中山的書店、展覽與選物複合文化空間" },
+        { "title": "moom bookshop", "url": "https://moom.cat/tw", "region_zh": "台灣 · 台北", "region_en": "Taiwan · Taipei", "note": "攝影書與獨立雜誌專門店，選書品味獨到" },
+        { "title": "三餘書店", "url": "https://takaobooks-shop.tw/", "region_zh": "台灣 · 高雄", "region_en": "Taiwan · Kaohsiung", "note": "高雄代表性獨立書店，深耕南部藝文場景" },
+        { "title": "女書店", "url": "https://www.fembooks.com.tw/", "region_zh": "台灣 · 台北", "region_en": "Taiwan · Taipei", "note": "華語圈第一家女性主義書店，書目規畫紮實" },
+        { "title": "季風帶", "url": "https://mzbooks.shop/", "region_zh": "新加坡", "region_en": "Singapore", "note": "新加坡東南亞華文出版的重要據點與發行平台" },
+        { "title": "本屋 B&B", "url": "https://bookandbeer.com/", "region_zh": "日本 · 東京", "region_en": "Japan · Tokyo", "note": "下北澤代表性獨立書店，夜間兼作活動場地" },
+        { "title": "模索舎", "url": "https://mosakusha.com/", "region_zh": "日本 · 東京", "region_en": "Japan · Tokyo", "note": "東京迷你雜誌與小流通專門店，日本 zine 據點" },
+        { "title": "YOUR-MIND", "url": "https://your-mind.com/", "region_zh": "韓國 · 首爾", "region_en": "Korea · Seoul", "note": "首爾的 zine 與藝術書店，韓國獨立出版核心" },
+        { "title": "The Book Society", "url": "https://www.thebooksociety.org/", "region_zh": "韓國 · 首爾", "region_en": "Korea · Seoul", "note": "首爾以獨立出版為核心策展的選書書店" }
       ]
     },
     {
-      "id": "womens-place",
-      "name_zh": "女性的位置",
-      "name_en": "Women's Place",
-      "description": "性別研究、女性議題與倡議組織",
+      "id": "sound",
+      "name_zh": "声响",
+      "name_en": "Sound",
+      "description": "獨立音樂評論、廠牌與聲響檔案",
       "links": [
-        { "title": "國立中央大學性／別研究室", "url": "https://sex.ncu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "華語圈最早的性／別研究機構" },
-        { "title": "台大婦女研究室", "url": "https://gender.psc.ntu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "性別研究中心" },
-        { "title": "女學學誌：婦女與性別研究", "url": "https://jwgs.psc.ntu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "中文性別研究學刊" },
-        { "title": "婦女新知基金會", "url": "https://www.awakening.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "資深性別倡議組織" },
-        { "title": "網氏／罔市女性電子報", "url": "https://bongchhi.frontier.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "長年經營的女性議題電子報" },
-        { "title": "Me Too Taiwan 性騷擾資料庫", "url": "https://www.metootaiwan.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣 MeToo 案件整理" },
-        { "title": "臺灣女人", "url": "https://women.nmth.gov.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台史博女性史專題" },
-        { "title": "Sino Women in Diaspora", "url": "https://sinowomenindiaspora.github.io/", "region_zh": "華語離散", "region_en": "Sinophone Diaspora", "note": "離散華語女性檔案" },
-        { "title": "Women Overseas 她鄉", "url": "https://womenoverseas.com/", "region_zh": "華語離散", "region_en": "Sinophone Diaspora", "note": "海外華語女性社群" }
+        { "title": "Blow 吹音樂", "url": "https://blow.streetvoice.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣獨立音樂核心媒體，樂評、專訪與音樂祭" },
+        { "title": "Trees Music & Art 大大樹音樂圖像", "url": "https://www.treesmusic.co/", "region_zh": "台灣", "region_en": "Taiwan", "note": "深耕世界音樂與民謠的廠牌，台灣音樂的國際窗口" },
+        { "title": "聲軌 – 台灣現代聲響文化資料庫", "url": "https://soundtraces.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "完整記錄台灣現代聲響文化的研究型資料庫" },
+        { "title": "聲經絡 Sound Meridians", "url": "https://soundmeridians.net/", "region_zh": "亞洲", "region_en": "Asia", "note": "跨亞洲聲響地景與田野錄音研究計畫" },
+        { "title": "臺灣音聲一百年", "url": "https://audio.nmth.gov.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台史博典藏的近百年錄音、廣播與音樂歷史" },
+        { "title": "香港樂評 HKmc²", "url": "https://hkmc2.com/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港獨立樂評與年度樂評選的長期記錄平台" },
+        { "title": "Pitchfork", "url": "https://pitchfork.com/", "region_zh": "美國", "region_en": "USA", "note": "英文世界最具代表性的獨立音樂評論媒體" },
+        { "title": "The Quietus", "url": "https://thequietus.com/", "region_zh": "英國", "region_en": "UK", "note": "英國深度音樂文化評論，涵蓋實驗音樂到流行" },
+        { "title": "Bandcamp Daily", "url": "https://daily.bandcamp.com/", "region_zh": "國際", "region_en": "International", "note": "Bandcamp 編輯策展，地方音樂與獨立廠牌好窗口" }
       ]
     },
     {
-      "id": "queer-landscapes",
-      "name_zh": "酷兒地景",
-      "name_en": "Queer Landscapes",
-      "description": "酷兒書寫、檔案與社群",
+      "id": "moving-image",
+      "name_zh": "光影",
+      "name_en": "Moving Image",
+      "description": "影展、影視機構、紀錄片資料庫與影評刊物",
       "links": [
-        { "title": "台灣同志諮詢熱線協會", "url": "https://hotline.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "資深 LGBTQ+ 倡議與服務組織" },
-        { "title": "LGBTQ.tw 台灣酷家", "url": "https://lgbtq.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣同志友善資訊站" },
-        { "title": "拉拉台 LalaTai", "url": "https://lalatai.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "女同志議題媒體" },
-        { "title": "LEZS 女人國", "url": "https://www.lezsmeeting.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "女同志文化雜誌" },
-        { "title": "G點電視 G Dot TV", "url": "https://gdottv.com/main/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港性小眾媒體" },
-        { "title": "Queer Reads Library", "url": "https://qrlib.net/", "region_zh": "香港", "region_en": "Hong Kong", "note": "華語酷兒讀物移動圖書館" },
-        { "title": "前互聯網時代香港同志印刷品", "url": "https://www.hklgbtqarchive.com/zh", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港 LGBTQ 歷史印刷品檔案" },
-        { "title": "Digital Transgender Archive", "url": "https://www.digitaltransgenderarchive.net/", "region_zh": "國際", "region_en": "International", "note": "全球跨性別檔案庫" }
+        { "title": "TFAI 國家電影及視聽文化中心", "url": "https://www.tfai.org.tw/zh/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣國家影視聽典藏、修復與研究的核心機構" },
+        { "title": "放映週報 Funscreen", "url": "https://funscreen.tfai.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "TFAI 旗下深度影評週刊，台灣電影評論重要陣地" },
+        { "title": "台灣國際紀錄片影展 TIDF", "url": "https://www.tidf.org.tw/zh-hant", "region_zh": "台灣", "region_en": "Taiwan", "note": "亞洲重要紀錄片影展，歷屆選片檔案完整" },
+        { "title": "台北金馬影展", "url": "https://www.goldenhorse.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "華語電影年度盛事，入選名單是最佳觀影指南" },
+        { "title": "Giloo 紀實影音", "url": "https://giloo.ist/", "region_zh": "台灣", "region_en": "Taiwan", "note": "紀錄片與議題電影的台灣串流平台" },
+        { "title": "香港影評庫", "url": "https://www.filmcritics.org.hk/film-review/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港電影評論學會建立的長期影評資料庫" },
+        { "title": "台灣女性影像學會", "url": "http://www.wmw.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "專注女性影像推廣、徵件與典藏的在地學會" },
+        { "title": "The Criterion Collection", "url": "https://www.criterion.com/", "region_zh": "美國", "region_en": "USA", "note": "全球最重要的電影典藏與策展品牌，評論附錄精彩" }
+      ]
+    },
+    {
+      "id": "visual-field",
+      "name_zh": "视觉志",
+      "name_en": "Visual Field",
+      "description": "藝術、攝影與設計的評論與檔案",
+      "links": [
+        { "title": "M+ 視覺文化博物館", "url": "https://www.mplus.org.hk/tc/", "region_zh": "香港", "region_en": "Hong Kong", "note": "西九龍當代視覺文化博物館，亞洲當代藝術旗艦" },
+        { "title": "shashasha 写々者", "url": "https://www.shashasha.co/jp", "region_zh": "日本", "region_en": "Japan", "note": "亞洲攝影書的重要線上平台，精選日本及亞洲出版" },
+        { "title": "VOP 攝影之聲", "url": "https://vopmagazine.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣攝影評論誌，聚焦攝影作品與理論論述" },
+        { "title": "CLABO 實驗波", "url": "https://mag.clab.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "C-LAB 旗下當代藝術評論誌，深耕科技與創作" },
+        { "title": "典藏 ARTouch", "url": "https://artouch.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣老牌藝術新聞與評論媒體，覆蓋廣泛" },
+        { "title": "The Type", "url": "https://www.thetype.com/", "region_zh": "華語圈", "region_en": "Sinophone", "note": "中文字體設計、排版研究的重要線上平台" },
+        { "title": "O.OO", "url": "https://odotoo.com/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣 Risograph 印刷工作室，設計與出版實驗場" },
+        { "title": "artscape", "url": "https://artscape.jp/", "region_zh": "日本", "region_en": "Japan", "note": "日本藝術資訊入口，展覽預告、評論與藝術家檔案" },
+        { "title": "Hyperallergic", "url": "https://hyperallergic.com/", "region_zh": "美國", "region_en": "USA", "note": "美國當代藝術與文化的批判性獨立評論媒體" }
+      ]
+    },
+    {
+      "id": "on-the-ground",
+      "name_zh": "在地报导",
+      "name_en": "On the Ground",
+      "description": "深度報導、公共議題與獨立新聞媒體",
+      "links": [
+        { "title": "報導者 The Reporter", "url": "https://www.twreporter.org/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣指標性非營利調查報導媒體，深度且公正" },
+        { "title": "端傳媒 Initium Media", "url": "https://theinitium.com/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港創立的華語深度新聞，分析性強" },
+        { "title": "鏡週刊 Mirror Media", "url": "https://www.mirrormedia.mg/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣深度調查週刊，娛樂與政治均有深度報導" },
+        { "title": "Hong Kong Free Press HKFP", "url": "https://hongkongfp.com/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港最具公信力的獨立英文新聞媒體" },
+        { "title": "光傳媒 Photon Media", "url": "https://photonmedia.net/", "region_zh": "香港", "region_en": "Hong Kong", "note": "香港深度報導新平台，關注公民社會與文化" },
+        { "title": "歪腦 WHYNOT", "url": "https://www.wainao.me/", "region_zh": "華語圈", "region_en": "Sinophone", "note": "中港台年輕世代議題媒體，視角多元開放" },
+        { "title": "上下游 News&Market", "url": "https://www.newsmarket.com.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣農業、食物與環境的獨立媒體" },
+        { "title": "苦勞網", "url": "https://www.coolloud.org.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣最資深的勞工社運獨立媒體" }
+      ]
+    },
+    {
+      "id": "self-study",
+      "name_zh": "自习室",
+      "name_en": "Self-Study",
+      "description": "免費可看的大學開放式課程與學術資源",
+      "links": [
+        { "title": "臺大開放式課程 NTU OCW", "url": "http://ocw.aca.ntu.edu.tw/ntu-ocw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣最完整的大學開放課程主站" },
+        { "title": "臺大通識網 GET", "url": "http://get.aca.ntu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台大通識中心影音課程，人文社科資源豐富" },
+        { "title": "清華大學開放式課程", "url": "https://ocw.nthu.edu.tw/ocw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "理工與人文通識均衡的清大 OCW" },
+        { "title": "陽明交大開放式課程", "url": "https://ocw.nycu.edu.tw/course.php", "region_zh": "台灣", "region_en": "Taiwan", "note": "跨域科研與理工為主的原交大 OCW" },
+        { "title": "北藝大開放式課程", "url": "https://ocw.media.tnua.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "藝術理論、戲劇、音樂相關課程資源豐富" },
+        { "title": "政大開放式課程影音網", "url": "https://ctld.video.nccu.edu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "人文、社科與傳播課程見長的政大 OCW" },
+        { "title": "中華開放教育平台", "url": "https://www.openedu.tw/", "region_zh": "台灣", "region_en": "Taiwan", "note": "台灣跨校 MOOCs 的大型整合入口" }
       ]
     }
   ]
