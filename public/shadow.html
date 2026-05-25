@@ -174,7 +174,7 @@
 <div class="container">
     <button class="reset-key" onclick="resetApiKey()">重新設定 API Key</button>
     <h1>🎬 Shadow Practice 提取器</h1>
-    <div class="subtitle">地道表达内化版 · 聚焦短语与句式复用</div>
+    <div class="subtitle">翻译补全版 · 彻底扫清内化障碍</div>
     
     <div class="form-group">
         <input type="file" id="srtFile" accept=".srt,.txt">
@@ -182,7 +182,7 @@
 
     <button id="analyzeBtn" class="main-btn" onclick="processSubtitle()">生成专属精选语料</button>
     
-    <div id="loading" class="loader">正在通读全集，全力提取可内化的地道短语和句式骨架，大约需要 20-30 秒...</div>
+    <div id="loading" class="loader">正在通读全集并撰写附带翻译的双语实战例句，大约需要 20-30 秒...</div>
     
     <div id="audioTip" class="audio-tip">
         ✨ 提示：鼠标划选一长段句子或双击单词，点击弹出的「🔊 朗读」按钮即可收听发音。
@@ -276,16 +276,12 @@
             content = content.replace(/\r/g, '');
             content = content.replace(/\n{3,}/g, '\n\n');
 
-            // 【灵魂修正】将关注点从冷僻单词彻底转移到地道短语表达上
             const prompt = `你是一位顶尖的英文口语教练 + 文化评论编辑，正在帮一位中文母语者挑选并分析最值得 shadow 的片段。
 她的身份：独立媒体创作者，做关于东亚（香港、台湾、日本、韩国）独立文化（电影、出版、音乐）的付费 newsletter，queer/feminist 倾向的文化评论者。
 
 下面是一集【带有时间轴】的美剧字幕。请精选最值得她练的 **3 段**（每段 20-45 秒），并严格遵守以下【提取与分析规则】：
 
-⚠️警告：不要关注单个冷僻的字典词汇（例如 explicit、mesh 等），影子跟读不是背单词！
-
-【核心分析规则】：
-影子跟读的目的是为了内化地道的组合与结构。请把重点全放在片段里的**固定搭配 (Collocations)**、**习语 (Idioms)**、**地道成块表达 (Authentic chunks)** 以及能够拆出结构作表达文化评论用的**句式骨架 (Patterns)** 上。
+⚠️警告：不要关注单个冷僻的字典词汇，影子跟读不是背单词！重点放在片段里的固定搭配 (Collocations)、习语 (Idioms) 和 句式骨架 (Patterns) 上。
 
 请严格按照以下 HTML 和 Markdown 混合格式输出（务必保证 HTML 标签闭合）：
 
@@ -318,12 +314,14 @@
 - **[地道组合]** \`[搭配类型/IDIOM]\` 
   - 释义：[中文释义]
   - 创作实战造句：*[必须针对她的 Newsletter 或文化评论语境，量身定制的 1 句英文长句示例]*
+  - 中文翻译：*[对应的精准中文翻译]*
 
 **【🎯 句式骨架复用 (Patterns)】**
 (请在此部分提取 1-2 个可作评论开篇或转折用的【可据为己有的句式骨架】)
 - **Pattern: \`[句式骨架，用X Y占位]\`**
   - 功能：[1句中文解析]
   - 创作实战造句：*[针对她的 queer/feminist 或东亚独立文化创作者视角，量身造的 1 句英文观点长句]*
+  - 中文翻译：*[对应的精准中文翻译]*
 
 ---
 字幕文本：\n` + content;
