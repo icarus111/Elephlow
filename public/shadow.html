@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎬 专属美剧口语提取器 - 创作者特供版</title>
+    <title>🎬 专属美剧口语提取器 - 地道表达内化版</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Noto+Serif+SC:wght@400;600&display=swap');
@@ -156,7 +156,7 @@
         }
         
         #result ul { padding-left: 20px; color: #4A3F32; }
-        #result li { margin-bottom: 10px; }
+        #result li { margin-bottom: 12px; }
         #result code { background: #F4E8D0; color: #3D4A66; padding: 2px 6px; font-family: monospace; border-radius: 3px; font-size: 0.9em; }
 
         .reset-key {
@@ -174,7 +174,7 @@
 <div class="container">
     <button class="reset-key" onclick="resetApiKey()">重新設定 API Key</button>
     <h1>🎬 Shadow Practice 提取器</h1>
-    <div class="subtitle">文化评论特供版 · 注入完整创作者指令</div>
+    <div class="subtitle">地道表达内化版 · 聚焦短语与句式复用</div>
     
     <div class="form-group">
         <input type="file" id="srtFile" accept=".srt,.txt">
@@ -182,7 +182,7 @@
 
     <button id="analyzeBtn" class="main-btn" onclick="processSubtitle()">生成专属精选语料</button>
     
-    <div id="loading" class="loader">正在用「选人重于选内容」的视角通读全集，大约需要 20-30 秒...</div>
+    <div id="loading" class="loader">正在通读全集，全力提取可内化的地道短语和句式骨架，大约需要 20-30 秒...</div>
     
     <div id="audioTip" class="audio-tip">
         ✨ 提示：鼠标划选一长段句子或双击单词，点击弹出的「🔊 朗读」按钮即可收听发音。
@@ -276,17 +276,18 @@
             content = content.replace(/\r/g, '');
             content = content.replace(/\n{3,}/g, '\n\n');
 
-            // 【核心修复】将 Claude 版本极具深度的文化创作者设定和挑选标准完全恢复
+            // 【灵魂修正】将关注点从冷僻单词彻底转移到地道短语表达上
             const prompt = `你是一位顶尖的英文口语教练 + 文化评论编辑，正在帮一位中文母语者挑选并分析最值得 shadow 的片段。
-她的身份：独立媒体创作者，做关于东亚（香港、台湾、日本、韩国）独立文化（电影、出版、音乐）的付费 newsletter，本人是 queer/feminist 倾向的文化评论者，编辑哲学是「选人重于选内容」。她希望以后能用 shadow 学到的句式做自己的英文文化评论。
+她的身份：独立媒体创作者，做关于东亚（香港、台湾、日本、韩国）独立文化（电影、出版、音乐）的付费 newsletter，queer/feminist 倾向的文化评论者。
 
-下面是一集【带有时间轴】的美剧完整字幕。请精选最值得她练的 **3 段**（每段 20-45 秒）。
-挑选标准（按重要性从高到低）：
-1. 思想/文化密度高 — thesis、argument、reflection、observation 类，特别是有论说结构的独白。这种内容迁移价值最高。
-2. 句式有可复用性 — 包含可以拆出来用到她自己写作里的句型骨架。
-3. 避免：纯转场对话、纯情节推进无思想内容、过短碎句。
+下面是一集【带有时间轴】的美剧字幕。请精选最值得她练的 **3 段**（每段 20-45 秒），并严格遵守以下【提取与分析规则】：
 
-请严格按照以下 HTML 和 Markdown 混合格式输出（绝对保证 HTML 标签闭合）：
+⚠️警告：不要关注单个冷僻的字典词汇（例如 explicit、mesh 等），影子跟读不是背单词！
+
+【核心分析规则】：
+影子跟读的目的是为了内化地道的组合与结构。请把重点全放在片段里的**固定搭配 (Collocations)**、**习语 (Idioms)**、**地道成块表达 (Authentic chunks)** 以及能够拆出结构作表达文化评论用的**句式骨架 (Patterns)** 上。
+
+请严格按照以下 HTML 和 Markdown 混合格式输出（务必保证 HTML 标签闭合）：
 
 ### 🎬 精选片段 [序号]：[8-12字中文标题]
 
@@ -294,12 +295,12 @@
 <span class="timecode-highlight">[起始时间码] - [结束时间码]</span>
 
 **【💡 为什么挑这段】**
-（2-3句中文说明，必须明确指出其思想密度或对她作为文化评论者的特殊价值）
+（2-3句中文说明其思想密度、语境情绪，及对她作为文化评论者的特殊价值）
 
 **【📜 原文与翻译】**
 <div class="translation-box">
-<div class="en-text">(此处将所有英文合并成一整段连续输出。绝对禁止夹杂中文！)</div>
-<div class="cn-text">(此处将所有中文合并成一整段连续输出。)</div>
+<div class="en-text">(此处英文合并成一整段。禁止夹杂中文！)</div>
+<div class="cn-text">(此处中文翻译合并成一整段。)</div>
 </div>
 
 **【🎼 跟读乐谱】**
@@ -308,22 +309,21 @@
 1. 重读单词使用 <b>单词</b>
 2. 弱读单词使用 <i>单词</i>
 3. 短停顿使用 /
-4. 句尾或意群结尾【必须】加上语调箭头，使用 <span class="tone">↗</span> 表示升调，或 <span class="tone">↘</span> 表示降调！
+4. 句尾或意群结尾须加上语调箭头，升调使用 <span class="tone">↗</span>，降调使用 <span class="tone">↘</span>
 绝对禁止使用 Markdown 的星号或反引号！)
 </div>
 
-**【💎 关键词汇与表达】**
-- **[单词或短语]** \`[词性/类型]\` 
+**【💎 地道短语提炼 (Expressions)】**
+(请在此部分提取 2-3 个片段中【最地道的成块组合】，多为动词词组或介词短语)
+- **[地道组合]** \`[搭配类型/IDIOM]\` 
   - 释义：[中文释义]
-  - 你的用法：*[必须针对她的 Newsletter 或文化评论语境，量身定制的 1 句英文长句示例]*
+  - 创作实战造句：*[必须针对她的 Newsletter 或文化评论语境，量身定制的 1 句英文长句示例]*
 
-**【🎯 可据为己有的句式】**
+**【🎯 句式骨架复用 (Patterns)】**
+(请在此部分提取 1-2 个可作评论开篇或转折用的【可据为己有的句式骨架】)
 - **Pattern: \`[句式骨架，用X Y占位]\`**
   - 功能：[1句中文解析]
-  - 给你定制：*[针对她的 queer/feminist 或东亚文化创作者身份，量身造的 1 句英文观点]*
-
-**【🚀 部署建议】**
-（1-2句中文，建议她如何把这段素材的具体句型或词汇，部署到她的 Threads、Newsletter 或真实的跨文化交流中）
+  - 创作实战造句：*[针对她的 queer/feminist 或东亚独立文化创作者视角，量身造的 1 句英文观点长句]*
 
 ---
 字幕文本：\n` + content;
