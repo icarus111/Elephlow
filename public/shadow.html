@@ -3,141 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎬 专属美剧口语提取器 - 地道表达内化版</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <title>🎬 Shadow Practice 提取器 · 编辑学者版</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Noto+Serif+SC:wght@400;600&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Noto+Serif+SC:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --paper: #F6F1E8;
+            --paper-deep: #EDE5D3;
+            --ink: #1F1A14;
+            --ink-soft: #4A3F32;
+            --oxblood: #8B2A3A;
+            --oxblood-soft: #B85667;
+            --indigo: #3D4A66;
+            --highlight: #F4E8D0;
+            --rule: #C9BFA9;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #F6F1E8;
-            color: #1F1A14;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans SC", sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
             max-width: 850px;
             margin: 40px auto;
             padding: 0 20px 100px;
             line-height: 1.7;
         }
+
         .container {
             background: #ffffff;
-            padding: 40px 50px;
+            padding: 36px 40px;
             border-radius: 8px;
             box-shadow: 0 8px 30px rgba(139,42,58,0.08);
-            border-top: 6px solid #8B2A3A;
+            border-top: 6px solid var(--oxblood);
             position: relative;
         }
+
         h1 {
             text-align: center;
-            color: #8B2A3A;
+            color: var(--oxblood);
             font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
             font-size: 28px;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
+
         .subtitle {
             text-align: center;
             font-size: 13px;
-            color: #4A3F32;
-            margin-bottom: 30px;
+            color: var(--ink-soft);
+            margin-bottom: 28px;
             font-family: 'Noto Serif SC', serif;
+            font-style: italic;
         }
-        input[type="file"] {
-            width: 100%;
-            padding: 20px;
-            border: 1.5px dashed #C9BFA9;
+
+        /* drop zone */
+        .drop-zone {
+            border: 1.5px dashed var(--rule);
             border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 15px;
-            background-color: rgba(255,255,255,0.3);
-            cursor: pointer;
-            margin-bottom: 20px;
+            padding: 28px 20px;
+            text-align: center;
+            background-color: rgba(255,255,255,0.4);
+            margin-bottom: 14px;
             transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
         }
-        input[type="file"]:hover {
-            border-color: #8B2A3A;
-            background-color: #F4E8D0;
+
+        .drop-zone:hover { border-color: var(--oxblood); background-color: var(--highlight); }
+        .drop-zone.drag-over { border-color: var(--oxblood); background-color: var(--highlight); transform: scale(1.005); }
+
+        .drop-zone-icon { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--oxblood); line-height: 1; margin-bottom: 6px; }
+        .drop-zone-text { font-family: 'Cormorant Garamond', 'Noto Serif SC', serif; font-size: 18px; color: var(--ink); }
+        .drop-zone-hint { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+        .drop-zone .filename { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--oxblood); margin-top: 8px; }
+        input[type="file"] { display: none; }
+
+        /* episode context */
+        .context-row { margin-bottom: 14px; }
+        .context-row label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 6px;
         }
+        .context-row input {
+            width: 100%;
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', serif;
+            font-size: 14px;
+            background: transparent;
+            color: var(--ink);
+            border: none;
+            border-bottom: 1px solid var(--rule);
+            padding: 6px 0;
+            outline: none;
+        }
+        .context-row input:focus { border-bottom-color: var(--oxblood); }
+
+        /* model toggle */
+        .model-toggle {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            flex-wrap: wrap;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--ink-soft);
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--rule);
+        }
+        .model-toggle label {
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .model-toggle input[type="radio"] { accent-color: var(--oxblood); }
+        .model-toggle .hint { font-style: italic; color: var(--ink-soft); text-transform: none; letter-spacing: 0; margin-left: auto; font-family: 'Noto Serif SC', serif; }
+
+        /* main button */
         button.main-btn {
             width: 100%;
-            background-color: #1F1A14;
-            color: #F6F1E8;
+            background-color: var(--ink);
+            color: var(--paper);
             border: none;
             padding: 16px;
             font-size: 14px;
-            font-family: monospace;
-            letter-spacing: 0.1em;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             cursor: pointer;
             border-radius: 4px;
             transition: background-color 0.3s ease;
         }
-        button.main-btn:hover { background-color: #8B2A3A; }
+        button.main-btn:hover { background-color: var(--oxblood); }
         button.main-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-        
+
+        /* loader / progress */
         .loader {
             display: none;
             text-align: center;
-            margin-top: 20px;
-            color: #8B2A3A;
-            font-family: 'Noto Serif SC', serif;
+            margin-top: 18px;
+            color: var(--oxblood);
+            font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
             font-style: italic;
+            font-size: 15px;
         }
-        
+        .loader.streaming { font-size: 13px; color: var(--ink-soft); }
+
+        .dots::after { content: '...'; animation: dotanim 1.2s infinite; }
+        @keyframes dotanim { 0%,20%{content:'.';} 40%{content:'..';} 60%,100%{content:'...';} }
+
+        /* audio tip & legend */
+        .audio-tip, .legend-box { display: none; }
         .audio-tip {
-            display: none;
             text-align: center;
-            font-size: 13px;
-            color: #8B2A3A;
+            font-size: 12px;
+            color: var(--oxblood);
             background: rgba(139,42,58,0.06);
-            padding: 12px;
-            margin-top: 20px;
+            padding: 10px;
+            margin-top: 18px;
             border-radius: 4px;
-            font-weight: 600;
+            font-family: 'Noto Serif SC', serif;
         }
 
+        .legend-box {
+            background: var(--highlight);
+            border-left: 4px solid var(--oxblood);
+            padding: 14px 18px;
+            margin-top: 24px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 13px;
+            color: var(--ink);
+            line-height: 1.9;
+            border-radius: 4px;
+        }
+
+        /* floating read button */
         #readFloatBtn {
-            display: none; position: absolute; background: #8B2A3A; color: white;
+            display: none; position: absolute; background: var(--oxblood); color: white;
             border: none; padding: 6px 12px; font-size: 13px; border-radius: 20px;
             cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1000;
             font-family: 'Noto Serif SC', serif; animation: popIn 0.2s ease-out;
+            -webkit-tap-highlight-color: transparent;
         }
-        #readFloatBtn:hover { background: #1F1A14; }
+        #readFloatBtn:hover { background: var(--ink); }
         @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        .legend-box {
-            display: none; background: #F4E8D0; border-left: 4px solid #8B2A3A;
-            padding: 15px 20px; margin-top: 30px; font-family: 'Noto Serif SC', serif;
-            font-size: 14px; color: #1F1A14; line-height: 1.8; border-radius: 4px;
-        }
-        
+        /* result rendering */
         #result { margin-top: 20px; display: none; }
-        
-        #result h3 { 
+        #result.streaming { display: block; }
+
+        #result h3 {
             font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
-            color: #1F1A14; font-size: 24px; margin-top: 50px; 
-            border-bottom: 2px solid #C9BFA9; padding-bottom: 10px;
+            color: var(--ink); font-size: 24px; margin-top: 48px;
+            border-bottom: 2px solid var(--rule); padding-bottom: 10px;
+            position: relative;
         }
-        
+
+        #result h3:first-of-type { margin-top: 20px; }
+
         .translation-box {
-            background: #faf7f2; border-left: 4px solid #C9BFA9;
-            padding: 20px 25px; margin: 20px 0; border-radius: 0 8px 8px 0;
+            background: #faf7f2; border-left: 4px solid var(--rule);
+            padding: 18px 22px; margin: 16px 0; border-radius: 0 6px 6px 0;
+            position: relative;
         }
         .en-text {
-            font-family: 'Cormorant Garamond', serif; font-size: 20px;
-            color: #1F1A14; margin-bottom: 15px; line-height: 1.6;
+            font-family: 'Cormorant Garamond', serif; font-size: 19px;
+            color: var(--ink); margin-bottom: 12px; line-height: 1.6;
+            padding-right: 40px;
         }
         .cn-text {
-            font-family: 'Noto Serif SC', serif; font-size: 15px;
-            color: #777; line-height: 1.7;
+            font-family: 'Noto Serif SC', serif; font-size: 14px;
+            color: #888; line-height: 1.7;
         }
 
         .score-box {
-            background: #ffffff; border: 1px dashed #C9BFA9;
-            border-radius: 8px; padding: 25px 30px; margin: 20px 0;
-            font-family: 'Cormorant Garamond', serif; font-size: 22px;
-            line-height: 2.8; color: #4A3F32;
+            background: #ffffff; border: 1px dashed var(--rule);
+            border-radius: 8px; padding: 22px 26px; margin: 18px 0;
+            font-family: 'Cormorant Garamond', serif; font-size: 21px;
+            line-height: 2.6; color: var(--ink-soft);
         }
         .score-box b {
-            color: #8B2A3A; font-size: 1.25em; 
-            border-bottom: 3px solid #8B2A3A; padding-bottom: 2px;
+            color: var(--oxblood); font-size: 1.25em;
+            border-bottom: 3px solid var(--oxblood); padding-bottom: 2px;
             margin: 0 2px; font-weight: bold; background: transparent;
         }
         .score-box i {
@@ -145,26 +241,135 @@
             font-style: normal; background: transparent;
         }
         .score-box span.tone {
-            color: #8B2A3A; font-weight: bold; font-size: 1.1em;
+            color: var(--oxblood); font-weight: bold; font-size: 1.1em;
             margin-left: 4px; font-family: -apple-system, sans-serif;
         }
 
         .timecode-highlight {
-            font-family: monospace; background-color: rgba(139,42,58,0.08);
-            color: #8B2A3A; padding: 4px 8px; border-radius: 4px; font-weight: bold;
-            display: inline-block; margin-bottom: 15px;
+            font-family: 'JetBrains Mono', monospace; background-color: rgba(139,42,58,0.08);
+            color: var(--oxblood); padding: 4px 8px; border-radius: 4px; font-weight: bold;
+            display: inline-block; margin-bottom: 12px;
         }
-        
-        #result ul { padding-left: 20px; color: #4A3F32; }
-        #result li { margin-bottom: 12px; }
-        #result code { background: #F4E8D0; color: #3D4A66; padding: 2px 6px; font-family: monospace; border-radius: 3px; font-size: 0.9em; }
 
-        .reset-key {
-            position: absolute; top: 20px; right: 20px;
-            font-size: 12px; color: #C9BFA9; cursor: pointer;
+        #result ul { padding-left: 20px; color: var(--ink-soft); }
+        #result li { margin-bottom: 10px; }
+        #result code {
+            background: var(--highlight); color: var(--indigo);
+            padding: 2px 6px; font-family: 'JetBrains Mono', monospace;
+            border-radius: 3px; font-size: 0.9em;
+        }
+        #result em, #result i { color: var(--ink); }
+        #result strong { color: var(--ink); }
+        #result hr { border: none; border-top: 1px solid var(--rule); margin: 36px 0; }
+
+        /* per-example inline read button */
+        .inline-read-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            opacity: 0.5;
+            transition: opacity 0.15s;
+            padding: 0 4px;
+            vertical-align: middle;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .inline-read-btn:hover { opacity: 1; }
+
+        .en-text .inline-read-btn {
+            position: absolute;
+            right: 14px;
+            top: 18px;
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
+        /* copy segment button */
+        .copy-segment-btn {
+            display: block;
+            margin: 24px 0 8px;
+            padding: 12px 18px;
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 4px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .copy-segment-btn:hover { background: var(--oxblood); }
+        .copy-segment-btn.copied { background: var(--oxblood); }
+
+        /* top-right buttons */
+        .top-actions {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            display: flex;
+            gap: 12px;
+        }
+        .top-actions button {
+            font-size: 11px; color: var(--rule); cursor: pointer;
             border: none; background: none; font-family: 'Noto Serif SC', serif;
         }
-        .reset-key:hover { color: #8B2A3A; }
+        .top-actions button:hover { color: var(--oxblood); }
+
+        /* history panel */
+        #historyPanel {
+            display: none;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--rule);
+        }
+        #historyPanel h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--oxblood);
+            margin: 0 0 10px;
+        }
+        .history-item {
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.5);
+            border: 1px solid var(--rule);
+            margin-bottom: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--ink-soft);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-item:hover { background: var(--highlight); border-color: var(--oxblood); }
+        .history-item .name { color: var(--ink); }
+        .history-item .time { color: var(--ink-soft); font-size: 10px; }
+        .history-item .del {
+            color: var(--ink-soft);
+            margin-left: 10px;
+            padding: 0 6px;
+            opacity: 0.5;
+        }
+        .history-item .del:hover { opacity: 1; color: var(--oxblood); }
+
+        @media (max-width: 600px) {
+            body { margin: 16px auto; padding: 0 12px 80px; }
+            .container { padding: 24px 20px; }
+            .top-actions { top: 12px; right: 14px; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+            .top-actions button { font-size: 10px; }
+            h1 { font-size: 24px; }
+            .score-box { padding: 18px 16px; font-size: 18px; line-height: 2.4; }
+            #result h3 { font-size: 20px; margin-top: 32px; }
+            .en-text { font-size: 17px; padding-right: 32px; }
+            .en-text .inline-read-btn { right: 8px; top: 14px; font-size: 16px; }
+            .model-toggle { gap: 12px; font-size: 10px; }
+            .model-toggle .hint { font-size: 11px; margin-left: 0; flex-basis: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -172,203 +377,597 @@
 <button id="readFloatBtn">🔊 朗读</button>
 
 <div class="container">
-    <button class="reset-key" onclick="resetApiKey()">重新設定 API Key</button>
+    <div class="top-actions">
+        <button onclick="toggleHistory()">📁 历史</button>
+        <button onclick="resetApiKey()">🔑 重设 Key</button>
+    </div>
+
     <h1>🎬 Shadow Practice 提取器</h1>
-    <div class="subtitle">翻译补全版 · 彻底扫清内化障碍</div>
-    
-    <div class="form-group">
+    <div class="subtitle">字幕进，三段教材出 · 编辑学者注解版</div>
+
+    <div class="drop-zone" id="dropZone" onclick="document.getElementById('srtFile').click()">
+        <div class="drop-zone-icon">¶</div>
+        <div class="drop-zone-text">上传或拖入 .srt 字幕文件</div>
+        <div class="drop-zone-hint">SATC、电影、纪录片、任意带字幕的素材</div>
+        <div class="filename" id="filename"></div>
         <input type="file" id="srtFile" accept=".srt,.txt">
     </div>
 
-    <button id="analyzeBtn" class="main-btn" onclick="processSubtitle()">生成专属精选语料</button>
-    
-    <div id="loading" class="loader">正在通读全集并撰写附带翻译的双语实战例句，大约需要 20-30 秒...</div>
-    
-    <div id="audioTip" class="audio-tip">
-        ✨ 提示：鼠标划选一长段句子或双击单词，点击弹出的「🔊 朗读」按钮即可收听发音。
+    <div class="context-row">
+        <label>剧集背景（选填，越具体筛选越精准）</label>
+        <input type="text" id="episodeContext" placeholder="例：SATC S3E7 Drama Queens，讨论关系是否需要冲突">
     </div>
 
+    <div class="model-toggle">
+        <label><input type="radio" name="model" value="gemini-2.5-flash" checked> Flash</label>
+        <label><input type="radio" name="model" value="gemini-2.5-pro"> Pro</label>
+        <span class="hint">Pro 分析更深但慢 + 贵 ~10x，重点片段可切换</span>
+    </div>
+
+    <button id="analyzeBtn" class="main-btn" onclick="processSubtitle()">生成专属精选语料</button>
+
+    <div id="loading" class="loader"></div>
+    <div id="audioTip" class="audio-tip">✨ 划选英文 → 点🔊 朗读 · 或点每段英文旁的小喇叭</div>
     <div id="legendBox" class="legend-box">
         <strong>🎼 乐谱怎么看？</strong><br>
-        <span style="font-size:1.25em; color:#8B2A3A; border-bottom:3px solid #8B2A3A; font-weight:bold;">红字底线</span> = 必须重读、拉长元音<br>
+        <span style="font-size:1.25em; color:var(--oxblood); border-bottom:3px solid var(--oxblood); font-weight:bold;">红字底线</span> = 必须重读、拉长元音<br>
         <span style="color:#aaa; font-size:0.85em;">灰色小字</span> = 必须弱读、像风一样滑过去<br>
-        <span style="color:#3D4A66; font-weight:bold; font-size:1.2em;"> / </span> = 在这里换气或停顿<br>
-        <strong style="color:#8B2A3A; font-size:1.1em;"> ↗ ↘ </strong> = 句尾升调（疑惑/激动）或 降调（肯定/陈述）
+        <span style="color:var(--indigo); font-weight:bold; font-size:1.2em;"> / </span> = 在这里换气或停顿<br>
+        <strong style="color:var(--oxblood); font-size:1.1em;"> ↗ ↘ </strong> = 句尾升调（疑惑/激动）或 降调（肯定/陈述）
     </div>
-    
+
     <div id="result"></div>
+
+    <div id="historyPanel">
+        <h4>📁 最近 10 次分析</h4>
+        <div id="historyList"></div>
+    </div>
 </div>
 
 <script>
-    function getApiKey() {
-        let key = localStorage.getItem('gemini_api_key_shadow');
-        if (!key) {
-            key = prompt('🔐 請輸入你的 Gemini API Key\n\n(這串密碼只會儲存在你當前的瀏覽器中，絕對不會上傳到任何伺服器或 GitHub，請放心使用)：');
-            if (key && key.trim() !== '') {
-                localStorage.setItem('gemini_api_key_shadow', key.trim());
-            } else {
-                alert('必須輸入 API Key 才能呼叫 AI 哦！');
-                return null;
-            }
+"use strict";
+
+// ─── API Key Management ───
+function getApiKey() {
+    let key = localStorage.getItem('gemini_api_key_shadow');
+    if (!key) {
+        key = prompt('🔐 请输入你的 Gemini API Key\n\n(只存储在你当前浏览器中，不会上传到任何服务器)：');
+        if (key && key.trim() !== '') {
+            localStorage.setItem('gemini_api_key_shadow', key.trim());
+        } else {
+            alert('必须输入 API Key 才能调用 AI');
+            return null;
         }
-        return key;
     }
+    return key;
+}
 
-    function resetApiKey() {
-        localStorage.removeItem('gemini_api_key_shadow');
-        alert('已清除瀏覽器中的舊 API Key，下次使用將重新詢問。');
+function resetApiKey() {
+    localStorage.removeItem('gemini_api_key_shadow');
+    alert('已清除本地 API Key，下次使用会重新询问');
+}
+
+// ─── Drag & Drop ───
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('srtFile');
+const filenameEl = document.getElementById('filename');
+
+['dragenter', 'dragover'].forEach(ev => {
+    dropZone.addEventListener(ev, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('drag-over');
+    });
+});
+
+['dragleave', 'drop'].forEach(ev => {
+    dropZone.addEventListener(ev, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('drag-over');
+    });
+});
+
+dropZone.addEventListener('drop', e => {
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+        fileInput.files = files;
+        showFilename(files[0].name);
     }
+});
 
-    const floatBtn = document.getElementById('readFloatBtn');
-    
-    document.addEventListener('mouseup', function(e) {
-        if(e.target === floatBtn) return;
-        setTimeout(() => {
-            const selectedText = window.getSelection().toString().trim();
-            if (selectedText && /[a-zA-Z]/.test(selectedText)) {
-                floatBtn.style.display = 'block';
-                floatBtn.style.left = e.pageX + 'px';
-                floatBtn.style.top = (e.pageY - 40) + 'px';
-            } else {
-                floatBtn.style.display = 'none';
-            }
-        }, 10);
-    });
+fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) showFilename(fileInput.files[0].name);
+});
 
-    document.addEventListener('mousedown', function(e) {
-        if(e.target !== floatBtn) floatBtn.style.display = 'none';
-    });
+function showFilename(name) {
+    filenameEl.textContent = '✓ ' + name;
+}
 
-    floatBtn.addEventListener('mousedown', function(e) {
-        e.preventDefault(); 
+// ─── Read-Aloud (with mobile touch support) ───
+const floatBtn = document.getElementById('readFloatBtn');
+
+function showFloatBtnAt(pageX, pageY) {
+    floatBtn.style.display = 'block';
+    floatBtn.style.left = pageX + 'px';
+    floatBtn.style.top = (pageY - 44) + 'px';
+}
+
+function tryShowFloat(e) {
+    if (e.target === floatBtn) return;
+    setTimeout(() => {
+        const selectedText = window.getSelection().toString().trim();
+        if (selectedText && /[a-zA-Z]/.test(selectedText) && selectedText.length < 500) {
+            const pos = (e.changedTouches && e.changedTouches[0]) || e;
+            showFloatBtnAt(pos.pageX, pos.pageY);
+        } else {
+            floatBtn.style.display = 'none';
+        }
+    }, 10);
+}
+
+['mouseup', 'touchend'].forEach(ev => document.addEventListener(ev, tryShowFloat));
+
+['mousedown', 'touchstart'].forEach(ev => document.addEventListener(ev, e => {
+    if (e.target !== floatBtn) floatBtn.style.display = 'none';
+}));
+
+function speak(text) {
+    if (!text) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+}
+
+['click', 'touchend'].forEach(ev => {
+    floatBtn.addEventListener(ev, e => {
+        e.preventDefault();
+        e.stopPropagation();
         const selectedText = window.getSelection().toString().trim();
         if (selectedText) {
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(selectedText);
-            utterance.lang = 'en-US'; 
-            utterance.rate = 0.9; 
-            window.speechSynthesis.speak(utterance);
+            speak(selectedText);
             floatBtn.style.display = 'none';
         }
     });
+});
 
-    async function processSubtitle() {
-        const MY_API_KEY = getApiKey();
-        if (!MY_API_KEY) return;
+// ─── Prompt Builder ───
+function buildPrompt(subtitleContent, episodeContext) {
+    return [
+        '你是一位顶尖英文口语教练 + 文化评论编辑，正在帮一位中文母语者从一集字幕里挑选并分析最值得 shadow 的片段。',
+        '',
+        '她的身份：独立媒体创作者，做关于东亚（香港、台湾、日本、韩国）独立文化（电影、出版、音乐）的付费 newsletter，queer/feminist 文化评论者，编辑哲学是「选人重于选内容」。',
+        '',
+        episodeContext ? '剧集语境：' + episodeContext + '\n' : '',
+        '请从下面这集字幕里精选最值得她练的 **3 段**（每段 20-45 秒），并严格遵守以下规则：',
+        '',
+        '⚠️ 不要关注单个冷僻词汇——shadow 不是背单词。重点放在【固定搭配 collocations、习语 idioms、句式骨架 patterns】上，这些才能真正迁移到她的英文写作里。',
+        '',
+        '三段应有梯度：一段【入门稳健】（独白、思路清晰）、一段【挑战快节奏】（对话或长句）、一段【最贴她的工作】（关于关系/创作/文化的思考）。',
+        '',
+        '严格按以下格式输出（HTML 标签必须闭合）：',
+        '',
+        '### 🎬 精选片段 [序号]：[8-12字中文标题]',
+        '',
+        '**【⏱️ 视频定位】**',
+        '<span class="timecode-highlight">[起始时间码] - [结束时间码]</span>',
+        '',
+        '**【🎭 段落定位】** [入门稳健 / 挑战快节奏 / 最贴她工作 之一]',
+        '',
+        '**【💡 为什么挑这段】**',
+        '（2-3 句中文，说明思想密度、语境情绪，以及对她作为文化评论者的特殊价值）',
+        '',
+        '**【📜 原文与翻译】**',
+        '<div class="translation-box">',
+        '<div class="en-text">(英文合并成一整段，不要夹杂中文)</div>',
+        '<div class="cn-text">(中文翻译合并成一整段)</div>',
+        '</div>',
+        '',
+        '**【🎼 跟读乐谱】**',
+        '<div class="score-box">',
+        '(规则：重读用 <b>单词</b>；弱读用 <i>单词</i>；短停用 / ；升调用 <span class="tone">↗</span>，降调用 <span class="tone">↘</span>。不要用 markdown 星号或反引号)',
+        '</div>',
+        '',
+        '**【💎 地道短语提炼】**',
+        '（提取 2-3 个【最地道的成块组合】，多为动词词组或介词短语）',
+        '- **[地道组合]** `[搭配类型 / IDIOM]`',
+        '  - 释义：[中文释义]',
+        '  - 创作实战造句：*[针对她的 newsletter 或文化评论语境量身造的 1 句英文]*',
+        '  - 中文翻译：*[精准的中文翻译]*',
+        '',
+        '**【🎯 句式骨架复用】**',
+        '（提取 1-2 个可作评论开篇或转折的【可据为己有的句式骨架】）',
+        '- **Pattern: `[句式骨架，用 X Y 占位]`**',
+        '  - 功能：[1 句中文]',
+        '  - 创作实战造句：*[针对她 queer/feminist 或东亚独立文化视角量身造的 1 句英文观点长句]*',
+        '  - 中文翻译：*[精准的中文翻译]*',
+        '',
+        '---',
+        '',
+        '（三段之间用 --- 分隔）',
+        '',
+        '字幕文本：',
+        subtitleContent
+    ].join('\n');
+}
 
-        const fileInput = document.getElementById('srtFile');
-        const resultDiv = document.getElementById('result');
-        const loadingDiv = document.getElementById('loading');
-        const btn = document.getElementById('analyzeBtn');
-        const legendBox = document.getElementById('legendBox');
-        const audioTip = document.getElementById('audioTip');
+// ─── Streaming API Call ───
+async function streamGemini(prompt, model) {
+    const apiKey = getApiKey();
+    if (!apiKey) return null;
 
-        if (!fileInput.files.length) {
-            alert('请先上传 SRT 字幕文件！');
-            return;
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':streamGenerateContent?alt=sse';
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': apiKey  // ← 不放 URL 里
+        },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.7 }
+        })
+    });
+
+    if (!response.ok) {
+        let errMsg = 'HTTP ' + response.status;
+        try {
+            const errData = await response.json();
+            errMsg = errData.error && errData.error.message ? errData.error.message : errMsg;
+            if (response.status === 400 || response.status === 403) {
+                alert('API 金钥可能错误或失效，请点右上角「重设 Key」后重试');
+            }
+        } catch (e) {}
+        throw new Error(errMsg);
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let accumulated = '';
+    let buffer = '';
+
+    while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        let nlIdx;
+        while ((nlIdx = buffer.indexOf('\n')) !== -1) {
+            const line = buffer.slice(0, nlIdx).trim();
+            buffer = buffer.slice(nlIdx + 1);
+            if (!line.startsWith('data: ')) continue;
+            const jsonStr = line.slice(6);
+            if (jsonStr === '[DONE]' || !jsonStr) continue;
+            try {
+                const data = JSON.parse(jsonStr);
+                const parts = data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts;
+                if (parts) {
+                    for (const part of parts) {
+                        if (part.text) {
+                            accumulated += part.text;
+                            renderProgress(accumulated);
+                        }
+                    }
+                }
+            } catch (e) { /* partial JSON, skip */ }
+        }
+    }
+
+    return accumulated;
+}
+
+// ─── Rendering ───
+const resultDiv = document.getElementById('result');
+const loadingDiv = document.getElementById('loading');
+
+function renderProgress(text) {
+    resultDiv.innerHTML = marked.parse(text);
+    resultDiv.classList.add('streaming');
+    resultDiv.style.display = 'block';
+}
+
+// ─── Per-Segment Copy to Notion Markdown ───
+function htmlChunkToNotionMd(chunk) {
+    let out = chunk;
+
+    // <div class="translation-box"> → blockquote
+    out = out.replace(/<div class="translation-box">[\s\S]*?<div class="en-text">([\s\S]*?)<\/div>[\s\S]*?<div class="cn-text">([\s\S]*?)<\/div>[\s\S]*?<\/div>/g,
+        (_, en, cn) => '> ' + en.trim() + '\n>\n> *' + cn.trim() + '*');
+
+    // <div class="score-box"> → annotated text
+    out = out.replace(/<div class="score-box">([\s\S]*?)<\/div>/g, (_, inner) => {
+        let c = inner;
+        c = c.replace(/<b>(.*?)<\/b>/g, '**$1**');
+        c = c.replace(/<i>(.*?)<\/i>/g, '`$1`');  // weak words → backticks for Notion
+        c = c.replace(/<span class="tone">(.*?)<\/span>/g, '$1');
+        c = c.replace(/<br\s*\/?>/g, '\n');
+        return c.replace(/\n{2,}/g, '\n').trim();
+    });
+
+    // <span class="timecode-highlight"> → bold
+    out = out.replace(/<span class="timecode-highlight">(.*?)<\/span>/g, '**$1**');
+
+    // strip remaining HTML
+    out = out.replace(/<[^>]+>/g, '');
+
+    // collapse extra blank lines
+    out = out.replace(/\n{3,}/g, '\n\n').trim();
+
+    return out;
+}
+
+function addSegmentCopyButtons(rawMarkdown) {
+    // Split raw markdown by segment headers (### 🎬)
+    const parts = rawMarkdown.split(/(?=### 🎬)/);
+    const segments = parts.filter(p => p.trim().startsWith('### 🎬'));
+
+    // Find h3 elements in result
+    const h3s = Array.from(resultDiv.querySelectorAll('h3')).filter(h => h.textContent.includes('🎬'));
+
+    h3s.forEach((h3, idx) => {
+        if (idx >= segments.length) return;
+        if (h3.parentElement.querySelector('.copy-segment-btn[data-seg-idx="' + idx + '"]')) return;
+
+        const segMd = segments[idx];
+        // Strip the segment separator if present
+        const cleanMd = segMd.replace(/\n*---\s*$/m, '').trim();
+        const notionMd = htmlChunkToNotionMd(cleanMd);
+
+        // Find insertion point: next h3 or end
+        let insertBefore = null;
+        let cur = h3.nextElementSibling;
+        while (cur) {
+            if (cur.tagName === 'H3' && cur.textContent.includes('🎬')) {
+                insertBefore = cur;
+                break;
+            }
+            cur = cur.nextElementSibling;
         }
 
-        const file = fileInput.files[0];
-        const reader = new FileReader();
+        const btn = document.createElement('button');
+        btn.className = 'copy-segment-btn';
+        btn.dataset.segIdx = idx;
+        btn.textContent = '⎘ 复制段 ' + (idx + 1) + ' 为 Notion 教材';
+        btn.addEventListener('click', () => copyToClipboard(notionMd, btn));
 
-        reader.onload = async function(e) {
-            let content = e.target.result;
-            content = content.replace(/\r/g, '');
-            content = content.replace(/\n{3,}/g, '\n\n');
+        if (insertBefore) {
+            // Insert before next h3, but after any preceding hr
+            let target = insertBefore.previousElementSibling;
+            while (target && target.tagName === 'HR') target = target.previousElementSibling;
+            if (target) target.after(btn);
+            else insertBefore.before(btn);
+        } else {
+            resultDiv.appendChild(btn);
+        }
+    });
+}
 
-            const prompt = `你是一位顶尖的英文口语教练 + 文化评论编辑，正在帮一位中文母语者挑选并分析最值得 shadow 的片段。
-她的身份：独立媒体创作者，做关于东亚（香港、台湾、日本、韩国）独立文化（电影、出版、音乐）的付费 newsletter，queer/feminist 倾向的文化评论者。
+function copyToClipboard(text, btn) {
+    const original = btn.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ 已复制 · 粘贴到 Notion';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove('copied');
+        }, 2200);
+    }).catch(() => {
+        // Fallback for non-HTTPS
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.textContent = '✓ 已复制';
+        setTimeout(() => { btn.textContent = original; }, 2200);
+    });
+}
 
-下面是一集【带有时间轴】的美剧字幕。请精选最值得她练的 **3 段**（每段 20-45 秒），并严格遵守以下【提取与分析规则】：
+// ─── Inline read-aloud buttons on rendered output ───
+function addInlineReadButtons() {
+    // Per-translation-box English
+    resultDiv.querySelectorAll('.en-text').forEach(div => {
+        if (div.querySelector('.inline-read-btn')) return;
+        const text = div.textContent.trim();
+        const btn = document.createElement('button');
+        btn.className = 'inline-read-btn';
+        btn.textContent = '🔊';
+        btn.title = '朗读这一段';
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            speak(text);
+        });
+        div.appendChild(btn);
+    });
 
-⚠️警告：不要关注单个冷僻的字典词汇，影子跟读不是背单词！重点放在片段里的固定搭配 (Collocations)、习语 (Idioms) 和 句式骨架 (Patterns) 上。
+    // Per English example sentence in italic
+    resultDiv.querySelectorAll('em, i').forEach(el => {
+        if (el.dataset.readBtn === '1') return;
+        if (el.closest('.score-box')) return;  // skip score-box weak markers
+        const text = el.textContent.trim();
+        if (text.length < 15) return;
+        const latinCount = (text.match(/[a-zA-Z]/g) || []).length;
+        if (latinCount / text.length < 0.5) return;
 
-请严格按照以下 HTML 和 Markdown 混合格式输出（务必保证 HTML 标签闭合）：
+        el.dataset.readBtn = '1';
+        const btn = document.createElement('button');
+        btn.className = 'inline-read-btn';
+        btn.textContent = '🔊';
+        btn.title = '朗读';
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            speak(text);
+        });
+        el.after(btn);
+    });
+}
 
-### 🎬 精选片段 [序号]：[8-12字中文标题]
+// ─── History (localStorage) ───
+function saveHistory(filename, markdown, episodeContext) {
+    const list = JSON.parse(localStorage.getItem('shadow_history') || '[]');
+    list.unshift({
+        id: Date.now(),
+        filename: filename,
+        episodeContext: episodeContext,
+        markdown: markdown,
+        timestamp: Date.now()
+    });
+    const trimmed = list.slice(0, 10);
+    localStorage.setItem('shadow_history', JSON.stringify(trimmed));
+}
 
-**【⏱️ 视频定位】**
-<span class="timecode-highlight">[起始时间码] - [结束时间码]</span>
+function loadHistory() {
+    return JSON.parse(localStorage.getItem('shadow_history') || '[]');
+}
 
-**【💡 为什么挑这段】**
-（2-3句中文说明其思想密度、语境情绪，及对她作为文化评论者的特殊价值）
+function deleteHistoryItem(id) {
+    const list = loadHistory().filter(item => item.id !== id);
+    localStorage.setItem('shadow_history', JSON.stringify(list));
+    renderHistoryList();
+}
 
-**【📜 原文与翻译】**
-<div class="translation-box">
-<div class="en-text">(此处英文合并成一整段。禁止夹杂中文！)</div>
-<div class="cn-text">(此处中文翻译合并成一整段。)</div>
-</div>
-
-**【🎼 跟读乐谱】**
-<div class="score-box">
-(⚠️ 乐谱排版强制规则：
-1. 重读单词使用 <b>单词</b>
-2. 弱读单词使用 <i>单词</i>
-3. 短停顿使用 /
-4. 句尾或意群结尾须加上语调箭头，升调使用 <span class="tone">↗</span>，降调使用 <span class="tone">↘</span>
-绝对禁止使用 Markdown 的星号或反引号！)
-</div>
-
-**【💎 地道短语提炼 (Expressions)】**
-(请在此部分提取 2-3 个片段中【最地道的成块组合】，多为动词词组或介词短语)
-- **[地道组合]** \`[搭配类型/IDIOM]\` 
-  - 释义：[中文释义]
-  - 创作实战造句：*[必须针对她的 Newsletter 或文化评论语境，量身定制的 1 句英文长句示例]*
-  - 中文翻译：*[对应的精准中文翻译]*
-
-**【🎯 句式骨架复用 (Patterns)】**
-(请在此部分提取 1-2 个可作评论开篇或转折用的【可据为己有的句式骨架】)
-- **Pattern: \`[句式骨架，用X Y占位]\`**
-  - 功能：[1句中文解析]
-  - 创作实战造句：*[针对她的 queer/feminist 或东亚独立文化创作者视角，量身造的 1 句英文观点长句]*
-  - 中文翻译：*[对应的精准中文翻译]*
-
----
-字幕文本：\n` + content;
-
-            btn.disabled = true;
-            loadingDiv.style.display = 'block';
-            resultDiv.style.display = 'none';
-            legendBox.style.display = 'none';
-            audioTip.style.display = 'none';
-            resultDiv.innerHTML = '';
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${MY_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (data.error) {
-                    if (data.error.code === 400 || data.error.code === 403) {
-                        alert('API 金鑰可能錯誤或已失效。請點擊右上角「重新設定 API Key」後再試一次！');
-                    } else {
-                        alert('API 报错: ' + data.error.message);
-                    }
-                } else {
-                    const markdownText = data.candidates[0].content.parts[0].text;
-                    resultDiv.innerHTML = marked.parse(markdownText, { sanitize: false });
-                    
-                    loadingDiv.style.display = 'none';
-                    audioTip.style.display = 'block';
-                    legendBox.style.display = 'block';
-                    resultDiv.style.display = 'block';
-                }
-            } catch (error) {
-                alert('请求失败: ' + error.message);
-            } finally {
-                btn.disabled = false;
-                loadingDiv.style.display = 'none';
-            }
-        };
-        
-        reader.readAsText(file, 'utf-8');
+function renderHistoryList() {
+    const list = loadHistory();
+    const container = document.getElementById('historyList');
+    if (list.length === 0) {
+        container.innerHTML = '<div style="font-style:italic; color:#999; font-size:12px; font-family:Noto Serif SC,serif;">还没有历史记录</div>';
+        return;
     }
+    container.innerHTML = list.map(item => {
+        const date = new Date(item.timestamp);
+        const dateStr = date.getMonth() + 1 + '/' + date.getDate() + ' ' + date.getHours() + ':' + String(date.getMinutes()).padStart(2, '0');
+        return '<div class="history-item" data-id="' + item.id + '">' +
+            '<span><span class="name">' + escapeHtml(item.filename) + '</span>' +
+            (item.episodeContext ? ' · <span style="color:#888;">' + escapeHtml(item.episodeContext.slice(0, 30)) + (item.episodeContext.length > 30 ? '...' : '') + '</span>' : '') +
+            '</span>' +
+            '<span><span class="time">' + dateStr + '</span><span class="del" data-del-id="' + item.id + '">×</span></span>' +
+            '</div>';
+    }).join('');
+    container.querySelectorAll('.history-item').forEach(item => {
+        item.addEventListener('click', e => {
+            if (e.target.classList.contains('del')) {
+                e.stopPropagation();
+                deleteHistoryItem(parseInt(e.target.dataset.delId));
+                return;
+            }
+            const id = parseInt(item.dataset.id);
+            const data = loadHistory().find(h => h.id === id);
+            if (data) restoreFromHistory(data);
+        });
+    });
+}
+
+function restoreFromHistory(data) {
+    document.getElementById('historyPanel').style.display = 'none';
+    document.getElementById('audioTip').style.display = 'block';
+    document.getElementById('legendBox').style.display = 'block';
+    resultDiv.style.display = 'block';
+    resultDiv.classList.remove('streaming');
+    resultDiv.innerHTML = marked.parse(data.markdown);
+    addSegmentCopyButtons(data.markdown);
+    addInlineReadButtons();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleHistory() {
+    const panel = document.getElementById('historyPanel');
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+    } else {
+        renderHistoryList();
+        panel.style.display = 'block';
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ─── Main Pipeline ───
+async function processSubtitle() {
+    const btn = document.getElementById('analyzeBtn');
+    const audioTip = document.getElementById('audioTip');
+    const legendBox = document.getElementById('legendBox');
+
+    if (!fileInput.files.length) {
+        alert('请先上传 SRT 字幕文件');
+        return;
+    }
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    const model = document.querySelector('input[name="model"]:checked').value;
+    const episodeContext = document.getElementById('episodeContext').value.trim();
+
+    reader.onload = async function(e) {
+        let content = e.target.result;
+        content = content.replace(/\r/g, '').replace(/\n{3,}/g, '\n\n');
+
+        // Sanity check: file size — Gemini has token limits
+        if (content.length > 200000) {
+            if (!confirm('字幕文件较大（' + Math.round(content.length / 1000) + 'k chars），可能超过 token 限制。继续吗？')) return;
+        }
+
+        const prompt = buildPrompt(content, episodeContext);
+
+        btn.disabled = true;
+        loadingDiv.textContent = '正在调用 ' + model + ' 通读全集...';
+        loadingDiv.style.display = 'block';
+        loadingDiv.classList.remove('streaming');
+        resultDiv.style.display = 'none';
+        audioTip.style.display = 'none';
+        legendBox.style.display = 'none';
+        resultDiv.innerHTML = '';
+
+        try {
+            // Switch to streaming style after first chunk
+            let firstChunk = true;
+            const checkStreamInterval = setInterval(() => {
+                if (resultDiv.innerHTML.length > 50 && firstChunk) {
+                    firstChunk = false;
+                    loadingDiv.textContent = '内容生成中（一边生成一边显示，请直接往下读）';
+                    loadingDiv.classList.add('streaming');
+                }
+            }, 200);
+
+            const fullText = await streamGemini(prompt, model);
+            clearInterval(checkStreamInterval);
+
+            if (fullText) {
+                // Final render to ensure complete parse
+                resultDiv.innerHTML = marked.parse(fullText);
+                resultDiv.classList.remove('streaming');
+                addSegmentCopyButtons(fullText);
+                addInlineReadButtons();
+                saveHistory(file.name, fullText, episodeContext);
+                audioTip.style.display = 'block';
+                legendBox.style.display = 'block';
+            }
+        } catch (error) {
+            alert('请求失败: ' + error.message);
+            console.error(error);
+        } finally {
+            btn.disabled = false;
+            loadingDiv.style.display = 'none';
+        }
+    };
+    reader.readAsText(file, 'utf-8');
+}
+
+// ─── Init ───
+window.addEventListener('DOMContentLoaded', () => {
+    // Show history badge if there's any
+    const hist = loadHistory();
+    if (hist.length > 0) {
+        // could add a count badge later
+    }
+});
 </script>
+
 </body>
 </html>
