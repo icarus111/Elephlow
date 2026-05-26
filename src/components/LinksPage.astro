@@ -17,7 +17,7 @@ const copy = {
     links: '🗺️ 灵感地图', guestbook: '💬 留言板', subscribe: '★ 订阅 ★',
     task: '▣ 灵感地图', sites: '个站点', addrBase: 'elephlow.cc/zh-cn/links',
     secNav: '◈ 分区 ◈',
-    marquee: '✿ 灵感地图 ★ 字与书 · 光影 · 声响 · 在地报导 · 刊物 · 小志与档案 · 视觉志 · 自习室 · 书店地图 · 女性的位置 · 酷儿地景 ✿ 像一张还在生长的地图 ♡ 每一条链接都是一个可以出发的路口 ★',
+    marquee: '✿ 灵感地图 ★ 她说 · 酷儿地景 · 小志 · 刊物 · 书店地图 · 文学 · 光影 · 声响 · 视觉志 · 现场 · 田野 · 通信 · 档案室 · 自习室 ✿ 像一张还在生长的地图 ♡ 每一条链接都是一个可以出发的路口 ★',
   },
   'zh-tw': {
     htmlLang: 'zh-TW', title: '靈感地圖 | 推開部屋的門',
@@ -29,7 +29,7 @@ const copy = {
     links: '🗺️ 靈感地圖', guestbook: '💬 留言板', subscribe: '★ 訂閱 ★',
     task: '▣ 靈感地圖', sites: '個站點', addrBase: 'elephlow.cc/zh-tw/links',
     secNav: '◈ 分區 ◈',
-    marquee: '✿ 靈感地圖 ★ 字與書 · 光影 · 聲響 · 在地報導 · 刊物 · 小誌與檔案 · 視覺誌 · 自習室 · 書店地圖 · 女性的位置 · 酷兒地景 ✿ 像一張還在生長的地圖 ♡ 每一條連結都是一個可以出發的路口 ★',
+    marquee: '✿ 靈感地圖 ★ 她說 · 酷兒地景 · 小誌 · 刊物 · 書店地圖 · 文學 · 光影 · 聲響 · 視覺誌 · 現場 · 田野 · 通信 · 檔案室 · 自習室 ✿ 像一張還在生長的地圖 ♡ 每一條連結都是一個可以出發的路口 ★',
   },
   en: {
     htmlLang: 'en', title: 'Inspiration Map | Push The Door',
@@ -41,7 +41,7 @@ const copy = {
     links: '🗺️ Map', guestbook: '💬 Guestbook', subscribe: '★ Subscribe ★',
     task: '▣ Inspiration Map', sites: 'sites', addrBase: 'elephlow.cc/en/links',
     secNav: '◈ zones ◈',
-    marquee: '✿ Inspiration Map ★ Words & Books · Moving Image · Sound · On the Ground · Periodicals · Zines & Archives · Visual Field · Self-Study · Bookshops · Women\'s Place · Queer Landscapes ✿ A map still growing ♡ Every link a crossroads you can leave from ★',
+    marquee: '✿ Inspiration Map ★ She Says · Queer Landscapes · Zines · Magazines · Bookshops · Literature · Moving Image · Sound · Visual Field · On Site · Fieldwork · Newsletters · Archive · Self-Study ✿ A map still growing ♡ Every link a crossroads you can leave from ★',
   },
 }[locale];
 
@@ -69,33 +69,39 @@ const menuItems = [
 ];
 
 const nameTW: Record<string, string> = {
-  'words-and-books':    '字與書',
-  'moving-image':       '光影',
-  'sound':              '聲響',
-  'on-the-ground':      '在地報導',
-  'periodicals':        '刊物',
-  'zines-and-archives': '小誌與檔案',
-  'visual-field':       '視覺誌',
-  'self-study':         '自習室',
-  'bookshops':          '書店地圖',
-  'womens-place':       '女性的位置',
-  'queer-landscapes':   '酷兒地景',
+  'she-says':         '她說',
+  'queer-landscapes': '酷兒地景',
+  'zines':            '小誌',
+  'magazines':        '刊物',
+  'bookshops':        '書店地圖',
+  'literature':       '文學',
+  'moving-image':     '光影',
+  'sound':            '聲響',
+  'visual-field':     '視覺誌',
+  'on-site':          '現場',
+  'fieldwork':        '田野',
+  'newsletters':      '通信',
+  'archive':          '檔案室',
+  'self-study':       '自習室',
 };
 
 const featuredUrls: Record<string, 'wide' | 'large'> = {};
 
 const defaultLayouts: Record<string, Record<number, 'wide' | 'large'>> = {
-  'words-and-books':    { 0: 'wide', 5: 'wide'  },
-  'moving-image':       { 0: 'large', 6: 'wide' },
-  'sound':              { 2: 'wide', 7: 'wide'  },
-  'on-the-ground':      { 0: 'wide', 4: 'wide'  },
-  'periodicals':        { 1: 'wide', 6: 'wide'  },
-  'zines-and-archives': { 1: 'large', 7: 'wide' },
-  'visual-field':       { 0: 'wide', 5: 'large' },
-  'self-study':         { 3: 'wide'             },
-  'bookshops':          { 2: 'wide', 6: 'wide'  },
-  'womens-place':       { 2: 'large', 7: 'wide' },
-  'queer-landscapes':   { 1: 'wide', 5: 'wide'  },
+  'she-says':         { 0: 'wide',  5: 'wide'  },
+  'queer-landscapes': { 0: 'large', 6: 'wide'  },
+  'zines':            { 2: 'wide',  7: 'wide'  },
+  'magazines':        { 0: 'wide',  4: 'wide'  },
+  'bookshops':        { 1: 'wide',  6: 'wide'  },
+  'literature':       { 1: 'large', 5: 'wide'  },
+  'moving-image':     { 0: 'wide',  4: 'large' },
+  'sound':            { 3: 'wide'              },
+  'visual-field':     { 2: 'wide',  6: 'wide'  },
+  'on-site':          { 2: 'large', 5: 'wide'  },
+  'fieldwork':        { 1: 'wide',  5: 'wide'  },
+  'newsletters':      { 0: 'wide'              },
+  'archive':          { 1: 'wide',  5: 'large' },
+  'self-study':       { 3: 'wide'              },
 };
 
 // 10 種底紋，輪換（同色系間距≥4，避免相鄰卡片撞色）
@@ -105,47 +111,56 @@ const stickerThemes = [
 ] as const;
 
 const themeOffsets: Record<string, number> = {
-  'words-and-books':    0,
-  'moving-image':       5,
-  'sound':              2,
-  'on-the-ground':      7,
-  'periodicals':        4,
-  'zines-and-archives': 9,
-  'visual-field':       1,
-  'self-study':         6,
-  'bookshops':          3,
-  'womens-place':       8,
-  'queer-landscapes':   0,
+  'she-says':         0,
+  'queer-landscapes': 3,
+  'zines':            6,
+  'magazines':        9,
+  'bookshops':        2,
+  'literature':       5,
+  'moving-image':     8,
+  'sound':            1,
+  'visual-field':     4,
+  'on-site':          7,
+  'fieldwork':        0,
+  'newsletters':      3,
+  'archive':          6,
+  'self-study':       9,
 };
 
-// 彩虹漸層邊框色（11色，按新分區順序分配，保持彩虹序列）
+// 彩虹漸層邊框色（14色，按 friends.json 分區順序分配，維持彩虹序列）
 const catMeta: Record<string, { icon: string; accent: string; bg: string; shadow: string }> = {
-  'womens-place':       { icon: '✊',  accent: '#FF8FAB', bg: '#FFF5F8', shadow: '#FF8FAB40' }, // 01 粉紅
-  'queer-landscapes':   { icon: '🌈', accent: '#FF9E64', bg: '#FFF6F0', shadow: '#FF9E6440' }, // 02 橙
-  'words-and-books':    { icon: '📖', accent: '#F0C030', bg: '#FFFBEE', shadow: '#F0C03040' }, // 03 黃
-  'periodicals':        { icon: '📋', accent: '#78CC70', bg: '#F2FAEE', shadow: '#78CC7040' }, // 04 綠
-  'zines-and-archives': { icon: '📚', accent: '#40C8A8', bg: '#EEFAF7', shadow: '#40C8A840' }, // 05 青
-  'bookshops':          { icon: '🏪', accent: '#48B8D8', bg: '#EEF8FD', shadow: '#48B8D840' }, // 06 水藍
-  'sound':              { icon: '🎧', accent: '#7090F0', bg: '#F0F3FD', shadow: '#7090F040' }, // 07 藍紫
-  'moving-image':       { icon: '🎞️', accent: '#9878E0', bg: '#F3EFFD', shadow: '#9878E040' }, // 08 紫
-  'visual-field':       { icon: '🎨', accent: '#C070D8', bg: '#F8EFFE', shadow: '#C070D840' }, // 09 紫堇
-  'on-the-ground':      { icon: '📰', accent: '#E858A0', bg: '#FEF0F7', shadow: '#E858A040' }, // 10 桃紅
-  'self-study':         { icon: '🧭', accent: '#FF7090', bg: '#FFF0F4', shadow: '#FF709040' }, // 11 紅粉
+  'she-says':         { icon: '✊',  accent: '#FF8FAB', bg: '#FFF5F8', shadow: '#FF8FAB40' }, // 01 粉紅
+  'queer-landscapes': { icon: '🌈', accent: '#FF9E64', bg: '#FFF6F0', shadow: '#FF9E6440' }, // 02 橙
+  'zines':            { icon: '📔', accent: '#F7B530', bg: '#FFFAED', shadow: '#F7B53040' }, // 03 琥珀
+  'magazines':        { icon: '📋', accent: '#E8D828', bg: '#FFFEF0', shadow: '#E8D82840' }, // 04 黃
+  'bookshops':        { icon: '🏪', accent: '#9CCC45', bg: '#F5FAEC', shadow: '#9CCC4540' }, // 05 黃綠
+  'literature':       { icon: '📖', accent: '#68C868', bg: '#F0FAF0', shadow: '#68C86840' }, // 06 綠
+  'moving-image':     { icon: '🎞️', accent: '#35C898', bg: '#EDFAF7', shadow: '#35C89840' }, // 07 青綠
+  'sound':            { icon: '🎧', accent: '#48B8D8', bg: '#EEF8FD', shadow: '#48B8D840' }, // 08 水藍
+  'visual-field':     { icon: '🎨', accent: '#5085F0', bg: '#EEF2FE', shadow: '#5085F040' }, // 09 藍
+  'on-site':          { icon: '📰', accent: '#7068E8', bg: '#F0F0FD', shadow: '#7068E840' }, // 10 藍紫
+  'fieldwork':        { icon: '🔬', accent: '#9858D8', bg: '#F3EEFD', shadow: '#9858D840' }, // 11 紫
+  'newsletters':      { icon: '💌', accent: '#C060D0', bg: '#F8EEFC', shadow: '#C060D040' }, // 12 紫堇
+  'archive':          { icon: '🗄️', accent: '#E84898', bg: '#FEF0F7', shadow: '#E8489840' }, // 13 桃紅
+  'self-study':       { icon: '🧭', accent: '#FF6688', bg: '#FFF0F3', shadow: '#FF668840' }, // 14 紅粉
 };
 
 // 每個板塊的顏文字
 const catKaomoji: Record<string, string> = {
-  'words-and-books':    "(´▽\`ʃ♡ƪ)",
-  'moving-image':       '(✿◠‿◠)',
-  'sound':              '♪(´▽`)',
-  'on-the-ground':      '(｀・ω・´)و',
-  'periodicals':        '(ノ◕ヮ◕)ノ*',
-  'zines-and-archives': 'ψ(｀∇´)ψ',
-  'visual-field':       '(◕‿◕✿)',
-  'self-study':         '(ﾉ*>∀<)ﾉ♡',
-  'bookshops':          '(˘▾˘~)',
-  'womens-place':       'ヾ(✿❛◡❛)ノ',
-  'queer-landscapes':   '(ﾉ≧∀≦)ﾉ',
+  'she-says':         'ヾ(✿❛◡❛)ノ',
+  'queer-landscapes': '(ﾉ≧∀≦)ﾉ',
+  'zines':            'ψ(｀∇´)ψ',
+  'magazines':        '(ノ◕ヮ◕)ノ*',
+  'bookshops':        '(˘▾˘~)',
+  'literature':       "(´▽\`ʃ♡ƪ)",
+  'moving-image':     '(✿◠‿◠)',
+  'sound':            '♪(´▽`)',
+  'visual-field':     '(◕‿◕✿)',
+  'on-site':          '(｀・ω・´)و',
+  'fieldwork':        '(๑•ᴗ•๑)',
+  'newsletters':      '(｡♡‿♡｡)',
+  'archive':          'ʕ•ᴥ•ʔ',
+  'self-study':       '(ﾉ*>∀<)ﾉ♡',
 };
 
 const totalLinks = friendsData.categories.reduce((s, c) => s + c.links.length, 0);
