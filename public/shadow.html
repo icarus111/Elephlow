@@ -398,12 +398,6 @@
         <input type="text" id="episodeContext" placeholder="例：SATC S3E7 Drama Queens，讨论关系是否需要冲突">
     </div>
 
-    <div class="model-toggle">
-        <label><input type="radio" name="model" value="gemini-2.5-flash" checked> Flash</label>
-        <label><input type="radio" name="model" value="gemini-2.5-pro"> Pro</label>
-        <span class="hint">Pro 分析更深但慢 + 贵 ~10x，重点片段可切换</span>
-    </div>
-
     <button id="analyzeBtn" class="main-btn" onclick="processSubtitle()">生成专属精选语料</button>
 
     <div id="loading" class="loader"></div>
@@ -901,7 +895,7 @@ async function processSubtitle() {
 
     const file = fileInput.files[0];
     const reader = new FileReader();
-    const model = document.querySelector('input[name="model"]:checked').value;
+    const model = 'gemini-2.5-flash';
     const episodeContext = document.getElementById('episodeContext').value.trim();
 
     reader.onload = async function(e) {
@@ -916,7 +910,7 @@ async function processSubtitle() {
         const prompt = buildPrompt(content, episodeContext);
 
         btn.disabled = true;
-        loadingDiv.textContent = '正在调用 ' + model + ' 通读全集...';
+        loadingDiv.textContent = '正在调用 Gemini Flash 通读全集...';
         loadingDiv.style.display = 'block';
         loadingDiv.classList.remove('streaming');
         resultDiv.style.display = 'none';
