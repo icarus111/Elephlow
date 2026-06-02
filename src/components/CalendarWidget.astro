@@ -110,11 +110,11 @@
     gap: 2px;
   }
 
-  .cal-empty {
+  .cal-grid :global(.cal-empty) {
     aspect-ratio: 1;
   }
 
-  .cal-cell {
+  .cal-grid :global(.cal-cell) {
     aspect-ratio: 1;
     display: flex;
     align-items: center;
@@ -127,20 +127,20 @@
     cursor: default;
   }
 
-  .cal-today {
+  .cal-grid :global(.cal-today) {
     border: 1.5px solid var(--ink-light);
     font-weight: 700;
   }
 
-  .cal-letter {
+  .cal-grid :global(.cal-letter) {
     background: var(--candy-mint);
   }
 
-  .cal-issue {
+  .cal-grid :global(.cal-issue) {
     background: var(--candy-purple);
   }
 
-  .cal-letter.cal-issue {
+  .cal-grid :global(.cal-letter.cal-issue) {
     background: linear-gradient(135deg, var(--candy-mint) 50%, var(--candy-purple) 50%);
   }
 
