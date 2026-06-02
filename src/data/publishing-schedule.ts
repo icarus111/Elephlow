@@ -6,17 +6,26 @@ export type PublishEvent = {
   title?: string;
 };
 
-// 第四季排程
-// 杂志通信：每周日，从 5/17 起（轻量内容）
-// 正刊：暂定每两周一次，从 5/31 起（待小象确认频率后修改）
-export const schedule: PublishEvent[] = [
-  { date: '2026-05-17', type: 'letter', title: '杂志通信 #1' },
-  { date: '2026-05-24', type: 'letter', title: '杂志通信 #2' },
-  { date: '2026-05-31', type: 'letter', title: '杂志通信 #3' },
-  { date: '2026-05-31', type: 'issue',  title: '正刊 #1' },
-  { date: '2026-06-07', type: 'letter', title: '杂志通信 #4' },
-  { date: '2026-06-14', type: 'letter', title: '杂志通信 #5' },
-  { date: '2026-06-14', type: 'issue',  title: '正刊 #2' },
-  { date: '2026-06-21', type: 'letter', title: '杂志通信 #6' },
-  { date: '2026-06-28', type: 'letter', title: '杂志通信 #7' },
-];
+const formatDate = (year: number, month: number, day: number) =>
+  `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+// 每月前三个周四发布杂志通信，最后一个周四发布正刊。
+export const getScheduleForMonth = (year: number, month: number): PublishEvent[] => {
+  const thursdays: number[] = [];
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    if (new Date(year, month, day).getDay() === 4) thursdays.push(day);
+  }
+
+  const letters: PublishEvent[] = thursdays.slice(0, 3).map((day, index) => ({
+    date: formatDate(year, month, day),
+    type: 'letter',
+    title: `杂志通信 #${index + 1}`,
+  }));
+  const issueDay = thursdays.at(-1);
+
+  return issueDay
+    ? [...letters, { date: formatDate(year, month, issueDay), type: 'issue', title: '正刊' }]
+    : letters;
+};

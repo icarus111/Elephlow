@@ -1,32 +1,7 @@
----
-import { schedule } from '../data/publishing-schedule';
-
-const today = new Date();
-const currentMonth = today.getMonth();
-const currentYear = today.getFullYear();
-const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-const todayDate = today.getDate();
-const monthName = `${currentYear} 年 ${currentMonth + 1} 月`;
-
-type Cell = { day: number; events: typeof schedule; isToday: boolean } | null;
-const cells: Cell[] = [];
-
-for (let i = 0; i < firstDay; i++) {
-  cells.push(null);
-}
-
-for (let day = 1; day <= daysInMonth; day++) {
-  const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-  const events = schedule.filter(e => e.date === dateStr);
-  cells.push({ day, events, isToday: day === todayDate });
-}
----
-
-<div class="calendar-widget">
+<div class="calendar-widget" data-calendar-widget>
   <div class="cal-header">
     <span>📅</span>
-    <span>{monthName}</span>
+    <span data-calendar-month></span>
   </div>
 
   <div class="cal-weekdays">
@@ -34,23 +9,7 @@ for (let day = 1; day <= daysInMonth; day++) {
     <span>三</span><span>四</span><span>五</span><span>六</span>
   </div>
 
-  <div class="cal-grid">
-    {cells.map(cell => {
-      if (!cell) return <div class="cal-empty"></div>;
-      const hasLetter = cell.events.some(e => e.type === 'letter');
-      const hasIssue = cell.events.some(e => e.type === 'issue');
-      const title = cell.events.map(e => e.title).join(' · ');
-      const classes = ['cal-cell'];
-      if (cell.isToday) classes.push('cal-today');
-      if (hasLetter) classes.push('cal-letter');
-      if (hasIssue) classes.push('cal-issue');
-      return (
-        <div class={classes.join(' ')} title={title}>
-          <span class="cal-day">{cell.day}</span>
-        </div>
-      );
-    })}
-  </div>
+  <div class="cal-grid" data-calendar-grid></div>
 
   <div class="cal-legend">
     <div class="legend-row">
@@ -63,6 +22,54 @@ for (let day = 1; day <= daysInMonth; day++) {
     </div>
   </div>
 </div>
+
+<script>
+  import { getScheduleForMonth } from '../data/publishing-schedule';
+
+  const formatDate = (year: number, month: number, day: number) =>
+    `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+  document.querySelectorAll<HTMLElement>('[data-calendar-widget]').forEach(widget => {
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const schedule = getScheduleForMonth(currentYear, currentMonth);
+    const monthLabel = widget.querySelector<HTMLElement>('[data-calendar-month]');
+    const grid = widget.querySelector<HTMLElement>('[data-calendar-grid]');
+
+    if (!monthLabel || !grid) return;
+
+    monthLabel.textContent = `${currentYear} 年 ${currentMonth + 1} 月`;
+
+    for (let i = 0; i < firstDay; i++) {
+      const emptyCell = document.createElement('div');
+      emptyCell.className = 'cal-empty';
+      grid.append(emptyCell);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const events = schedule.filter(event => event.date === formatDate(currentYear, currentMonth, day));
+      const hasLetter = events.some(event => event.type === 'letter');
+      const hasIssue = events.some(event => event.type === 'issue');
+      const cell = document.createElement('div');
+      const dayLabel = document.createElement('span');
+      const classes = ['cal-cell'];
+
+      if (day === today.getDate()) classes.push('cal-today');
+      if (hasLetter) classes.push('cal-letter');
+      if (hasIssue) classes.push('cal-issue');
+
+      cell.className = classes.join(' ');
+      cell.title = events.map(event => event.title).join(' · ');
+      dayLabel.className = 'cal-day';
+      dayLabel.textContent = String(day);
+      cell.append(dayLabel);
+      grid.append(cell);
+    }
+  });
+</script>
 
 <style>
   .calendar-widget {
