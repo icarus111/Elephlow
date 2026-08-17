@@ -1,0 +1,715 @@
+---
+import '../styles/global.css';
+import {
+  accessLabels,
+  lastVerified,
+  localPublications,
+  statusLabels,
+} from '../data/taiwan-local-publications';
+import { taiwanCountyPaths } from '../data/taiwan-county-paths';
+
+type Coverage = { title: string; outlet: string; date?: string; summary: string; url: string };
+
+const countyOrder = [
+  '基隆市', '臺北市', '新北市', '桃園市', '新竹市', '新竹縣', '苗栗縣',
+  '臺中市', '彰化縣', '南投縣', '雲林縣', '嘉義市', '嘉義縣', '臺南市',
+  '高雄市', '屏東縣', '宜蘭縣', '花蓮縣', '臺東縣', '澎湖縣', '金門縣', '連江縣',
+] as const;
+
+const countyLabelPositions: Record<string, { x: number; y: number; short: string }> = {
+  基隆市: { x: 631, y: 91, short: '基隆' }, 臺北市: { x: 575, y: 106, short: '臺北' },
+  新北市: { x: 592, y: 139, short: '新北' }, 桃園市: { x: 490, y: 133, short: '桃園' },
+  新竹市: { x: 427, y: 171, short: '竹市' }, 新竹縣: { x: 477, y: 187, short: '竹縣' },
+  苗栗縣: { x: 407, y: 224, short: '苗栗' }, 臺中市: { x: 397, y: 277, short: '臺中' },
+  彰化縣: { x: 331, y: 319, short: '彰化' }, 南投縣: { x: 450, y: 354, short: '南投' },
+  雲林縣: { x: 327, y: 382, short: '雲林' }, 嘉義市: { x: 344, y: 426, short: '嘉市' },
+  嘉義縣: { x: 391, y: 425, short: '嘉縣' }, 臺南市: { x: 305, y: 482, short: '臺南' },
+  高雄市: { x: 397, y: 535, short: '高雄' }, 屏東縣: { x: 382, y: 622, short: '屏東' },
+  宜蘭縣: { x: 600, y: 194, short: '宜蘭' }, 花蓮縣: { x: 540, y: 362, short: '花蓮' },
+  臺東縣: { x: 478, y: 527, short: '臺東' }, 澎湖縣: { x: 143, y: 373, short: '澎湖' },
+  金門縣: { x: 137, y: 558, short: '金門' }, 連江縣: { x: 145, y: 157, short: '馬祖' },
+};
+
+const countyTone: Record<string, string> = Object.fromEntries(countyOrder.map((county) => {
+  if (['澎湖縣', '金門縣', '連江縣'].includes(county)) return [county, 'islands'];
+  if (['宜蘭縣', '花蓮縣', '臺東縣'].includes(county)) return [county, 'east'];
+  if (['嘉義市', '嘉義縣', '臺南市', '高雄市', '屏東縣'].includes(county)) return [county, 'south'];
+  if (['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣'].includes(county)) return [county, 'central'];
+  return [county, 'north'];
+}));
+
+const coverageByName: Record<string, Coverage[]> = {
+  看見臺東: [{
+    title: '《看見臺東》改版，以地方刊物描繪山海日常', outlet: '今周刊', date: '2025.04',
+    summary: '報導新版刊物如何從政策刊物轉向人物、旅行與地方生活敘事。',
+    url: 'https://www.businesstoday.com.tw/article/category/183031/post/202504020025/',
+  }],
+  臺東部落食尚誌: [{
+    title: '從部落餐桌認識臺東風土', outlet: 'Green Media 綠媒體',
+    summary: '由飲食、旅行與部落文化切入，介紹刊物背後的地方採集方法。',
+    url: 'https://greenmedia.today/article_detail.php?cid=260&mid=1277',
+  }],
+  苑裡掀海風: [{
+    title: '地方刊物《苑裡掀海風》的返鄉書寫', outlet: '窩客島',
+    summary: '從苑裡青年行動與在地採訪，回看刊物如何累積小鎮記憶。',
+    url: 'https://www.walkerland.com.tw/article/view/271191',
+  }],
+  埔里鄉情: [{
+    title: '《埔里鄉情》記錄地方四十年的變化', outlet: 'PeoPo 公民新聞',
+    summary: '整理刊物發展、編輯社群與長期地方書寫的歷史脈絡。',
+    url: 'https://www.peopo.org/news/580856',
+  }],
+  正興聞: [{
+    title: '一份街區刊物如何串起正興街', outlet: '關鍵評論網',
+    summary: '由店家與街區共同編輯的角度，介紹《正興聞》的社群方法。',
+    url: 'https://www.thenewslens.com/article/31511',
+  }],
+  大雄誌: [{
+    title: '高雄地方刊物的城市觀察', outlet: '關鍵評論網',
+    summary: '從獨立出版與地方採訪，閱讀《大雄誌》如何描寫高雄。',
+    url: 'https://www.thenewslens.com/article/117543',
+  }],
+  什貨生活: [{
+    title: '鹽埕地方刊物與生活採集', outlet: 'VERSE',
+    summary: '回顧刊物如何用人物、店家與老街日常保存鹽埕的地方感。',
+    url: 'https://www.verse.com.tw/article/local-publications-yancheng',
+  }],
+  東透可: [{
+    title: '從四本刊物看臺東的地方出版', outlet: '臺東藝文', date: '2024.02',
+    summary: '專題並讀《東透可》、《看見臺東》、《部落食尚誌》與《Zoom in Taitung》。',
+    url: 'https://culture.taitung.gov.tw/magazine/113-02',
+  }],
+  'Zoom in Taitung': [{
+    title: '從四本刊物看臺東的地方出版', outlet: '臺東藝文', date: '2024.02',
+    summary: '以地方編輯、影像紀實與生活觀察，整理臺東刊物的不同路徑。',
+    url: 'https://culture.taitung.gov.tw/magazine/113-02',
+  }],
+  新莊騷: [{
+    title: '臥房城市的精神覺醒：新莊騷串起舊記憶與新文化', outlet: '微笑台灣', date: '2023.09',
+    summary: '從紙上策展與地方品牌的角度，回看刊物如何讓居民重新認識新莊。',
+    url: 'https://smiletaiwan.cw.com.tw/article/7653',
+  }],
+  臺東土黏黏: [{
+    title: '臺東土黏黏十周年，學生深入卑南海岸記錄地方故事', outlet: '國立臺東大學', date: '2026.01',
+    summary: '第十輯以卑南海岸為田野，整理十一篇人物、海洋生活與返鄉創生報導。',
+    url: 'https://enews.nttu.edu.tw/p/406-1045-171642%2Cr923.php',
+  }],
+  逐步東行: [{
+    title: '母語創作、用心玩出家鄉驕傲', outlet: '見域', date: '2025.12',
+    summary: '回顧竹東國中團隊十年來如何從紙本刊物走向母語歌曲與地方藝術行動。',
+    url: 'https://www.citilens.cc/nest16-welovejudong',
+  }],
+  深溝年報: [{
+    title: '宜蘭深溝田文社：種田也能種成地方媒體', outlet: '獨立評論', date: '2019.09',
+    summary: '介紹年報的手作編輯、年度色票，以及田文社如何在農村持續記錄。',
+    url: 'https://opinion.cw.com.tw/blog/profile/380/article/8477',
+  }],
+  'AMAZING PINGTUNG 驚豔屏東': [{
+    title: '屏東縣刊變身生活風格雜誌', outlet: '中央社', date: '2020.08',
+    summary: '從改版理念與地方美學，理解公部門刊物如何跳脫制式宣傳。',
+    url: 'https://www.cna.com.tw/news/acul/202008220022.aspx?topic=2214',
+  }],
+};
+
+const rootCounty = (city: string) => city.split('・')[0];
+const isReference = (item: (typeof localPublications)[number]) => item.reading === 'reference' || item.access === 'catalog';
+const withStatusSuffix = (name: string, status: (typeof localPublications)[number]['status']) => {
+  if (status === 'hiatus') return name + '（已休刊）';
+  if (status === 'ceased') return name + '（已停刊）';
+  return name;
+};
+const payload = localPublications.map((item, index) => ({
+  ...item,
+  id: `zine-${index}`,
+  county: rootCounty(item.city),
+  displayName: withStatusSuffix(item.name, item.status),
+  reading: isReference(item) ? 'reference' : 'online',
+  statusLabel: statusLabels[item.status],
+  accessLabel: accessLabels[item.access],
+  coverage: coverageByName[item.name] || [],
+}));
+
+const initialCounty = '臺北市';
+const initialPublications = payload.filter((item) => item.county === initialCounty);
+const initialItem = initialPublications.find((item) => item.reading === 'online') || initialPublications[0];
+const onlineCount = payload.filter((item) => item.reading === 'online').length;
+const referenceCount = payload.length - onlineCount;
+const serializedPayload = JSON.stringify(payload).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="臺灣 22 縣市地方刊物互動閱讀地圖。" />
+    <meta name="theme-color" content="#C8E9B0" />
+    <title>臺灣地方刊物閱讀地圖 · elephlow</title>
+  </head>
+  <body>
+    <main class="zine-window">
+      <header class="window-titlebar">
+        <div><span class="title-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>C:\ELEPHLOW\LOCAL_ZINES\reading-map.exe</span></div>
+        <nav aria-label="頁面捷徑"><a href="/zh-tw/">⌂ 回小窩</a><span>繁</span></nav>
+      </header>
+
+      <div class="window-body">
+        <header class="desk-heading">
+          <span class="banner-charm charm-star" aria-hidden="true">✦</span>
+          <span class="banner-charm charm-heart" aria-hidden="true">♡</span>
+          <div class="heading-emblem" aria-hidden="true"><span>22</span><small>COUNTY<br />FILES</small></div>
+          <div class="heading-copy">
+            <p>TAIWAN LOCAL PUBLICATION DESK_</p>
+            <h1>臺灣地方刊物閱讀地圖</h1>
+            <small>點一個縣市，先看哪些刊物可以直接線上翻閱。</small>
+          </div>
+          <div class="heading-side">
+            <span class="banner-ribbon">ISLAND READING CLUB</span>
+            <div class="desk-counts" aria-label="刊物收錄數量">
+              <span><b>{onlineCount}</b> 線上閱讀</span><span><b>{referenceCount}</b> 發行線索</span><span><b>22</b> 縣市</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="reading-desktop" aria-label="地方刊物互動閱讀桌面">
+          <section class="map-window" aria-labelledby="map-window-title">
+            <header class="pane-titlebar"><span>▧ county_map.svg</span><i>— □</i></header>
+            <div class="map-toolbar">
+              <div><small>NOW SELECTED</small><strong id="selected-county">{initialCounty}</strong></div>
+              <div class="name-legend"><span class="online-sample">可線上閱讀</span><span class="reference-sample">發行／館藏線索</span><button class="cross-county-button" type="button" data-county-select="跨縣市" aria-pressed="false">↗ 全臺／跨域</button></div>
+            </div>
+            <div class="map-canvas">
+              <svg class="county-map" viewBox="0 0 720 760" role="img" aria-labelledby="map-title map-desc">
+                <title id="map-title">臺灣二十二縣市互動地圖</title>
+                <desc id="map-desc">點選縣市後，右側會顯示該縣市的地方刊物名稱。</desc>
+                {countyOrder.map((county) => (
+                  <g
+                    class:list={['county-zone', `tone-${countyTone[county]}`, county === initialCounty && 'is-current']}
+                    data-county-select={county}
+                    role="button"
+                    tabindex="0"
+                    aria-label={`查看${county}地方刊物`}
+                    aria-pressed={county === initialCounty ? 'true' : 'false'}
+                  >
+                    <title>{county}</title>
+                    <path d={taiwanCountyPaths[county]}></path>
+                  </g>
+                ))}
+                {countyOrder.map((county) => {
+                  const label = countyLabelPositions[county];
+                  return (
+                    <g class:list={['county-label', county === initialCounty && 'is-current']} data-county-label={county} aria-hidden="true">
+                      <circle cx={label.x} cy={label.y} r="3.5"></circle>
+                      <text x={label.x + 7} y={label.y + 3}>{label.short}</text>
+                    </g>
+                  );
+                })}
+              </svg>
+              <span class="map-decoration map-star">✦</span><span class="map-decoration map-note">22 COUNTY FILES</span>
+            </div>
+            <footer class="map-source">界線資料：<a href="https://data.gov.tw/dataset/7442" target="_blank" rel="noreferrer">政府資料開放平臺</a> · 最後核對 {lastVerified}</footer>
+          </section>
+
+          <aside class="library-pane">
+            <section class="directory-window" aria-labelledby="directory-title">
+              <header class="pane-titlebar"><span>▤ publication_index.txt</span><i>— □</i></header>
+              <div class="directory-tools">
+                <div><p>COUNTY SHELF</p><h2 id="directory-title">{initialCounty} · {initialPublications.length} 本</h2></div>
+                <label class="directory-search"><span>⌕</span><input id="zine-search" type="search" placeholder="搜尋刊名或縣市" autocomplete="off" /></label>
+              </div>
+              <div class="directory-list" id="directory-list">
+                {initialPublications.map((item) => (
+                  <button class:list={['directory-item', `is-${item.reading}`, item.id === initialItem.id && 'is-current']} type="button" data-record-id={item.id}>
+                    <span>{item.displayName}</span><small>{item.reading === 'online' ? '線上閱讀' : '發行線索'}</small>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            <article class="record-card" id="record-card" data-reading={initialItem.reading} aria-live="polite">
+              <header class="record-heading">
+                <div class="record-eyebrow"><span>{initialItem.city}</span><span>{initialItem.statusLabel}</span><span>{initialItem.period}</span></div>
+                <h2>{initialItem.displayName}</h2>
+                <p>發行：{initialItem.publisher}</p>
+              </header>
+              <div class="record-scroll">
+                <section class="record-about"><h3>刊物在讀什麼</h3><p>{initialItem.description}</p></section>
+                <section class="record-issues"><h3>{initialItem.reading === 'online' ? '推薦單期' : '單期／資料線索'}</h3>{initialItem.issues.map((issue, index) => (
+                  <a href={issue.url} target="_blank" rel="noreferrer"><b>{String(index + 1).padStart(2, '0')}</b><span><small>{issue.label}</small><strong>{issue.title}</strong><em>{issue.reason}</em></span><i>↗</i></a>
+                ))}</section>
+                {initialItem.coverage.length > 0 && <section class="record-coverage"><h3>相關報導</h3>{initialItem.coverage.map((report) => (
+                  <a href={report.url} target="_blank" rel="noreferrer"><span><small>{report.outlet}{report.date ? ` · ${report.date}` : ''}</small><strong>{report.title}</strong><em>{report.summary}</em></span><i>↗</i></a>
+                ))}</section>}
+              </div>
+              <footer class="record-footer"><span>{initialItem.reading === 'online' ? '有公開線上版本' : '目前僅有發行／館藏線索'}</span><a href={initialItem.url} target="_blank" rel="noreferrer">{initialItem.reading === 'online' ? '前往官方閱讀' : '查看發行資料'} ↗</a></footer>
+            </article>
+          </aside>
+        </section>
+
+      </div>
+
+      <footer class="window-taskbar"><div><a href="/zh-tw/">⊞ 小窩</a><span>▣ 臺灣地方刊物閱讀地圖</span></div><div><span id="selection-status">{initialCounty} · {initialItem.displayName}</span><span id="clock">--:--</span></div></footer>
+    </main>
+
+    <aside class="suggest-float" id="suggest-float" aria-label="補充地方刊物">
+      <header class="float-titlebar" id="suggest-drag-handle"><span>✉ zine_dropbox.msg</span><i>↕</i></header>
+      <button class="float-body" id="open-suggestion" type="button" aria-haspopup="dialog">
+        <span class="float-sticker" aria-hidden="true">NEW!</span>
+        <span class="float-mail" aria-hidden="true">✉</span>
+        <strong>漏網刊物？</strong>
+        <small>點一下投遞<br />拖著標題列上下移動</small>
+        <span class="float-ticker"><i>補充一本 ✦ 補充一本 ✦ 補充一本 ✦</i></span>
+      </button>
+    </aside>
+
+    <dialog class="suggest-dialog" id="suggest-dialog">
+      <form method="dialog" class="dialog-window" id="suggest-form">
+        <header class="pane-titlebar"><span>✉ add_a_zine.msg</span><button type="button" id="close-suggestion" aria-label="關閉">×</button></header>
+        <div class="dialog-body"><p>COMMUNITY DROPBOX_</p><h2>補充一本地方刊物</h2><small>送出時會打開郵件程式，網頁本身不儲存資料。</small>
+          <div class="dialog-fields"><label><span>刊物名稱 *</span><input name="publication" required /></label><label><span>縣市／地區 *</span><input name="place" required /></label><label class="wide"><span>閱讀、發行或介紹連結 *</span><input name="url" type="url" required placeholder="https://" /></label><label class="wide"><span>補充說明</span><textarea name="note" rows="3"></textarea></label></div>
+        </div>
+        <footer class="dialog-actions"><button type="button" id="cancel-suggestion">取消</button><button type="submit" value="default">整理成郵件 ↗</button></footer>
+      </form>
+    </dialog>
+
+    <script id="zine-data" type="application/json" set:html={serializedPayload}></script>
+    <script is:inline>
+      const records = JSON.parse(document.querySelector('#zine-data')?.textContent || '[]');
+      const counties = [...new Set(records.map((record) => record.county))];
+      const directory = document.querySelector('#directory-list');
+      const directoryTitle = document.querySelector('#directory-title');
+      const recordCard = document.querySelector('#record-card');
+      const selectedCountyLabel = document.querySelector('#selected-county');
+      const selectionStatus = document.querySelector('#selection-status');
+      const search = document.querySelector('#zine-search');
+      let selectedCounty = counties.includes(decodeURIComponent(location.hash.slice(1))) ? decodeURIComponent(location.hash.slice(1)) : '臺北市';
+      let selectedRecordId = '';
+
+      const escapeHtml = (value = '') => String(value).replace(/[&<>"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[character]);
+      const countyRecords = (county) => records.filter((record) => record.county === county).sort((a, b) => (a.reading === b.reading ? 0 : a.reading === 'online' ? -1 : 1));
+
+      function updateMap() {
+        document.querySelectorAll('[data-county-select]').forEach((zone) => {
+          const current = zone.dataset.countySelect === selectedCounty;
+          zone.classList.toggle('is-current', current);
+          zone.setAttribute('aria-pressed', String(current));
+        });
+        document.querySelectorAll('[data-county-label]').forEach((label) => label.classList.toggle('is-current', label.dataset.countyLabel === selectedCounty));
+        if (selectedCountyLabel) selectedCountyLabel.textContent = selectedCounty;
+      }
+
+      function renderDirectory(items, heading) {
+        if (!directory || !directoryTitle) return;
+        directoryTitle.textContent = `${heading} · ${items.length} 本`;
+        directory.innerHTML = items.length ? items.map((record) => `<button class="directory-item is-${record.reading}${record.id === selectedRecordId ? ' is-current' : ''}" type="button" data-record-id="${record.id}"><span>${escapeHtml(record.displayName)}</span><small>${record.reading === 'online' ? '線上閱讀' : '發行線索'}</small></button>`).join('') : '<p class="directory-empty">沒有找到相符刊物。</p>';
+      }
+
+      function renderRecord(record) {
+        if (!recordCard || !record) return;
+        selectedRecordId = record.id;
+        recordCard.dataset.reading = record.reading;
+        const issues = record.issues.map((issue, index) => `<a href="${issue.url}" target="_blank" rel="noreferrer"><b>${String(index + 1).padStart(2, '0')}</b><span><small>${escapeHtml(issue.label)}</small><strong>${escapeHtml(issue.title)}</strong><em>${escapeHtml(issue.reason)}</em></span><i>↗</i></a>`).join('');
+        const coverage = record.coverage.length ? `<section class="record-coverage"><h3>相關報導</h3>${record.coverage.map((report) => `<a href="${report.url}" target="_blank" rel="noreferrer"><span><small>${escapeHtml(report.outlet)}${report.date ? ` · ${escapeHtml(report.date)}` : ''}</small><strong>${escapeHtml(report.title)}</strong><em>${escapeHtml(report.summary)}</em></span><i>↗</i></a>`).join('')}</section>` : '';
+        recordCard.innerHTML = `<header class="record-heading"><div class="record-eyebrow"><span>${escapeHtml(record.city)}</span><span>${escapeHtml(record.statusLabel)}</span><span>${escapeHtml(record.period)}</span></div><h2>${escapeHtml(record.displayName)}</h2><p>發行：${escapeHtml(record.publisher)}</p></header><div class="record-scroll"><section class="record-about"><h3>刊物在讀什麼</h3><p>${escapeHtml(record.description)}</p></section><section class="record-issues"><h3>${record.reading === 'online' ? '推薦單期' : '單期／資料線索'}</h3>${issues}</section>${coverage}</div><footer class="record-footer"><span>${record.reading === 'online' ? '有公開線上版本' : '目前僅有發行／館藏線索'}</span><a href="${record.url}" target="_blank" rel="noreferrer">${record.reading === 'online' ? '前往官方閱讀' : '查看發行資料'} ↗</a></footer>`;
+        if (selectionStatus) selectionStatus.textContent = `${record.county} · ${record.displayName}`;
+      }
+
+      function selectCounty(county, preferredRecordId = '') {
+        if (!counties.includes(county)) return;
+        selectedCounty = county;
+        const items = countyRecords(county);
+        const selected = items.find((item) => item.id === preferredRecordId) || items[0];
+        selectedRecordId = selected?.id || '';
+        updateMap(); renderDirectory(items, county); renderRecord(selected);
+        history.replaceState(null, '', `#${encodeURIComponent(county)}`);
+      }
+
+      document.querySelectorAll('[data-county-select]').forEach((zone) => {
+        const choose = () => { if (search) search.value = ''; selectCounty(zone.dataset.countySelect); };
+        zone.addEventListener('click', choose);
+        zone.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); choose(); } });
+      });
+      directory?.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-record-id]'); if (!button) return;
+        const record = records.find((item) => item.id === button.dataset.recordId); if (!record) return;
+        if (record.county !== selectedCounty || search?.value) { if (search) search.value = ''; selectCounty(record.county, record.id); return; }
+        selectedRecordId = record.id; renderDirectory(countyRecords(selectedCounty), selectedCounty); renderRecord(record);
+      });
+      search?.addEventListener('input', () => {
+        const query = search.value.toLocaleLowerCase('zh-Hant').trim();
+        if (!query) { renderDirectory(countyRecords(selectedCounty), selectedCounty); return; }
+        const matches = records.filter((record) => `${record.name} ${record.city} ${record.publisher} ${record.description}`.toLocaleLowerCase('zh-Hant').includes(query));
+        renderDirectory(matches, '搜尋結果');
+      });
+
+      const dialog = document.querySelector('#suggest-dialog');
+      document.querySelector('#open-suggestion')?.addEventListener('click', () => dialog?.showModal());
+      document.querySelector('#close-suggestion')?.addEventListener('click', () => dialog?.close());
+      document.querySelector('#cancel-suggestion')?.addEventListener('click', () => dialog?.close());
+      const floatWindow = document.querySelector('#suggest-float');
+      const dragHandle = document.querySelector('#suggest-drag-handle');
+      let floatDragOffset = 0;
+      let draggingFloat = false;
+
+      function positionFloat(clientY) {
+        if (!floatWindow) return;
+        const edge = window.innerWidth <= 640 ? 42 : 48;
+        const maxTop = Math.max(edge, window.innerHeight - floatWindow.offsetHeight - edge);
+        const top = Math.min(maxTop, Math.max(edge, clientY - floatDragOffset));
+        floatWindow.style.top = top + 'px';
+      }
+
+      dragHandle?.addEventListener('pointerdown', (event) => {
+        if (!floatWindow) return;
+        draggingFloat = true;
+        floatWindow.classList.add('is-dragging');
+        floatDragOffset = event.clientY - floatWindow.getBoundingClientRect().top;
+        dragHandle.setPointerCapture(event.pointerId);
+      });
+      dragHandle?.addEventListener('pointermove', (event) => {
+        if (draggingFloat) positionFloat(event.clientY);
+      });
+      const stopFloatDrag = (event) => {
+        draggingFloat = false;
+        floatWindow?.classList.remove('is-dragging');
+        if (dragHandle?.hasPointerCapture(event.pointerId)) dragHandle.releasePointerCapture(event.pointerId);
+      };
+      dragHandle?.addEventListener('pointerup', stopFloatDrag);
+      dragHandle?.addEventListener('pointercancel', stopFloatDrag);
+      window.addEventListener('resize', () => {
+        if (!floatWindow) return;
+        const rect = floatWindow.getBoundingClientRect();
+        floatDragOffset = rect.height / 2;
+        positionFloat(rect.top + floatDragOffset);
+      });
+      document.querySelector('#suggest-form')?.addEventListener('submit', (event) => {
+        event.preventDefault(); const data = new FormData(event.currentTarget);
+        const subject = `地方刊物補充｜${data.get('publication') || ''}`;
+        const body = `刊物名稱：${data.get('publication') || ''}\n縣市／地區：${data.get('place') || ''}\n查證連結：${data.get('url') || ''}\n補充說明：${data.get('note') || '（無）'}\n\n來自臺灣地方刊物閱讀地圖的訪客投稿`;
+        location.href = `mailto:iiicarus1217@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+      dialog?.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+
+      function updateClock() { const clock = document.querySelector('#clock'); const now = new Date(); if (clock) clock.textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`; }
+      selectCounty(selectedCounty); updateClock(); setInterval(updateClock, 30000);
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  html { scroll-behavior: smooth; }
+  body { overflow-x: hidden; }
+  button, input, textarea { font: inherit; }
+  .zine-window {
+    width: calc(100% - 24px); max-width: 1180px; margin: 18px auto;
+    overflow: clip; border: 2px dashed var(--candy-purple); border-radius: 15px;
+    background: var(--soft-white); box-shadow: 6px 6px 0 rgba(199,179,232,.34);
+  }
+  .window-titlebar, .window-taskbar, .pane-titlebar { color: var(--ink); font: 9px var(--font-pixel); }
+  .window-titlebar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 8px 14px; border-bottom: 2px dashed var(--candy-purple); background: var(--candy-mint);
+  }
+  .window-titlebar > div, .window-titlebar nav, .window-taskbar > div { display: flex; align-items: center; gap: 11px; }
+  .window-titlebar nav a, .window-taskbar a { color: var(--ink); }
+  .window-titlebar nav span { padding: 2px 7px; border-radius: 3px; background: var(--candy-cream); }
+  .title-dots { display: flex; gap: 4px; }
+  .title-dots i { width: 7px; height: 7px; border: 1px solid rgba(42,31,24,.22); border-radius: 50%; background: var(--candy-purple); }
+  .title-dots i:nth-child(2) { background: var(--candy-pink); }
+  .title-dots i:nth-child(3) { background: var(--candy-cream); }
+  .window-body {
+    padding: 14px 16px 12px;
+    background:
+      linear-gradient(rgba(255,255,255,.84),rgba(255,255,255,.84)),
+      repeating-linear-gradient(0deg,transparent 0 27px,rgba(181,232,224,.26) 27px 28px),
+      repeating-linear-gradient(90deg,transparent 0 27px,rgba(199,179,232,.17) 27px 28px);
+  }
+
+  .desk-heading {
+    position: relative; display: grid; grid-template-columns: 70px minmax(0,1fr) auto; align-items: center; gap: 17px;
+    min-height: 108px; margin: 2px 4px 18px 0; padding: 18px 22px 16px; overflow: hidden;
+    border: 1.5px dashed var(--candy-purple); border-radius: 12px;
+    background:
+      linear-gradient(120deg,rgba(247,255,251,.92),rgba(255,252,245,.88)),
+      repeating-linear-gradient(0deg,transparent 0 17px,rgba(181,232,224,.55) 17px 18px),
+      repeating-linear-gradient(90deg,transparent 0 17px,rgba(181,232,224,.55) 17px 18px);
+    box-shadow: 4px 4px 0 rgba(181,232,224,.7), 8px 8px 0 rgba(199,179,232,.2);
+  }
+  .desk-heading::before {
+    content: 'LOCAL FILES'; position: absolute; top: -1px; left: 92px; padding: 3px 12px 4px;
+    border: 1px dashed var(--candy-purple); border-top: 0; border-radius: 0 0 6px 6px;
+    background: var(--candy-cream); color: var(--candy-purple); font: 6px var(--font-pixel); letter-spacing: 1px;
+  }
+  .desk-heading::after {
+    content: ''; position: absolute; right: -20px; bottom: -25px; width: 150px; height: 54px;
+    border: 1px dashed rgba(199,179,232,.72); background: rgba(247,213,217,.42); transform: rotate(-11deg); pointer-events: none;
+  }
+  .heading-emblem {
+    position: relative; z-index: 2; width: 64px; height: 64px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px;
+    padding: 7px; border: 1.5px dashed var(--candy-purple); border-radius: 9px; background: var(--candy-mint);
+    box-shadow: 3px 3px 0 var(--candy-pink); transform: rotate(-2.5deg);
+  }
+  .heading-emblem span { font: 700 27px/1 var(--font-serif-tc); }
+  .heading-emblem small { color: var(--candy-purple); font: 5px/1.55 var(--font-pixel); letter-spacing: 0; }
+  .heading-copy { position: relative; z-index: 2; min-width: 0; }
+  .desk-heading p { color: var(--candy-purple); font: 7px var(--font-pixel); letter-spacing: 1.5px; }
+  .desk-heading h1 { margin: 4px 0 3px; font: 700 clamp(28px,3.4vw,40px)/1 var(--font-serif-tc); letter-spacing: .09em; text-shadow: 2px 2px 0 var(--candy-peach); }
+  .heading-copy > small { color: var(--ink-light); font: 9px var(--font-rounded); }
+  .heading-side { position: relative; z-index: 2; display: grid; justify-items: end; gap: 11px; }
+  .banner-ribbon {
+    display: inline-block; padding: 5px 10px; border: 1px dashed var(--candy-purple); border-radius: 3px;
+    background: var(--candy-cream); color: var(--candy-purple); font: 6px var(--font-pixel); letter-spacing: .8px; transform: rotate(1.4deg);
+  }
+  .banner-charm { position: absolute; z-index: 3; color: var(--candy-purple); font: 16px var(--font-pixel); pointer-events: none; }
+  .charm-star { top: 13px; right: 26px; animation: charm-turn 8s linear infinite; }
+  .charm-heart { right: 145px; bottom: 7px; color: #9b7aa8; transform: rotate(-10deg); animation: charm-pulse 2.8s ease-in-out infinite; }
+  @keyframes charm-turn { to { transform: rotate(360deg); } }
+  @keyframes charm-pulse { 50% { transform: rotate(-4deg) scale(1.18); } }
+  .desk-counts { display: flex; flex-wrap: wrap; justify-content: end; gap: 6px; }
+  .desk-counts span { padding: 5px 8px; border: 1px dashed var(--candy-purple); border-radius: 99px; background: rgba(255,255,255,.9); color: var(--ink-light); font: 7px var(--font-pixel); }
+  .desk-counts b { color: var(--ink); font-size: 10px; }
+
+  .reading-desktop {
+    position: relative; height: 636px; display: grid; grid-template-columns: minmax(0,1.12fr) minmax(365px,.88fr); gap: 12px;
+    padding: 8px; border: 1.5px dashed var(--candy-mint); border-radius: 12px;
+    background:
+      linear-gradient(rgba(247,255,251,.88),rgba(247,255,251,.88)),
+      repeating-linear-gradient(0deg, transparent 0 19px, rgba(181,232,224,.5) 19px 20px),
+      repeating-linear-gradient(90deg, transparent 0 19px, rgba(181,232,224,.5) 19px 20px);
+    box-shadow: 3px 3px 0 rgba(247,213,217,.28);
+  }
+  .reading-desktop::before {
+    content: 'ISLAND DESKTOP'; position: absolute; z-index: 5; top: -10px; left: 28px; padding: 3px 10px;
+    border: 1px dashed var(--candy-purple); border-radius: 3px; background: var(--candy-cream); color: var(--candy-purple);
+    font: 6px var(--font-pixel); letter-spacing: .8px; transform: rotate(-1deg); pointer-events: none;
+  }
+  .reading-desktop::after {
+    content: '✦'; position: absolute; z-index: 5; right: 13px; bottom: -10px; width: 26px; height: 26px; display: grid; place-items: center;
+    border: 1px dashed var(--candy-purple); border-radius: 50%; background: var(--candy-pink); color: var(--candy-purple); font: 8px var(--font-pixel); pointer-events: none;
+  }
+  .map-window, .directory-window, .record-card {
+    min-width: 0; overflow: hidden; border: 1.5px dashed var(--candy-purple); border-radius: 9px;
+    background: rgba(255,255,255,.94); box-shadow: 4px 4px 0 rgba(199,179,232,.2);
+  }
+  .pane-titlebar {
+    min-height: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 6px 9px; border-bottom: 1px dashed var(--candy-purple); background: var(--candy-mint);
+  }
+  .directory-window > .pane-titlebar { background: var(--candy-cream); }
+  .pane-titlebar i { color: var(--candy-purple); font-style: normal; letter-spacing: 3px; }
+  .map-window { display: grid; grid-template-rows: auto auto minmax(0,1fr) auto; }
+  .map-toolbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 9px 12px 7px; border-bottom: 1px dashed var(--candy-mint); background: rgba(255,252,245,.75);
+  }
+  .map-toolbar > div:first-child { display: flex; align-items: baseline; gap: 8px; }
+  .map-toolbar small { color: var(--candy-purple); font: 6px var(--font-pixel); letter-spacing: 1px; }
+  .map-toolbar strong { font: 700 17px var(--font-serif-tc); }
+  .name-legend { display: flex; align-items: center; gap: 9px; color: var(--ink-light); font: 7px var(--font-pixel); }
+  .online-sample { color: #47745f; text-decoration: underline 1.5px solid #77b99b; text-underline-offset: 3px; }
+  .reference-sample { color: #887399; text-decoration: underline 1.5px dotted #a98fbb; text-underline-offset: 3px; }
+  .cross-county-button {
+    padding: 4px 6px; border: 1px dashed var(--candy-purple); border-radius: 4px; background: var(--candy-cream);
+    color: var(--candy-purple); cursor: pointer; font: 6px var(--font-pixel); white-space: nowrap;
+  }
+  .cross-county-button:hover, .cross-county-button.is-current { background: var(--candy-pink); box-shadow: 2px 2px 0 rgba(199,179,232,.24); }
+  .map-canvas { position: relative; min-height: 0; overflow: hidden; }
+  .map-canvas::before {
+    content: ''; position: absolute; inset: 13px; border: 1px dashed rgba(199,179,232,.42); border-radius: 50%;
+    transform: scale(.75,.98) rotate(-10deg); pointer-events: none;
+  }
+  .county-map { position: relative; z-index: 2; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(5px 6px 0 rgba(199,179,232,.13)); }
+  .county-zone { cursor: pointer; outline: none; }
+  .county-zone path {
+    stroke: #4d4a42; stroke-width: 1.05; stroke-linejoin: round; vector-effect: non-scaling-stroke;
+    transition: fill .18s ease, filter .18s ease, opacity .18s ease; transform-box: fill-box; transform-origin: center;
+  }
+  .county-zone.tone-north path { fill: color-mix(in srgb, var(--candy-mint) 76%, white); }
+  .county-zone.tone-central path { fill: color-mix(in srgb, var(--candy-cream) 76%, white); }
+  .county-zone.tone-south path { fill: color-mix(in srgb, var(--candy-pink) 58%, white); }
+  .county-zone.tone-east path { fill: color-mix(in srgb, var(--candy-aqua) 72%, white); }
+  .county-zone.tone-islands path { fill: color-mix(in srgb, var(--candy-purple) 52%, white); }
+  .county-zone:hover path, .county-zone:focus-visible path { filter: brightness(.97) drop-shadow(0 0 3px rgba(111,159,132,.7)); }
+  .county-zone.is-current path { fill: var(--candy-mint); stroke: #6b4d78; stroke-width: 2.4; filter: drop-shadow(0 0 5px rgba(107,77,120,.38)); animation: county-glow 1.8s ease-in-out infinite; }
+  @keyframes county-glow { 50% { filter: drop-shadow(0 0 8px rgba(107,77,120,.52)); } }
+  .county-label { pointer-events: none; }
+  .county-label circle { fill: var(--soft-white); stroke: var(--candy-purple); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .county-label text { fill: #4b4842; paint-order: stroke; stroke: rgba(255,255,255,.95); stroke-width: 3px; font: 12px var(--font-rounded); }
+  .county-label.is-current circle { fill: var(--candy-purple); }
+  .county-label.is-current text { fill: #563d63; font-weight: 700; }
+  .map-decoration { position: absolute; z-index: 4; color: var(--candy-purple); pointer-events: none; }
+  .map-star { top: 22px; right: 28px; font: 19px var(--font-pixel); animation: star-turn 8s linear infinite; }
+  .map-note { left: 17px; bottom: 18px; padding: 4px 7px; border: 1px dashed var(--candy-purple); background: var(--candy-cream); font: 6px var(--font-pixel); transform: rotate(-2deg); }
+  @keyframes star-turn { to { transform: rotate(360deg); } }
+  .map-source { padding: 5px 9px; border-top: 1px dashed var(--candy-mint); color: var(--ink-light); font: 6px var(--font-pixel); text-align: right; }
+  .map-source a { color: var(--ink-light); }
+
+  .library-pane { min-height: 0; display: grid; grid-template-rows: 206px minmax(0,1fr); gap: 10px; }
+  .directory-window { display: grid; grid-template-rows: auto auto minmax(0,1fr); }
+  .directory-tools { display: grid; grid-template-columns: 1fr minmax(125px,.72fr); gap: 10px; align-items: center; padding: 8px 10px; border-bottom: 1px dashed var(--candy-mint); }
+  .directory-tools p { color: var(--candy-purple); font: 6px var(--font-pixel); }
+  .directory-tools h2 { margin-top: 2px; font: 700 16px var(--font-serif-tc); }
+  .directory-search { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 5px; padding: 5px 7px; border: 1px dashed var(--candy-purple); border-radius: 5px; background: white; }
+  .directory-search span { color: var(--candy-purple); }
+  .directory-search input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink); font: 9px var(--font-rounded); }
+  .directory-list { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; align-content: start; gap: 5px 8px; overflow-y: auto; padding: 8px 10px 10px; scrollbar-color: var(--candy-mint) transparent; }
+  .directory-item { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; min-width: 0; padding: 5px 6px; border: 0; border-radius: 4px; background: transparent; text-align: left; cursor: pointer; }
+  .directory-item span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 10px var(--font-rounded); text-underline-offset: 3px; }
+  .directory-item small { flex: 0 0 auto; font: 6px var(--font-pixel); }
+  .directory-item.is-online span { color: #47745f; text-decoration: underline 1.5px solid #77b99b; }
+  .directory-item.is-online small { color: #5d9279; }
+  .directory-item.is-reference span { color: #887399; text-decoration: underline 1.5px dotted #a98fbb; }
+  .directory-item.is-reference small { color: #9c88aa; }
+  .directory-item:hover, .directory-item.is-current { background: color-mix(in srgb, var(--candy-mint) 48%, white); outline: 1px dashed var(--candy-purple); }
+  .directory-empty { grid-column: 1 / -1; padding: 17px; color: var(--ink-light); font: 9px var(--font-rounded); text-align: center; }
+
+  .record-card { min-height: 0; display: grid; grid-template-rows: auto minmax(0,1fr) auto; border-color: #8fcdb1; animation: record-in .22s ease; }
+  .record-card[data-reading='reference'] { border-color: #c6a2ce; box-shadow: 4px 4px 0 rgba(199,179,232,.28); }
+  @keyframes record-in { from { opacity: .35; transform: translateY(4px); } }
+  .record-heading { padding: 12px 14px 9px; border-bottom: 1px dashed #8fcdb1; background: linear-gradient(110deg,color-mix(in srgb,var(--candy-mint) 48%,white),white); }
+  .record-card[data-reading='reference'] .record-heading { border-color: #c6a2ce; background: linear-gradient(110deg,color-mix(in srgb,var(--candy-pink) 38%,white),white); }
+  .record-eyebrow { display: flex; flex-wrap: wrap; gap: 5px; }
+  .record-eyebrow span { padding: 3px 6px; border: 1px dashed var(--candy-purple); border-radius: 99px; color: var(--ink-light); font: 6px var(--font-pixel); }
+  .record-heading h2 { margin: 7px 0 2px; font: 700 clamp(22px,2.7vw,32px)/1.08 var(--font-serif-tc); letter-spacing: .045em; }
+  .record-heading p { color: var(--ink-light); font: 9px var(--font-rounded); }
+  .record-scroll { min-height: 0; overflow-y: auto; padding: 11px 13px 14px; scrollbar-color: var(--candy-mint) transparent; }
+  .record-scroll section + section { margin-top: 13px; padding-top: 11px; border-top: 1px dashed var(--candy-purple); }
+  .record-scroll h3 { margin-bottom: 6px; color: var(--candy-purple); font: 7px var(--font-pixel); letter-spacing: 1px; }
+  .record-about p { color: var(--ink-light); font: 11px/1.75 var(--font-serif-tc); }
+  .record-issues, .record-coverage { display: grid; gap: 6px; }
+  .record-issues h3, .record-coverage h3 { grid-column: 1 / -1; }
+  .record-issues a, .record-coverage a {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 9px; align-items: start;
+    padding: 7px 8px; border: 1px dashed var(--candy-mint); border-radius: 6px;
+    background: rgba(255,255,255,.83); color: var(--ink); text-decoration: none;
+  }
+  .record-card[data-reading='reference'] .record-issues a { border-color: #cfb7d8; }
+  .record-issues a:hover, .record-coverage a:hover { transform: translateX(2px); background: var(--soft-white); }
+  .record-issues a > b { width: 24px; height: 24px; display: grid; place-items: center; border: 1px dashed var(--candy-purple); border-radius: 50%; color: var(--candy-purple); font: 6px var(--font-pixel); }
+  .record-issues a > span, .record-coverage a > span { min-width: 0; display: grid; gap: 2px; }
+  .record-issues small, .record-coverage small { color: var(--candy-purple); font: 6px var(--font-pixel); }
+  .record-issues strong, .record-coverage strong { font: 700 11px/1.45 var(--font-serif-tc); }
+  .record-issues em, .record-coverage em { color: var(--ink-light); font: normal 8px/1.55 var(--font-rounded); }
+  .record-issues a > i, .record-coverage a > i { color: var(--candy-purple); font: normal 9px var(--font-pixel); }
+  .record-coverage a { grid-template-columns: 1fr auto; border-color: var(--candy-purple); background: color-mix(in srgb,var(--candy-cream) 42%,white); }
+  .record-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 11px; border-top: 1px dashed var(--candy-purple); background: var(--soft-white); }
+  .record-footer span { color: var(--ink-light); font: 7px var(--font-pixel); }
+  .record-footer a { padding: 7px 10px; border: 1px dashed var(--candy-purple); border-radius: 5px; background: var(--candy-mint); color: var(--ink); font: 8px var(--font-pixel); text-decoration: none; box-shadow: 2px 2px 0 rgba(199,179,232,.24); }
+  .record-card[data-reading='reference'] .record-footer a { background: var(--candy-pink); }
+
+  .suggest-float {
+    position: fixed; z-index: 80; top: 57vh; right: clamp(10px,2.2vw,30px); width: 178px; overflow: visible;
+    border: 2px dashed var(--candy-purple); border-radius: 10px; background: var(--soft-white);
+    box-shadow: 5px 5px 0 rgba(181,232,224,.88), 9px 9px 0 rgba(199,179,232,.23);
+    transition: opacity .16s ease, box-shadow .16s ease;
+  }
+  .suggest-float::before {
+    content: ''; position: absolute; z-index: 3; top: -8px; right: 16px; width: 48px; height: 14px;
+    border: 1px dashed rgba(155,122,168,.58); background: rgba(255,242,187,.82); transform: rotate(4deg); pointer-events: none;
+  }
+  .float-titlebar {
+    min-height: 28px; display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    padding: 7px 8px; border-bottom: 1px dashed var(--candy-purple); border-radius: 8px 8px 0 0;
+    background: var(--candy-mint); color: var(--ink); cursor: ns-resize; touch-action: none; user-select: none; font: 6px var(--font-pixel);
+  }
+  .float-titlebar i { color: var(--candy-purple); font: normal 11px var(--font-pixel); }
+  .float-body {
+    position: relative; width: 100%; display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 4px 9px;
+    overflow: hidden; padding: 13px 10px 9px; border: 0; border-radius: 0 0 8px 8px; color: var(--ink); text-align: left; cursor: pointer;
+    background:
+      linear-gradient(rgba(255,255,255,.84),rgba(255,255,255,.84)),
+      repeating-linear-gradient(0deg,transparent 0 13px,rgba(181,232,224,.65) 13px 14px),
+      repeating-linear-gradient(90deg,transparent 0 13px,rgba(199,179,232,.38) 13px 14px);
+  }
+  .float-body::after { content: '♡'; position: absolute; right: 8px; top: 8px; color: var(--candy-purple); font: 8px var(--font-pixel); }
+  .float-mail {
+    grid-row: 1 / 3; width: 42px; height: 38px; display: grid; place-items: center; border: 1.5px dashed var(--candy-purple); border-radius: 5px;
+    background: var(--candy-cream); color: var(--candy-purple); font: 19px var(--font-pixel); box-shadow: 2px 2px 0 var(--candy-pink);
+    animation: mail-wiggle 3.4s ease-in-out infinite;
+  }
+  .float-sticker {
+    position: absolute; z-index: 2; left: -7px; top: -7px; padding: 3px 5px; border: 1px dashed var(--candy-purple); border-radius: 3px;
+    background: var(--candy-pink); color: var(--candy-purple); font: 5px var(--font-pixel); transform: rotate(-11deg);
+  }
+  .float-body strong { align-self: end; padding-right: 11px; font: 700 15px/1.15 var(--font-serif-tc); letter-spacing: .04em; }
+  .float-body > small { align-self: start; color: var(--ink-light); font: 7px/1.5 var(--font-rounded); }
+  .float-ticker {
+    grid-column: 1 / -1; margin: 6px -10px -9px; overflow: hidden; border-top: 1px dashed var(--candy-purple); background: var(--candy-cream); white-space: nowrap;
+  }
+  .float-ticker i { display: block; width: max-content; padding: 5px 0; color: var(--candy-purple); font: normal 5px var(--font-pixel); animation: float-ticker 7.5s linear infinite; }
+  .float-body:hover .float-ticker i, .float-body:focus-visible .float-ticker i { animation-play-state: paused; }
+  .float-body:hover, .float-body:focus-visible { outline: 2px solid rgba(181,232,224,.75); outline-offset: 2px; }
+  .suggest-float.is-dragging { opacity: .9; box-shadow: 7px 7px 0 rgba(181,232,224,.9), 12px 12px 0 rgba(199,179,232,.28); }
+  @keyframes float-ticker { to { transform: translateX(-50%); } }
+  @keyframes mail-wiggle { 0%,88%,100% { transform: rotate(0); } 92% { transform: rotate(-7deg); } 96% { transform: rotate(6deg); } }
+
+  .window-taskbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 14px; border-top: 2px dashed var(--candy-purple); background: var(--candy-mint); }
+  .window-taskbar div:last-child { color: var(--ink-light); }
+
+  .suggest-dialog { width: min(540px,calc(100% - 24px)); padding: 0; border: 0; background: transparent; color: var(--ink); }
+  .suggest-dialog::backdrop { background: rgba(47,51,44,.24); backdrop-filter: blur(3px); }
+  .dialog-window { overflow: hidden; border: 2px dashed var(--candy-purple); border-radius: 12px; background: var(--soft-white); box-shadow: 8px 8px 0 rgba(199,179,232,.35); }
+  .dialog-window .pane-titlebar button { width: 22px; height: 20px; border: 1px dashed var(--candy-purple); border-radius: 3px; background: var(--candy-pink); cursor: pointer; }
+  .dialog-body { padding: 19px; }
+  .dialog-body > p { color: var(--candy-purple); font: 7px var(--font-pixel); letter-spacing: 1.5px; }
+  .dialog-body h2 { margin: 5px 0 4px; font: 700 24px var(--font-serif-tc); }
+  .dialog-body > small { color: var(--ink-light); font: 9px var(--font-rounded); }
+  .dialog-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .dialog-fields label { display: grid; gap: 5px; color: var(--ink-light); font: 7px var(--font-pixel); }
+  .dialog-fields .wide { grid-column: 1 / -1; }
+  .dialog-fields input, .dialog-fields textarea { width: 100%; min-width: 0; padding: 8px 9px; border: 1px dashed var(--candy-purple); border-radius: 5px; outline: none; background: white; color: var(--ink); font: 10px/1.5 var(--font-rounded); resize: vertical; }
+  .dialog-fields input:focus, .dialog-fields textarea:focus { box-shadow: 0 0 0 3px rgba(181,232,224,.45); }
+  .dialog-actions { display: flex; justify-content: end; gap: 8px; padding: 10px 14px; border-top: 1px dashed var(--candy-purple); background: color-mix(in srgb,var(--candy-mint) 46%,white); }
+  .dialog-actions button { padding: 7px 11px; border: 1px dashed var(--candy-purple); border-radius: 5px; background: white; color: var(--ink); cursor: pointer; }
+  .dialog-actions button:last-child { background: var(--candy-mint); }
+
+  @media (max-width: 900px) {
+    .zine-window { width: calc(100% - 12px); margin: 6px auto 12px; }
+    .window-body { padding: 10px; }
+    .desk-heading { grid-template-columns: 64px minmax(0,1fr); align-items: center; }
+    .heading-side { grid-column: 1 / -1; grid-template-columns: auto 1fr; align-items: center; justify-items: start; }
+    .desk-counts { justify-content: start; }
+    .reading-desktop { height: auto; grid-template-columns: 1fr; }
+    .map-window { height: 610px; }
+    .library-pane { grid-template-rows: 210px 480px; }
+  }
+  @media (max-width: 640px) {
+    .window-titlebar { padding: 7px 9px; }
+    .window-titlebar > div > span:last-child { max-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .window-titlebar nav a { display: none; }
+    .desk-heading { grid-template-columns: 52px minmax(0,1fr); gap: 11px; min-height: 0; padding: 17px 13px 13px; margin-right: 3px; }
+    .desk-heading::before { left: 68px; }
+    .heading-emblem { width: 48px; height: 48px; padding: 5px; }
+    .heading-emblem span { font-size: 21px; }
+    .heading-emblem small { font-size: 4px; }
+    .desk-heading h1 { font-size: 27px; }
+    .heading-copy > small { font-size: 8px; }
+    .heading-side { display: grid; grid-template-columns: 1fr; gap: 7px; }
+    .banner-ribbon { display: none; }
+    .charm-heart { right: 32px; }
+    .desk-counts { justify-content: start; }
+    .reading-desktop { padding: 5px; }
+    .map-window { height: 500px; }
+    .map-toolbar { align-items: start; }
+    .name-legend { display: grid; gap: 5px; }
+    .map-canvas::before { display: none; }
+    .county-label text { font-size: 14px; }
+    .library-pane { grid-template-rows: 225px 520px; }
+    .directory-tools { grid-template-columns: 1fr; }
+    .directory-list { grid-template-columns: 1fr; }
+    .record-footer { align-items: stretch; flex-direction: column; }
+    .record-footer a { text-align: center; }
+    .dialog-fields { grid-template-columns: 1fr; }
+    .dialog-fields .wide { grid-column: auto; }
+    .window-taskbar > div:first-child span, #selection-status { display: none; }
+    .suggest-float { top: 63vh; right: 8px; width: 154px; }
+    .float-body { grid-template-columns: 38px 1fr; padding: 11px 8px 8px; }
+    .float-mail { width: 36px; height: 34px; font-size: 16px; }
+    .float-body strong { font-size: 13px; }
+    .float-body > small { font-size: 6px; }
+    .float-ticker { margin: 5px -8px -8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
