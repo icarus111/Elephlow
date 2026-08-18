@@ -14,7 +14,7 @@ const copy = {
     intro: '这里收着影像、独立出版、学术期刊、地方记忆、酷儿研究、音乐声响与开放课程等入口。有些像资料库，有些像编辑部，有些像还亮着灯的小房间。',
     zones: '分区', pins: '标记点', updated: '2026.05',
     home: '🏠 主页', about: '✍️ 创作者说', archive: '📚 往期目录',
-    links: '🗺️ 灵感地图', guestbook: '💬 留言板', subscribe: '★ 订阅 ★',
+    links: '🗺️ 灵感地图', localZines: '🏝️ 地方刊物地图', guestbook: '💬 留言板', subscribe: '★ 订阅 ★',
     task: '▣ 灵感地图', sites: '个站点', addrBase: 'elephlow.cc/zh-cn/links',
     secNav: '◈ 分区 ◈',
     marquee: '✿ 灵感地图 ★ 她说 · 酷儿地景 · 小志 · 刊物 · 书店地图 · 文学 · 光影 · 声响 · 视觉志 · 现场 · 田野 · 通信 · 档案室 · 自习室 ✿ 像一张还在生长的地图 ♡ 每一条链接都是一个可以出发的路口 ★',
@@ -26,7 +26,7 @@ const copy = {
     intro: '這裡收著影像、獨立出版、學術期刊、地方記憶、酷兒研究、音樂聲響與開放課程等入口。有些像資料庫，有些像編輯部，有些像還亮著燈的小房間。',
     zones: '分區', pins: '標記點', updated: '2026.05',
     home: '🏠 主頁', about: '✍️ 創作者說', archive: '📚 往期目錄',
-    links: '🗺️ 靈感地圖', guestbook: '💬 留言板', subscribe: '★ 訂閱 ★',
+    links: '🗺️ 靈感地圖', localZines: '🏝️ 地方刊物地圖', guestbook: '💬 留言板', subscribe: '★ 訂閱 ★',
     task: '▣ 靈感地圖', sites: '個站點', addrBase: 'elephlow.cc/zh-tw/links',
     secNav: '◈ 分區 ◈',
     marquee: '✿ 靈感地圖 ★ 她說 · 酷兒地景 · 小誌 · 刊物 · 書店地圖 · 文學 · 光影 · 聲響 · 視覺誌 · 現場 · 田野 · 通信 · 檔案室 · 自習室 ✿ 像一張還在生長的地圖 ♡ 每一條連結都是一個可以出發的路口 ★',
@@ -38,7 +38,7 @@ const copy = {
     intro: 'Film archives, independent publishing, journals, local memory, queer studies, music resources, open courses — some feel like databases, some like editorial rooms, some like small windows with the light on.',
     zones: 'zones', pins: 'pins', updated: '2026.05',
     home: '🏠 Home', about: "✍️ Editor's Note", archive: '📚 Archive',
-    links: '🗺️ Map', guestbook: '💬 Guestbook', subscribe: '★ Subscribe ★',
+    links: '🗺️ Map', localZines: '🏝️ Local Publication Map', guestbook: '💬 Guestbook', subscribe: '★ Subscribe ★',
     task: '▣ Inspiration Map', sites: 'sites', addrBase: 'elephlow.cc/en/links',
     secNav: '◈ zones ◈',
     marquee: '✿ Inspiration Map ★ She Says · Queer Landscapes · Zines · Magazines · Bookshops · Literature · Moving Image · Sound · Visual Field · On Site · Fieldwork · Newsletters · Archive · Self-Study ✿ A map still growing ♡ Every link a crossroads you can leave from ★',
@@ -50,6 +50,7 @@ const paths = {
   about:     locale === 'en' ? '/en/about'     : `/${locale}/about`,
   archive:   locale === 'en' ? '/en/archive'   : `/${locale}/archive`,
   links:     locale === 'en' ? '/en/links'     : `/${locale}/links`,
+  localZines: locale === 'en' ? '/en/local-zines' : `/${locale}/local-zines`,
   guestbook: locale === 'en' ? '/en/guestbook' : `/${locale}/guestbook`,
 };
 
@@ -64,6 +65,7 @@ const menuItems = [
   { href: paths.about,     label: copy.about,     cls: 'menu-pink'   },
   { href: paths.archive,   label: copy.archive,   cls: 'menu-aqua'   },
   { href: paths.links,     label: copy.links,     cls: 'menu-cream'  },
+  { href: paths.localZines, label: copy.localZines, cls: 'menu-mint'  },
   { href: paths.guestbook, label: copy.guestbook, cls: 'menu-purple' },
   { href: 'https://tally.so/r/4415XB', label: copy.subscribe, cls: 'menu-pink', external: true },
 ];
