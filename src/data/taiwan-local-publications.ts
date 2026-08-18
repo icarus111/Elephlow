@@ -76,7 +76,7 @@ export const regionMeta: Record<
 
 export const statusLabels: Record<PublicationStatus, string> = {
   active: '持續發行',
-  irregular: '狀態待確認',
+  irregular: '不定期／專案出版',
   hiatus: '休刊中',
   ceased: '已停刊',
   archive: '歷史典藏',
@@ -1479,12 +1479,12 @@ const referencePublicationsPartA: LocalPublication[] = [
     period: '地方刊物',
     url: 'https://www.sualianmag.tw/tw',
     description: '1978 年創辦的私人地方刊物，是《水沙連雜誌》的前身，也是一段埔里地方出版史。',
-    note: '1984 年停刊；現階段可由水沙連雜誌社沿革與地方館藏追索。',
+    note: '1978 年創辦、1984 年停刊；水沙連雜誌社沿革將它列為《水沙連雜誌》的前身。',
     issues: [
       {
         label: '1978–1984',
         title: '埔里第一代地方聲音',
-        reason: '先從水沙連刊物沿革理解它與後來地方雜誌的接續關係。',
+        reason: '水沙連雜誌社沿革記錄了它與後來地方刊物之間的接續關係。',
         url: 'https://www.sualianmag.tw/tw',
       },
       {
@@ -1536,7 +1536,7 @@ const referencePublicationsPartB: LocalPublication[] = [
     period: '不定期',
     url: 'https://zh.wikipedia.org/wiki/%E6%85%A2%E6%BC%AB%E5%88%8A',
     description: '受日本小雜誌啟發，以畫刊方式記錄嘉義的人、地方與生活，不把城市只寫成古蹟說明。',
-    note: '2007 年創刊、現已停刊；目前以圖書館、舊書與二手市場追索為主。',
+    note: '2007 年創刊；由嘉義市人文關懷協會以畫刊形式記錄城市人物與生活。',
     issues: [
       {
         label: '創刊號・2007',
@@ -1547,7 +1547,7 @@ const referencePublicationsPartB: LocalPublication[] = [
       {
         label: '歷史刊號',
         title: '人與土地的連結',
-        reason: '保留刊名與發行單位，方便往國家圖書館與地方館藏繼續查找。',
+        reason: '嘉義市人文關懷協會以畫刊形式呈現地方人物、街區與生活記憶。',
         url: 'https://zh.wikipedia.org/wiki/%E6%85%A2%E6%BC%AB%E5%88%8A',
       },
     ],
@@ -1563,7 +1563,7 @@ const referencePublicationsPartB: LocalPublication[] = [
     period: '街道刊物',
     url: 'https://pantravel.life/archives/7325',
     description: '把不到百米的街道當成整個宇宙，由店家與居民自己採訪、編輯、販售並支持街區行動。',
-    note: '共發行四期，現多已絕版；可由訪談、圖書館與二手書追索。',
+    note: '共發行四期；由正興街店家共同採訪與編輯，刊物收入支援街區行動。',
     issues: [
       {
         label: '第 2 期',
@@ -1666,13 +1666,13 @@ const referencePublicationsPartB: LocalPublication[] = [
     name: 'Zoom in Taitung',
     region: 'east',
     status: 'active',
-    access: 'catalog',
-    reading: 'reference',
+    access: 'web',
+    reading: 'online',
     publisher: '臺東縣政府文化處／微慢城鄉生活',
     period: '不定期',
-    url: 'https://www.dondonstyle.com/products/zoom-in-taitung-%E7%94%9F%E6%B4%BB%E7%B4%80%E5%AF%A6',
+    url: 'https://sites.google.com/slife-taitung.com/taitung-together/index',
     description: '以社區為本位，把常民生活與小人物行動拉近放大，保存無法取代的臺東日常切片。',
-    note: '前兩期為紙本、第三期曾線上發行，至 2025 年已有第六期；目前沒有穩定的全刊公開書架。',
+    note: '前兩期為紙本，後續曾以線上刊物發行；至 2025 年已有第六期，可由線上刊物頁閱讀。',
     issues: [
       {
         label: 'VOL.6・2025',
