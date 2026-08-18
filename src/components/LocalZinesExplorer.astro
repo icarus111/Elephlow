@@ -25,7 +25,7 @@ const copy = {
     hasOnline: '有公開線上版本', platformOnline: '可透過電子書平台閱讀', hasIntro: '已有刊物介紹', noIntro: '已有資料頁', paperSource: '已有資料頁', readOfficial: '前往官方閱讀', viewIntro: '查看刊物介紹', viewSource: '查看資料頁',
     researchTitle: '地方刊物研究與報導', researchLead: '整體認識臺灣地方刊物', readFull: '閱讀全文', readOriginal: '閱讀原文',
     taskHome: '⊞ 小窩', taskTitle: '▣ 臺灣地方刊物閱讀地圖',
-    suggestAria: '補充地方刊物', missed: '漏網刊物？', submitHint: '點一下投遞', dragHint: '拖著標題列上下移動', ticker: '補充一本 ✦ 補充一本 ✦ 補充一本 ✦', close: '關閉',
+    suggestAria: '補充地方刊物', missed: '漏網刊物？', submitHint: '開啟補充表單', dragHint: '拖著標題列上下移動', ticker: '補充一本 ✦ 補充一本 ✦ 補充一本 ✦', close: '關閉',
     dialogTitle: '補充一本地方刊物', dialogNote: '送出時會打開郵件程式，網頁本身不儲存資料。', publicationName: '刊物名稱 *', place: '縣市／地區 *', link: '閱讀、發行或介紹連結 *', notes: '補充說明', cancel: '取消', compose: '整理成郵件 ↗',
     noMatch: '這個地區目前沒有符合此狀態的刊物。', nonePrefix: '暫無「', noneSuffix: '」刊物', switchHint: '可以切換另一種狀態，或顯示這個地區的全部刊物。', showAll: '顯示全部', noResults: '無符合刊物', searchResults: '搜尋結果',
     hiatusSuffix: '（已休刊）', ceasedSuffix: '（已停刊）',
@@ -47,7 +47,7 @@ const copy = {
     hasOnline: '有公开在线版本', platformOnline: '可通过电子书平台阅读', hasIntro: '已有刊物介绍', noIntro: '已有资料页', paperSource: '已有资料页', readOfficial: '前往官方阅读', viewIntro: '查看刊物介绍', viewSource: '查看资料页',
     researchTitle: '地方刊物研究与报道', researchLead: '整体认识台湾地方刊物', readFull: '阅读全文', readOriginal: '阅读原文',
     taskHome: '⊞ 小窝', taskTitle: '▣ 台湾地方刊物阅读地图',
-    suggestAria: '补充地方刊物', missed: '漏网刊物？', submitHint: '点击投递', dragHint: '拖动标题栏可上下移动', ticker: '补充一本 ✦ 补充一本 ✦ 补充一本 ✦', close: '关闭',
+    suggestAria: '补充地方刊物', missed: '漏网刊物？', submitHint: '打开补充表单', dragHint: '拖动标题栏可上下移动', ticker: '补充一本 ✦ 补充一本 ✦ 补充一本 ✦', close: '关闭',
     dialogTitle: '补充一本地方刊物', dialogNote: '提交时会打开邮件程序，网页本身不会储存资料。', publicationName: '刊物名称 *', place: '县市／地区 *', link: '阅读、发行或介绍链接 *', notes: '补充说明', cancel: '取消', compose: '整理成邮件 ↗',
     noMatch: '这个地区目前没有符合此状态的刊物。', nonePrefix: '暂无“', noneSuffix: '”刊物', switchHint: '可以切换另一种状态，或显示这个地区的全部刊物。', showAll: '显示全部', noResults: '没有符合的刊物', searchResults: '搜索结果',
     hiatusSuffix: '（已休刊）', ceasedSuffix: '（已停刊）',
@@ -69,7 +69,7 @@ const copy = {
     hasOnline: 'Public online edition available', platformOnline: 'Available through an e-book platform', hasIntro: 'Publication introduction available', noIntro: 'Reference page available', paperSource: 'Reference page available', readOfficial: 'Read on the official site', viewIntro: 'View publication guide', viewSource: 'View reference page',
     researchTitle: 'Research & reporting on local publications', researchLead: 'An introduction to Taiwan’s local publications', readFull: 'Read the feature', readOriginal: 'Read original',
     taskHome: '⊞ Home', taskTitle: '▣ Taiwan Local Publication Map',
-    suggestAria: 'Suggest a local publication', missed: 'Missing a title?', submitHint: 'Click to send a lead', dragHint: 'Drag the title bar to move', ticker: 'ADD A TITLE ✦ ADD A TITLE ✦ ADD A TITLE ✦', close: 'Close',
+    suggestAria: 'Suggest a local publication', missed: 'Missing a title?', submitHint: 'Open suggestion form', dragHint: 'Drag the title bar to move', ticker: 'ADD A TITLE ✦ ADD A TITLE ✦ ADD A TITLE ✦', close: 'Close',
     dialogTitle: 'Suggest a local publication', dialogNote: 'Submitting opens your email app. This page does not store your information.', publicationName: 'Publication name *', place: 'County / city *', link: 'Reading, publisher, or introduction link *', notes: 'Notes', cancel: 'Cancel', compose: 'Compose email ↗',
     noMatch: 'No publications in this place match the current filter.', nonePrefix: 'No “', noneSuffix: '” titles yet', switchHint: 'Try the other access status, or show every title in this place.', showAll: 'Show all', noResults: 'No matching publication', searchResults: 'Search results',
     hiatusSuffix: ' (on hiatus)', ceasedSuffix: ' (ceased)',
@@ -84,6 +84,7 @@ const paths = {
   home: `${localeBase}/`, about: `${localeBase}/about`, archive: `${localeBase}/archive`,
   links: `${localeBase}/links`, localZines: `${localeBase}/local-zines`, guestbook: `${localeBase}/guestbook`,
 };
+const suggestionFormUrl = 'https://tally.so/r/LZ4KR1';
 const langLinks = [
   { href: '/zh-cn/local-zines', label: '简', active: locale === 'zh-cn' },
   { href: '/zh-tw/local-zines', label: '繁', active: locale === 'zh-tw' },
@@ -856,13 +857,13 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
 
     <aside class="suggest-float" id="suggest-float" aria-label={copy.suggestAria}>
       <header class="float-titlebar" id="suggest-drag-handle"><span>✉ zine_dropbox.msg</span><i>↕</i></header>
-      <button class="float-body" id="open-suggestion" type="button" aria-haspopup="dialog">
+      <a class="float-body" href={suggestionFormUrl} target="_blank" rel="noreferrer">
         <span class="float-sticker" aria-hidden="true">NEW!</span>
         <span class="float-mail" aria-hidden="true">✉</span>
         <strong>{copy.missed}</strong>
         <small>{copy.submitHint}<br />{copy.dragHint}</small>
         <span class="float-ticker"><i>{copy.ticker}</i></span>
-      </button>
+      </a>
     </aside>
 
     <dialog class="suggest-dialog" id="suggest-dialog">
@@ -1542,7 +1543,7 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
   .float-titlebar i { color: var(--candy-purple); font: normal 11px var(--font-pixel); }
   .float-body {
     position: relative; width: 100%; display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 4px 9px;
-    overflow: hidden; padding: 13px 10px 9px; border: 0; border-radius: 0 0 8px 8px; color: var(--ink); text-align: left; cursor: pointer;
+    overflow: hidden; padding: 13px 10px 9px; border: 0; border-radius: 0 0 8px 8px; color: var(--ink); text-align: left; text-decoration: none; cursor: pointer;
     background:
       linear-gradient(rgba(255,255,255,.84),rgba(255,255,255,.84)),
       repeating-linear-gradient(0deg,transparent 0 13px,rgba(181,232,224,.65) 13px 14px),
