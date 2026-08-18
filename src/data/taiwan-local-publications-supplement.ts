@@ -9,6 +9,9 @@ type DiscoverySeed = {
   publisher: string;
   period?: string;
   status?: PublicationStatus;
+  access?: LocalPublication['access'];
+  reading?: LocalPublication['reading'];
+  firstPublished?: string;
   url: string;
   note?: string;
   issues?: RecommendedIssue[];
@@ -19,10 +22,11 @@ const makeReference = (seed: DiscoverySeed): LocalPublication => ({
   name: seed.name,
   region: seed.region,
   status: seed.status ?? 'irregular',
-  access: 'catalog',
-  reading: 'reference',
+  access: seed.access ?? 'catalog',
+  reading: seed.reading ?? 'reference',
   publisher: seed.publisher,
   period: seed.period ?? '',
+  firstPublished: seed.firstPublished,
   url: seed.url,
   description: seed.description,
   note: seed.note ?? '',
@@ -118,6 +122,33 @@ const verifiedOnline: LocalPublication[] = [
     featured: true,
   },
   {
+    city: '花蓮縣',
+    name: '花蓮趣',
+    region: 'east',
+    status: 'active',
+    access: 'ebook',
+    publisher: '花蓮縣政府觀光處',
+    period: '季刊',
+    firstPublished: '2012 年 6 月',
+    url: 'https://tour-hualien.hl.gov.tw/News_Link2.aspx?n=84&sms=12334',
+    description: '花蓮縣政府發行的觀光季刊，以主題旅行、戶外生態、鄉鎮人物、藝文與飲食整理當季花蓮；官方頁持續提供中、英、日、韓多語電子刊物。',
+    note: '政府出版品資料記錄 2012 年 6 月出版且未停刊；官方期刊頁已更新至 2026 年第 57 期。',
+    issues: [
+      {
+        label: '第 57 期・2026 夏',
+        title: '尋 Way 花路',
+        reason: '從飲食、文化、藝術與自然景緻，讀最新一季的花蓮旅行提案。',
+        url: 'https://tour-hualien.hl.gov.tw/News_Link2.aspx?n=84&sms=12334',
+      },
+      {
+        label: '第 47 期',
+        title: '留得久、玩得慢、走得深',
+        reason: '以永續慢遊為題，把交通、地方體驗與旅遊節奏放在同一冊閱讀。',
+        url: 'https://tour-hualien.hl.gov.tw/News_Content.aspx?n=26&s=8393',
+      },
+    ],
+  },
+  {
     city: '屏東縣',
     name: 'AMAZING PINGTUNG 驚豔屏東',
     region: 'south',
@@ -157,7 +188,7 @@ const discoveredReferences: LocalPublication[] = [
     { label: 'NO.01・2013 夏季號', title: '炎炎夏日，不吃冰不行！', reason: '從移動冰店、慢食堂與桃園冰店踏查，看刊物如何把小人物故事編成城市時間誌。', url: 'https://www.commabooks.com.tw/book/166' },
   ] }),
   makeReference({ city: '桃園市・龍潭', name: '野菱報', region: 'north', publisher: '菱潭街興創基地／野菱文化工作隊', period: '2018 年 8 月試刊號', description: '龍潭青年在菱潭街地方創生行動中製作的街區刊物，試刊號把老街、店家與返鄉實作整理成可帶走的地方閱讀。', url: 'https://issuu.com/lingtanstreet2017/docs/___2018____', note: '桃園市地方創生研究列出《野菱報》2018 年 8 月試刊號與 Issuu 閱讀連結。' }),
-  makeReference({ city: '基隆市', name: '雞籠霧雨', region: 'north', status: 'hiatus', publisher: '雞籠霧雨團隊', period: '2015–2017・共 4 刊', description: '以雞籠舊名與雨港氣候為識別，書寫基隆港市生活；官方文章保留四刊主題與通路，第四刊後暫停紙本出版。', url: 'https://keelungrain.wordpress.com/2017/11/06/%E3%80%8A%E9%9B%9E%E7%B1%A0%E9%9C%A7%E9%9B%A8%E3%80%8B%E4%B8%80%E5%88%B0%E5%9B%9B%E5%88%8A%E5%93%AA%E8%A3%A1%E8%B2%B7%EF%BC%9F%EF%BC%88%E8%88%87%E6%88%91%E5%80%91%E4%B9%8B%E5%BE%8C%E7%9A%84%E8%A8%88/' }),
+  makeReference({ city: '基隆市', name: '雞籠霧雨', region: 'north', status: 'hiatus', access: 'ebook', reading: 'online', publisher: '雞籠霧雨團隊', period: '2015–2017・共 4 刊', description: '以雞籠舊名與雨港氣候為識別，書寫基隆港市生活；官方文章保留四刊主題與通路，第四刊後暫停紙本出版，創刊號另有付費電子版可線上試讀與購買。', url: 'https://keelungrain.wordpress.com/2017/11/06/%E3%80%8A%E9%9B%9E%E7%B1%A0%E9%9C%A7%E9%9B%A8%E3%80%8B%E4%B8%80%E5%88%B0%E5%9B%9B%E5%88%8A%E5%93%AA%E8%A3%A1%E8%B2%B7%EF%BC%9F%EF%BC%88%E8%88%87%E6%88%91%E5%80%91%E4%B9%8B%E5%BE%8C%E7%9A%84%E8%A8%88/' }),
   makeReference({ city: '桃園市・龜山', name: '龜山不是島', region: 'north', publisher: '回龜山陣線／微光生活設計室', period: '2019 年創刊', description: '由返鄉青年組成的回龜山陣線發起，從地方文史、老屋與人物重新回答「龜山是什麼」，也曾整理全臺地方獨立刊物地圖。', url: 'https://usr.moe.gov.tw/tw/report/blog/207' }),
   makeReference({ city: '桃園市・中壢', name: '實況中壢', region: 'north', publisher: '桃園藝文陣線', description: '由桃園藝文陣線發起，以中壢現場為主題，記錄街區變化、文化資產與地方生活。', url: 'https://www.atanews.net/?news=52529' }),
   makeReference({ city: '桃園市・中壢', name: '三佰貳', region: 'north', publisher: '三佰貳編輯團隊', description: '由兩位中壢創辦者以文字與攝影重新認識成長的家鄉；刊物曾整理在地人私藏的街區、食物與散步景點。', url: 'https://dappei.com/articles/2695' }),
@@ -172,7 +203,7 @@ const discoveredReferences: LocalPublication[] = [
   makeReference({ city: '臺中市・梧棲', name: '梧棲風', region: 'central', publisher: '梧棲風工作室', period: '季刊・曾出至少 5 期', description: '以海線梧棲的街區、港口與地方記憶為主題，由在地青年訪談耆老、店家與職人。', url: 'https://www.chinatimes.com/amp/newspapers/20160627000339-260102' }),
   makeReference({ city: '彰化縣・鹿港', name: '道地誌', region: 'central', status: 'ceased', publisher: '鹿港囝仔文化事業', period: '《今秋誌》前身', description: '鹿港囝仔早期以《道地誌》記錄鹿港人物與地方生活，之後改以《今秋誌》延續編輯工作。', url: 'https://tkfl.tw/topic/story-of-jin-qiu-lukang-vol-1/' }),
   makeReference({ city: '臺中市', name: '風格線上', region: 'central', status: 'hiatus', publisher: 'SOL 風格線上', description: '臺中地方刊物，曾公開表示休刊並保留復刊可能。', period: '休刊中', url: 'https://tcxthu.wixsite.com/tastecreative/solmag' }),
-  makeReference({ city: '臺中市・山城', name: '山城週刊', region: 'central', status: 'active', publisher: '山城週刊', period: '週刊', description: '持續報導臺中豐原、東勢、石岡、新社等山城地區的地方新聞與人物，官網保留近期文章與沿革。', url: 'https://scweekly.com.tw/' }),
+  makeReference({ city: '臺中市・山城', name: '山城週刊', region: 'central', status: 'active', access: 'web', reading: 'online', firstPublished: '1979 年 7 月 15 日', publisher: '山城週刊', period: '週刊', description: '1979 年創刊的地方社區媒體，持續報導臺中豐原、東勢、石岡、新社、和平與卓蘭的地方新聞、人物與公共議題；官網可直接閱讀近期文章與歷史資料。', url: 'https://scweekly.com.tw/' }),
   makeReference({ city: '苗栗縣', name: '尋庄', region: 'central', publisher: '捍衛苗栗青年聯盟', period: '2014 年創刊・原規劃至少 12 期', description: '苗栗青年在大埔事件後走進地方現場，以社會議題、草根人物與傳統文化為主軸；創刊號從媽祖信仰延伸到廟宇傳承與在地處境。', url: 'https://www.newsmarket.com.tw/blog/48126/' }),
   makeReference({ city: '彰化縣・鹿港', name: '今秋誌', region: 'central', status: 'active', publisher: '鹿港囝仔文化事業', description: '從鹿港的街屋、職人、人物與地方日常出發的民間地方誌。', url: 'https://tkfl.tw/topic/story-of-jin-qiu-lukang-vol-1/' }),
   makeReference({ city: '彰化縣・員林', name: '員林紀事', region: 'central', status: 'hiatus', publisher: '好好生活書店／蓋印彰', description: '以員林街區記憶與地方生活為內容的民間刊物；紙本目前暫停，但團隊仍持續地方文化工作。', url: 'https://www.goodlifebookstore.com.tw/' }),

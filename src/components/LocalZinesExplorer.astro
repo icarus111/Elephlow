@@ -20,7 +20,7 @@ const copy = {
     desktopAria: '地方刊物互動閱讀桌面', county: '縣市', exactCounty: '精確選擇縣市', filterAria: '依閱讀狀態篩選', readable: '可線上閱讀', referenceLong: '發行／館藏線索', nationwide: '全臺性', unplaced: '地區待確認',
     mapTitle: '臺灣二十二縣市互動地圖', mapDesc: '點選縣市後，右側會顯示該縣市的地方刊物名稱。', viewCounty: '查看', viewSuffix: '地方刊物', selectCounty: '以文字選擇', islandZoom: '離島放大選擇', unit: '本',
     boundary: '界線資料：', dataPlatform: '政府資料開放平臺', checked: '最後核對', shelf: 'COUNTY SHELF', search: '搜尋刊名或縣市',
-    publisher: '發行', about: '刊物在讀什麼', recommended: '推薦單期', introIssues: '刊物介紹／單期線索', reports: '相關報導',
+    publisher: '發行', firstPublished: '發刊時間', about: '刊物在讀什麼', recommended: '推薦單期', introIssues: '刊物介紹／單期線索', reports: '相關報導',
     platformReading: '電子書平台', teamLinks: '刊物團隊／社群', borrowOnline: '登入借閱', buyPreview: '購買／試讀', visitSocial: '前往社群',
     hasOnline: '有公開線上版本', platformOnline: '可透過電子書平台閱讀', hasIntro: '已有刊物介紹', noIntro: '已有資料頁', paperSource: '已有資料頁', readOfficial: '前往官方閱讀', viewIntro: '查看刊物介紹', viewSource: '查看資料頁',
     researchTitle: '地方刊物研究與報導', researchLead: '整體認識臺灣地方刊物', readFull: '閱讀全文', readOriginal: '閱讀原文',
@@ -42,7 +42,7 @@ const copy = {
     desktopAria: '地方刊物互动阅读桌面', county: '县市', exactCounty: '精确选择县市', filterAria: '按阅读状态筛选', readable: '可在线阅读', referenceLong: '发行／馆藏线索', nationwide: '全台性', unplaced: '地区待确认',
     mapTitle: '台湾二十二县市互动地图', mapDesc: '选择县市后，右侧会显示该县市的地方刊物名称。', viewCounty: '查看', viewSuffix: '地方刊物', selectCounty: '用文字选择', islandZoom: '离岛放大选择', unit: '本',
     boundary: '边界资料：', dataPlatform: '政府资料开放平台', checked: '最后核对', shelf: 'COUNTY SHELF', search: '搜索刊名或县市',
-    publisher: '发行', about: '刊物在读什么', recommended: '推荐单期', introIssues: '刊物介绍／单期线索', reports: '相关新闻',
+    publisher: '发行', firstPublished: '发刊时间', about: '刊物在读什么', recommended: '推荐单期', introIssues: '刊物介绍／单期线索', reports: '相关新闻',
     platformReading: '电子书平台', teamLinks: '刊物团队／社群', borrowOnline: '登录借阅', buyPreview: '购买／试读', visitSocial: '前往社群',
     hasOnline: '有公开在线版本', platformOnline: '可通过电子书平台阅读', hasIntro: '已有刊物介绍', noIntro: '已有资料页', paperSource: '已有资料页', readOfficial: '前往官方阅读', viewIntro: '查看刊物介绍', viewSource: '查看资料页',
     researchTitle: '地方刊物研究与报道', researchLead: '整体认识台湾地方刊物', readFull: '阅读全文', readOriginal: '阅读原文',
@@ -64,7 +64,7 @@ const copy = {
     desktopAria: 'Interactive local-publication reading desk', county: 'place', exactCounty: 'Choose a county or city', filterAria: 'Filter by reading access', readable: 'Read online', referenceLong: 'Publication / library lead', nationwide: 'Taiwan-wide', unplaced: 'Location unconfirmed',
     mapTitle: 'Interactive map of Taiwan’s 22 counties and cities', mapDesc: 'Select a place to see its local publications on the right.', viewCounty: 'View ', viewSuffix: ' publications', selectCounty: 'Select ', islandZoom: 'Enlarged island selectors', unit: ' titles',
     boundary: 'Boundary data: ', dataPlatform: 'Taiwan Open Data', checked: 'checked', shelf: 'COUNTY SHELF', search: 'Search title or place',
-    publisher: 'Published by', about: 'What it covers', recommended: 'Recommended issues', introIssues: 'Publication guide / issue leads', reports: 'Related coverage',
+    publisher: 'Published by', firstPublished: 'First published', about: 'What it covers', recommended: 'Recommended issues', introIssues: 'Publication guide / issue leads', reports: 'Related coverage',
     platformReading: 'E-book platforms', teamLinks: 'Publisher / social', borrowOnline: 'Borrow online', buyPreview: 'Buy / preview', visitSocial: 'Visit profile',
     hasOnline: 'Public online edition available', platformOnline: 'Available through an e-book platform', hasIntro: 'Publication introduction available', noIntro: 'Reference page available', paperSource: 'Reference page available', readOfficial: 'Read on the official site', viewIntro: 'View publication guide', viewSource: 'View reference page',
     researchTitle: 'Research & reporting on local publications', researchLead: 'An introduction to Taiwan’s local publications', readFull: 'Read the feature', readOriginal: 'Read original',
@@ -331,7 +331,13 @@ const publicationLinksByName: Record<string, PublicationLinks> = {
     { label: 'Instagram · 新莊騷', url: 'https://www.instagram.com/xinzhuangsao' },
   ] },
   慢漫刊: { socials: [{ label: 'Facebook · 慢漫刊', url: 'https://www.facebook.com/chiayimmk' }] },
-  雞籠霧雨: { socials: [{ label: 'Facebook · 雞籠霧雨', url: 'https://www.facebook.com/keelungoldstory' }] },
+  雞籠霧雨: {
+    platforms: [{ label: 'TAAZE 讀冊生活', access: 'purchase', detail: '創刊號電子版／試讀', url: 'https://www.taaze.tw/products/25100007335.html' }],
+    socials: [
+      { label: '官方部落格 · 雞籠霧雨', url: 'https://keelungrain.wordpress.com/' },
+      { label: 'Facebook · 雞籠霧雨', url: 'https://www.facebook.com/keelungoldstory' },
+    ],
+  },
   'Mingalar Par 緬甸街': { socials: [{ label: 'Facebook · 緬甸街', url: 'https://www.facebook.com/MingalarparTaiwan/' }] },
   今秋誌: { socials: [
     { label: 'Facebook · 鹿港囝仔', url: 'https://www.facebook.com/tkfl.tw/' },
@@ -406,7 +412,12 @@ const publicationLinksByName: Record<string, PublicationLinks> = {
   '五花鹽 BaconPress': { socials: [{ label: 'Facebook · 五花鹽', url: 'https://www.facebook.com/BaconPress/' }] },
   台味誌: { socials: [{ label: 'Facebook · 台味誌', url: 'https://www.facebook.com/taiwaymag/' }] },
   漾台中: { socials: [{ label: 'Facebook · 漾台中', url: 'https://www.facebook.com/GLAT.Taichung/' }] },
-  'AMAZING PINGTUNG 驚豔屏東': { socials: [
+  蘭嶼雙月刊: {
+    platforms: [{ label: 'Issuu', access: 'borrow', detail: '官方歷期線上翻閱', url: 'https://issuu.com/lananmedia732' }],
+  },
+  'AMAZING PINGTUNG 驚豔屏東': {
+    platforms: [{ label: 'HyRead', access: 'borrow', detail: '雙月刊歷期借閱／購買', url: 'https://ebook.hyread.com.tw/Template/store/magazineSubscribe.jsp?cate=&jid=815' }],
+    socials: [
     { label: 'Facebook · 發行單位 i屏東', url: 'https://www.facebook.com/ipingtung/' },
     { label: 'Instagram · 發行單位 i屏東', url: 'https://www.instagram.com/ipingtung/' },
   ] },
@@ -795,6 +806,7 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
                 <div class="record-eyebrow"><span>{initialItem.city}</span><span>{initialItem.statusLabel}</span>{initialItem.period && <span>{initialItem.period}</span>}</div>
                 <h2>{initialItem.displayName}</h2>
                 <p>{copy.publisher}：{initialItem.publisher}</p>
+                {initialItem.firstPublished && <p class="record-first-published"><b>{copy.firstPublished}</b><span>{initialItem.firstPublished}</span></p>}
               </header>
               <div class="record-scroll">
                 <section class="record-about"><h3>{copy.about}</h3><p>{initialItem.description}</p>{initialItem.note && <small class="record-note">{initialItem.note}</small>}</section>
@@ -945,7 +957,8 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
         const sourceAction = record.hasLink ? `<a href="${record.url}" target="_blank" rel="noreferrer">${record.publicReading ? escapeHtml(ui.readOfficial) : record.hasDirectIntro ? escapeHtml(ui.viewIntro) : escapeHtml(ui.viewSource)} ↗</a>` : '';
         const period = record.period ? `<span>${escapeHtml(record.period)}</span>` : '';
         const note = record.note ? `<small class="record-note">${escapeHtml(record.note)}</small>` : '';
-        recordCard.innerHTML = `<header class="record-heading"><div class="record-eyebrow"><span>${escapeHtml(record.city)}</span><span>${escapeHtml(record.statusLabel)}</span>${period}</div><h2>${escapeHtml(record.displayName)}</h2><p>${escapeHtml(ui.publisher)}：${escapeHtml(record.publisher)}</p></header><div class="record-scroll"><section class="record-about"><h3>${escapeHtml(ui.about)}</h3><p>${escapeHtml(record.description)}</p>${note}</section>${platforms}${socials}${issues}${coverage}</div><footer class="record-footer"><span>${escapeHtml(sourceStatus)}</span>${sourceAction}</footer>`;
+        const firstPublished = record.firstPublished ? `<p class="record-first-published"><b>${escapeHtml(ui.firstPublished)}</b><span>${escapeHtml(record.firstPublished)}</span></p>` : '';
+        recordCard.innerHTML = `<header class="record-heading"><div class="record-eyebrow"><span>${escapeHtml(record.city)}</span><span>${escapeHtml(record.statusLabel)}</span>${period}</div><h2>${escapeHtml(record.displayName)}</h2><p>${escapeHtml(ui.publisher)}：${escapeHtml(record.publisher)}</p>${firstPublished}</header><div class="record-scroll"><section class="record-about"><h3>${escapeHtml(ui.about)}</h3><p>${escapeHtml(record.description)}</p>${note}</section>${platforms}${socials}${issues}${coverage}</div><footer class="record-footer"><span>${escapeHtml(sourceStatus)}</span>${sourceAction}</footer>`;
         if (selectionStatus) selectionStatus.textContent = `${record.county} · ${record.displayName}`;
       }
 
@@ -1331,6 +1344,9 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
   .record-eyebrow span { padding: 3px 6px; border: 1px dashed var(--candy-purple); border-radius: 99px; color: var(--ink-light); font: 6px var(--font-pixel); }
   .record-heading h2 { margin: 7px 0 2px; font: 700 clamp(22px,2.7vw,32px)/1.08 var(--font-serif-tc); letter-spacing: .045em; }
   .record-heading p { color: var(--ink-light); font: 9px var(--font-rounded); }
+  .record-heading .record-first-published { width: fit-content; display: flex; align-items: center; gap: 7px; margin-top: 7px; padding: 4px 8px; border: 1px dashed #8fcdb1; border-radius: 4px; background: rgba(255,255,255,.72); color: var(--ink); font-size: 9px; }
+  .record-card[data-reading='reference'] .record-first-published { border-color: #c6a2ce; }
+  .record-first-published b { color: #47745f; font: 700 7px var(--font-pixel); letter-spacing: .04em; }
   .record-scroll { min-height: 0; overflow-y: auto; padding: 11px 13px 14px; scrollbar-color: var(--candy-mint) transparent; }
   .record-scroll section + section { margin-top: 13px; padding-top: 11px; border-top: 1px dashed var(--candy-purple); }
   .record-scroll h3 { margin-bottom: 6px; color: var(--candy-purple); font: 7px var(--font-pixel); letter-spacing: 1px; }

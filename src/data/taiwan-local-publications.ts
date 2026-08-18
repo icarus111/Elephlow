@@ -20,6 +20,7 @@ export interface LocalPublication {
   access: AccessType;
   publisher: string;
   period: string;
+  firstPublished?: string;
   url: string;
   description: string;
   note: string;
@@ -936,13 +937,14 @@ const publicationRecords: LocalPublication[] = [
     city: '臺東縣・蘭嶼',
     name: '蘭嶼雙月刊',
     region: 'east',
-    status: 'active',
+    status: 'ceased',
     access: 'ebook',
     publisher: '蘭恩文教基金會',
     period: '雙月刊',
+    firstPublished: '1985 年 2 月（前身）・2018 年改版',
     url: 'https://lanan.org.tw/media/biweekly',
     description: '由島上機構長期編輯，關注達悟族社區新聞、人物、教育、文化與島嶼產業。',
-    note: '前身為《蘭嶼雙週刊》；2016 年復刊、2018 年轉型雙月刊，官網連接線上電子書與舊刊典藏。',
+    note: '前身《蘭嶼雙週刊》於 1985 年創刊，2016 年復刊、2018 年轉型為雙月刊；2024 年《原住民族文獻》記載目前已停刊，官方頁仍保留舊刊電子書入口。',
     issues: [
       {
         label: '2016.11・復刊號',
@@ -1705,12 +1707,54 @@ const documentPublicationNames = new Set([
   '屏東文獻',
 ]);
 
-export const localPublications: LocalPublication[] = [
+const verifiedFirstPublicationByName: Record<string, string> = {
+  台北畫刊: '1968 年 1 月',
+  新北市文化季刊: '1984 年 6 月 30 日',
+  桃園誌: '2015 年 7 月',
+  貢丸湯: '2015 年 3 月',
+  新莊騷: '2020 年初',
+  'Taipei Post': '2015 年 9 月',
+  野菱報: '2018 年 8 月',
+  雞籠霧雨: '2015 年 1 月',
+  風起: '2015 年',
+  甘樂誌: '2010 年',
+  水沙連雜誌: '1995 年 9 月',
+  山城週刊: '1979 年 7 月 15 日',
+  員林紀事: '2019 年',
+  透南風: '2012 年 3 月',
+  慢漫刊: '2007 年 10 月',
+  正興聞: '2014 年 11 月 22 日',
+  高雄畫刊: '1979 年 10 月',
+  屏東本事: '2017 年 1 月',
+  東透可: '2019 年',
+  苗圖紙: '2021 年',
+  'LOCAL WORD': '2018 年春季',
+  稻相報: '2016 年',
+  寫寫字: '2015 年',
+  '三峽客 SHOCK': '2011 年',
+  逐步東行: '2014 年',
+  'Mingalar Par 緬甸街': '2018 年',
+};
+
+const firstPublicationFromText = (item: LocalPublication) => {
+  const source = [item.period, item.description, item.note].filter(Boolean).join(' ');
+  const match = source.match(/((?:19|20)\d{2}\s*年(?:\s*\d{1,2}\s*月(?:\s*\d{1,2}\s*日)?)?)(?=\s*(?:創刊|發起|改版))/);
+  return match?.[1].replace(/\s+/g, ' ').trim();
+};
+
+const allLocalPublications: LocalPublication[] = [
   ...publicationRecords,
   ...expandedOnlinePublications,
   ...referencePublicationsPartA,
   ...referencePublicationsPartB,
   ...supplementalPublications,
-].filter((item) => !documentPublicationNames.has(item.name));
+];
+
+export const localPublications: LocalPublication[] = allLocalPublications
+  .map((item) => ({
+    ...item,
+    firstPublished: item.firstPublished ?? verifiedFirstPublicationByName[item.name] ?? firstPublicationFromText(item),
+  }))
+  .filter((item) => !documentPublicationNames.has(item.name));
 
 export const lastVerified = '2026.08.18';
