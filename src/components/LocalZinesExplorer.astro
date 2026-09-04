@@ -28,8 +28,8 @@ const copy = {
     supportTitle: '♡ 支持這個計畫', supportIntro: '如果這張地圖幫你找到了一本想讀的刊物，也可以支持我繼續整理、查證和更新。',
     supportPromise: '所有內容仍會免費開放。',
     paypalRegion: '適合使用 PayPal 的讀者', paypalAction: '支持這張地圖 →',
-    wechatTitle: '微信讚賞', wechatRegion: '適合使用微信支付的讀者', wechatAction: '查看讚賞碼',
-    wechatDialogTitle: '微信讚賞碼', wechatDialogHint: '使用微信掃描或長按辨識圖片',
+    wechatTitle: 'WeChat', wechatRegion: '適合使用微信支付的讀者', wechatAction: '查看讚賞碼',
+    wechatDialogTitle: 'WeChat 讚賞碼', wechatDialogHint: '使用微信掃描或長按辨識圖片',
     suggestAria: '補充地方刊物', missed: '漏網刊物？', submitHint: '開啟補充表單', dragHint: '拖著標題列上下移動', ticker: '補充一本 ✦ 補充一本 ✦ 補充一本 ✦', close: '關閉',
     dialogTitle: '補充一本地方刊物', dialogNote: '送出時會打開郵件程式，網頁本身不儲存資料。', publicationName: '刊物名稱 *', place: '縣市／地區 *', link: '閱讀、發行或介紹連結 *', notes: '補充說明', cancel: '取消', compose: '整理成郵件 ↗',
     noMatch: '這個地區目前沒有符合此狀態的刊物。', nonePrefix: '暫無「', noneSuffix: '」刊物', switchHint: '可以切換另一種狀態，或顯示這個地區的全部刊物。', showAll: '顯示全部', noResults: '無符合刊物', searchResults: '搜尋結果',
@@ -55,8 +55,8 @@ const copy = {
     supportTitle: '♡ 支持这个计划', supportIntro: '如果这张地图帮你找到了一本想读的刊物，也可以支持我继续整理、查证和更新。',
     supportPromise: '所有内容仍会免费开放。',
     paypalRegion: '适合使用 PayPal 的读者', paypalAction: '支持这张地图 →',
-    wechatTitle: '微信赞赏', wechatRegion: '适合使用微信支付的读者', wechatAction: '查看赞赏码',
-    wechatDialogTitle: '微信赞赏码', wechatDialogHint: '使用微信扫描或长按识别图片',
+    wechatTitle: 'WeChat', wechatRegion: '适合使用微信支付的读者', wechatAction: '查看赞赏码',
+    wechatDialogTitle: 'WeChat 赞赏码', wechatDialogHint: '使用微信扫描或长按识别图片',
     suggestAria: '补充地方刊物', missed: '漏网刊物？', submitHint: '打开补充表单', dragHint: '拖动标题栏可上下移动', ticker: '补充一本 ✦ 补充一本 ✦ 补充一本 ✦', close: '关闭',
     dialogTitle: '补充一本地方刊物', dialogNote: '提交时会打开邮件程序，网页本身不会储存资料。', publicationName: '刊物名称 *', place: '县市／地区 *', link: '阅读、发行或介绍链接 *', notes: '补充说明', cancel: '取消', compose: '整理成邮件 ↗',
     noMatch: '这个地区目前没有符合此状态的刊物。', nonePrefix: '暂无“', noneSuffix: '”刊物', switchHint: '可以切换另一种状态，或显示这个地区的全部刊物。', showAll: '显示全部', noResults: '没有符合的刊物', searchResults: '搜索结果',
@@ -82,7 +82,7 @@ const copy = {
     supportTitle: '♡ Support this project', supportIntro: 'If this map helped you find something to read, you can support the research, verification, and updates behind it.',
     supportPromise: 'Everything here will remain free to access.',
     paypalRegion: 'For readers who prefer PayPal', paypalAction: 'Support this map →',
-    wechatTitle: 'WeChat Appreciation', wechatRegion: 'For readers who prefer WeChat Pay', wechatAction: 'View appreciation code',
+    wechatTitle: 'WeChat', wechatRegion: 'For readers who prefer WeChat Pay', wechatAction: 'View appreciation code',
     wechatDialogTitle: 'WeChat appreciation code', wechatDialogHint: 'Scan with WeChat or save the image to identify it',
     suggestAria: 'Suggest a local publication', missed: 'Missing a title?', submitHint: 'Open suggestion form', dragHint: 'Drag the title bar to move', ticker: 'ADD A TITLE ✦ ADD A TITLE ✦ ADD A TITLE ✦', close: 'Close',
     dialogTitle: 'Suggest a local publication', dialogNote: 'Submitting opens your email app. This page does not store your information.', publicationName: 'Publication name *', place: 'County / city *', link: 'Reading, publisher, or introduction link *', notes: 'Notes', cancel: 'Cancel', compose: 'Compose email ↗',
@@ -1800,6 +1800,77 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
     .float-body strong { font-size: 13px; }
     .float-body > small { font-size: 6px; }
     .float-ticker { margin: 5px -8px -8px; }
+  }
+  /* Readability pass: keep the tiny pixel type for decoration, not essential reading. */
+  .window-titlebar, .window-taskbar, .pane-titlebar { font-size: 10px; line-height: 1.45; }
+  .heading-copy > small { font-size: 12px; line-height: 1.55; }
+  .desk-counts span { font-size: 9px; }
+  .desk-counts b { font-size: 12px; }
+  .site-menu-list a { font-size: 11px; line-height: 1.4; }
+  .map-toolbar small { font-size: 8px; }
+  .county-jump { font-size: 10px; }
+  .county-jump select { font-size: 12px; }
+  .online-sample, .reference-sample { font-size: 11px; }
+  .cross-county-button { font-size: 10px; }
+  .island-insets-label, .island-inset small { font-size: 7px; }
+  .map-source { font-size: 8px; line-height: 1.45; }
+  .directory-tools p { font-size: 8px; }
+  .directory-tools h2 { font-size: 18px; }
+  .directory-search input { font-size: 11px; }
+  .directory-item { padding-block: 7px; }
+  .directory-item span { font-size: 12px; line-height: 1.45; }
+  .directory-item small { font-size: 8px; }
+  .directory-empty { font-size: 11px; }
+  .record-eyebrow span { font-size: 7px; }
+  .record-heading p, .record-heading .record-first-published { font-size: 11px; line-height: 1.5; }
+  .record-first-published b, .record-scroll h3 { font-size: 8px; }
+  .record-about p { font-size: 13px; line-height: 1.82; }
+  .record-note { font-size: 10px; line-height: 1.7; }
+  .record-links a strong { font-size: 12px; }
+  .record-links a small, .record-links a > b { font-size: 8px; }
+  .record-issues small, .record-coverage small { font-size: 7px; }
+  .record-issues strong, .record-coverage strong { font-size: 13px; }
+  .record-issues em, .record-coverage em { font-size: 10px; line-height: 1.65; }
+  .record-footer span { font-size: 8px; }
+  .record-footer a { font-size: 10px; }
+  .research-feature-top small, .research-heading p, .research-heading > span { font-size: 8px; }
+  .research-feature > small, .research-outlet { font-size: 10px; }
+  .research-feature > p { font-size: 14px; line-height: 1.9; }
+  .research-tags span { font-size: 7px; }
+  .research-feature footer { font-size: 9px; }
+  .research-card-visual small { font-size: 7px; }
+  .research-index-card h3 { font-size: 20px; line-height: 1.43; }
+  .research-index-card p { font-size: 12px; line-height: 1.78; }
+  .research-card-link { font-size: 10px; }
+  .support-titlebar { font-size: 12px; }
+  .support-titlebar i { font-size: 6px; }
+  .support-intro p { font-size: 12px; line-height: 1.68; }
+  .support-intro > small { font-size: 10px; }
+  .support-method h3 { font-size: 15px; }
+  .support-method-heading span { font-size: 9px; line-height: 1.5; }
+  .support-action { min-height: 34px; font-size: 10px; }
+  .support-qr-titlebar { font-size: 12px; }
+  .support-qr-body > p { font-size: 8px; }
+  .support-qr-body > small { font-size: 10px; }
+  .float-titlebar { font-size: 8px; }
+  .float-body > small { font-size: 9px; }
+  .float-ticker i { font-size: 7px; }
+  .window-taskbar .task-credit { font-size: 8px; }
+  .dialog-body > p, .dialog-fields label { font-size: 9px; }
+  .dialog-body > small { font-size: 11px; }
+  .dialog-fields input, .dialog-fields textarea { font-size: 12px; }
+  .dialog-actions button { font-size: 11px; }
+  @media (min-width: 641px) {
+    .research-index-card, .research-card-visual { min-height: 176px; }
+  }
+  @media (max-width: 640px) {
+    .heading-copy > small { font-size: 11px; }
+    .site-menu-list a { font-size: 11px; }
+    .island-insets-label, .island-inset small { font-size: 6px; }
+    .research-card-visual { min-height: 154px; }
+    .research-index-card h3 { font-size: 18px; }
+    .research-index-card p { font-size: 12px; -webkit-line-clamp: 3; }
+    .float-body > small { font-size: 8px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
