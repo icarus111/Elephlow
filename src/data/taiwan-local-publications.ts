@@ -7,7 +7,8 @@ export type ReadingAvailability = 'online' | 'reference';
 
 export interface RecommendedIssue {
   label: string;
-  title: string;
+  theme?: string;
+  highlight: string;
   reason: string;
   url: string;
 }
@@ -105,13 +106,14 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: 'NO.53・2026',
-        title: '港邊聽的歌',
+        highlight: '港邊聽的歌',
         reason: '從港口、交通到城市聲音，看一座港城如何慢慢改變。',
         url: 'https://www.klcg.gov.tw/tw/klcg1/3241-317746.html',
       },
       {
         label: 'NO.51・2025 秋',
-        title: '大船來了！',
+        theme: '大船來了！邀你共赴山與海的盛宴',
+        highlight: '大船來了！邀你共赴山與海的盛宴',
         reason: '把中元祭、港灣盛事與山海旅行裝進同一本。',
         url: 'https://www.klcg.gov.tw/tw/klcg1/3241-308231.html',
       },
@@ -132,13 +134,15 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 686 期・2026.05',
-        title: '翻讀漫畫，探索書頁裡的台北',
+        theme: '翻讀漫畫 探索書頁裡的台北',
+        highlight: '從漫畫作品與閱讀空間看城市如何成為故事場景。',
         reason: '從漫畫家的筆下，重新辨認城市街景與生活記憶。',
         url: 'https://www.travel.taipei/zh-tw/pictorial/list',
       },
       {
         label: '第 685 期・2026.03',
-        title: '台北風格聚落',
+        theme: '台北風格聚落',
+        highlight: '沿聚落走進城市生活、人物與地方風格。',
         reason: '適合喜歡街區散步的人，從聚落讀城市性格。',
         url: 'https://www.travel.taipei/zh-tw/pictorial/list',
       },
@@ -159,13 +163,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 7 卷・1997',
-        title: '中正區與中山區誌',
+        highlight: '中正區與中山區誌',
         reason: '港口、軍事、信仰與勝蹟並讀，是進入基隆舊城很厚的一冊。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/14',
       },
       {
         label: '第 6 卷・1996',
-        title: '仁愛區與安樂區誌',
+        highlight: '仁愛區與安樂區誌',
         reason: '從都市更新到宗教信仰，補上港區之外的生活地理。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/13/3/1',
       },
@@ -185,13 +189,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '當期季刊',
-        title: '從最新一期臺北學進場',
+        highlight: '從最新一期臺北學進場',
         reason: '先讀當期研究與口述歷史，再循官方索引往舊刊回溯。',
         url: 'https://www.chr.gov.taipei/News_Content.aspx?n=5E1EA80502E3E5F9&s=45E091CED462F23C&sms=CF3E1832CC99782B',
       },
       {
         label: '第 224 期・2023',
-        title: '一冊完整的城市史料切片',
+        highlight: '一冊完整的城市史料切片',
         reason: '臺北資料大平臺提供全文 PDF，適合體驗刊物的研究密度。',
         url: 'https://data.taipei/dataset/detail?id=8dab3890-6808-4fe0-b0dd-1bd4d90b95c0',
       },
@@ -210,14 +214,16 @@ const publicationRecords: LocalPublication[] = [
     note: '官方列表保留多期刊物，可逐期進入閱讀。',
     issues: [
       {
-        label: '第 56 期',
-        title: '走讀新北的郊山古道',
+        label: '第 56 期・2025.07',
+        theme: '親近新北自然',
+        highlight: '從郊山古道、溪流與地方人物走進新北自然。',
         reason: '從淡蘭古道出發，把自然路徑讀成地方史。',
         url: 'https://www.culture.ntpc.gov.tw/files/file_pool/1/0P209572491942240372/%E6%96%B0%E5%8C%97%E5%B8%82%E6%96%87%E5%8C%96%E5%AD%A3%E5%88%8A%28%E7%AC%AC56%E6%9C%9F%29.pdf',
       },
       {
-        label: '第 57 期',
-        title: '近期文化現場',
+        label: '第 57 期・2025.10',
+        theme: '認識新北茶',
+        highlight: '從茶知識、茶職人與茶生活閱讀新北茶產業。',
         reason: '先看最新一冊，再沿目錄回翻館舍與地方行動。',
         url: 'https://www.culture.ntpc.gov.tw/xmdoc?xsmsid=0G244582088669372377',
       },
@@ -237,13 +243,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 108 期',
-        title: '智慧圖書館・老香行・棒球城',
+        highlight: '智慧圖書館・老香行・棒球城',
         reason: '新舊桃園並置得很有趣，適合第一次認識這座城市。',
         url: 'https://typass.tycg.gov.tw/list/library',
       },
       {
         label: '第 77 期',
-        title: '中壢的地方滋味',
+        highlight: '中壢的地方滋味',
         reason: '從伴手禮與店家切入，讀一座移民城市的味覺。',
         url: 'https://typass.tycg.gov.tw/list/library',
       },
@@ -263,13 +269,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 21 期・2026.03',
-        title: '族群與多元文化',
+        highlight: '族群與多元文化',
         reason: '從泰雅遷徙到東南亞街區，最能讀出桃園的流動性。',
         url: 'https://culture.tycg.gov.tw/News_Content.aspx?n=11230&s=1614814&sms=14624',
       },
       {
         label: '第 20 期・2025.09',
-        title: '建築與藝術',
+        highlight: '建築與藝術',
         reason: '街屋、眷村、瓦作與剪黏，讓城市史落在可觸摸的工藝上。',
         url: 'https://culture.tycg.gov.tw/News_Content.aspx?n=11230&s=1588509',
       },
@@ -289,13 +295,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 40 期',
-        title: '從最新一期看桃園客庄',
+        highlight: '從最新一期看桃園客庄',
         reason: '先讀近期人物與文化行動，再依專區逐期往前翻。',
         url: 'https://www.hakka.tycg.gov.tw/News_Photo.aspx?n=11478&sms=17532',
       },
       {
         label: '第 34 期',
-        title: '回看客庄生活的另一切面',
+        highlight: '回看客庄生活的另一切面',
         reason: '與最新期對照，最容易看見專刊選題如何累積地方記憶。',
         url: 'https://www.hakka.tycg.gov.tw/News_Photo.aspx?n=11478&sms=17532',
       },
@@ -315,13 +321,15 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: 'NO.34・2025.12',
-        title: '翻閱時光的皺摺',
+        theme: '翻閱時光的皺摺，穿越歷史軌跡，傳承文化光景',
+        highlight: '以城市歷史與文化傳承串起這一期的新竹生活。',
         reason: '沿歷史軌跡回看城市，是認識舊城最穩的一期。',
         url: 'https://web.hccg.gov.tw/ch/home.jsp?id=30172&parentpath=0%2C17%2C30151',
       },
       {
         label: 'NO.33・2025.10',
-        title: '山色波光秋意濃',
+        theme: '山色波光秋意濃，走入自然也走向人群的故事',
+        highlight: '從自然景色走到人與地方相遇的生活故事。',
         reason: '從自然走向人群，節奏比較鬆，也更接近日常。',
         url: 'https://web.hccg.gov.tw/ch/home.jsp?id=30172&parentpath=0%2C17%2C30151',
       },
@@ -341,13 +349,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '2026 年 06 月號',
-        title: '初夏藝文行事曆',
+        highlight: '初夏藝文行事曆',
         reason: '從最新月份進場，快速掌握館舍與展演現場。',
         url: 'https://www.hchcc.gov.tw/Tw/Publication/Links?filter=eeb2ed25-8cc6-4454-b021-321f66df62cf',
       },
       {
         label: '2026 年 05 月號',
-        title: '五月的文化散步',
+        highlight: '五月的文化散步',
         reason: '適合用週末行程的方式，慢慢逛進竹縣藝文生活。',
         url: 'https://www.hchcc.gov.tw/Tw/Publication/Links?filter=eeb2ed25-8cc6-4454-b021-321f66df62cf',
       },
@@ -367,13 +375,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 80 期・2025.11',
-        title: '最新一期竹塹研究',
+        highlight: '最新一期竹塹研究',
         reason: '從最新研究進入，再沿作者與史料來源向前追索。',
         url: 'https://culture.hccg.gov.tw/uploaddowndoc?file=Publication%2F202601161001010.pdf&filedisplay=%E7%AB%B9%E5%A1%B9%E6%96%87%E7%8D%BB80%E6%9C%9F_ebook.pdf&flag=doc',
       },
       {
         label: '第 79 期・2025',
-        title: '百載風華話雙館',
+        highlight: '百載風華話雙館',
         reason: '從州立圖書館與市役所，讀公共建築如何改變城市記憶。',
         url: 'https://culture.hccg.gov.tw/ch/home.jsp?dataserno=202510140007&id=296&mcustomize=onemessages_view.jsp&mserno=201809060001&parentpath=0%2C5%2C238&t=HcccbOnes&toolsflag=Y',
       },
@@ -393,13 +401,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 78 期・2024.10',
-        title: '竹塹社的文化復振',
+        highlight: '竹塹社的文化復振',
         reason: '以認同、口述歷史與田野紀錄，讀平埔族群如何重建記憶。',
         url: 'https://www.hchcc.gov.tw/Tw/Publication/BooksDetail?filter=a5fb5546-6881-439c-95bf-35a002163315&id=546333aa-230d-4205-8466-66b711a2d967',
       },
       {
         label: '第 77 期・2023',
-        title: '往前一期的竹縣文史',
+        highlight: '往前一期的竹縣文史',
         reason: '與第 78 期連讀，能看出文獻刊物在研究與地方記錄間的尺度。',
         url: 'https://www.hchcc.gov.tw/Tw/Publication/Books?filter=a5fb5546-6881-439c-95bf-35a002163315',
       },
@@ -419,13 +427,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 187 期・2026.04',
-        title: '史前工藝如何走進博物館教育',
+        highlight: '史前工藝如何走進博物館教育',
         reason: '把考古、手作與學習串在一起，知識密度很漂亮。',
         url: 'https://www.lym.gov.tw/ch/collection/epaper/current-enews-list/2026/202604/index.html',
       },
       {
         label: '第 139 期・2022.04',
-        title: '蘭陽’s 貝秀',
+        highlight: '蘭陽’s 貝秀',
         reason: '從貝類特展一路讀到宜蘭史前文明，地方感很完整。',
         url: 'https://www.lym.gov.tw/ch/collection/epaper/current-enews-list/2022/202204/index.html',
       },
@@ -445,13 +453,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 52 期',
-        title: '信仰與族群',
+        highlight: '信仰與族群',
         reason: '從伯公、敬字到香茅產業，客庄文化的入口很扎實。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/619/10/1',
       },
       {
         label: '第 30 期',
-        title: '苑裡慈和宮與地方信仰',
+        highlight: '苑裡慈和宮與地方信仰',
         reason: '以一座廟的格局與神明配置，讀聚落如何形成。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/557/6/1',
       },
@@ -471,13 +479,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: 'NO.43・2026.06',
-        title: '路網升級・親子館達陣',
+        highlight: '路網升級・親子館達陣',
         reason: '從交通與育兒設施，看城市生活如何被重新安排。',
         url: 'https://www.taichung.gov.tw/3292145/post',
       },
       {
         label: 'NO.41・2026.02',
-        title: '幸福台中，友善育兒',
+        highlight: '幸福台中，友善育兒',
         reason: '用家庭日常的尺度，讀一座大城市的公共服務。',
         url: 'https://www.news.taichung.gov.tw/14786/15050/15092/15095/1263057?nowPage=1&pagesize=30&type=',
       },
@@ -498,13 +506,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: 'NO.37',
-        title: '藝文人物與在地生活',
+        highlight: '藝文人物與在地生活',
         reason: '分篇 PDF 很適合隨選閱讀，也能快速掌握刊物的欄目結構。',
         url: 'https://www.culture.taichung.gov.tw/2061062/2072210/2102292/2102340/2117581',
       },
       {
         label: 'NO.35',
-        title: '回到大墩文化的中段刊號',
+        highlight: '回到大墩文化的中段刊號',
         reason: '與 37 期對照，能看見文化月刊如何編排城市藝文日常。',
         url: 'https://www.culture.taichung.gov.tw/2117629/post',
       },
@@ -524,13 +532,15 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: 'NO.40・2026.04',
-        title: '城市餐桌，飲食文化 2.0',
+        theme: '城市餐桌　彰化飲食文化 2.0',
+        highlight: '從吃開始，地方產業與人的故事也一起上桌。',
         reason: '從吃開始最對味，地方產業與人的故事也一起上桌。',
         url: 'https://www.chcg.gov.tw/ch2/e-publication-gov-publication.aspx',
       },
       {
         label: 'NO.38・2025.12',
-        title: '設計傾城，彰化行見真章',
+        theme: '2025 設計傾城　彰化行見真章',
+        highlight: '設計展與老城、產業及地方生活在這一期交會。',
         reason: '設計與老城的碰撞很鮮明，適合和飲食號對照讀。',
         url: 'https://www.chcg.gov.tw/ch2/e-publication-gov-publication.aspx',
       },
@@ -550,13 +560,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 22 期・2018',
-        title: '方志編修與實務',
+        highlight: '方志編修與實務',
         reason: '適合想理解地方知識如何被整理、編纂與保存的讀者。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/598/7/1',
       },
       {
         label: '第 18 期・2012',
-        title: '文化傳統與社會變遷',
+        highlight: '文化傳統與社會變遷',
         reason: '從媽祖信仰、磚窯產業到城市意象，題材非常有彰化性格。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/378/10/1',
       },
@@ -575,16 +585,18 @@ const publicationRecords: LocalPublication[] = [
     note: '1995 年創刊，2016 年停刊後於 2022 年復刊；官網可讀文章與當期內容。',
     issues: [
       {
-        label: '第 56 期・冬季號',
-        title: '埔里社廳設治 150 週年',
-        reason: '從制度、地名到地方記憶，是理解埔里的厚實入口。',
-        url: 'https://www.sualianmag.tw/tw/journal-detail/289',
+        label: '第 56 期・秋季號',
+        theme: '守護水資源專題',
+        highlight: '從水源地、河川與地方行動讀埔里的水鄉日常',
+        reason: '官方各篇皆標示本期專題名，適合循著水資源一路閱讀地方產業與公民行動。',
+        url: 'https://www.sualianmag.tw/tw/journal-detail/268',
       },
       {
-        label: '第 56 期・秋季號',
-        title: '重返人之境',
-        reason: '採集邵族風土與部落食光，讀起來很有人與土地的溫度。',
-        url: 'https://www.sualianmag.tw/tw/journal-detail/273',
+        label: '第 55 期・夏季號',
+        theme: '邵族專題',
+        highlight: '從祭儀、飲食與日月潭生活走進邵族文化',
+        reason: '由部落祭儀與地方飲食展開，是這一期明確標示的整期專題。',
+        url: 'https://www.sualianmag.tw/tw/journal-detail/258',
       },
     ],
     featured: true,
@@ -603,13 +615,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '2025 雲林生活',
-        title: '最新年度地方生活總覽',
+        highlight: '最新年度地方生活總覽',
         reason: '先從最近一年看人物、物產與城鄉正在發生的變化。',
         url: 'https://information.yunlin.gov.tw/News_eBook.aspx?n=11659&sms=16852',
       },
       {
         label: '2024 詔安客家專刊・二',
-        title: '詔安客家的生活紋理',
+        highlight: '詔安客家的生活紋理',
         reason: '主題更集中，適合想往族群文化深挖的讀者。',
         url: 'https://information.yunlin.gov.tw/News_eBook.aspx?n=11659&sms=16852',
       },
@@ -629,13 +641,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 64 輯・2026',
-        title: '七十餘年的最新續頁',
+        highlight: '七十餘年的最新續頁',
         reason: '從最新研究看雲林文獻如何連接縣志、地方工藝與當代議題。',
         url: 'https://ws.yunlin.gov.tw/001/Upload/422/ebook/ebook_458149/pdf/full.pdf',
       },
       {
         label: '第 63 輯・2025',
-        title: '縣志纂修計畫專刊',
+        highlight: '縣志纂修計畫專刊',
         reason: '想理解地方志如何被重新編寫，這一輯是很清楚的入口。',
         url: 'https://content.yunlin.gov.tw/News_eBook.aspx?n=14213&sms=18003',
       },
@@ -655,13 +667,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '2024・第三輯',
-        title: '回到原點，重新看見嘉義',
+        highlight: '回到原點，重新看見嘉義',
         reason: '從舊城門、陳澄波到當代創意人，城市輪廓最完整。',
         url: 'https://gpi.culture.tw/books/1011301774',
       },
       {
         label: '2022・創刊輯',
-        title: '體驗嘉義的 29 種方式',
+        highlight: '體驗嘉義的 29 種方式',
         reason: '市場、咖啡、獨立書店與常民文化，第一次讀就從這本。',
         url: 'https://gpi.culture.tw/books/1011102268',
       },
@@ -682,13 +694,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 25 期',
-        title: '鄉土情・嘉義采風',
+        highlight: '鄉土情・嘉義采風',
         reason: '從大士爺到阿里山，民俗與山城風景都在這冊。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/76/3/1',
       },
       {
         label: '第 19 期',
-        title: '校園、油氣田與諸羅詩苑',
+        highlight: '校園、油氣田與諸羅詩苑',
         reason: '題材跨度很大，能看見地方文獻最迷人的雜食性。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/70',
       },
@@ -708,13 +720,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 59 期',
-        title: '最新一期城市生活提案',
+        highlight: '最新一期城市生活提案',
         reason: '先從當下的臺南進場，再順著人物與街區往舊城深處走。',
         url: 'https://www.tainan.gov.tw/News_eBook.aspx?n=14090&sms=14343',
       },
       {
         label: '第 58 期',
-        title: '上一站的古都日常',
+        highlight: '上一站的古都日常',
         reason: '與最新一期並讀，最容易看出刊物安排城市節奏的方法。',
         url: 'https://www.tainan.gov.tw/News_eBook.aspx?n=14090&sms=14343',
       },
@@ -735,13 +747,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 28 輯',
-        title: '陣頭傳承與戰爭記憶',
+        highlight: '陣頭傳承與戰爭記憶',
         reason: '把民俗展演與歷史創傷放在同一冊，能看見臺南文獻的題材跨度。',
         url: 'https://publications.culture.tainan.gov.tw/',
       },
       {
         label: '第 24 輯',
-        title: '往前讀一冊臺南地方研究',
+        highlight: '往前讀一冊臺南地方研究',
         reason: '與最新輯對照，可看出文獻刊物如何持續整理大臺南議題。',
         url: 'https://publications.culture.tainan.gov.tw/',
       },
@@ -760,14 +772,16 @@ const publicationRecords: LocalPublication[] = [
     note: '官方獨立網站提供電子期刊、完整電子書與多媒體翻閱版。',
     issues: [
       {
-        label: '2026.07',
-        title: '海風迎夏',
+        label: 'NO.07・2026.07',
+        theme: '海風迎夏',
+        highlight: '從海港的季節感開始，讀出高雄盛夏的城市氣味。',
         reason: '從海港的季節感開始，最能立刻讀出高雄的氣味。',
         url: 'https://takao.kcg.gov.tw/issue',
       },
       {
-        label: '2026.05',
-        title: '高雄，築夢之地',
+        label: 'NO.05・2026.05',
+        theme: '高雄，築夢之地',
+        highlight: '以人物和地方行動觀看城市如何承接不同的夢想。',
         reason: '以人物和行動看城市，與純旅行型內容很不一樣。',
         url: 'https://takao.kcg.gov.tw/issue',
       },
@@ -788,13 +802,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '線上期刊・近期卷期',
-        title: '從當期高雄學開始',
+        highlight: '從當期高雄學開始',
         reason: '先看近期研究主題，再沿卷期目錄回到港市與縣區歷史。',
         url: 'https://khcc.kcg.gov.tw/rwd_home02.aspx?EXEC=L&ID=%240A03&IDK=2',
       },
       {
         label: '第 23 卷第 2 期',
-        title: '舊刊中的高雄地方史',
+        highlight: '舊刊中的高雄地方史',
         reason: '從較早卷期進入，適合觀察刊物如何記錄城市變遷。',
         url: 'https://khcc.kcg.gov.tw/PhotoData/PIC1021226_4.pdf',
       },
@@ -814,13 +828,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '2025.12・飲食專題',
-        title: '好味道，是一起活出來的',
+        highlight: '好味道，是一起活出來的',
         reason: '不只談食物，也談共同生活如何長成地方的味道。',
         url: 'https://www.pingtung-media.com/post/%E5%A5%BD%E5%91%B3%E9%81%93%E6%98%AF%E4%B8%80%E8%B5%B7%E6%B4%BB%E5%87%BA%E4%BE%86%E7%9A%84',
       },
       {
         label: '2025.08・人物故事',
-        title: '孤女的思鄉餘味',
+        highlight: '孤女的思鄉餘味',
         reason: '一篇很有餘韻的人物採訪，適合感受刊物的敘事調子。',
         url: 'https://www.pingtung-media.com/post/%E5%AD%A4%E5%A5%B3%E7%9A%84%E6%80%9D%E9%84%89%E9%A4%98%E5%91%B3',
       },
@@ -841,13 +855,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 17 期・飲食專題',
-        title: '萬丹人的飯湯',
+        highlight: '萬丹人的飯湯',
         reason: '從農忙點心進入常民生活，是很有屏東味的一篇地方研究。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/520/6/1',
       },
       {
         label: '第 17 期・聚落專題',
-        title: '屏東市眷村的沿革與發展',
+        highlight: '屏東市眷村的沿革與發展',
         reason: '把大鵬七村與凌雲三村放回城市空間，適合與飲食篇並讀。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/520/10/1',
       },
@@ -867,13 +881,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: 'VOL.20',
-        title: '最新花蓮文化現場',
+        highlight: '最新花蓮文化現場',
         reason: '先從目前最新一冊進入，看編輯如何安放山海與人物。',
         url: 'https://www.hccc.gov.tw/zh-tw/PublicationLite/List?category=223&page=1',
       },
       {
         label: 'VOL.19',
-        title: '往前一冊的地方故事',
+        highlight: '往前一冊的地方故事',
         reason: '與 VOL.20 連讀，刊物的選題性格會更快浮出來。',
         url: 'https://www.hccc.gov.tw/zh-tw/PublicationLite/List?category=223&page=1',
       },
@@ -894,13 +908,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 6 期・2014.10',
-        title: '我們唱的，是自己寫的歌',
+        highlight: '我們唱的，是自己寫的歌',
         reason: '從撒奇萊雅火神祭、土地到音樂創作，內容橫跨傳統與當代。',
         url: 'https://abda.hl.gov.tw/EBook/Detail/6/%E8%8A%B1%E8%93%AE%E7%B8%A3%E5%8E%9F%E4%BD%8F%E6%B0%91%E6%97%8F%E5%AD%A3%E5%88%8A_%E7%AC%AC%E5%85%AD%E6%9C%9F',
       },
       {
         label: '第 1 期',
-        title: '回到季刊的創刊起點',
+        highlight: '回到季刊的創刊起點',
         reason: '與中段刊號對照，能看見縣府族群刊物如何選擇與保存地方故事。',
         url: 'https://abda.hl.gov.tw/EBook/List',
       },
@@ -920,13 +934,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '115 年 02 月號',
-        title: '麻煩了，臺東！',
+        highlight: '麻煩了，臺東！',
         reason: '從文化基地與設計現場切入，輕巧但很能看出地方能量。',
         url: 'https://culture.taitung.gov.tw/magazine/115-02',
       },
       {
         label: '113 年 02 月號',
-        title: '地方刊物編輯企畫',
+        highlight: '地方刊物編輯企畫',
         reason: '一次讀到慢波、看見臺東與南迴人，正好是這頁的東部入口。',
         url: 'https://culture.taitung.gov.tw/magazine/113-02',
       },
@@ -948,13 +962,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '2016.11・復刊號',
-        title: '重新連上小島的聲音',
+        highlight: '重新連上小島的聲音',
         reason: '從地方新聞走向深度人物與專題，是理解刊物轉型的起點。',
         url: 'https://lanan.org.tw/media/biweekly',
       },
       {
         label: '第 533 期・2015.03',
-        title: '雙週刊時代的最後一站',
+        highlight: '雙週刊時代的最後一站',
         reason: '與復刊號對照，能看見島嶼媒體如何重新思考自己的位置。',
         url: 'https://lanan.org.tw/media/biweekly',
       },
@@ -974,13 +988,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 109 期',
-        title: '從最新一冊開始讀澎湖',
+        highlight: '從最新一冊開始讀澎湖',
         reason: '先熟悉刊物的地方研究筆法，再回翻聚落與海洋史。',
         url: 'https://phb.tw/Book/0240',
       },
       {
         label: '第 108 期',
-        title: '往前一冊的島嶼記憶',
+        highlight: '往前一冊的島嶼記憶',
         reason: '兩期並讀，能看見季刊如何把碎片慢慢縫成地方知識。',
         url: 'https://phb.tw/Book/0240',
       },
@@ -1001,13 +1015,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '聚落專題',
-        title: '先從一座村落散步',
+        highlight: '先從一座村落散步',
         reason: '浯島城事最迷人的是人的尺度，從聚落故事開始最對味。',
         url: 'https://kinmen-story.tw/',
       },
       {
         label: '戰地日常',
-        title: '把歷史放回生活裡',
+        highlight: '把歷史放回生活裡',
         reason: '不只看遺跡，也看島民如何與戰地記憶共同生活。',
         url: 'https://kinmen-story.tw/',
       },
@@ -1028,13 +1042,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 135 期・2018.06',
-        title: '現存電子書的最新一冊',
+        highlight: '現存電子書的最新一冊',
         reason: '先從典藏架上最近的一期讀起，再循文章主題往前找。',
         url: 'https://cabkc.kinmen.gov.tw/shopping?pid=67&uid=84',
       },
       {
         label: '第 134 期',
-        title: '往前一季的金門文史',
+        highlight: '往前一季的金門文史',
         reason: '與第 135 期並讀，能更快掌握官方季刊的編輯尺度。',
         url: 'https://cabkc.kinmen.gov.tw/shoppinglist?page=2&uid=84',
       },
@@ -1054,13 +1068,13 @@ const publicationRecords: LocalPublication[] = [
     issues: [
       {
         label: '第 52 期',
-        title: '戰地政務終止前夕',
+        highlight: '戰地政務終止前夕',
         reason: '從制度轉折讀島嶼日常，是理解現代馬祖很關鍵的一冊。',
         url: 'https://twlld.nmth.gov.tw/literal-detail/301/7/1',
       },
       {
         label: '早期刊號',
-        title: '回到島嶼生活的原始記錄',
+        highlight: '回到島嶼生活的原始記錄',
         reason: '從文獻中心往前翻，會遇見交通、軍政與居民生活的交界。',
         url: 'https://client.matsu.idv.tw/literature/search.html',
       },
@@ -1083,13 +1097,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '2026・06',
-        title: '港城六月的文化現場',
+        highlight: '港城六月的文化現場',
         reason: '從當月展演與地方專欄進入，最容易掌握這本月刊的節奏。',
         url: 'https://klctb.klcg.gov.tw/News2.aspx?n=7775&sms=12517',
       },
       {
         label: '2026・04',
-        title: '隧道、古蹟與城市日常',
+        highlight: '隧道、古蹟與城市日常',
         reason: '文化資產不只做公告，也被重新放回基隆人的生活裡。',
         url: 'https://klctb.klcg.gov.tw/News2.aspx?n=7775&sms=12517',
       },
@@ -1109,13 +1123,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '2026・06',
-        title: '六月藝文生活提案',
+        highlight: '六月藝文生活提案',
         reason: '先用最新一期認識新北各館舍與城市文化活動的分布。',
         url: 'https://www.culture.ntpc.gov.tw/xmdoc?xsmsid=0g290617351802660588',
       },
       {
         label: '2026・01–02',
-        title: '馬年文化走春',
+        highlight: '馬年文化走春',
         reason: '跨月春節號題材完整，適合看刊物怎麼串連城市與節慶。',
         url: 'https://www.culture.ntpc.gov.tw/files/file_pool/1/0Q007683961942240372/%E6%96%B0%E5%8C%97%E8%97%9D%E9%81%8A%201-2%E6%9C%88%E8%99%9F_%E9%9B%99%E9%A0%81%E9%9B%BB%E5%AD%90%E6%9B%B8_compressed.pdf',
       },
@@ -1135,13 +1149,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '2026・08',
-        title: '八月桃園藝文',
+        highlight: '八月桃園藝文',
         reason: '目前可核對的最新一期，適合直接掌握當季文化節目。',
         url: 'https://culture.tycg.gov.tw/News_Content.aspx?n=11229&s=1755131',
       },
       {
         label: '2026・06',
-        title: '六月桃園藝文',
+        highlight: '六月桃園藝文',
         reason: '與八月號對讀，可看出月刊固定欄目和場館網絡。',
         url: 'https://culture.tycg.gov.tw/News_Content.aspx?n=11229&s=1629924',
       },
@@ -1161,13 +1175,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '2018・冬季號',
-        title: '捏出彰化的糖味故事',
+        highlight: '捏出彰化的糖味故事',
         reason: '從糖業、老街到常民甜食，是很完整的地方專題。',
         url: 'https://ws.bocach.gov.tw/001/Upload/1/ebook/ebook_21491/pdf/full.pdf',
       },
       {
         label: '電子書典藏',
-        title: '回看四季裡的彰化味',
+        highlight: '回看四季裡的彰化味',
         reason: '沿官方書架往前翻，能找到不同季節的工藝與生活題材。',
         url: 'https://www.bocach.gov.tw/cl.aspx?n=3928',
       },
@@ -1187,13 +1201,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '2026・06',
-        title: '六月雲林藝文',
+        highlight: '六月雲林藝文',
         reason: '由最新月份進入，快速掌握雲林各地場館與活動。',
         url: 'https://content.yunlin.gov.tw/News_eBook.aspx?n=15415&sms=18549',
       },
       {
         label: '2023・07',
-        title: '微冊角落：從土地、食物與職人出發',
+        highlight: '微冊角落：從土地、食物與職人出發',
         reason: '不只是節目表，這一期也很像一本地方閱讀生活提案。',
         url: 'https://ws.yunlin.gov.tw/001/Upload/422/ebook/ebook_261903/index.html',
       },
@@ -1213,13 +1227,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '2026・06',
-        title: '六月臺南藝文活動月刊',
+        highlight: '六月臺南藝文活動月刊',
         reason: '先用最近一期建立場館與節目地圖，再依興趣深入。',
         url: 'https://culture.tainan.gov.tw/form/index?Parser=28%2C6%2C118%2C48%2C%2C%2C%2C15',
       },
       {
         label: '2026・04',
-        title: '四月臺南藝文活動月刊',
+        highlight: '四月臺南藝文活動月刊',
         reason: '與初夏號並讀，可以看出月刊的固定欄目與城市節奏。',
         url: 'https://culture.tainan.gov.tw/form/index?Parser=28%2C6%2C118%2C48%2C%2C%2C%2C15',
       },
@@ -1239,13 +1253,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '2026・01',
-        title: '大新營區放送者',
+        highlight: '大新營區放送者',
         reason: '從地方傳媒與新興媒體認識溪北的聲音，非常貼近本頁收錄精神。',
         url: 'https://culture.tainan.gov.tw/form/Details?Parser=28%2C6%2C118%2C48%2C%2C%2C1344',
       },
       {
         label: '2025・11',
-        title: '走入淺山地帶',
+        highlight: '走入淺山地帶',
         reason: '十八重溪、關子嶺與山林生態把地方文化拉到戶外。',
         url: 'https://culture.tainan.gov.tw/form/Details?Parser=28%2C6%2C118%2C48%2C%2C%2C1327',
       },
@@ -1266,13 +1280,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '2026・04',
-        title: '四月洄瀾文化現場',
+        highlight: '四月洄瀾文化現場',
         reason: '從當期資訊與地方專欄讀花蓮正在發生的文化生活。',
         url: 'https://www.hccc.gov.tw/zh-tw/PublicationLite/List?category=222',
       },
       {
         label: '2021・09',
-        title: '依附・共生',
+        highlight: '依附・共生',
         reason: '主題投稿、海岸環境與藝文活動並置，很能看出改版後的刊物性格。',
         url: 'https://document.hccc.gov.tw/zine/202109.pdf',
       },
@@ -1292,13 +1306,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: '第 367 期・2026',
-        title: '體驗山海日常・走進臺東生活',
+        highlight: '體驗山海日常・走進臺東生活',
         reason: '雙封面串起展覽、飲食、青年、永續與城市記憶。',
         url: 'https://books.google.com/books/about/%E7%9C%8B%E8%A6%8B%E8%87%BA%E6%9D%B1_%E7%AC%AC367%E6%9C%9F_%E9%AB%94%E9%A9%97%E5%B1%B1%E6%B5%B7%E6%97%A5.html?id=ERPzEQAAQBAJ',
       },
       {
         label: '第 363 期・2025',
-        title: '熱氣球、醫療與兒童城市',
+        highlight: '熱氣球、醫療與兒童城市',
         reason: '從節慶飛回日常，題材跨度很能代表這本縣刊。',
         url: 'https://issuu.com/seeingtaitung./docs/_363_',
       },
@@ -1319,13 +1333,13 @@ const expandedOnlinePublications: LocalPublication[] = [
     issues: [
       {
         label: 'ISSUE 02・2020.11',
-        title: '神來一筆的釀造職人',
+        highlight: '神來一筆的釀造職人',
         reason: '由都蘭地酒讀文化如何落進味覺，是很好的起讀篇。',
         url: 'https://greenmedia.today/article_detail.php?cid=260&mid=1277',
       },
       {
         label: '食尚誌線上欄目',
-        title: '大口吃臺東，也走進部落',
+        highlight: '大口吃臺東，也走進部落',
         reason: '沿官網的食尚誌與部落路線繼續讀，能把人物放回土地。',
         url: 'https://ttstylefood-travel.org/',
       },
@@ -1344,18 +1358,18 @@ const referencePublicationsPartA: LocalPublication[] = [
     publisher: '甘樂文創',
     period: '不定期',
     url: 'https://www.thecan.com.tw/tw/creative2/detail/112052',
-    description: '從三峽地方報出發，長期採訪臺灣各地職人、老屋、青年與傳統工藝。',
-    note: '目前可查到出版計畫與文章介紹，未找到免登入的完整刊號閱讀頁。',
+    description: '由三峽在地青年共同編採，內容橫跨社會議題、地方文化、藝文資訊與臺灣人物；刊物也和甘樂文創的社區營造、弱勢學童陪伴及青年返鄉行動相連，讓地方報導成為培養在地編輯與推動社區工作的入口。',
+    note: '2016 年紙本停刊，2021 年起以「小村長」延續地方人物與地方行動內容。',
     issues: [
       {
         label: '地方人物系列',
-        title: '小村長',
+        highlight: '小村長',
         reason: '以回鄉行動者為主角，看刊物如何把地方工作寫成人的故事。',
         url: 'https://www.thecan.com.tw/tw/creative2/detail/112052',
       },
       {
         label: '歷史刊號',
-        title: '從三峽走向全臺地方',
+        highlight: '從三峽走向全臺地方',
         reason: '保留這條發行線索，方便之後循實體館藏與二手書店追刊。',
         url: 'https://www.kingcar.com.tw/fileupload/books/4/4.pdf',
       },
@@ -1371,18 +1385,18 @@ const referencePublicationsPartA: LocalPublication[] = [
     publisher: '淡江大學中文系田野調查研究室',
     period: '半年刊',
     url: 'https://tkutimes.tku.edu.tw/kwdlist.cshtml?t=%E4%B8%AD%E6%96%87%E7%B3%BB',
-    description: '由學生田野採訪淡水人物、產物、聚落與生活變貌，持續十年的地方小誌。',
-    note: '刊物仍在發行，但目前主要是紙本、校內展示與館藏資訊，未見完整公開閱讀架。',
+    description: '刊名同時取自「淡水」與「淡江」，也借淡淡雲霧形容觀音山、大屯山之間的城市色彩。田野調查研究室以「走出校園，走入在地文化」為方法，採訪淡水的歷史現況、人物、產物與聚落變貌，並曾將人物誌譯為英、日、法文版本。',
+
     issues: [
       {
         label: '第 19 期・2024',
-        title: '淡水地方人物與生活田野',
+        highlight: '淡水地方人物與生活田野',
         reason: '可由發行人紀錄確認刊號，再向淡江或圖書館查詢館藏。',
         url: 'https://teacher.tku.edu.tw/StfTchrSmy.aspx?tid=t902240',
       },
       {
         label: '第 18 期・2024',
-        title: '上一期田野成果',
+        highlight: '上一期田野成果',
         reason: '與第 19 期連讀，能看見學生團隊接力編採的方式。',
         url: 'https://teacher.tku.edu.tw/StfTchrSmy.aspx?tid=t902240',
       },
@@ -1403,13 +1417,15 @@ const referencePublicationsPartA: LocalPublication[] = [
     issues: [
       {
         label: 'VOL.40・2026',
-        title: '經典客家味',
+        theme: '經典客家味',
+        highlight: '回到庄頭老店、常民米食與客家灶下的日常風味',
         reason: '從最新一期看見大新竹客家飲食如何被重新編輯。',
         url: 'https://shop.citilens.cc/categories/magazine',
       },
       {
         label: 'VOL.38・2025',
-        title: '尋水新竹',
+        theme: '尋水新竹',
+        highlight: '沿著地名、圳道與河川重新讀懂一座城市',
         reason: '把水道、溪流、冰店與環境行動串成一條城市線索。',
         url: 'https://indiepublisher.tw/zh-hant/book/2226',
       },
@@ -1426,18 +1442,18 @@ const referencePublicationsPartA: LocalPublication[] = [
     publisher: '苑裡掀冊店與在地青年',
     period: '不定期',
     url: 'https://www.walkerland.com.tw/article/view/271191',
-    description: '由返鄉青年自力採訪、編輯與發行，書寫苑裡的人、農業、海風與地方日常。',
-    note: '目前以書店介紹與歷史發刊消息為主，未找到穩定的完整線上閱讀頁。',
+    description: '由苑裡素人青年自行採訪、撰稿、編輯與發行。創刊號從鯊魚魚丸由漁港到餐桌的製程、返鄉經營的「苑裡好咖」、特奧金牌女孩，寫到封面人物苑裡站長，透過一座車站串起地方居民離鄉與返鄉的生命經驗。',
+
     issues: [
       {
         label: '創刊號・2016',
-        title: '讓苑裡的海風吹進書頁',
+        highlight: '讓苑裡的海風吹進書頁',
         reason: '可由發刊消息確認索取點與創刊理念。',
         url: 'https://www.ptt.cc/bbs/Miaoli/M.1477155158.A.478.html',
       },
       {
         label: '地方刊物回顧',
-        title: '苑裡在地青年發聲',
+        highlight: '苑裡在地青年發聲',
         reason: '從後續介紹辨認它在臺灣地方刊物浪潮裡的位置。',
         url: 'https://www.unitas.me/archives/tag/%E5%88%8A%E7%89%A9%E7%B7%A8%E8%BC%AF',
       },
@@ -1453,18 +1469,18 @@ const referencePublicationsPartA: LocalPublication[] = [
     publisher: '蕃社30／竹南地方團隊',
     period: '專刊',
     url: 'https://sites.google.com/view/pieceandpage/%E6%B4%BB%E5%8B%95/2023/%E7%AB%B9%E5%8D%97%E5%9C%B0%E6%96%B9%E8%AA%8C%E5%B1%B1%E6%B5%B7%E9%9B%86%E5%B7%A1%E8%BF%B4%E5%88%86%E4%BA%AB',
-    description: '從飲食與田野進入竹南風土，把鎮上的市場、早餐、海線生活與居民故事重新收集。',
-    note: '可查到巡迴分享與團隊文章，暫無整本公開閱讀地址。',
+    description: '刊名回應竹南兼具閩客文化、又是火車山線與海線交會之地。2022 秋季號從飲食踏查竹南人的一日生活圈，記錄坐火車來擺攤的市場阿嬤、在地稱作「糋粿」的蚵嗲、淋紅麴醬的肉圓，以及崎頂丘陵一帶的農漁生活。',
+
     issues: [
       {
         label: '《山海集》・2023',
-        title: '竹南地方誌',
+        highlight: '竹南地方誌',
         reason: '從巡迴分享頁認識編輯緣起與刊物內容。',
         url: 'https://sites.google.com/view/pieceandpage/%E6%B4%BB%E5%8B%95/2023/%E7%AB%B9%E5%8D%97%E5%9C%B0%E6%96%B9%E8%AA%8C%E5%B1%B1%E6%B5%B7%E9%9B%86%E5%B7%A1%E8%BF%B4%E5%88%86%E4%BA%AB',
       },
       {
         label: '飲食田野',
-        title: '從早餐與市場微觀竹南',
+        highlight: '從早餐與市場微觀竹南',
         reason: '團隊頁保留相關地方書寫與後續活動線索。',
         url: 'https://huansia30.home.blog/tag/%E5%9C%B0%E6%96%B9%E8%AA%8C/',
       },
@@ -1485,13 +1501,13 @@ const referencePublicationsPartA: LocalPublication[] = [
     issues: [
       {
         label: '1978–1984',
-        title: '埔里第一代地方聲音',
+        highlight: '埔里第一代地方聲音',
         reason: '水沙連雜誌社沿革記錄了它與後來地方刊物之間的接續關係。',
         url: 'https://www.sualianmag.tw/tw',
       },
       {
         label: '復刊脈絡',
-        title: '從埔里鄉情到水沙連',
+        highlight: '從埔里鄉情到水沙連',
         reason: '地方新聞保留兩代刊物之間的傳承線索。',
         url: 'https://www.peopo.org/news/580856',
       },
@@ -1507,18 +1523,18 @@ const referencePublicationsPartA: LocalPublication[] = [
     publisher: '嘉義縣政府',
     period: '系列專刊',
     url: 'https://gpi.culture.tw/books/1011000414',
-    description: '用生活風格、地方創生、產業與人物採訪，編輯出嘉義縣在地方生活的機會與想像。',
-    note: '2021 年出版的單冊地方生活誌；可查書目與購買／館藏資料，未見完整公開閱讀。',
+    description: '《本地 The Place》系列第七冊以嘉義縣為題，從時序、地圖與經濟概況進入曾文溪、新港奉天宮和大埔社區，也收錄黑龍醬油、洲南鹽場、故宮南院、交趾陶、刺繡與竹編；後段沿阿里山、咖啡茶館、地方飲食與居住者訪談，拼出在嘉義生活的多種選擇。',
+    note: '2021 年出版，為《本地 The Place》地方生活誌系列第七冊。',
     issues: [
       {
         label: 'THE PLACE 07・2021',
-        title: '嘉義縣',
+        highlight: '嘉義縣',
         reason: '系列第七冊，也是目前補足嘉義縣非學術地方刊物的重要線索。',
         url: 'https://gpi.culture.tw/books/1011000414',
       },
       {
         label: '系列脈絡',
-        title: '從七個地方重新想像生活',
+        highlight: '從七個地方重新想像生活',
         reason: '書目介紹可順帶回查花蓮、新北、桃園、臺南、屏東與臺東卷。',
         url: 'https://gpi.culture.tw/books/1011000414',
       },
@@ -1542,13 +1558,13 @@ const referencePublicationsPartB: LocalPublication[] = [
     issues: [
       {
         label: '創刊號・2007',
-        title: '嘉義人的慢慢生活',
+        highlight: '嘉義人的慢慢生活',
         reason: '從創刊背景理解早一波臺灣地方小誌的編輯方法。',
         url: 'https://zh.wikipedia.org/wiki/%E6%85%A2%E6%BC%AB%E5%88%8A',
       },
       {
         label: '歷史刊號',
-        title: '人與土地的連結',
+        highlight: '人與土地的連結',
         reason: '嘉義市人文關懷協會以畫刊形式呈現地方人物、街區與生活記憶。',
         url: 'https://zh.wikipedia.org/wiki/%E6%85%A2%E6%BC%AB%E5%88%8A',
       },
@@ -1569,13 +1585,13 @@ const referencePublicationsPartB: LocalPublication[] = [
     issues: [
       {
         label: '第 2 期',
-        title: '正興三姝',
+        highlight: '正興三姝',
         reason: '三位街坊阿嬤成為封面明星，是刊物最具代表性的地方敘事。',
         url: 'https://www.peopo.org/news/292533',
       },
       {
         label: '第 3 期',
-        title: '失敗的人',
+        highlight: '失敗的人',
         reason: '請店家寫下失敗與反省，題目既胡鬧又非常誠實。',
         url: 'https://pantravel.life/archives/7325',
       },
@@ -1592,18 +1608,18 @@ const referencePublicationsPartB: LocalPublication[] = [
     publisher: '高雄在地青年編輯團隊',
     period: '不定期',
     url: 'https://takaobooks.tw/html/magazine_info?me_guid=e85803a3b26c',
-    description: '由高雄青年自發編輯的地方刊物，以城市觀察、地圖與生活提案重新介紹高雄。',
-    note: '共出版三期；三餘書店保留刊物介紹，未找到完整公開線上閱讀。',
+    description: '由高雄在地青年自發編輯，創刊號以十個「高雄症候群」辨認港都生活，第二期「高雄發財夢」訪問不同立場的市民，也以 250 份問卷與雙城居住圖討論青年北漂；刊物同時收錄便當、私房店家和旗山三桃山遊樂園等生活題材。',
+    note: '共出版三期。',
     issues: [
       {
         label: '共三期',
-        title: '高雄青年自己的城市指南',
+        highlight: '高雄青年自己的城市指南',
         reason: '三餘書店保留完整的刊物背景與發行線索。',
         url: 'https://takaobooks.tw/html/magazine_info?me_guid=e85803a3b26c',
       },
       {
         label: '地方誌回顧',
-        title: '大雄誌在地方刊物浪潮裡',
+        highlight: '大雄誌在地方刊物浪潮裡',
         reason: '與《貢丸湯》《正興聞》並看，更容易理解同時期的地方小誌。',
         url: 'https://www.thenewslens.com/article/117543',
       },
@@ -1619,18 +1635,18 @@ const referencePublicationsPartB: LocalPublication[] = [
     publisher: '叁捌地方生活',
     period: '季刊・共四期',
     url: 'https://3080s.com/thirtyeight/',
-    description: '以食、衣、住、行四冊採集鹽埕老店與職人，讓街區底層故事從耆老口述裡重新亮起來。',
-    note: '四期紙本已完成階段任務；官網與專訪留有內容介紹，無完整公開閱讀。',
+    description: '四期季刊分別從食、衣、住、行採集鹽埕仍在營業的老店與職人，不以大篇地方史作主軸，而是透過訪談拼回居民眼中的街區。刊物寫進六十多年進口布莊、替歌廳明星製衣的西服店，以及每日熬煮糖塊的冬瓜茶老店。',
+    note: '以「食、衣、住、行」四個主題完成四期紙本。',
     issues: [
       {
         label: '食・衣・住・行',
-        title: '四冊鹽埕生活採集',
+        highlight: '四冊鹽埕生活採集',
         reason: '專訪完整說明四期的採訪對象與編輯方法。',
         url: 'https://www.verse.com.tw/article/local-publications-yancheng',
       },
       {
         label: '延伸刊物',
-        title: '鹽埕微醺與水上人家',
+        highlight: '鹽埕微醺與水上人家',
         reason: '沿團隊官網可繼續追到刊物之後的地方出版與導覽。',
         url: 'https://3080s.com/thirtyeight/',
       },
@@ -1646,18 +1662,18 @@ const referencePublicationsPartB: LocalPublication[] = [
     publisher: '臺東原味採集所',
     period: '不定期',
     url: 'https://www.newsmarket.com.tw/shop/brand/%E6%9D%B1%E9%80%8F%E5%8F%AF/',
-    description: '一本拿在手上的臺東，深入街角巷弄與原住民族生活，語氣像青春的臺東少年兄。',
-    note: '目前可查到創刊號商品與計畫資料，未見免費完整刊號閱讀。',
+    description: '創刊號以馬蘭市場為封面故事，從阿水姨見證市場興衰、野菜採買和阿美族語，延伸到馬蘭部落史；其他單元走訪長濱書粥、返鄉咖啡店、延平射耳祭與關山市場，並以多位移居者的經驗討論「東漂」如何成為一種生活選擇。',
+    note: '2019 年出版創刊號，後續地方計畫延續刊物與原味體驗內容。',
     issues: [
       {
         label: 'NO.1・2019',
-        title: '一本拿在手上的臺東',
+        highlight: '一本拿在手上的臺東',
         reason: '創刊號商品頁保留最完整的刊物定位與內容介紹。',
         url: 'https://www.newsmarket.com.tw/shop/product/taitung-talk-2019-no01/',
       },
       {
         label: '第 2 年計畫',
-        title: '地方刊物與原味體驗',
+        highlight: '地方刊物與原味體驗',
         reason: '由後續計畫資料確認刊物曾持續發展，而非一次性概念。',
         url: 'https://pwl.cip.gov.tw/AYFiles/112/YearNewsFile/13/%E6%A0%B8%E5%AE%9A%E5%90%8D%E5%86%8A.pdf',
       },
@@ -1678,13 +1694,13 @@ const referencePublicationsPartB: LocalPublication[] = [
     issues: [
       {
         label: 'VOL.6・2025',
-        title: '最新社區生活採集',
+        highlight: '最新社區生活採集',
         reason: '國家圖書館新書資料可確認第六期仍在延續。',
         url: 'https://isbn.ncl.edu.tw/FCKEDITOR_UploadFiles/1765854517.pdf',
       },
       {
         label: 'VOL.2',
-        title: '臺東老生活的新提案',
+        highlight: '臺東老生活的新提案',
         reason: '從雜貨店、職人與地方情歌回看日常生活的細節。',
         url: 'https://www.dondonstyle.com/products/zoom-in-taitung-%E7%94%9F%E6%B4%BB%E7%B4%80%E5%AF%A6',
       },
@@ -1705,6 +1721,7 @@ const documentPublicationNames = new Set([
   '臺南文獻',
   '高雄文獻',
   '屏東文獻',
+  '硓𥑮石',
 ]);
 
 const verifiedFirstPublicationByName: Record<string, string> = {

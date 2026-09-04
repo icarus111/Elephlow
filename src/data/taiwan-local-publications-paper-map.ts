@@ -27,9 +27,9 @@ const paperMapSeeds: PaperMapSeed[] = [
 
   { city: '新北市・淡水', place: '淡水', name: '淡水 23 事', region: 'north', year: '2020', publisher: '淡水社區大學', url: 'https://tamsui.twco.org.tw/course/m_bulletin_detail.php?u=67fd0719f21ac', description: '由淡水在地學員採寫生活路徑與人物故事，從移居者與居住者的日常經驗，看見淡水不只是觀光古蹟。' },
   { city: '新北市・坪林', place: '坪林', name: '走水', region: 'north', year: '2022', publisher: '《走水》地方誌編輯團隊／詹培昕', period: '2019 年發起・已出至少 4 期', url: 'https://www.citilens.cc/nest18-zou-shuei', description: '由坪林青年以製茶工序「走水」為名，把田野、口述歷史與地方策展編進刊物，記錄北勢溪、茶產業、保坪宮與人口外移下的山城生活。', note: '《巢兼代》第 18 期曾以專題報導《走水》，兩者是各自獨立的刊物。', issues: [
-    { label: '第 1 期', title: '信仰、產業與河川', reason: '從保坪宮、茶業與北勢溪並讀坪林不只一種地方面貌。', url: 'https://www.citilens.cc/nest18-zou-shuei' },
-    { label: '第 2 期', title: '水與抾水技藝', reason: '從長者記憶、水道與抾水技藝，整理一條由居民經驗構成的流域地圖。', url: 'https://www.citilens.cc/nest18-zou-shuei' },
-    { label: '第 4 期', title: '坪林的信仰節點', reason: '細寫元宵、中元與媽祖遶境，觀看祭儀如何連結地方生活。', url: 'https://www.citilens.cc/nest18-zou-shuei' },
+    { label: '第 1 期', highlight: '信仰、產業與河川', reason: '從保坪宮、茶業與北勢溪並讀坪林不只一種地方面貌。', url: 'https://www.citilens.cc/nest18-zou-shuei' },
+    { label: '第 2 期', highlight: '水與抾水技藝', reason: '從長者記憶、水道與抾水技藝，整理一條由居民經驗構成的流域地圖。', url: 'https://www.citilens.cc/nest18-zou-shuei' },
+    { label: '第 4 期', highlight: '坪林的信仰節點', reason: '細寫元宵、中元與媽祖遶境，觀看祭儀如何連結地方生活。', url: 'https://www.citilens.cc/nest18-zou-shuei' },
   ] },
   { city: '新北市・貢寮馬崗', place: '貢寮馬崗漁村', name: '鹹石報', region: 'north', year: '2022' },
   { city: '新北市・瑞芳', place: '瑞芳', name: '瑞芳華', region: 'north', year: '2022', publisher: '胡皓婷與《瑞芳華》地方團隊', period: '2022 年地方刊物計畫', url: 'https://www.tucheng.ntpc.gov.tw/uploaddowndoc?file=news%2F202208111032410.pdf&filedisplay=111%E5%B9%B4%E5%BA%A6%E6%96%B0%E5%8C%97%E5%B8%82%E6%94%BF%E5%BA%9C%E6%96%87%E5%8C%96%E5%B1%80%E7%A4%BE%E9%80%A0%E7%8D%8E%E8%A3%9C%E5%8A%A9%E5%90%8D%E5%96%AE.pdf&flag=doc', description: '從瑞芳後站出發，透過實地走訪與史料研究保存社區記憶，並在刊物編採過程中邀請居民重新思考自己與瑞芳的連結。' },
