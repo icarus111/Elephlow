@@ -5,6 +5,7 @@ import {
   localPublications,
 } from '../data/taiwan-local-publications';
 import { taiwanCountyPaths } from '../data/taiwan-county-paths';
+import { localizeCounty, localizeText, localizePublication, localizePlatformLabel, localizeSocialLabel } from '../data/local-zines-i18n';
 
 type Locale = 'zh-cn' | 'zh-tw' | 'en';
 interface Props { locale?: Locale; }
@@ -55,7 +56,7 @@ const copy = {
     supportTitle: '♡ 支持这个计划', supportIntro: '如果这张地图帮你找到了一本想读的刊物，也可以支持我继续整理、查证和更新。',
     supportPromise: '所有内容仍会免费开放。',
     paypalRegion: '适合使用 PayPal 的读者', paypalAction: '支持这张地图 →',
-    wechatTitle: 'WeChat', wechatRegion: '适合使用微信支付的读者', wechatAction: '支持地圖維護 →',
+    wechatTitle: 'WeChat', wechatRegion: '适合使用微信支付的读者', wechatAction: '支持地图维护 →',
     wechatDialogTitle: 'WeChat 赞赏码', wechatDialogHint: '使用微信扫描或长按识别图片',
     suggestAria: '补充地方刊物', missed: '漏网刊物？', submitHint: '打开补充表单', dragHint: '拖动标题栏可上下移动', ticker: '补充一本 ✦ 补充一本 ✦ 补充一本 ✦', close: '关闭',
     dialogTitle: '补充一本地方刊物', dialogNote: '提交时会打开邮件程序，网页本身不会储存资料。', publicationName: '刊物名称 *', place: '县市／地区 *', link: '阅读、发行或介绍链接 *', notes: '补充说明', cancel: '取消', compose: '整理成邮件 ↗',
@@ -75,9 +76,9 @@ const copy = {
     mapTitle: 'Interactive map of Taiwan’s 22 counties and cities', mapDesc: 'Select a place to see its local publications on the right.', viewCounty: 'View ', viewSuffix: ' publications', selectCounty: 'Select ', islandZoom: 'Enlarged island selectors', unit: ' titles',
     boundary: 'Boundary data: ', dataPlatform: 'Taiwan Open Data', checked: 'checked', shelf: 'COUNTY SHELF', search: 'Search title or place',
     publisher: 'Published by', firstPublished: 'First published', about: 'About the publication', recommended: 'Issue details / purchase', introIssues: 'Publication guide / issue leads', issueTheme: 'Issue theme', issueHighlight: 'Reading note', reports: 'Related material',
-    fullReading: 'Full reading', platformReading: 'Borrow / preview', teamLinks: 'Publisher / social', borrowOnline: 'Borrow online', buyPreview: 'Buy / preview', visitSocial: 'Visit profile',
+    fullReading: 'Read in full', platformReading: 'Borrow / preview', teamLinks: 'Publisher / social', borrowOnline: 'Borrow online', buyPreview: 'Buy / preview', visitSocial: 'Visit profile',
     hasOnline: 'Public online edition available', platformOnline: 'Available through an e-book platform', hasIntro: 'Source material', noIntro: 'Source material', paperSource: 'Print publication record', readOfficial: 'Read on the official site', viewIntro: 'View source material', viewSource: 'View source material',
-    researchTitle: 'Research & reporting on local publications', researchLead: 'An introduction to Taiwan’s local publications', readFull: 'Read the feature', readOriginal: 'Read original',
+    researchTitle: 'Research & reporting on local publications', researchLead: 'An introduction to Taiwan’s local publications', readFull: 'Read full article (Chinese)', readOriginal: 'Read original (Chinese)',
     taskHome: '⊞ Home', taskTitle: '▣ Taiwan Local Publication Map',
     supportTitle: '♡ Support this project', supportIntro: 'If this map helped you find something to read, you can support the research, verification, and updates behind it.',
     supportPromise: 'Everything here will remain free to access.',
@@ -140,6 +141,11 @@ const countyLabelPositions: Record<string, { x: number; y: number; short: string
 };
 
 const compactCounties = ['基隆市', '臺北市', '新竹市', '嘉義市'] as const;
+const countyLabel = (county: string) => localizeCounty(county, locale);
+const countyLabels = Object.fromEntries([...countyOrder, '全臺性', '地區待確認'].map((county) => [county, countyLabel(county)]));
+const mapCountyLabel = (county: string) => locale === 'en'
+  ? county === '連江縣' ? 'Matsu' : ['新竹市', '新竹縣', '嘉義市', '嘉義縣'].includes(county) ? countyLabel(county) : countyLabel(county).replace(/ (City|County)$/, '')
+  : countyLabel(county);
 
 const countyTone: Record<string, string> = Object.fromEntries(countyOrder.map((county) => {
   if (['澎湖縣', '金門縣', '連江縣'].includes(county)) return [county, 'islands'];
@@ -621,7 +627,7 @@ const publicationSocialsByPublisher: Record<string, SocialLink[]> = {
   臺東縣達仁鄉公所: [{ label: 'Facebook · 發行單位達仁鄉公所', url: 'https://www.facebook.com/profile.php?id=100068309460565' }],
 };
 
-const researchReading = [
+const researchReadingSource = [
   {
     year: '2024',
     title: '他們在你的家鄉出雜誌：地方刊物誕生史',
@@ -667,17 +673,25 @@ const researchReading = [
   },
 ] as const;
 
+const researchReading = researchReadingSource.map((article) => ({
+  ...article,
+  originalTitle: article.title,
+  title: localizeText(article.title, locale),
+  outlet: localizeText(article.outlet, locale),
+  summary: localizeText(article.summary, locale),
+  tags: 'tags' in article ? article.tags.map((tag) => localizeText(tag, locale)) : [],
+}));
 const featuredResearch = researchReading[0];
 const researchIndex = researchReading.slice(1);
 const researchVisualLabels = ['EDIT', 'FIELD', 'ARCHIVE', 'SCALE', 'DIALOGUE'] as const;
 
 const rootCounty = (city: string) => city.split('・')[0];
-const normalizedCounty = (city: string) => rootCounty(city) === '跨縣市' ? copy.nationwide : rootCounty(city);
-const normalizedCity = (city: string) => city.replace(/^跨縣市/, copy.nationwide);
+const normalizedCounty = (city: string) => ['跨縣市', '全臺性'].includes(rootCounty(city)) ? '全臺性' : rootCounty(city);
+const normalizedCity = (city: string) => city.split('・').map((part) => countyLabel(part)).join(locale === 'en' ? ' · ' : '・');
 const compactPeriodLabel = (period?: string, firstPublished?: string) => {
   if (!period) return '';
   if (!firstPublished) return period;
-  return period.replace(/^.*?(?:創刊|發起)\s*[・·／/-]?\s*/, '').trim();
+  return period.replace(/^.*?(?:創刊|创刊|發起|发起)\s*[・·／/-]?\s*/, '').trim();
 };
 const isReference = (item: (typeof localPublications)[number]) => item.reading === 'reference' || item.access === 'catalog';
 const withStatusSuffix = (name: string, status: (typeof localPublications)[number]['status']) => {
@@ -699,8 +713,13 @@ const compactSocialLabel = (label: string) => {
   return 'WEB';
 };
 const payload = localPublications.map((item, index) => {
+  const localizedItem = localizePublication(item, locale);
   const curatedLinks = publicationLinksByName[item.name] || {};
-  const platforms = curatedLinks.platforms || [];
+  const platforms = (curatedLinks.platforms || []).map((link) => ({
+    ...link,
+    label: localizePlatformLabel(link.label, locale),
+    detail: link.detail ? localizeText(link.detail, locale) : undefined,
+  }));
   const borrowLinks = platforms.filter((link) => link.access === 'borrow');
   const purchaseLinks = platforms.filter((link) => link.access === 'purchase');
   const socials = [
@@ -710,25 +729,34 @@ const payload = localPublications.map((item, index) => {
   ].filter((link, linkIndex, links) => {
     const normalizedUrl = link.url.replace(/\/$/, '');
     return links.findIndex((candidate) => candidate.url.replace(/\/$/, '') === normalizedUrl) === linkIndex;
-  });
+  }).map((link) => ({ ...link, label: localizeSocialLabel(link.label, locale) }));
   const publicReading = !isReference(item);
   return {
-    ...item,
+    ...localizedItem,
+    originalName: item.name,
+    originalPublisher: item.publisher,
+    originalCity: item.city,
     city: normalizedCity(item.city),
     id: `zine-${index}`,
     county: normalizedCounty(item.city),
-    displayName: withStatusSuffix(item.name, item.status),
+    displayName: withStatusSuffix(localizedItem.name, item.status),
     publicReading,
     reading: publicReading || borrowLinks.length > 0 ? 'online' : 'reference',
     statusLabel: copy.status[item.status],
     accessLabel: copy.access[item.access],
-    periodLabel: compactPeriodLabel(item.period, item.firstPublished),
+    periodLabel: locale === 'en' ? localizedItem.period : compactPeriodLabel(localizedItem.period, localizedItem.firstPublished),
     hasLink: Boolean(item.url),
     hasDirectIntro: Boolean(item.url),
     borrowLinks,
     purchaseLinks,
     socials,
-    coverage: coverageByName[item.name] || [],
+    coverage: (coverageByName[item.name] || []).map((report) => ({
+      ...report,
+      originalTitle: report.title,
+      title: localizeText(report.title, locale),
+      outlet: localizeText(report.outlet, locale),
+      summary: localizeText(report.summary, locale),
+    })),
   };
 });
 
@@ -740,7 +768,7 @@ const initialCoverage = initialItem.coverage;
 const onlineCount = payload.filter((item) => item.reading === 'online').length;
 const referenceCount = payload.length - onlineCount;
 const serializedPayload = JSON.stringify(payload).replace(/</g, '\\u003c');
-const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
+const serializedUi = JSON.stringify({ ...copy, countyLabels }).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
@@ -796,13 +824,13 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
           <section class="map-window" aria-labelledby="map-window-title">
             <header class="pane-titlebar"><span>▧ county_map.svg</span><i>— □</i></header>
             <div class="map-toolbar">
-              <div><small>NOW SELECTED</small><strong id="selected-county">{initialCounty}</strong></div>
+              <div><small>NOW SELECTED</small><strong id="selected-county">{countyLabel(initialCounty)}</strong></div>
               <div class="map-toolbar-actions">
-                <label class="county-jump"><span>{copy.county}</span><select id="county-jump" aria-label={copy.exactCounty}>{countyOrder.map((county) => <option value={county}>{county}</option>)}<option value={copy.nationwide}>{copy.nationwide}</option><option value={copy.unplaced}>{copy.unplaced}</option></select></label>
+                <label class="county-jump"><span>{copy.county}</span><select id="county-jump" aria-label={copy.exactCounty}>{countyOrder.map((county) => <option value={county}>{countyLabel(county)}</option>)}<option value="全臺性">{copy.nationwide}</option><option value="地區待確認">{copy.unplaced}</option></select></label>
                 <div class="name-legend" role="group" aria-label={copy.filterAria}>
                   <button class="online-sample" type="button" data-reading-filter="online" aria-pressed="false"><i></i>{copy.readable}</button>
                   <button class="reference-sample" type="button" data-reading-filter="reference" aria-pressed="false"><i></i>{copy.referenceLong}</button>
-                  <button class="cross-county-button" type="button" data-county-select={copy.nationwide} aria-pressed="false">◎ {copy.nationwide}</button>
+                  <button class="cross-county-button" type="button" data-county-select="全臺性" aria-pressed="false">◎ {copy.nationwide}</button>
                 </div>
               </div>
             </div>
@@ -816,25 +844,26 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
                     data-county-select={county}
                     role="button"
                     tabindex="0"
-                    aria-label={`${copy.viewCounty}${county}${copy.viewSuffix}`}
+                    aria-label={`${copy.viewCounty}${countyLabel(county)}${copy.viewSuffix}`}
                     aria-pressed={county === initialCounty ? 'true' : 'false'}
                   >
-                    <title>{county}</title>
+                    <title>{countyLabel(county)}</title>
                     <path d={taiwanCountyPaths[county]}></path>
                   </g>
                 ))}
                 {compactCounties.map((county) => (
-                  <g class="county-hit-zone" data-county-select={county} role="button" tabindex="0" aria-label={`${copy.viewCounty}${county}${copy.viewSuffix}`} aria-pressed={county === initialCounty ? 'true' : 'false'}>
+                  <g class="county-hit-zone" data-county-select={county} role="button" tabindex="0" aria-label={`${copy.viewCounty}${countyLabel(county)}${copy.viewSuffix}`} aria-pressed={county === initialCounty ? 'true' : 'false'}>
                     <path d={taiwanCountyPaths[county]}></path>
                   </g>
                 ))}
                 {countyOrder.map((county) => {
                   const label = countyLabelPositions[county];
+                  const displayLabel = mapCountyLabel(county);
                   return (
-                    <g class:list={['county-label', ['澎湖縣', '金門縣', '連江縣'].includes(county) && 'is-offshore', county === initialCounty && 'is-current']} data-county-label={county} data-county-select={county} role="button" tabindex="0" aria-label={`${copy.selectCounty}${county}`} aria-pressed={county === initialCounty ? 'true' : 'false'}>
-                      <rect x={label.x - 7} y={label.y - 12} width={25 + label.short.length * 15} height="25" rx="8"></rect>
+                    <g class:list={['county-label', ['澎湖縣', '金門縣', '連江縣'].includes(county) && 'is-offshore', county === initialCounty && 'is-current']} data-county-label={county} data-county-select={county} role="button" tabindex="0" aria-label={`${copy.selectCounty}${countyLabel(county)}`} aria-pressed={county === initialCounty ? 'true' : 'false'}>
+                      <rect x={label.x - 7} y={label.y - 12} width={25 + displayLabel.length * (locale === 'en' ? 7.4 : 15)} height="25" rx="8"></rect>
                       <circle cx={label.x} cy={label.y} r="3.5"></circle>
-                      <text x={label.x + 7} y={label.y + 3}>{label.short}</text>
+                      <text x={label.x + 7} y={label.y + 3}>{displayLabel}</text>
                     </g>
                   );
                 })}
@@ -846,10 +875,10 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
                     class:list={['island-inset', island.county === initialCounty && 'is-current']}
                     type="button"
                     data-county-select={island.county}
-                    aria-label={copy.viewCounty + island.label + copy.viewSuffix}
+                    aria-label={copy.viewCounty + countyLabel(island.label) + copy.viewSuffix}
                     aria-pressed={island.county === initialCounty ? 'true' : 'false'}
                   >
-                    <span><b>{island.label}</b><small>{payload.filter((item) => item.county === island.county).length}{copy.unit}</small></span>
+                    <span><b>{countyLabel(island.label)}</b><small>{payload.filter((item) => item.county === island.county).length}{copy.unit}</small></span>
                     <svg viewBox={island.viewBox} aria-hidden="true"><path d={taiwanCountyPaths[island.county]}></path></svg>
                     <i aria-hidden="true">{island.charm}</i>
                   </button>
@@ -864,7 +893,7 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
             <section class="directory-window" aria-labelledby="directory-title">
               <header class="pane-titlebar"><span>▤ publication_index.txt</span><i>— □</i></header>
               <div class="directory-tools">
-                <div><p>{copy.shelf}</p><h2 id="directory-title">{initialCounty} · {initialPublications.length}{copy.unit}</h2></div>
+                <div><p>{copy.shelf}</p><h2 id="directory-title">{countyLabel(initialCounty)} · {initialPublications.length}{copy.unit}</h2></div>
                 <label class="directory-search"><span>⌕</span><input id="zine-search" type="search" placeholder={copy.search} autocomplete="off" /></label>
               </div>
               <div class="directory-list" id="directory-list">
@@ -930,7 +959,7 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
             <a class="research-feature" href={featuredResearch.url} target="_blank" rel="noreferrer">
               <div class="research-feature-top"><span>{featuredResearch.year}</span><small>FEATURED ESSAY ✦</small></div>
               <small>{featuredResearch.outlet}</small>
-              <h3>《{featuredResearch.title}》</h3>
+              <h3 title={featuredResearch.originalTitle}>{locale === 'en' ? featuredResearch.title : `《${featuredResearch.title}》`}</h3>
               <p>{featuredResearch.summary}</p>
               <div class="research-tags">{featuredResearch.tags.map((tag) => <span>{tag}</span>)}</div>
               <footer><span>{copy.researchLead}</span><b>{copy.readFull} ↗</b></footer>
@@ -943,7 +972,7 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
                   </span>
                   <div class="research-card-copy">
                     <small class="research-outlet">{article.outlet}</small>
-                    <h3>《{article.title}》</h3>
+                    <h3 title={article.originalTitle}>{locale === 'en' ? article.title : `《${article.title}》`}</h3>
                     <p>{article.summary}</p>
                     <span class="research-card-link">{copy.readOriginal}</span>
                   </div>
@@ -982,7 +1011,7 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
 
       </div>
 
-      <footer class="window-taskbar"><div><a href={paths.home}>{copy.taskHome}</a><a class="task-credit" href={paths.about}>{copy.projectByline}</a><span>{copy.taskTitle}</span></div><div><span id="selection-status">{initialCounty} · {initialItem.displayName}</span><span id="clock">--:--</span></div></footer>
+      <footer class="window-taskbar"><div><a href={paths.home}>{copy.taskHome}</a><a class="task-credit" href={paths.about}>{copy.projectByline}</a><span>{copy.taskTitle}</span></div><div><span id="selection-status">{countyLabel(initialCounty)} · {initialItem.displayName}</span><span id="clock">--:--</span></div></footer>
     </main>
 
     <aside class="suggest-float" id="suggest-float" aria-label={copy.suggestAria}>
@@ -1023,6 +1052,7 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
       const records = JSON.parse(document.querySelector('#zine-data')?.textContent || '[]');
       const ui = JSON.parse(document.querySelector('#zine-ui')?.textContent || '{}');
       const counties = [...new Set(records.map((record) => record.county))];
+      const countyLabel = (county) => ui.countyLabels?.[county] || county;
       const directory = document.querySelector('#directory-list');
       const directoryTitle = document.querySelector('#directory-title');
       const recordCard = document.querySelector('#record-card');
@@ -1031,7 +1061,8 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
       const search = document.querySelector('#zine-search');
       const countyJump = document.querySelector('#county-jump');
       const readingFilterButtons = [...document.querySelectorAll('[data-reading-filter]')];
-      let selectedCounty = counties.includes(decodeURIComponent(location.hash.slice(1))) ? decodeURIComponent(location.hash.slice(1)) : '臺北市';
+      const requestedCounty = decodeURIComponent(location.hash.slice(1));
+      let selectedCounty = counties.find((county) => county === requestedCounty || countyLabel(county) === requestedCounty) || '臺北市';
       let selectedRecordId = '';
       let activeReadingFilter = '';
 
@@ -1062,15 +1093,18 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
           zone.setAttribute('aria-pressed', String(current));
         });
         document.querySelectorAll('[data-county-label]').forEach((label) => label.classList.toggle('is-current', label.dataset.countyLabel === selectedCounty));
-        if (selectedCountyLabel) selectedCountyLabel.textContent = selectedCounty;
+        if (selectedCountyLabel) selectedCountyLabel.textContent = countyLabel(selectedCounty);
         if (countyJump) countyJump.value = selectedCounty;
+        document.querySelectorAll('.lang-link').forEach((link) => {
+          link.href = `${link.href.split('#')[0]}#${encodeURIComponent(selectedCounty)}`;
+        });
       }
 
       function renderDirectory(items, heading) {
         if (!directory || !directoryTitle) return;
         const visibleItems = filteredRecords(items);
         const filterLabel = activeReadingFilter === 'online' ? ` · ${ui.online}` : activeReadingFilter === 'reference' ? ` · ${ui.reference}` : '';
-        directoryTitle.textContent = `${heading}${filterLabel} · ${visibleItems.length}${ui.unit}`;
+        directoryTitle.textContent = `${countyLabel(heading)}${filterLabel} · ${visibleItems.length}${ui.unit}`;
         directory.innerHTML = visibleItems.length ? visibleItems.map((record) => `<button class="directory-item is-${record.reading}${record.id === selectedRecordId ? ' is-current' : ''}" type="button" data-record-id="${record.id}"><span>${escapeHtml(record.displayName)}</span><small>${record.reading === 'online' ? escapeHtml(ui.online) : escapeHtml(ui.reference)}</small></button>`).join('') : `<p class="directory-empty">${escapeHtml(ui.noMatch)}</p>`;
       }
 
@@ -1079,9 +1113,9 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
         if (!record) {
           const filterLabel = activeReadingFilter === 'online' ? ui.readable : ui.referenceLong;
           recordCard.dataset.reading = activeReadingFilter || 'reference';
-          recordCard.innerHTML = `<div class="record-empty-filter"><small>NO MATCH_</small><h2>${escapeHtml(selectedCounty)} · ${escapeHtml(ui.nonePrefix)}${escapeHtml(filterLabel)}${escapeHtml(ui.noneSuffix)}</h2><p>${escapeHtml(ui.switchHint)}</p><button id="clear-reading-filter" type="button">${escapeHtml(ui.showAll)}</button></div>`;
+          recordCard.innerHTML = `<div class="record-empty-filter"><small>NO MATCH_</small><h2>${escapeHtml(countyLabel(selectedCounty))} · ${escapeHtml(ui.nonePrefix)}${escapeHtml(filterLabel)}${escapeHtml(ui.noneSuffix)}</h2><p>${escapeHtml(ui.switchHint)}</p><button id="clear-reading-filter" type="button">${escapeHtml(ui.showAll)}</button></div>`;
           document.querySelector('#clear-reading-filter')?.addEventListener('click', () => { activeReadingFilter = ''; updateReadingFilters(); selectCounty(selectedCounty); });
-          if (selectionStatus) selectionStatus.textContent = `${selectedCounty} · ${ui.noResults}`;
+          if (selectionStatus) selectionStatus.textContent = `${countyLabel(selectedCounty)} · ${ui.noResults}`;
           return;
         }
         selectedRecordId = record.id;
@@ -1102,7 +1136,7 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
         const socialBadges = record.socials.length ? `<nav class="record-social-badges" aria-label="${escapeHtml(ui.teamLinks)}">${record.socials.map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer" title="${escapeHtml(link.label)}" aria-label="${escapeHtml(link.label)}">${compactSocialLabel(link.label)}</a>`).join('')}</nav>` : '';
         const quickMeta = facts || socialBadges ? `<div class="record-quick-meta">${facts}${socialBadges}</div>` : '';
         recordCard.innerHTML = `<header class="record-heading"><div class="record-eyebrow"><span>${escapeHtml(record.city)}</span><span>${escapeHtml(record.statusLabel)}</span></div><h2>${escapeHtml(record.displayName)}</h2><p>${escapeHtml(ui.publisher)}：${escapeHtml(record.publisher)}</p>${quickMeta}</header><div class="record-scroll"><section class="record-about"><h3>${escapeHtml(ui.about)}</h3><p>${escapeHtml(record.description)}</p>${note}</section>${fullReading}${borrowPlatforms}${issuePurchases}${related}</div><footer class="record-footer"><span>${escapeHtml(sourceStatus)}</span></footer>`;
-        if (selectionStatus) selectionStatus.textContent = `${record.county} · ${record.displayName}`;
+        if (selectionStatus) selectionStatus.textContent = `${countyLabel(record.county)} · ${record.displayName}`;
       }
 
       function selectCounty(county, preferredRecordId = '') {
@@ -1134,9 +1168,9 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
         selectedRecordId = record.id; renderDirectory(countyRecords(selectedCounty), selectedCounty); renderRecord(record);
       });
       search?.addEventListener('input', () => {
-        const query = search.value.toLocaleLowerCase('zh-Hant').trim();
+        const query = search.value.toLowerCase().trim();
         if (!query) { renderDirectory(countyRecords(selectedCounty), selectedCounty); return; }
-        const matches = records.filter((record) => `${record.name} ${record.city} ${record.publisher} ${record.description}`.toLocaleLowerCase('zh-Hant').includes(query));
+        const matches = records.filter((record) => `${record.name} ${record.originalName} ${record.city} ${record.originalCity} ${countyLabel(record.county)} ${record.publisher} ${record.originalPublisher} ${record.description}`.toLowerCase().includes(query));
         renderDirectory(matches, ui.searchResults);
       });
 
@@ -1950,6 +1984,26 @@ const serializedUi = JSON.stringify(copy).replace(/</g, '\\u003c');
     line-height: 1.4;
     letter-spacing: .03em;
   }
+  html[lang='zh-Hans'] .zine-window,
+  html[lang='zh-Hans'] .suggest-dialog,
+  html[lang='zh-Hans'] .support-qr-dialog { --font-serif-tc: var(--font-serif-sc); }
+  html[lang='en'] .zine-window,
+  html[lang='en'] .suggest-dialog,
+  html[lang='en'] .support-qr-dialog {
+    --font-serif-tc: var(--font-sans-en);
+    --font-rounded: var(--font-sans-en);
+    font-family: var(--font-sans-en);
+  }
+  html[lang='en'] .desk-heading h1,
+  html[lang='en'] .research-heading h2,
+  html[lang='en'] .research-feature h3,
+  html[lang='en'] .research-index-card h3 { letter-spacing: .01em; }
+  html[lang='en'] .desk-heading h1 { font-size: clamp(27px,3vw,38px); line-height: 1.15; }
+  html[lang='en'] .map-toolbar strong { font-size: 16px; white-space: normal; }
+  html[lang='en'] .name-legend button { white-space: normal; }
+  html[lang='en'] .county-label text { font-family: var(--font-sans-en); font-size: 13px; }
+  html[lang='en'] .research-feature h3 { font-size: clamp(22px,2vw,28px); }
+  html[lang='en'] .research-heading h2 { line-height: 1.2; }
   .support-titlebar { font-size: 12px; }
   .support-titlebar i { font-size: 6px; }
   .support-intro p { font-size: 12px; line-height: 1.68; }
